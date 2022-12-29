@@ -9,12 +9,17 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserStatus;
 use App\Notifications\VerifyEmailQueued;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasRoles;
+    use SoftDeletes;
+
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +55,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailQueued());
+    }
+
+      /**
+     * Picture
+     *
+     * @param [type] $uid
+     * @return void
+     */
+    public function getPictureAttribute($value)
+    {
+        if ($value !== null) {
+            return  $this->attributes['picture'] = url($value);
+        } else {
+            return  $this->attributes['picture'] = url('uploads/users/avatar.png');
+        }
     }
 }
