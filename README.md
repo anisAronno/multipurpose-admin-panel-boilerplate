@@ -1,6 +1,6 @@
 ## Modern monolithic pwa with ssr boilerplate
 
-*Application with laravel, vue js, vite, inertia js, tailwind css, typescript
+#Application with laravel, vue js, vite, inertia js, tailwind css, typescript
   
 Run command for development
 
