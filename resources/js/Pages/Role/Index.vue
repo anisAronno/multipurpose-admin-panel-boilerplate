@@ -1,10 +1,16 @@
 <script setup>
+import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import DeleteRoleForm from "@/Pages/Role/Partials/DeleteRoleForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-
 defineProps({
     roles: Object,
 });
+
+const getRoles = async () => {
+    try {
+    } catch (error) {}
+};
 </script>
 
 <template>
@@ -15,7 +21,7 @@ defineProps({
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Profile
+                Roles
             </h2>
         </template>
 
@@ -39,12 +45,12 @@ defineProps({
                                 </p>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <button
-                                    type="button"
+                                <Link
+                                    :href="route('role.create')"
                                     class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                                 >
                                     Add Role
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div class="mt-8 flex flex-col">
@@ -58,7 +64,7 @@ defineProps({
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
-                                            class="min-w-full table-compact divide-y divide-gray-300 p-3"
+                                            class="min-w-full table-auto divide-y divide-gray-300 p-3"
                                         >
                                             <thead class="bg-gray-50">
                                                 <tr>
@@ -93,13 +99,13 @@ defineProps({
                                                     :key="role.id"
                                                 >
                                                     <td
-                                                        class="min-w-[8rem] whitespace-nowrap py-4 pr-3 pl-3 text-sm font-medium text-gray-900"
+                                                        class="w-[20%] whitespace-nowrap text-left p-4 text-sm font-bold text-gray-900 capitalize"
                                                     >
                                                         {{ role.name }}
                                                     </td>
 
                                                     <td
-                                                        class="min-w-[8rem] max-w-16rem] whitespace-normal px-3 py-4 text-sm text-gray-500 p-2 flex flex-wrap"
+                                                        class="w-60% whitespace-normal p-3 text-md text-gray-500 flex flex-wrap"
                                                     >
                                                         <p
                                                             v-for="permission in role.permissions"
@@ -116,23 +122,48 @@ defineProps({
                                                         </p>
                                                     </td>
                                                     <td
-                                                        class="min-w-[8rem] whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
+                                                        class="w-[20%] whitespace-nowrap text-right text-sm font-medium"
                                                     >
-                                                        <a
-                                                            href="#"
-                                                            class="text-indigo-600 hover:text-indigo-900 mr-2"
-                                                            >Edit
-                                                        </a>
-                                                        <a
-                                                            href="#"
-                                                            class="text-indigo-600 hover:text-indigo-900"
-                                                            >Delete
-                                                        </a>
+                                                        <div
+                                                            class="flex flex-wrap gap-2 justify-center"
+                                                        >
+                                                            <Link
+                                                                :href="
+                                                                    route(
+                                                                        'role.edit',
+                                                                        role.id
+                                                                    )
+                                                                "
+                                                                class="inline-flex items-center px-4 py-2 bg-blue-800 dark:bg-blue-800 border border-blue-300 dark:border-blue-500 rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest shadow-sm hover:bg-blue-50 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-blue-800 disabled:opacity-25 transition ease-in-out duration-150"
+                                                                >Edit</Link
+                                                            >
+
+                                                            <DeleteRoleForm
+                                                                :roleId="
+                                                                    role.id
+                                                                "
+                                                            ></DeleteRoleForm>
+                                                        </div>
                                                     </td>
                                                 </tr>
-
-                                                <!-- More people... -->
                                             </tbody>
+                                            <tfoot class="bg-gray-50">
+                                                <tr>
+                                                    <td
+                                                        colspan="3"
+                                                        class="w-[100%]"
+                                                    >
+                                                        <Pagination
+                                                            v-if="
+                                                                roles.last_page >
+                                                                1
+                                                            "
+                                                            class="mt-6 dark:text-white flex justify-end p-3"
+                                                            :links="roles.links"
+                                                        ></Pagination>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

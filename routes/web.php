@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/role', [RolesController::class, 'index'])->name('role.view');
+    Route::get('/create', [RolesController::class, 'create'])->name('role.create');
+    Route::post('/store', [RolesController::class, 'store'])->name('role.store');
+    Route::get('/edit/{role}', [RolesController::class, 'edit'])->name('role.edit');
+    Route::delete('/destroy/{role}', [RolesController::class, 'destroy'])->name('role.destroy');
 });
 
 require __DIR__.'/auth.php';

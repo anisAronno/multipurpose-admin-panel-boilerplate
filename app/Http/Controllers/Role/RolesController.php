@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Role;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\RoleStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -29,10 +31,10 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $role = Role::with(['permissions'=>function ($query) {
+        $roles = Role::with(['permissions'=>function ($query) {
             $query->select('id', 'name');
         }])->paginate(3);
-        return Inertia::render('Role/Index', [ 'roles' => $role]);
+        return Inertia::render('Role/Index', [ 'roles' => $roles]);
     }
 
     /**
@@ -42,9 +44,10 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $all_permissions  = Permission::all();
-        $permission_groups = User::getpermissionGroups();
-        return Inertia::render('Role/Index', compact('all_permissions', 'permission_groups'));
+        $all_permissions  = Permission::orderBy('group_name')->get()->groupBy(function ($data) {
+            return $data->group_name;
+        });
+        return Inertia::render('Role/Create', compact('all_permissions'));
     }
 
     /**
@@ -53,23 +56,17 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleStoreRequest $request)
     {
-        // Validation Data
-        $request->validate([
-            'name' => 'required|max:100|unique:roles'
-        ], [
-            'name.requried' => 'Please give a role name'
-        ]);
+        $role = Role::create(['name' => $request->name]);
 
-        // Process Data
-        $role = Role::create(['name' => $request->name, 'guard_name' => 'admin']);
         $permissions = $request->input('permissions');
+
         if (!empty($permissions)) {
             $role->syncPermissions($permissions);
         }
 
-        return Inertia::render('Role/Create', compact('role', 'permissions'));
+        return Redirect::route('role.view');
     }
 
     /**
@@ -93,9 +90,8 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $role = Role::findById($id, 'admin');
+    public function edit(Role $role)
+    {  
         $all_permissions = Permission::all();
         $permission_groups = User::getpermissionGroups();
         return Inertia::render('Role/Edit', compact('role', 'all_permissions', 'permission_groups'));
@@ -108,16 +104,15 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
         // Validation Data
         $request->validate([
-            'name' => 'required|max:100|unique:roles,name,' . $id
+            'name' => 'required|max:100|unique:roles,name,' . $role->id
         ], [
             'name.requried' => 'Please give a role name'
         ]);
-
-        $role = Role::findById($id, 'admin');
+ 
         $permissions = $request->input('permissions');
 
         if (!empty($permissions)) {
@@ -135,12 +130,10 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        $role = Role::findById($id, 'admin');
-        if (!is_null($role)) {
-            // $role->delete();
-        }
-        return back();
+        $role->delete();
+
+        return Redirect::route('role.view');
     }
 }

@@ -4,7 +4,7 @@ import "./bootstrap";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { createInertiaApp } from "@inertiajs/inertia-vue3";
+import { createInertiaApp, Link } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
@@ -26,6 +26,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .component("font-awesome-icon", FontAwesomeIcon)
+            .component("Link", Link)
             .mount(el);
     },
 });

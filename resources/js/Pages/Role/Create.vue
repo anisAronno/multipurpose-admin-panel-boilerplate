@@ -1,9 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import CreateRoleForm from "@/Pages/Role/Partials/CreateRoleForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    role: Object,
+    all_permissions: Object,
+    permission_groups: Object,
 });
 </script>
 
@@ -22,11 +24,11 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
-                    class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
+                    class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg "
                 >
-                    <pre>
-                        {{ role }}
-                    </pre>
+                    <CreateRoleForm
+                        :all_permissions="all_permissions"
+                    ></CreateRoleForm>
                 </div>
             </div>
         </div>
