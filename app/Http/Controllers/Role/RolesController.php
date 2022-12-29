@@ -29,7 +29,10 @@ class RolesController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Role/Index', [ 'role' => Role::all()]);
+        $role = Role::with(['permissions'=>function ($query) {
+            $query->select('id', 'name');
+        }])->paginate(3);
+        return Inertia::render('Role/Index', [ 'roles' => $role]);
     }
 
     /**
