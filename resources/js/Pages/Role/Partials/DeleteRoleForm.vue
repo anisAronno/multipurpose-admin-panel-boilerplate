@@ -5,14 +5,14 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
-const confirmRoleDeletion = ref(false);
+const modalShow = ref(false);
 
 defineProps({
-    roleId: String | Number,
+    item_id: String | Number,
 });
 const form = useForm();
-const confirmUserDeletion = () => {
-    confirmRoleDeletion.value = true;
+const confirmDeletion = () => {
+    modalShow.value = true;
 };
 
 const deleteRole = (id) => {
@@ -25,15 +25,18 @@ const deleteRole = (id) => {
 };
 
 const closeModal = () => {
-    confirmRoleDeletion.value = false;
+    modalShow.value = false;
 };
 </script>
 
 <template>
     <section>
-        <DangerButton @click="confirmUserDeletion"> Delete</DangerButton>
+        <DangerButton @click="confirmDeletion">
+            <font-awesome-icon icon="fa-solid fa-trash" class="mr-1" />
+            </DangerButton
+        >
 
-        <Modal :show="confirmRoleDeletion" @close="closeModal">
+        <Modal :show="modalShow" @close="closeModal">
             <div class="p-6">
                 <h2
                     class="text-lg font-medium text-gray-900 dark:text-gray-100"
@@ -55,8 +58,12 @@ const closeModal = () => {
                         class="ml-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
-                        @click="deleteRole(roleId)"
+                        @click="deleteRole(item_id)"
                     >
+                        <font-awesome-icon
+                            icon="fa-solid fa-trash"
+                            class="mr-1"
+                        />
                         Delete
                     </DangerButton>
                 </div>

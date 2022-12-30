@@ -4,8 +4,11 @@ import CreateRoleForm from "@/Pages/Role/Partials/CreateRoleForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    all_permissions: Object,
-    permission_groups: Object,
+    permissionWithGroup: Object,
+    permissions: Object,
+    all_group: Object,
+    total_permissions: String,
+    total_group: String,
 });
 </script>
 
@@ -24,10 +27,40 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
-                    class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg "
+                    class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
+                    <div class="sm:flex sm:items-center">
+                        <div class="sm:flex-auto">
+                            <h1
+                                class="text-xl font-semibold text-gray-900 dark:text-white"
+                            >
+                                Create Role
+                            </h1>
+                            <p
+                                class="mt-2 text-sm text-gray-700 dark:text-white"
+                            >
+                                Create a new roles with permission.
+                            </p>
+                        </div>
+                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                            <Link
+                                :href="route('role.view')"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-eye"
+                                    class="mr-1"
+                                />
+                                View All
+                            </Link>
+                        </div>
+                    </div>
                     <CreateRoleForm
-                        :all_permissions="all_permissions"
+                        :permissionWithGroup="permissionWithGroup"
+                        :permissions="permissions"
+                        :all_group="all_group"
+                        :total_permissions="total_permissions"
+                        :total_group="total_group"
                     ></CreateRoleForm>
                 </div>
             </div>

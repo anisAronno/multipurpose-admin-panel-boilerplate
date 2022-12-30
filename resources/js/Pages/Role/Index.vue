@@ -6,11 +6,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     roles: Object,
 });
-
-const getRoles = async () => {
-    try {
-    } catch (error) {}
-};
+ 
 </script>
 
 <template>
@@ -47,9 +43,13 @@ const getRoles = async () => {
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                                 <Link
                                     :href="route('role.create')"
-                                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                    class="btn btn-primary"
                                 >
-                                    Add Role
+                                    <font-awesome-icon
+                                        icon="fa-solid fa-circle-plus"
+                                        class="mr-1"
+                                    />
+                                    Create New
                                 </Link>
                             </div>
                         </div>
@@ -83,11 +83,9 @@ const getRoles = async () => {
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                                                        class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                                                     >
-                                                        <span class="sr-only"
-                                                            >Edit</span
-                                                        >
+                                                        Action
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -99,7 +97,7 @@ const getRoles = async () => {
                                                     :key="role.id"
                                                 >
                                                     <td
-                                                        class="w-[20%] whitespace-nowrap text-left p-4 text-sm font-bold text-gray-900 capitalize"
+                                                        class="w-[20%] whitespace-nowrap text-left p-4 text-base font-bold text-gray-900 capitalize"
                                                     >
                                                         {{ role.name }}
                                                     </td>
@@ -114,7 +112,7 @@ const getRoles = async () => {
                                                         >
                                                             <font-awesome-icon
                                                                 icon="fa-solid fa-user-shield"
-                                                                class="text-green-500"
+                                                                class="text-blue-400"
                                                             />
                                                             {{
                                                                 permission.name
@@ -125,20 +123,47 @@ const getRoles = async () => {
                                                         class="w-[20%] whitespace-nowrap text-right text-sm font-medium"
                                                     >
                                                         <div
-                                                            class="flex flex-wrap gap-2 justify-center"
+                                                            class="space-x-1 flex justify-end pr-3"
                                                         >
-                                                            <Link
-                                                                :href="
-                                                                    route(
-                                                                        'role.edit',
-                                                                        role.id
-                                                                    )
-                                                                "
-                                                                class="inline-flex items-center px-4 py-2 bg-blue-800 dark:bg-blue-800 border border-blue-300 dark:border-blue-500 rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest shadow-sm hover:bg-blue-50 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-blue-800 disabled:opacity-25 transition ease-in-out duration-150"
-                                                                >Edit</Link
-                                                            >
+                                                            <div>
+                                                                <Link
+                                                                    :href="
+                                                                        route(
+                                                                            'role.show',
+                                                                            role.id
+                                                                        )
+                                                                    "
+                                                                    class="btn btn-info"
+                                                                >
+                                                                    <font-awesome-icon
+                                                                        icon="fa-solid fa-eye"
+                                                                        class="mr-1"
+                                                                    />
+                                                                </Link>
+                                                            </div>
+
+                                                            <div>
+                                                                <Link
+                                                                    :href="
+                                                                        route(
+                                                                            'role.edit',
+                                                                            role.id
+                                                                        )
+                                                                    "
+                                                                    class="btn btn-primary"
+                                                                >
+                                                                    <font-awesome-icon
+                                                                        icon="fa-solid fa-pen-to-square"
+                                                                        class="mr-1"
+                                                                    />
+                                                                </Link>
+                                                            </div>
 
                                                             <DeleteRoleForm
+                                                                v-if="
+                                                                    role.id !==
+                                                                    1
+                                                                "
                                                                 :roleId="
                                                                     role.id
                                                                 "

@@ -44,10 +44,20 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $all_permissions  = Permission::orderBy('group_name')->get()->groupBy(function ($data) {
+        $permissions = Permission::orderBy('group_name')->get();
+        $permissionWithGroup  = $permissions->groupBy(function ($data) {
             return $data->group_name;
         });
-        return Inertia::render('Role/Create', compact('all_permissions'));
+
+        $all_group  = User::getpermissionGroups()->pluck('name');
+
+        return Inertia::render('Role/Create', [
+            'permissionWithGroup'=>$permissionWithGroup,
+            'permissions'=>$permissions->pluck('name'),
+            'all_group'=>$all_group,
+            'total_permissions'=>$permissions->count(),
+            'total_group'=>$all_group->count(),
+        ]);
     }
 
     /**
@@ -75,9 +85,8 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        $role = Role::findById($id, 'admin');
         $all_permissions = Permission::all();
         $permission_groups = User::getpermissionGroups();
 
@@ -91,7 +100,7 @@ class RolesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
-    {  
+    {
         $all_permissions = Permission::all();
         $permission_groups = User::getpermissionGroups();
         return Inertia::render('Role/Edit', compact('role', 'all_permissions', 'permission_groups'));
@@ -112,7 +121,7 @@ class RolesController extends Controller
         ], [
             'name.requried' => 'Please give a role name'
         ]);
- 
+
         $permissions = $request->input('permissions');
 
         if (!empty($permissions)) {

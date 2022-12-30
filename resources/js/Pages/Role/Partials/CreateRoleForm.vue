@@ -4,14 +4,90 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { watch } from "@vue/runtime-core";
 
 const props = defineProps({
-    all_permissions: Object,
+    permissionWithGroup: Object,
+    permissions: Object,
+    all_group: Object,
+    total_permissions: String,
+    total_group: String,
 });
+
 const form = useForm({
     name: "",
     permissions: [],
+    group_name: [],
+    is_all_selected: false,
 });
+
+const allCheckSubmit = (e) => {
+    if (e) {
+        form.permissions = _.clone(props.permissions);
+        form.group_name = _.clone(props.all_group);
+    } else {
+        form.permissions = [];
+        form.group_name = [];
+    }
+};
+watch(
+    () => form.permissions,
+    (permissions) => {
+        let currentGroup = _.split(_.last(permissions), ".", 1)[0];
+        let isCurrentGroupSelected = _.includes(form.group_name, currentGroup);
+        let currentGroupPermissions = props.permissionWithGroup[currentGroup];
+        let currentGroupSelectedPermissions = _.filter(
+            permissions,
+            function (item) {
+                return item.indexOf(currentGroup) > -1;
+            }
+        );
+
+        if (permissions.length == props.permissions.length) {
+            form.is_all_selected = true;
+        } else {
+            form.is_all_selected = false;
+        }
+
+        if (
+            isCurrentGroupSelected &&
+            currentGroupPermissions?.length !==
+                currentGroupSelectedPermissions?.length
+        ) {
+            _.remove(form.group_name, (item) => item === currentGroup);
+        } else if (
+            !isCurrentGroupSelected &&
+            currentGroupPermissions?.length ==
+                currentGroupSelectedPermissions?.length
+        ) {
+            form.group_name.push(currentGroup);
+        }
+    }
+);
+
+const selectedGroup = (groupName) => {
+    let selectedPermisssion = props.permissionWithGroup[groupName];
+
+    if (!_.includes(form.group_name, groupName)) {
+        form.group_name.push(groupName);
+        _.forEach(selectedPermisssion, function (permission) {
+            if (!_.includes(form.permissions, permission.name)) {
+                form.permissions.push(permission.name);
+            }
+        });
+    } else {
+        _.remove(form.group_name, (item) => item === groupName);
+        _.forEach(selectedPermisssion, function (permission) {
+            _.remove(form.permissions, (item) => item === permission.name);
+        });
+    }
+
+    if (form.group_name.length == props.total_group) {
+        form.is_all_selected = true;
+    } else {
+        form.is_all_selected = false;
+    }
+};
 
 const storeRole = () => {
     form.post(route("role.store"), {
@@ -31,17 +107,7 @@ const storeRole = () => {
 </script>
 
 <template>
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Update Password
-            </h2>
-
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Ensure your account is using a long, random password to stay
-                secure.
-            </p>
-        </header>
+    <section> 
         <form @submit.prevent="storeRole" class="mt-6 space-y-6">
             <div>
                 <InputLabel for="current_password" value="Role Name" />
@@ -57,12 +123,41 @@ const storeRole = () => {
 
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
+            <div class="flex items-center gap-1 mb-5">
+                <InputLabel
+                    for="is_all_selected"
+                    value="Select All"
+                    class="text-2xl capitalize mr-2"
+                />
+                <input
+                    type="checkbox"
+                    id="is_all_selected"
+                    v-model="form.is_all_selected"
+                    class="checkbox w-5 h-5"
+                    :checked="form.is_all_selected"
+                    @change="allCheckSubmit(form.is_all_selected)"
+                /> 
+            </div>
             <div class="grid md:grid-cols-4 grid-cols-3 gap-5">
                 <div
-                    v-for="(permissions, index) in all_permissions"
+                    v-for="(permissions, index) in permissionWithGroup"
                     :key="index"
                 >
-                    <h2 class="text-2xl capitalize mb-3">{{ index }}</h2>
+                    <div class="flex items-center gap-1 mb-5">
+                        <input
+                            type="checkbox"
+                            id="group_name"
+                            :value="form.group_name"
+                            class="checkbox mr-1 w-5 h-5"
+                            :checked="form.group_name.includes(index)"
+                            @click="selectedGroup(index)"
+                        />
+                        <InputLabel
+                            for="group_name"
+                            :value="index"
+                            class="text-xl capitalize"
+                        />
+                    </div>
                     <div
                         v-for="permission in permissions"
                         :key="permission.id"
@@ -73,7 +168,7 @@ const storeRole = () => {
                             id="permissions"
                             :value="permission.name"
                             v-model="form.permissions"
-                            class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                            class="checkbox mr-1"
                         />
                         <InputLabel
                             for="permissions"
@@ -82,8 +177,10 @@ const storeRole = () => {
                     </div>
                 </div>
             </div>
-            <div class="flex items-center justify-end pr-[10%] py-5">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+            <div class="flex items-center justify-end pr-5 py-5">
+                <PrimaryButton :disabled="form.processing"
+                    >Submit</PrimaryButton
+                >
 
                 <Transition
                     enter-from-class="opacity-0"
