@@ -37,7 +37,7 @@ watch(
         if (old.length > permissions.length) {
             currentGroup = _.split(_.difference(old, permissions), ".", 1)[0];
         }
-        
+
         let isCurrentGroupSelected = _.includes(form.group_name, currentGroup);
         let currentGroupPermissions = props.permissionWithGroup[currentGroup];
         let currentGroupSelectedPermissions = _.filter(
@@ -53,7 +53,7 @@ watch(
         } else {
             form.is_all_selected = false;
         }
-        
+
         if (
             isCurrentGroupSelected &&
             currentGroupPermissions?.length !==
@@ -113,21 +113,26 @@ const storeRole = () => {
 
 <template>
     <section>
-        {{ form.group_name }}
-        <form @submit.prevent="storeRole" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="current_password" value="Role Name" />
-
-                <TextInput
-                    id="name"
-                    ref="nameInput"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="name"
+        <form @submit.prevent="storeRole" class="mt-6 space-y-6 p-3">
+            <div class="flex gap-4 justify-center">
+                <InputLabel
+                    for="current_password"
+                    value="Role Name :"
+                    class="text-xl flex-none"
                 />
 
-                <InputError :message="form.errors.name" class="mt-2" />
+                <div class="col-span-4 flex-auto">
+                    <TextInput
+                        id="name"
+                        ref="nameInput"
+                        v-model="form.name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        autocomplete="name"
+                    />
+
+                    <InputError :message="form.errors.name" class="mt-2" />
+                </div>
             </div>
             <div class="flex items-center gap-1 mb-5">
                 <InputLabel
@@ -144,7 +149,7 @@ const storeRole = () => {
                     @change="allCheckSubmit(form.is_all_selected)"
                 />
             </div>
-            <div class="grid md:grid-cols-4 grid-cols-3 gap-5">
+            <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0">
                 <div
                     v-for="(permissions, index) in permissionWithGroup"
                     :key="index"
