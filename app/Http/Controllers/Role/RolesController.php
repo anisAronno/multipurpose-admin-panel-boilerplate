@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -29,11 +31,18 @@ class RolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $roles = Role::with(['permissions'=>function ($query) {
             $query->select('id', 'name');
         }])->paginate(3);
+ 
+        Session::put('last_visited_url', $request->fullUrl());
+
+        if (!$roles->items()) {
+            return Redirect::to($roles->previousPageUrl());
+        }
+        
         return Inertia::render('Role/Index', [ 'roles' => $roles]);
     }
 
@@ -74,6 +83,10 @@ class RolesController extends Controller
 
         if (!empty($permissions)) {
             $role->syncPermissions($permissions);
+        }
+
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'));
         }
 
         return Redirect::route('role.view');
@@ -143,6 +156,6 @@ class RolesController extends Controller
     {
         $role->delete();
 
-        return Redirect::route('role.view');
+        return Redirect::back();
     }
 }

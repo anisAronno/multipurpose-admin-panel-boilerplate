@@ -6,7 +6,6 @@ import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     roles: Object,
 });
- 
 </script>
 
 <template>
@@ -91,10 +90,12 @@ defineProps({
                                             </thead>
                                             <tbody
                                                 class="divide-y divide-gray-200 bg-white"
+                                                v-if="roles.data.length > 0"
                                             >
                                                 <tr
                                                     v-for="role in roles.data"
                                                     :key="role.id"
+                                                    :id="role.id"
                                                 >
                                                     <td
                                                         class="w-[20%] whitespace-nowrap text-left p-4 text-base font-bold text-gray-900 capitalize"
@@ -164,11 +165,25 @@ defineProps({
                                                                     role.id !==
                                                                     1
                                                                 "
-                                                                :roleId="
+                                                                :item_id="
                                                                     role.id
                                                                 "
                                                             ></DeleteRoleForm>
                                                         </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody
+                                                v-else
+                                                class="divide-y divide-gray-200 bg-white h-24"
+                                            >
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <p
+                                                            class="text-2xl text-red-500 grid place-content-center"
+                                                        >
+                                                            Record is empty
+                                                        </p>
                                                     </td>
                                                 </tr>
                                             </tbody>

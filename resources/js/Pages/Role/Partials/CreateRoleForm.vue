@@ -32,8 +32,12 @@ const allCheckSubmit = (e) => {
 };
 watch(
     () => form.permissions,
-    (permissions) => {
+    (permissions, old) => {
         let currentGroup = _.split(_.last(permissions), ".", 1)[0];
+        if (old.length > permissions.length) {
+            currentGroup = _.split(_.difference(old, permissions), ".", 1)[0];
+        }
+        
         let isCurrentGroupSelected = _.includes(form.group_name, currentGroup);
         let currentGroupPermissions = props.permissionWithGroup[currentGroup];
         let currentGroupSelectedPermissions = _.filter(
@@ -45,10 +49,11 @@ watch(
 
         if (permissions.length == props.permissions.length) {
             form.is_all_selected = true;
+            form.group_name = _.clone(props.all_group);
         } else {
             form.is_all_selected = false;
         }
-
+        
         if (
             isCurrentGroupSelected &&
             currentGroupPermissions?.length !==
@@ -107,7 +112,8 @@ const storeRole = () => {
 </script>
 
 <template>
-    <section> 
+    <section>
+        {{ form.group_name }}
         <form @submit.prevent="storeRole" class="mt-6 space-y-6">
             <div>
                 <InputLabel for="current_password" value="Role Name" />
@@ -136,7 +142,7 @@ const storeRole = () => {
                     class="checkbox w-5 h-5"
                     :checked="form.is_all_selected"
                     @change="allCheckSubmit(form.is_all_selected)"
-                /> 
+                />
             </div>
             <div class="grid md:grid-cols-4 grid-cols-3 gap-5">
                 <div
