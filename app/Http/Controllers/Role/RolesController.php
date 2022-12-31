@@ -119,15 +119,6 @@ class RolesController extends Controller
             $query->orderBy('name');
         }]);
 
-        $roleWithPermissions = $role->permissions;
-
-        $permissions->map(function ($p) use ($roleWithPermissions) {
-            if ($roleWithPermissions->contains($p->id)) {
-                $p->checked=true;
-            } else {
-                $p->checked=false;
-            }
-        }); 
 
         $permissionWithGroup  = $permissions->groupBy(function ($data) {
             return $data->group_name;
@@ -143,6 +134,7 @@ class RolesController extends Controller
             'total_permissions'=>$permissions->count(),
             'total_group'=>$all_group->count(),
             'role'=>$role,
+            'permissionArr'  => $role->permissions->pluck('name')
         ]);
     }
 

@@ -4,7 +4,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { watch } from "@vue/runtime-core";
+import { onMounted, watch } from "@vue/runtime-core";
 
 const props = defineProps({
     permissionWithGroup: Object,
@@ -13,13 +13,20 @@ const props = defineProps({
     total_permissions: String,
     total_group: String,
     role: Object,
+    permissionArr: Object,
 });
 
 const form = useForm({
     name: props.role.name,
-    permissions: [],
+    permissions: props.permissionArr,
     group_name: [],
-    is_all_selected: false,
+    is_all_selected: props.permissionArr.length == props.permissions.length,
+});
+
+onMounted(() => {
+    setTimeout(() => {
+        selectedGroup("");
+    }, 1000);
 });
 
 const allCheckSubmit = (e) => {
@@ -31,12 +38,27 @@ const allCheckSubmit = (e) => {
         form.group_name = [];
     }
 };
+const getCurrentGroup = (p) => {
+    let grp = "";
+    for (const key in props.permissionWithGroup) {
+        const element = props.permissionWithGroup[key];
+        let res = element.find((item) => item.name == p);
+        if (res) {
+            grp = res?.group_name;
+        }
+    }
+
+    return grp;
+};
+
 watch(
     () => form.permissions,
     (permissions, old) => {
-        let currentGroup = _.split(_.last(permissions), ".", 1)[0];
+        let currentGroup = "";
         if (old.length > permissions.length) {
-            currentGroup = _.split(_.difference(old, permissions), ".", 1)[0];
+            currentGroup = getCurrentGroup(_.difference(old, permissions)[0]);
+        } else if (old.length < permissions.length) {
+            currentGroup = getCurrentGroup(_.last(permissions));
         }
 
         let isCurrentGroupSelected = _.includes(form.group_name, currentGroup);
@@ -112,7 +134,6 @@ const storeRole = () => {
         },
     });
 };
- 
 </script>
 
 <template>
@@ -173,7 +194,7 @@ const storeRole = () => {
                             :value="index"
                             class="text-xl capitalize border-b-2 border-gray-700 border-spacing-2 pb-0.5"
                         />
-                    </div> 
+                    </div>
                     <div
                         v-for="permission in permissions"
                         :key="permission.id"
@@ -185,14 +206,11 @@ const storeRole = () => {
                             :value="permission.name"
                             v-model="form.permissions"
                             class="checkbox mr-1"
-                            :checked="permission.checked==true"
-                        /> 
-                        {{ props.permissionWithGroup[index][permission.id] }}
+                        />
                         <InputLabel
                             for="permissions"
                             :value="permission.name"
-                        /> 
-                        
+                        />
                     </div>
                 </div>
             </div>

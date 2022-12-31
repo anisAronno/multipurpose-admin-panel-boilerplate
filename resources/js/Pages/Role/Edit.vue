@@ -10,6 +10,7 @@ defineProps({
     total_permissions: String,
     total_group: String,
     role: Object,
+    permissionArr: Object,
 });
 </script>
 
@@ -63,6 +64,7 @@ defineProps({
                         :total_permissions="total_permissions"
                         :total_group="total_group"
                         :role="role"
+                        :permissionArr="permissionArr"
                     ></edit-role-form>
                 </div>
             </div>

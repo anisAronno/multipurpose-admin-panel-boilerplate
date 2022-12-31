@@ -30,14 +30,29 @@ const allCheckSubmit = (e) => {
         form.group_name = [];
     }
 };
+
+const getCurrentGroup = (p) => {
+    let grp = "";
+    for (const key in props.permissionWithGroup) {
+        const element = props.permissionWithGroup[key];
+        let res = element.find((item) => item.name == p);
+        if (res) {
+            grp = res?.group_name;
+        }
+    }
+
+    return grp;
+};
+
 watch(
     () => form.permissions,
     (permissions, old) => {
-        let currentGroup = _.split(_.last(permissions), ".", 1)[0];
+        let currentGroup = "";
         if (old.length > permissions.length) {
-            currentGroup = _.split(_.difference(old, permissions), ".", 1)[0];
+            currentGroup = getCurrentGroup(_.difference(old, permissions)[0]);
+        } else if (old.length < permissions.length) {
+            currentGroup = getCurrentGroup(_.last(permissions));
         }
-
         let isCurrentGroupSelected = _.includes(form.group_name, currentGroup);
         let currentGroupPermissions = props.permissionWithGroup[currentGroup];
         let currentGroupSelectedPermissions = _.filter(
@@ -152,7 +167,7 @@ const storeRole = () => {
                     @change="allCheckSubmit(form.is_all_selected)"
                 />
             </div>
-            <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0"> 
+            <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0">
                 <div
                     v-for="(permissions, index) in permissionWithGroup"
                     :key="index"
