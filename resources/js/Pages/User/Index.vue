@@ -4,19 +4,19 @@ import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
-    roles: Object,
+    users: Object,
 });
 </script>
 
 <template>
-    <Head title="Role" />
+    <Head title="User" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Roles
+                User
             </h2>
         </template>
 
@@ -31,17 +31,17 @@ defineProps({
                                 <h1
                                     class="text-xl font-semibold text-gray-900 dark:text-white"
                                 >
-                                    Roles
+                                    User
                                 </h1>
                                 <p
                                     class="mt-2 text-sm text-gray-700 dark:text-white"
                                 >
-                                    A list of all the Roles.
+                                    A list of all the users.
                                 </p>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                                 <Link
-                                    :href="route('role.create')"
+                                    :href="route('user.create')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -65,7 +65,7 @@ defineProps({
                                         <table
                                             class="min-w-full table-auto divide-y divide-gray-300 p-3"
                                         >
-                                            <thead class="bg-gray-50">
+                                            <thead class="bg-gray-50 w-full">
                                                 <tr>
                                                     <th
                                                         scope="col"
@@ -78,50 +78,85 @@ defineProps({
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
+                                                        Email
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                    >
+                                                        Avatar
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                    >
                                                         Role
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-center text-base font-bold text-gray-900"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                    >
+                                                        Status
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-3 w-[20%] py-3.5 text-center text-base font-bold text-gray-900"
                                                     >
                                                         Action
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody
-                                                class="divide-y divide-gray-200 bg-white"
-                                                v-if="roles.data.length > 0"
+                                                class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="role in roles.data"
-                                                    :key="role.id"
-                                                    :id="role.id"
+                                                    v-for="user in users.data"
+                                                    :key="user.id"
+                                                    :id="user.id"
                                                 >
                                                     <td
-                                                        class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        {{ role.name }}
+                                                        {{ user.name }}
                                                     </td>
 
                                                     <td
-                                                        class="w-60% whitespace-normal p-3 text-md text-gray-500 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        <p
-                                                            v-for="permission in role.permissions"
-                                                            :key="permission.id"
+                                                        {{ user.email }}
+                                                    </td>
+
+                                                    <td
+                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                    >
+                                                        <img
+                                                            :src="user.avatar"
+                                                            alt=""
+                                                            class="w-12 h-12"
+                                                        />
+                                                    </td>
+                                                    <td
+                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                    >
+                                                        <div
+                                                            v-for="role in user.roles"
+                                                            :key="role.id"
                                                             class="mr-2"
                                                         >
                                                             <font-awesome-icon
                                                                 icon="fa-solid fa-user-shield"
                                                                 class="text-blue-400"
                                                             />
-                                                            {{
-                                                                permission.name
-                                                            }}
-                                                        </p>
+                                                            {{ role.name }}
+                                                        </div>
                                                     </td>
                                                     <td
-                                                        class="w-[20%] whitespace-nowrap text-right text-sm font-medium"
+                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                    >
+                                                        {{ user.status }}
+                                                    </td>
+                                                    <td
+                                                        class="whitespace-nowrap min-w-[20%] max-w-[30%] text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
@@ -130,8 +165,8 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'role.show',
-                                                                            role.id
+                                                                            'user.show',
+                                                                            user.id
                                                                         )
                                                                     "
                                                                     class="btn btn-info"
@@ -147,8 +182,8 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'role.edit',
-                                                                            role.id
+                                                                            'user.edit',
+                                                                            user.id
                                                                         )
                                                                     "
                                                                     class="btn btn-primary"
@@ -162,34 +197,33 @@ defineProps({
 
                                                             <DeleteForm
                                                                 v-if="
-                                                                    ![
-                                                                        1, 2,
-                                                                    ].includes(
-                                                                        role.id
-                                                                    )
+                                                                    user.id != 1
                                                                 "
                                                                 :data="{
-                                                                    id: role.id,
-                                                                    model: 'role',
+                                                                    id: user.id,
+                                                                    model: 'user',
                                                                 }"
                                                             ></DeleteForm>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot class="bg-gray-50">
+                                            <tfoot
+                                                class="bg-gray-50 min-w-full"
+                                                v-if="users.last_page > 1"
+                                            >
                                                 <tr>
                                                     <td
-                                                        colspan="3"
+                                                        colspan="6"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                roles.last_page >
+                                                                users.last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="roles.links"
+                                                            :links="users.links"
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

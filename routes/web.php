@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Role\RolesController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Foundation\Application;
@@ -34,13 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/role', [RolesController::class, 'index'])->name('role.view');
+    Route::get('/role', [RolesController::class, 'index'])->name('role.index');
     Route::get('/role/create', [RolesController::class, 'create'])->name('role.create');
     Route::post('/role/store', [RolesController::class, 'store'])->name('role.store');
     Route::get('/role/edit/{role}', [RolesController::class, 'edit'])->name('role.edit');
     Route::post('/role/update/{role}', [RolesController::class, 'update'])->name('role.update');
     Route::get('/role/{role}', [RolesController::class, 'show'])->name('role.show');
     Route::delete('/role/destroy/{role}', [RolesController::class, 'destroy'])->name('role.destroy');
+    Route::resource('user', UserController::class, ['except' => ['update']]);
 });
 
 require __DIR__.'/auth.php';

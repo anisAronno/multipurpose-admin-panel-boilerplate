@@ -42,6 +42,7 @@ class RolePermissionSeeder extends Seeder
 
         // Create Roles
         $roleSuperAdmin = Role::create([ 'name' => 'superadmin']);
+        $roleUser = Role::create([ 'name' => 'user']);
         $roleAdmin = Role::create([ 'name' => 'admin']);
         $roleEditor = Role::create([ 'name' => 'editor']);
 
@@ -303,7 +304,7 @@ class RolePermissionSeeder extends Seeder
             'social.edit',
             'social.delete',
             'social.status',
-            
+
             'tag.create',
             'tag.view',
             'tag.edit',
@@ -319,10 +320,51 @@ class RolePermissionSeeder extends Seeder
 
         $roleAdmin->syncPermissions($adminPermissions);
 
+
+        //User Permission
+
+        $userPermissions = [
+
+            'dashboard.view',
+
+            'blog.create',
+            'blog.view',
+            'blog.edit',
+            'blog.delete',
+            'blog.status',
+
+            'category.create',
+            'category.view',
+
+            'tag.create',
+            'tag.view',
+
+        ];
+
+        $roleUser->syncPermissions($userPermissions);
+
         //Model Has Roles Create
 
         DB::table('model_has_roles')->insert([
             'role_id' => $roleSuperAdmin->id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $user->id
+        ]);
+
+        DB::table('model_has_roles')->insert([
+            'role_id' => $roleAdmin->id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $user->id
+        ]);
+
+        DB::table('model_has_roles')->insert([
+            'role_id' => $roleEditor->id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $user->id
+        ]);
+
+        DB::table('model_has_roles')->insert([
+            'role_id' => $roleUser->id,
             'model_type' => 'App\Models\User',
             'model_id' => $user->id
         ]);

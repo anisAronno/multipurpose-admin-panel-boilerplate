@@ -64,12 +64,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param [type] $uid
      * @return void
      */
-    public function getPictureAttribute($value)
+    public function getAvatarAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['picture'] = url($value);
+            return  $this->attributes['avatar'] = url($value);
         } else {
-            return  $this->attributes['picture'] = url('uploads/users/avatar.png');
+            return  $this->attributes['avatar'] = url('uploads/users/avatar.png');
         }
     }
 

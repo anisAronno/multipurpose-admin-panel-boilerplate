@@ -7,8 +7,8 @@ import { ref } from "vue";
 
 const modalShow = ref(false);
 
-defineProps({
-    item_id: String | Number,
+const props =defineProps({
+    data: Object,
 });
 const form = useForm();
 const confirmDeletion = () => {
@@ -16,7 +16,7 @@ const confirmDeletion = () => {
 };
 
 const deleteRole = (id) => {
-    form.delete(route("role.destroy", id), {
+    form.delete(route(`${props.data.model}.destroy`, id), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),
@@ -33,8 +33,7 @@ const closeModal = () => {
     <section>
         <DangerButton @click="confirmDeletion">
             <font-awesome-icon icon="fa-solid fa-trash" class="mr-1" />
-            </DangerButton
-        >
+        </DangerButton>
 
         <Modal :show="modalShow" @close="closeModal">
             <div class="p-6">
@@ -58,7 +57,7 @@ const closeModal = () => {
                         class="ml-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
-                        @click="deleteRole(item_id)"
+                        @click="deleteRole(data.id)"
                     >
                         <font-awesome-icon
                             icon="fa-solid fa-trash"

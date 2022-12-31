@@ -21,9 +21,9 @@ class RolesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:role.view|role.create|role.edit|role.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role.view|role.create|role.edit|role.status|role.delete', ['only' => ['index','store']]);
         $this->middleware('permission:role.create', ['only' => ['create','store']]);
-        $this->middleware('permission:role.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role.edit|permission:role.status', ['only' => ['edit','update']]);
         $this->middleware('permission:role.delete', ['only' => ['destroy']]);
     }
 
@@ -91,7 +91,7 @@ class RolesController extends Controller
             return Redirect::to(session('last_visited_url'));
         }
 
-        return Redirect::route('role.view');
+        return Redirect::route('role.index');
     }
 
     /**
@@ -147,7 +147,7 @@ class RolesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(RoleUpdateRequest $request, Role $role)
-    { 
+    {
         $permissions = $request->input('permissions');
 
         if (!empty($permissions)) {
@@ -161,7 +161,7 @@ class RolesController extends Controller
             return Redirect::to(session('last_visited_url'));
         }
 
-        return Redirect::route('role.view');
+        return Redirect::route('role.index');
     }
 
     /**
@@ -172,8 +172,14 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
+        if (!in_array($role->id, [1,2])) {
+            $role->delete();
+        }
 
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'));
+        }
+        
         return Redirect::back();
     }
 }

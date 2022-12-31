@@ -40,10 +40,26 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink
-                                    :href="route('role.view')"
-                                    :active="route().current('role.view')"
+                                    :href="route('role.index')"
+                                    :active="
+                                        route().current('role.index') ||
+                                        route().current('role.create') ||
+                                        route().current('role.edit') ||
+                                        route().current('role.show')
+                                    "
                                 >
                                     Role & Permission
+                                </NavLink>
+                                <NavLink
+                                    :href="route('user.index')"
+                                    :active="
+                                        route().current('user.index') ||
+                                        route().current('user.create') ||
+                                        route().current('user.edit') ||
+                                        route().current('user.show')
+                                    "
+                                >
+                                    User
                                 </NavLink>
                             </div>
                         </div>
@@ -81,7 +97,7 @@ const showingNavigationDropdown = ref(false);
                                             :href="route('profile.edit')"
                                         >
                                             Profile
-                                        </DropdownLink> 
+                                        </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
