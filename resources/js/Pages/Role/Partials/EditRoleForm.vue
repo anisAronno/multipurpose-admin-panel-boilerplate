@@ -17,6 +17,7 @@ const props = defineProps({
 });
 
 const form = useForm({
+    id: props.role.id,
     name: props.role.name,
     permissions: props.permissionArr,
     group_name: [],
@@ -24,9 +25,7 @@ const form = useForm({
 });
 
 onMounted(() => {
-    setTimeout(() => {
-        selectedGroup("");
-    }, 1000);
+    selectGroup();
 });
 
 const allCheckSubmit = (e) => {
@@ -50,7 +49,21 @@ const getCurrentGroup = (p) => {
 
     return grp;
 };
-
+const selectGroup = () => {
+    for (const key in props.permissionWithGroup) {
+        let isGroupSelected = _.includes(form.group_name, key);
+        let groupAllPermissions = props.permissionWithGroup[key];
+        let groupHasPermissions = _.filter(form.permissions, function (item) {
+            return item.indexOf(key) > -1;
+        });
+        if (
+            !isGroupSelected &&
+            groupAllPermissions?.length == groupHasPermissions?.length
+        ) {
+            form.group_name.push(key);
+        }
+    }
+};
 watch(
     () => form.permissions,
     (permissions, old) => {
@@ -119,8 +132,8 @@ const selectedGroup = (groupName) => {
     }
 };
 
-const storeRole = () => {
-    form.post(route("role.store"), {
+const updateRole = () => {
+    form.post(route("role.update", form.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
@@ -138,7 +151,7 @@ const storeRole = () => {
 
 <template>
     <section>
-        <form @submit.prevent="storeRole" class="mt-6 space-y-6 p-3">
+        <form @submit.prevent="updateRole" class="mt-6 space-y-6 p-3">
             <div class="grid grid-cols-6 justify-items-start gap-1">
                 <InputLabel
                     for="current_password"
@@ -157,7 +170,7 @@ const storeRole = () => {
 
                 <InputError
                     :message="form.errors.name"
-                    class="mt-2 col-start-2"
+                    class="mt-2 col-start-2 col-span-4"
                 />
             </div>
             <div class="flex items-center gap-1 my-5">
@@ -173,6 +186,10 @@ const storeRole = () => {
                     class="checkbox w-6 h-6"
                     :checked="form.is_all_selected"
                     @change="allCheckSubmit(form.is_all_selected)"
+                />
+                 <InputError
+                    :message="form.errors.permissions"
+                    class="mt-2 col-start-2 col-span-4 ml-3"
                 />
             </div>
             <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0">
@@ -216,7 +233,7 @@ const storeRole = () => {
             </div>
             <div class="flex items-center justify-end pr-5 py-5">
                 <PrimaryButton :disabled="form.processing"
-                    >Submit</PrimaryButton
+                    >Update</PrimaryButton
                 >
 
                 <Transition
@@ -228,7 +245,7 @@ const storeRole = () => {
                         v-if="form.recentlySuccessful"
                         class="text-sm text-gray-600 dark:text-gray-400"
                     >
-                        Saved.
+                        updated.
                     </p>
                 </Transition>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Role;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStoreRequest;
+use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -145,15 +146,8 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
-    {
-        // Validation Data
-        $request->validate([
-            'name' => 'required|max:100|unique:roles,name,' . $role->id
-        ], [
-            'name.requried' => 'Please give a role name'
-        ]);
-
+    public function update(RoleUpdateRequest $request, Role $role)
+    { 
         $permissions = $request->input('permissions');
 
         if (!empty($permissions)) {
@@ -167,7 +161,7 @@ class RolesController extends Controller
             return Redirect::to(session('last_visited_url'));
         }
 
-        return Inertia::render('Role/Index', compact('role'));
+        return Redirect::route('role.view');
     }
 
     /**

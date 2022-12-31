@@ -4,7 +4,7 @@ namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleStoreRequest extends FormRequest
+class RoleUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class RoleStoreRequest extends FormRequest
      */
     public function rules()
     {
+        logger()->debug($this->id);
         return [
-            'name' => 'required|max:100|unique:roles', 
+            'name' => 'required|max:100|unique:roles,name,' . $this->id,
             "permissions"  => "required|array|present|min:0",
             "permissions.*"  => "required|string|distinct|min:3"
         ];

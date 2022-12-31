@@ -149,7 +149,7 @@ const storeRole = () => {
 
                 <InputError
                     :message="form.errors.name"
-                    class="mt-2 col-start-2"
+                    class="mt-2 col-start-2 col-span-4"
                 />
             </div>
             <div class="flex items-center gap-1 my-5">
@@ -165,6 +165,10 @@ const storeRole = () => {
                     class="checkbox w-6 h-6"
                     :checked="form.is_all_selected"
                     @change="allCheckSubmit(form.is_all_selected)"
+                />
+                <InputError
+                    :message="form.errors.permissions"
+                    class="mt-2 col-start-2 col-span-4 ml-3"
                 />
             </div>
             <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0">

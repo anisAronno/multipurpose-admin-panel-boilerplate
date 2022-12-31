@@ -303,6 +303,12 @@ class RolePermissionSeeder extends Seeder
             'social.edit',
             'social.delete',
             'social.status',
+            
+            'tag.create',
+            'tag.view',
+            'tag.edit',
+            'tag.delete',
+            'tag.status',
 
             'user.create',
             'user.view',
