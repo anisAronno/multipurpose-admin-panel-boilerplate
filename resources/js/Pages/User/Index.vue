@@ -132,7 +132,7 @@ defineProps({
                                                         <img
                                                             :src="user.avatar"
                                                             alt=""
-                                                            class="w-12 h-12"
+                                                            class="w-16 h-16"
                                                         />
                                                     </td>
                                                     <td

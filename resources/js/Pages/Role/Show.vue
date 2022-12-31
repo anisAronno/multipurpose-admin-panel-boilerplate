@@ -106,15 +106,6 @@ defineProps({
                                                 </td>
                                             </tr>
                                         </tbody>
-
-                                        <tfoot class="bg-gray-50">
-                                            <tr>
-                                                <td
-                                                    colspan="3"
-                                                    class="w-[100%]"
-                                                ></td>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
