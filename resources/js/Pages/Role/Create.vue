@@ -20,7 +20,7 @@ defineProps({
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Profile
+                Create Role
             </h2>
         </template>
 

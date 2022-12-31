@@ -36,13 +36,13 @@ class RolesController extends Controller
         $roles = Role::with(['permissions'=>function ($query) {
             $query->select('id', 'name');
         }])->paginate(3);
- 
+
         Session::put('last_visited_url', $request->fullUrl());
 
         if (!$roles->items()) {
             return Redirect::to($roles->previousPageUrl());
         }
-        
+
         return Inertia::render('Role/Index', [ 'roles' => $roles]);
     }
 
@@ -54,6 +54,7 @@ class RolesController extends Controller
     public function create()
     {
         $permissions = Permission::orderBy('group_name')->get();
+
         $permissionWithGroup  = $permissions->groupBy(function ($data) {
             return $data->group_name;
         });
@@ -98,25 +99,51 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
-    {
-        $all_permissions = Permission::all();
-        $permission_groups = User::getpermissionGroups();
-
-        return Inertia::render('Role/Single', compact('role', 'all_permissions', 'permission_groups'));
-    }
+  public function show(Role $role)
+  {
+      $role->load('permissions');
+      return Inertia::render('Role/Show', compact('role'));
+  }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
     public function edit(Role $role)
     {
-        $all_permissions = Permission::all();
-        $permission_groups = User::getpermissionGroups();
-        return Inertia::render('Role/Edit', compact('role', 'all_permissions', 'permission_groups'));
+        $permissions = Permission::orderBy('group_name')->get();
+
+        $role->load(['permissions'=>function ($query) {
+            $query->orderBy('name');
+        }]);
+
+        $roleWithPermissions = $role->permissions;
+
+        $permissions->map(function ($p) use ($roleWithPermissions) {
+            if ($roleWithPermissions->contains($p->id)) {
+                $p->checked=true;
+            } else {
+                $p->checked=false;
+            }
+        }); 
+
+        $permissionWithGroup  = $permissions->groupBy(function ($data) {
+            return $data->group_name;
+        });
+
+        $all_group  = User::getpermissionGroups()->pluck('name');
+
+
+        return Inertia::render('Role/Edit', [
+            'permissionWithGroup'=>$permissionWithGroup,
+            'permissions'=>$permissions->pluck('name'),
+            'all_group'=>$all_group,
+            'total_permissions'=>$permissions->count(),
+            'total_group'=>$all_group->count(),
+            'role'=>$role,
+        ]);
     }
 
     /**
@@ -141,6 +168,11 @@ class RolesController extends Controller
             $role->name = $request->name;
             $role->save();
             $role->syncPermissions($permissions);
+        }
+
+
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'));
         }
 
         return Inertia::render('Role/Index', compact('role'));

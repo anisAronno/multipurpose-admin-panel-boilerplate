@@ -12,10 +12,11 @@ const props = defineProps({
     all_group: Object,
     total_permissions: String,
     total_group: String,
+    role: Object,
 });
 
 const form = useForm({
-    name: "",
+    name: props.role.name,
     permissions: [],
     group_name: [],
     is_all_selected: false,
@@ -111,6 +112,7 @@ const storeRole = () => {
         },
     });
 };
+ 
 </script>
 
 <template>
@@ -152,7 +154,7 @@ const storeRole = () => {
                     @change="allCheckSubmit(form.is_all_selected)"
                 />
             </div>
-            <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0"> 
+            <div class="grid md:grid-cols-4 grid-cols-3 gap-5 pr-5 sm:pr-0">
                 <div
                     v-for="(permissions, index) in permissionWithGroup"
                     :key="index"
@@ -171,7 +173,7 @@ const storeRole = () => {
                             :value="index"
                             class="text-xl capitalize border-b-2 border-gray-700 border-spacing-2 pb-0.5"
                         />
-                    </div>
+                    </div> 
                     <div
                         v-for="permission in permissions"
                         :key="permission.id"
@@ -183,11 +185,14 @@ const storeRole = () => {
                             :value="permission.name"
                             v-model="form.permissions"
                             class="checkbox mr-1"
-                        />
+                            :checked="permission.checked==true"
+                        /> 
+                        {{ props.permissionWithGroup[index][permission.id] }}
                         <InputLabel
                             for="permissions"
                             :value="permission.name"
-                        />
+                        /> 
+                        
                     </div>
                 </div>
             </div>

@@ -69,20 +69,20 @@ defineProps({
                                                 <tr>
                                                     <th
                                                         scope="col"
-                                                        class="py-3.5 pr-3 pl-3 text-left text-sm font-semibold text-gray-900"
+                                                        class="py-3.5 pr-3 pl-3 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Name
                                                     </th>
 
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Role
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                                                        class="px-3 py-3.5 text-center text-base font-bold text-gray-900"
                                                     >
                                                         Action
                                                     </th>
@@ -98,13 +98,13 @@ defineProps({
                                                     :id="role.id"
                                                 >
                                                     <td
-                                                        class="w-[20%] whitespace-nowrap text-left p-4 text-base font-bold text-gray-900 capitalize"
+                                                        class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ role.name }}
                                                     </td>
 
                                                     <td
-                                                        class="w-60% whitespace-normal p-3 text-md text-gray-500 flex flex-wrap"
+                                                        class="w-60% whitespace-normal p-3 text-md text-gray-500 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
                                                     >
                                                         <p
                                                             v-for="permission in role.permissions"
@@ -124,7 +124,7 @@ defineProps({
                                                         class="w-[20%] whitespace-nowrap text-right text-sm font-medium"
                                                     >
                                                         <div
-                                                            class="space-x-1 flex justify-end pr-3"
+                                                            class="flex justify-end flex-wrap gap-2 pr-3"
                                                         >
                                                             <div>
                                                                 <Link
