@@ -65,10 +65,14 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $file['avatar'] = FileServices::upload($request, 'avatar', 'users');
         $data = $request->only('name', 'email', 'password', 'status');
 
-        $user = User::create(array_merge($data, $file));
+        if ($request->avatar) {
+            $data['avatar'] = FileServices::upload($request, 'avatar', 'users');
+        }
+
+        $user = User::create($data);
+
         if ($user) {
             $user->assignRole($request->get('roles'));
         }
@@ -124,10 +128,15 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $file['avatar'] = FileServices::upload($request, 'avatar', 'users');
         $data = $request->only('name', 'email', 'status');
 
-        $user->update(array_merge($data, $file));
+        if ($request->avatar) {
+            $data['avatar'] = FileServices::upload($request, 'avatar', 'users');
+            FileServices::deleteFile($user->avatar);
+        }
+
+        $user->update($data);
+
 
         if ($user) {
             $user->assignRole($request->get('roles'));
@@ -135,7 +144,7 @@ class UserController extends Controller
 
         if ($user && $user->id!=1) {
             $user->roles()->detach();
-            $user->assignRole($request->role);
+            $user->assignRole($request->roles);
         }
 
         if (session('last_visited_url')) {

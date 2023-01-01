@@ -16,13 +16,13 @@ class FileServices
                 if ($file->getError()) {
                     $request->session()->flash('warning', $file->getErrorMessage());
 
-                    return '';
+                    return [];
                 }
 
                 return $filePath;
             }
         } catch (\Throwable $th) {
-            return '';
+            return [];
         }
     }
 
@@ -38,7 +38,7 @@ class FileServices
     public static function deleteFile($value)
     {
         $path = stristr($value, 'uploads');
-        
+
         try {
             if (file_exists(public_path($path))) {
                 unlink(public_path($path));

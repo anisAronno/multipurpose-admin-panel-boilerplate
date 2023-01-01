@@ -146,19 +146,15 @@ const storeUser = () => {
                                 </span>
                             </div>
                             <div
-                                class="col-span-6 sm:col-span-3 grid grid-cols-6 gap-5 items-center justify-between"
+                                class="col-span-6 sm:col-span-3 grid grid-cols-6 gap-5 items-center justify-between relative"
                             >
                                 <div class="col-span-3">
                                     <InputLabel
                                         for="roles"
                                         value="Role :"
-                                        class="block text-sm font-medium text-gray-700"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
                                     />
 
-                                    <InputError
-                                        :message="form.errors.roles"
-                                        class="mt-2 col-start-2 col-span-4"
-                                    />
                                     <Multiselect
                                         v-model:roles="form.roles"
                                         :options="roles"
@@ -167,6 +163,11 @@ const storeUser = () => {
                                         class="block w-full"
                                     >
                                     </Multiselect>
+
+                                    <InputError
+                                        :message="form.errors.roles"
+                                        class="mt-2 col-start-2 col-span-4 absolute z-5"
+                                    />
                                 </div>
                                 <div class="col-span-3">
                                     <InputLabel
