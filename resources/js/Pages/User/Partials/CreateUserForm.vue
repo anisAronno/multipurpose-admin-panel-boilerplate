@@ -1,10 +1,10 @@
 <script setup>
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import Multiselect from "@/Components/Multiselect.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import Multiselect from "@suadelabs/vue3-multiselect";
 import { ref } from "@vue/reactivity";
 
 const props = defineProps({
@@ -159,15 +159,14 @@ const storeUser = () => {
                                         :message="form.errors.roles"
                                         class="mt-2 col-start-2 col-span-4"
                                     />
-                                    <multiselect
-                                        v-model="form.roles"
+                                    <Multiselect
+                                        v-model:roles="form.roles"
                                         :options="roles"
-                                        :multiple="true"
-                                        :close-on-select="true"
-                                        placeholder="Pick some"
-                                        class="block w-full !bg-white dark:bg-black mt-1 text-sm font-medium text-gray-700 form-controll"
+                                        :selected="form.roles"
+                                        placeholder="Pick some..."
+                                        class="block w-full"
                                     >
-                                    </multiselect>
+                                    </Multiselect>
                                 </div>
                                 <div class="col-span-3">
                                     <InputLabel
@@ -264,12 +263,3 @@ const storeUser = () => {
         </form>
     </section>
 </template>
-
-<style src="@suadelabs/vue3-multiselect/dist/vue3-multiselect.css"></style>
-<style>
-@media (prefers-color-scheme: dark) {
-    .multiselect > .multiselect__tags {
-        background: #111827;
-    }
-}
-</style>

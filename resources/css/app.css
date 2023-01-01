@@ -33,3 +33,10 @@
 .checkbox {
     @apply rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800;
 }
+
+.unChecked {
+    @apply bg-white text-black dark:text-gray-50 w-4 h-4 inline-block p-2;
+}
+.checked {
+    @apply bg-blue-600 text-white w-4 h-4  p-2;
+}

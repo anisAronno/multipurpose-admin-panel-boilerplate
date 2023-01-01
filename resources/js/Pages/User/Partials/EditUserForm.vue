@@ -5,7 +5,7 @@ import Multiselect from "@/Components/Multiselect.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { ref } from "@vue/reactivity";
+import { ref } from "vue";
 
 const props = defineProps({
     roleArr: Object,
@@ -63,7 +63,7 @@ const storeUser = () => {
     <section class="dark:text-white">
         <form @submit.prevent="storeUser" class="mt-6 space-y-6 p-3">
             <div class="mt-10 sm:mt-0">
-                <div class="overflow-hidden shadow sm:rounded-md">
+                <div class="shadow sm:rounded-md">
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-3">
@@ -149,20 +149,21 @@ const storeUser = () => {
                                     <InputLabel
                                         for="roles"
                                         value="Role :"
-                                        class="block text-sm font-medium text-gray-700"
-                                    />
+                                        class="block text-sm font-medium text-gray-700 mb-1"
+                                    /> 
+                                    <Multiselect
+                                        v-model:roles="form.roles"
+                                        :options="roleArr"
+                                        :selected="form.roles"
+                                        placeholder="Pick some..."
+                                        class="block w-full"
+                                    >
+                                    </Multiselect>
 
                                     <InputError
                                         :message="form.errors.roles"
                                         class="mt-2 col-start-2 col-span-4"
                                     />
-                                    <Multiselect
-                                        v-model="form.roles"
-                                        :options="['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',]"
-                                        placeholder="Pick some"
-                                        class="block w-full !bg-white dark:bg-black mt-1 text-sm font-medium text-gray-700 form-controll"
-                                    >
-                                    </Multiselect>
                                 </div>
                                 <div class="col-span-3">
                                     <InputLabel
