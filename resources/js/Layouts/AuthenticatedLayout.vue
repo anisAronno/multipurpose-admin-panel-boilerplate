@@ -1,5 +1,6 @@
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import DarkMode from "@/Components/DarkMode.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
@@ -39,17 +40,7 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink
-                                    :href="route('role.index')"
-                                    :active="
-                                        route().current('role.index') ||
-                                        route().current('role.create') ||
-                                        route().current('role.edit') ||
-                                        route().current('role.show')
-                                    "
-                                >
-                                    Role & Permission
-                                </NavLink>
+
                                 <NavLink
                                     :href="route('user.index')"
                                     :active="
@@ -61,10 +52,23 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     User
                                 </NavLink>
+                                
+                                <NavLink
+                                    :href="route('role.index')"
+                                    :active="
+                                        route().current('role.index') ||
+                                        route().current('role.create') ||
+                                        route().current('role.edit') ||
+                                        route().current('role.show')
+                                    "
+                                >
+                                    Role & Permission
+                                </NavLink>
                             </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
+                            <DarkMode></DarkMode>
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
                                 <Dropdown align="right" width="48">
@@ -72,8 +76,19 @@ const showingNavigationDropdown = ref(false);
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 capitalize"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 capitalize"
                                             >
+                                                <img
+                                                    :src="
+                                                        $page.props.auth.user
+                                                            .avatar
+                                                    "
+                                                    :alt="
+                                                        $page.props.auth.user
+                                                            .name
+                                                    "
+                                                    class="w-8 h-8 rounded-full mr-2"
+                                                />
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg

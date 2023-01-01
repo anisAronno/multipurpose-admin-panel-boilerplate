@@ -12,6 +12,7 @@ use App\Notifications\VerifyEmailQueued;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -29,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'avatar',
@@ -59,6 +61,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailQueued());
+    }
+
+        /**
+     * Override the default boot method to register some extra stuff for every child model.
+     */
+    protected static function boot()
+    {
+        static::creating(function ($model) {
+            $model->username = Uuid::uuid4()->toString();
+        });
+
+        parent::boot();
     }
 
       /**

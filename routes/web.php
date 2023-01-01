@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/{role}', [RolesController::class, 'show'])->name('role.show');
     Route::delete('/role/destroy/{role}', [RolesController::class, 'destroy'])->name('role.destroy');
     Route::resource('user', UserController::class, ['except' => ['update']]);
+    Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
 });
 
 require __DIR__.'/auth.php';

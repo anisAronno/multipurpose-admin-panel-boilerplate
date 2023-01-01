@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Services\FileServices;
 use Illuminate\Http\Request;
@@ -49,10 +50,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Role $role)
+    public function create()
     {
+        $role = Role::pluck('name');
         $statusArr =  UserStatus::array();
-        return Inertia::render('User/Create', ['roles'=>$role->pluck('name'),'statusArr'=>$statusArr,]);
+        return Inertia::render('User/Create', ['roles'=>$role,'statusArr'=>$statusArr]);
     }
 
     /**
@@ -67,7 +69,7 @@ class UserController extends Controller
         $data = $request->only('name', 'email', 'password', 'status');
 
         $user = User::create(array_merge($data, $file));
-        if ($user) { 
+        if ($user) {
             $user->assignRole($request->get('roles'));
         }
 
@@ -99,9 +101,18 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $user->load(['roles']);
+        $user->load(['roles:name']);
 
-        return Inertia::render('User/Edit', ['user'=>$user]);
+        $user->has_roles = $user->roles->map(function ($value) {
+            return $value->name;
+        });
+
+        $statusArr =  UserStatus::array();
+
+
+        $roleArr = Role::pluck('name');
+
+        return Inertia::render('User/Edit', ['user'=>$user, 'statusArr'=>$statusArr, 'roleArr'=>$roleArr]);
     }
 
     /**
@@ -111,9 +122,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        $file['avatar'] = FileServices::upload($request, 'avatar', 'users');
+        $data = $request->only('name', 'email', 'status');
+
+        $user->update(array_merge($data, $file));
+
+        if ($user) {
+            $user->assignRole($request->get('roles'));
+        }
+
+        if ($user && $user->id!=1) {
+            $user->roles()->detach();
+            $user->assignRole($request->role);
+        }
+
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'));
+        }
+
+        return Redirect::route('user.index');
     }
 
     /**

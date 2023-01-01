@@ -1,28 +1,24 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditRoleForm from "@/Pages/Role/Partials/EditRoleForm.vue";
+import EditUserForm from "@/Pages/User/Partials/EditUserForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    permissionWithGroup: Object,
-    permissions: Object,
-    all_group: Object,
-    total_permissions: String,
-    total_group: String,
-    role: Object,
-    permissionArr: Object,
+    user: Object,
+    roleArr: Object,
+    statusArr: Object,
 });
 </script>
 
 <template>
-    <Head title="Role" />
+    <Head title="User" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Role Edit
+                Edit User
             </h2>
         </template>
 
@@ -36,17 +32,17 @@ defineProps({
                             <h1
                                 class="text-xl font-semibold text-gray-900 dark:text-white"
                             >
-                                Create Role
+                                Edit User
                             </h1>
                             <p
                                 class="mt-2 text-sm text-gray-700 dark:text-white"
                             >
-                                Create a new roles with permission.
+                                Edit a new users with roles.
                             </p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
-                                :href="route('role.index')"
+                                :href="route('user.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -57,15 +53,11 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <edit-role-form
-                        :permissionWithGroup="permissionWithGroup"
-                        :permissions="permissions"
-                        :all_group="all_group"
-                        :total_permissions="total_permissions"
-                        :total_group="total_group"
-                        :role="role"
-                        :permissionArr="permissionArr"
-                    ></edit-role-form>
+                    <EditUserForm
+                        :user="user"
+                        :roleArr="roleArr"
+                        :statusArr="statusArr"
+                    ></EditUserForm>
                 </div>
             </div>
         </div>
