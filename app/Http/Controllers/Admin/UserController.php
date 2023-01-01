@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UserStoreRequest;
 use App\Models\User;
+use App\Services\FileServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -29,7 +33,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $user=User::with(['roles'])->orderBy('name')->paginate(3);
+        $user = User::with(['roles'])->orderBy('id')->paginate(3);
 
         Session::put('last_visited_url', $request->fullUrl());
 
@@ -45,9 +49,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(User $user)
+    public function create(Role $role)
     {
-        //
+        $statusArr =  UserStatus::array();
+        return Inertia::render('User/Create', ['roles'=>$role->pluck('name'),'statusArr'=>$statusArr,]);
     }
 
     /**
@@ -56,9 +61,21 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $file['avatar'] = FileServices::upload($request, 'avatar', 'users');
+        $data = $request->only('name', 'email', 'password', 'status');
+
+        $user = User::create(array_merge($data, $file));
+        if ($user) { 
+            $user->assignRole($request->get('roles'));
+        }
+
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'));
+        }
+
+        return Redirect::route('user.index');
     }
 
     /**
@@ -80,9 +97,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $user->load(['roles']);
+
+        return Inertia::render('User/Edit', ['user'=>$user]);
     }
 
     /**
@@ -106,6 +125,7 @@ class UserController extends Controller
    public function destroy(User $user)
    {
        if ($user->id !==1) {
+           FileServices::deleteFile($user->avatar);
            $user->delete();
        }
 

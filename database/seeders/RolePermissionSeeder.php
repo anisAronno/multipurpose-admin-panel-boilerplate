@@ -34,8 +34,7 @@ class RolePermissionSeeder extends Seeder
         $user->name = 'anis';
         $user->email = 'admin@gmail.com';
         $user->password = bcrypt('password');
-        $user->status = UserStatus::ACTIVE;
-        $user->avatar = 'uploads/users/avatar.png';
+        $user->status = UserStatus::ACTIVE; 
         $user->email_verified_at = Date::now();
         $user->save();
 

@@ -153,7 +153,7 @@ defineProps({
                                                     <td
                                                         class="whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ user.status }}
+                                                        {{ user.status }} 
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[20%] max-w-[30%] text-right text-sm font-medium"

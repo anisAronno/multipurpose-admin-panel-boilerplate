@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\FileServices;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,6 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
-
     /**
      * Display the user's profile form.
      *
@@ -59,10 +59,18 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-
         Auth::logout();
 
-        $user->delete();
+        if ($user->id !==1) {
+            FileServices::deleteFile($user->avatar);
+            $user->delete();
+        }
+
+        if ($user->id !==1) {
+            $user->delete();
+        }
+
+
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
