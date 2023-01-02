@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserStatus;
 use App\Notifications\VerifyEmailQueued;
+use App\Services\FileServices;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
@@ -86,9 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['avatar'] = url($value);
+            return  $this->attributes['avatar'] = FileServices::getUrl($value);
         } else {
-            return  $this->attributes['avatar'] = url('uploads/users/avatar.png');
+            return  $this->attributes['avatar'] = FileServices::getUrl('uploads/users/avatar.png');
         }
     }
 
