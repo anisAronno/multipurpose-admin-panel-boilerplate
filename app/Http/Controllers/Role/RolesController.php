@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Models\User;
+use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -34,15 +35,17 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::with(['permissions'=>function ($query) {
-            $query->select('id', 'name');
-        }])->paginate(3);
+        $currentPage = isset($request->page) ? (int)[$request->page] : 1;
+
+        $key = CacheServices::getRoleCacheKey($currentPage);
+
+        $roles = Cache::remember($key, 10, function () {
+            return Role::with(['permissions'=>function ($query) {
+                $query->select('id', 'name');
+            }])->paginate(10);
+        });
 
         Session::put('last_visited_url', $request->fullUrl());
-
-        if (!$roles->items()) {
-            return Redirect::to($roles->previousPageUrl());
-        }
 
         return Inertia::render('Role/Index', [ 'roles' => $roles]);
     }
@@ -150,7 +153,7 @@ class RolesController extends Controller
     {
         $permissions = $request->input('permissions');
 
-        if (!empty($permissions)) {
+        if (!empty($permissions && $role->id!=1)) {
             $role->name = $request->name;
             $role->save();
             $role->syncPermissions($permissions);
@@ -179,7 +182,7 @@ class RolesController extends Controller
         if (session('last_visited_url')) {
             return Redirect::to(session('last_visited_url'));
         }
-        
+
         return Redirect::back();
     }
 }

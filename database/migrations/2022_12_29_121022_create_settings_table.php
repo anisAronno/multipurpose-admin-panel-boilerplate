@@ -24,6 +24,9 @@ return new class () extends Migration {
             $table->string('copyright_url')->nullable();
             $table->longText('design_develop_by')->nullable();
             $table->longText('design_develop_by_url')->nullable();
+            $table->json('address')->nullable();
+            $table->json('social')->nullable();
+            $table->json('options')->nullable();
             $table->timestamps();
         });
     }

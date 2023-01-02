@@ -39,6 +39,12 @@ class FileServices
     {
         $path = stristr($value, 'uploads');
 
+        $defaultFile = ['uploads/users/avatar.png','uploads/placeholder.png'];
+
+        if (in_array($path, $defaultFile)) {
+            return false;
+        }
+
         try {
             if (file_exists(public_path($path))) {
                 unlink(public_path($path));

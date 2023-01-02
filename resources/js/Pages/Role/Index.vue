@@ -143,7 +143,7 @@ defineProps({
                                                                 </Link>
                                                             </div>
 
-                                                            <div>
+                                                            <div v-if="role.id!=1">
                                                                 <Link
                                                                     :href="
                                                                         route(

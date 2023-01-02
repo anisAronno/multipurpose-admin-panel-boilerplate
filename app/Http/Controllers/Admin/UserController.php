@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
+use App\Services\Cache\CacheServices;
 use App\Services\FileServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -34,15 +36,17 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $user = User::with(['roles'])->orderBy('id')->paginate(3);
+        $currentPage = isset($request->page) ? (int)[$request->page] : 1;
+
+        $key = CacheServices::getUserCacheKey($currentPage);
+
+        $users = Cache::remember($key, 10, function () {
+            return User::with(['roles'])->orderBy('id')->paginate(10);
+        });
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        if (!$user->items()) {
-            return Redirect::to($user->previousPageUrl());
-        }
-
-        return Inertia::render('User/Index', ['users'=>$user]);
+        return Inertia::render('User/Index', ['users'=>$users]);
     }
 
     /**
@@ -81,7 +85,7 @@ class UserController extends Controller
             return Redirect::to(session('last_visited_url'));
         }
 
-        return Redirect::route('user.index');
+        return Redirect::route('user.index')->with('message', 'Created successfull');
     }
 
     /**
@@ -142,16 +146,26 @@ class UserController extends Controller
             $user->assignRole($request->get('roles'));
         }
 
-        if ($user && $user->id!=1) {
+        if ($user && $user->id==1) {
+            $user->roles()->detach();
+
+            $roles = $request->roles;
+
+            if (!in_array('superadmin', $roles)) {
+                array_push($roles, 'superadmin');
+            }
+
+            $user->assignRole($roles);
+        } else {
             $user->roles()->detach();
             $user->assignRole($request->roles);
         }
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'));
+            return Redirect::to(session('last_visited_url'))->with('message', 'Updated successfull');
         }
 
-        return Redirect::route('user.index');
+        return Redirect::route('user.index')->with('message', 'Updated successfull');
     }
 
     /**
@@ -163,14 +177,13 @@ class UserController extends Controller
    public function destroy(User $user)
    {
        if ($user->id !==1) {
-           FileServices::deleteFile($user->avatar);
            $user->delete();
        }
 
        if (session('last_visited_url')) {
-           return Redirect::to(session('last_visited_url'));
+           return Redirect::to(session('last_visited_url'))->with('message', 'Deleted successfull');
        }
 
-       return Redirect::back();
+       return Redirect::back()->with('message', 'Deleted successfull');
    }
 }
