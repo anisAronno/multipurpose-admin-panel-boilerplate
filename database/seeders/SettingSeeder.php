@@ -19,7 +19,7 @@ class SettingSeeder extends Seeder
         Setting::truncate();
         Schema::enableForeignKeyConstraints();
         $setting = new Setting();
-        $setting->site_name = "Website Name";
+        $setting->site_name = "My App";
         $setting->site_title = "Website Title";
         $setting->logo = "uploads/settings/logo.png";
         $setting->banner = "uploads/settings/banner.png";

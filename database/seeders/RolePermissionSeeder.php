@@ -31,10 +31,10 @@ class RolePermissionSeeder extends Seeder
 
 
         $user = new User();
-        $user->name = 'anis';
+        $user->name = 'Anichur Rahaman';
         $user->email = 'admin@gmail.com';
         $user->password = bcrypt('password');
-        $user->status = UserStatus::ACTIVE; 
+        $user->status = UserStatus::ACTIVE;
         $user->email_verified_at = Date::now();
         $user->save();
 

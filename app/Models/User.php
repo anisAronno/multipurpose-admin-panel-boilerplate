@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -69,7 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected static function boot()
     {
         static::creating(function ($model) {
-            $model->username = Uuid::uuid4()->toString();
+            $model->token = Uuid::uuid4()->toString();
+            $model->username = Str::slug($model->name)."_".(User::max('id') + 1).random_int(1, 9999);
         });
 
         parent::boot();
