@@ -100,6 +100,12 @@ defineProps({
                                                     </th>
                                                     <th
                                                         scope="col"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                    >
+                                                        Date Time
+                                                    </th>
+                                                    <th
+                                                        scope="col"
                                                         class="px-3 w-[20%] py-3.5 text-center text-base font-bold text-gray-900"
                                                     >
                                                         Action
@@ -115,19 +121,19 @@ defineProps({
                                                     :id="user.id"
                                                 >
                                                     <td
-                                                        class="whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ user.name }}
                                                     </td>
 
                                                     <td
-                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
                                                         {{ user.email }}
                                                     </td>
 
                                                     <td
-                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="whitespace-nowrap min-w-[10%]  p-3 text-md text-gray-500"
                                                     >
                                                         <img
                                                             :src="user.avatar"
@@ -136,7 +142,7 @@ defineProps({
                                                         />
                                                     </td>
                                                     <td
-                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
                                                         <div
                                                             v-for="role in user.roles"
@@ -151,12 +157,17 @@ defineProps({
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ user.status }} 
+                                                        {{ user.status }}
                                                     </td>
                                                     <td
-                                                        class="whitespace-nowrap min-w-[20%] max-w-[30%] text-right text-sm font-medium"
+                                                        class="min-w-[10%]  whitespace-nowrap p-3 text-md text-gray-500"
+                                                    >
+                                                        {{ user.created_at }}
+                                                    </td>
+                                                    <td
+                                                        class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
@@ -214,7 +225,7 @@ defineProps({
                                             >
                                                 <tr>
                                                     <td
-                                                        colspan="6"
+                                                        colspan="7"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination

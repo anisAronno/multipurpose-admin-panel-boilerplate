@@ -37,7 +37,29 @@ defineProps({
                                 View roles with permission.
                             </p>
                         </div>
-                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                        <div
+                            class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-2"
+                        >
+                            <Link
+                                :href="route('role.edit', role.id)"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-pen-to-square"
+                                    class="mr-1"
+                                />
+                                Edit
+                            </Link>
+                            <Link
+                                :href="route('role.create')"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-circle-plus"
+                                    class="mr-1"
+                                />
+                                Create New
+                            </Link>
                             <Link
                                 :href="route('role.index')"
                                 class="btn btn-primary"

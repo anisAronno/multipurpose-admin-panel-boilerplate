@@ -17,7 +17,7 @@ defineProps({
             >
                 Show User
             </h2>
-        </template> 
+        </template>
 
         <div class="py-12 dark:text-white">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -37,7 +37,29 @@ defineProps({
                                 View users with role.
                             </p>
                         </div>
-                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                        <div
+                            class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-2"
+                        >
+                            <Link
+                                :href="route('user.edit', user.id)"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-pen-to-square"
+                                    class="mr-1"
+                                />
+                                Edit
+                            </Link>
+                            <Link
+                                :href="route('user.create')"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-circle-plus"
+                                    class="mr-1"
+                                />
+                                Create New
+                            </Link>
                             <Link
                                 :href="route('user.index')"
                                 class="btn btn-primary"

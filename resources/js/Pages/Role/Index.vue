@@ -82,6 +82,12 @@ defineProps({
                                                     </th>
                                                     <th
                                                         scope="col"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                    >
+                                                        Date Time
+                                                    </th>
+                                                    <th
+                                                        scope="col"
                                                         class="px-3 py-3.5 text-center text-base font-bold text-gray-900"
                                                     >
                                                         Action
@@ -98,7 +104,7 @@ defineProps({
                                                     :id="role.id"
                                                 >
                                                     <td
-                                                        class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="w-[15%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ role.name }}
                                                     </td>
@@ -121,7 +127,12 @@ defineProps({
                                                         </p>
                                                     </td>
                                                     <td
-                                                        class="w-[20%] whitespace-nowrap text-right text-sm font-medium"
+                                                        class="w-[15%] text-left p-4  text-gray-900 "
+                                                    >
+                                                        {{ role.created_at }}
+                                                    </td>
+                                                    <td
+                                                        class="w-[10%] whitespace-nowrap text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
@@ -143,7 +154,11 @@ defineProps({
                                                                 </Link>
                                                             </div>
 
-                                                            <div v-if="role.id!=1">
+                                                            <div
+                                                                v-if="
+                                                                    role.id != 1
+                                                                "
+                                                            >
                                                                 <Link
                                                                     :href="
                                                                         route(
@@ -175,12 +190,13 @@ defineProps({
                                                             ></DeleteForm>
                                                         </div>
                                                     </td>
+                                                    
                                                 </tr>
                                             </tbody>
                                             <tfoot class="bg-gray-50">
                                                 <tr>
                                                     <td
-                                                        colspan="3"
+                                                        colspan="4"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination

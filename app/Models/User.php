@@ -11,6 +11,7 @@ use App\Enums\UserStatus;
 use App\Notifications\VerifyEmailQueued;
 use App\Services\FileServices;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Ramsey\Uuid\Uuid;
@@ -57,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at' => 'datetime',
         'status' => UserStatus::class,
     ];
 
@@ -90,6 +92,18 @@ class User extends Authenticatable implements MustVerifyEmail
             return  $this->attributes['avatar'] = FileServices::getUrl($value);
         } else {
             return  $this->attributes['avatar'] = FileServices::getUrl('uploads/users/avatar.png');
+        }
+    }
+      /**
+     * Date
+     *
+     * @param [type] $uid
+     * @return void
+     */
+    public function getCreatedAtAttribute($value)
+    {
+        if ($value !== null) {
+            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
         }
     }
 

@@ -40,7 +40,29 @@ defineProps({
                                 Edit a new users with roles.
                             </p>
                         </div>
-                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                        <div
+                            class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-2"
+                        >
+                            <Link
+                                :href="route('user.show', user.id)"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-eye"
+                                    class="mr-1"
+                                />
+                                Back
+                            </Link>
+                            <Link
+                                :href="route('user.create')"
+                                class="btn btn-primary"
+                            >
+                                <font-awesome-icon
+                                    icon="fa-solid fa-circle-plus"
+                                    class="mr-1"
+                                />
+                                Create New
+                            </Link>
                             <Link
                                 :href="route('user.index')"
                                 class="btn btn-primary"
