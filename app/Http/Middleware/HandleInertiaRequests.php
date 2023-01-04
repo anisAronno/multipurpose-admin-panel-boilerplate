@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Option;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -41,6 +42,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'global' => [
                 'settings' =>  Setting::first(),
+                'options' =>  Option::all(),
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message')

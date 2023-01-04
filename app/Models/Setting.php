@@ -10,6 +10,20 @@ class Setting extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+            'site_name',
+            'site_title',
+            'logo',
+            'banner',
+            'fav_icon',
+            'copyright_message',
+            'copyright_name',
+            'copyright_url',
+            'design_develop_by',
+            'design_develop_by_url',
+            'address',
+            'social'
+        ];
 
     public function getFavIconAttribute($value)
     {
@@ -37,4 +51,9 @@ class Setting extends Model
             return  $this->attributes['banner'] = FileServices::getUrl('uploads/settings/banner.png');
         }
     }
+
+    protected $casts = [
+      'social' => 'array',
+      'address' => 'array',
+    ];
 }

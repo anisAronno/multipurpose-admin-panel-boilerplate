@@ -26,7 +26,6 @@ return new class () extends Migration {
             $table->longText('design_develop_by_url')->nullable();
             $table->json('address')->nullable();
             $table->json('social')->nullable();
-            $table->json('options')->nullable();
             $table->timestamps();
         });
     }
