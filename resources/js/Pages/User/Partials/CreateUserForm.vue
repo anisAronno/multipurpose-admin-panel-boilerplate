@@ -1,11 +1,11 @@
 <script setup>
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import Multiselect from "@/Components/Multiselect.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
+import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
     roles: Object,
@@ -154,13 +154,15 @@ const storeUser = () => {
                                         value="Role :"
                                         class="block text-sm font-medium text-gray-700 mb-1"
                                     />
-
                                     <Multiselect
-                                        v-model:roles="form.roles"
-                                        :options="roles"
+                                        v-model="form.roles"
+                                        :options="props.roles"
                                         :selected="form.roles"
                                         placeholder="Pick some..."
-                                        class="block w-full"
+                                        class="block w-full multiselect-green"
+                                        mode="tags"
+                                        :searchable="true"
+                                        :close-on-select="false"
                                     >
                                     </Multiselect>
 
@@ -173,25 +175,18 @@ const storeUser = () => {
                                     <InputLabel
                                         for="status"
                                         value="Status :"
-                                        class="block text-sm font-medium text-gray-700"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
                                     />
-                                    <select
-                                        id="status"
-                                        name="status"
-                                        ref="statusInput"
+                                    
+                                    <Multiselect
                                         v-model="form.status"
-                                        autocomplete="status-name"
-                                        class="block w-full mt-1 text-sm font-medium text-gray-700 form-controll"
+                                        :options="statusArr"
+                                        :selected="form.status"
+                                        placeholder="Pick some..."
+                                        class="block w-full multiselect-green form-controll"
+                                        :searchable="true" 
                                     >
-                                        <option
-                                            v-for="status in statusArr"
-                                            :key="status"
-                                            :value="status"
-                                            :selected="status == 'Pending'"
-                                        >
-                                            {{ status }}
-                                        </option>
-                                    </select>
+                                    </Multiselect>
                                     <InputError
                                         :message="form.errors.status"
                                         class="mt-2 col-start-2 col-span-4"
@@ -264,3 +259,5 @@ const storeUser = () => {
         </form>
     </section>
 </template>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

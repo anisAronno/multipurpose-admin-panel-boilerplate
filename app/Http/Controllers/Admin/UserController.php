@@ -57,7 +57,7 @@ class UserController extends Controller
     public function create()
     {
         $role = Role::pluck('name');
-        $statusArr =  UserStatus::array();
+        $statusArr =  UserStatus::values();
         return Inertia::render('User/Create', ['roles'=>$role,'statusArr'=>$statusArr]);
     }
 
@@ -115,7 +115,7 @@ class UserController extends Controller
             return $value->name;
         });
 
-        $statusArr =  UserStatus::array();
+        $statusArr =  UserStatus::values();
 
 
         $roleArr = Role::pluck('name');
