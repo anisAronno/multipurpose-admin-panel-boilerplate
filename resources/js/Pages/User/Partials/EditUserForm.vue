@@ -1,10 +1,10 @@
 <script setup>
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import Multiselect from "@/Components/Multiselect.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import Multiselect from "@vueform/multiselect";
 import { ref } from "vue";
 
 const props = defineProps({
@@ -150,13 +150,16 @@ const storeUser = () => {
                                         for="roles"
                                         value="Role :"
                                         class="block text-sm font-medium text-gray-700 mb-1"
-                                    /> 
+                                    />
                                     <Multiselect
-                                        v-model:roles="form.roles"
+                                        v-model="form.roles"
                                         :options="roleArr"
                                         :selected="form.roles"
                                         placeholder="Pick some..."
-                                        class="block w-full"
+                                        class="block w-full multiselect-green"
+                                        mode="tags"
+                                        :searchable="true"
+                                        :close-on-select="false"
                                     >
                                     </Multiselect>
 
@@ -220,3 +223,5 @@ const storeUser = () => {
         </form>
     </section>
 </template>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
