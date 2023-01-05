@@ -41,7 +41,7 @@ class UserController extends Controller
         $key = CacheServices::getUserCacheKey($currentPage);
 
         $users = Cache::remember($key, 10, function () {
-            return User::with(['roles'])->orderBy('id')->paginate(10);
+            return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
@@ -79,10 +79,6 @@ class UserController extends Controller
 
         if ($user) {
             $user->assignRole($request->get('roles'));
-        }
-
-        if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'));
         }
 
         return Redirect::route('user.index')->with('message', 'Created successfull');

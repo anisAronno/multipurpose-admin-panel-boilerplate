@@ -42,7 +42,7 @@ class RolesController extends Controller
         $roles = Cache::remember($key, 10, function () {
             return Role::with(['permissions'=>function ($query) {
                 $query->select('id', 'name');
-            }])->paginate(10);
+            }])->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
@@ -90,11 +90,7 @@ class RolesController extends Controller
             $role->syncPermissions($permissions);
         }
 
-        if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'));
-        }
-
-        return Redirect::route('role.index');
+        return Redirect::route('role.index')->with(['message'=>'successfully Created']);
     }
 
     /**
@@ -161,10 +157,10 @@ class RolesController extends Controller
 
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'));
+            return Redirect::to(session('last_visited_url'))->with(['message'=>'successfully Updated']);
         }
 
-        return Redirect::route('role.index');
+        return Redirect::route('role.index')->with(['message'=>'successfully Updated']);
     }
 
     /**
@@ -180,9 +176,9 @@ class RolesController extends Controller
         }
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'));
+            return Redirect::to(session('last_visited_url'))->with(['message'=>'successfully Deleted']);
         }
 
-        return Redirect::back();
+        return Redirect::route('role.index')->with(['message'=>'successfully Deleted']);
     }
 }

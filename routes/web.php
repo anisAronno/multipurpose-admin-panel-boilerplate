@@ -31,17 +31,12 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/role', [RolesController::class, 'index'])->name('role.index');
-    Route::get('/role/create', [RolesController::class, 'create'])->name('role.create');
-    Route::post('/role/store', [RolesController::class, 'store'])->name('role.store');
-    Route::get('/role/edit/{role}', [RolesController::class, 'edit'])->name('role.edit');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); 
+    Route::resource('role', RolesController::class, ['except' => ['update']]);
     Route::post('/role/update/{role}', [RolesController::class, 'update'])->name('role.update');
-    Route::get('/role/{role}', [RolesController::class, 'show'])->name('role.show');
-    Route::delete('/role/destroy/{role}', [RolesController::class, 'destroy'])->name('role.destroy');
     Route::resource('user', UserController::class, ['except' => ['update']]);
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
 });

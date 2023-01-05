@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+
 
 class PasswordResetLinkController extends Controller
 {
@@ -19,6 +21,7 @@ class PasswordResetLinkController extends Controller
     {
         return Inertia::render('Auth/ForgotPassword', [
             'status' => session('status'),
+            'canRegister' => Route::has('register'),
         ]);
     }
 
@@ -44,7 +47,7 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
+            return back()->with('status', __($status))->with('message', 'We have emailed your password reset link!');
         }
 
         throw ValidationException::withMessages([

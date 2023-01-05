@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserStatus;
+use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
 use App\Services\FileServices;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -67,6 +68,10 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmailQueued());
     }
 
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
         /**
      * Override the default boot method to register some extra stuff for every child model.
      */

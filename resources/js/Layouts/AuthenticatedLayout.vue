@@ -5,6 +5,7 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import Toast from "@/Components/Toast.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
@@ -13,6 +14,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
+        <Toast></Toast>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav
                 class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700"
@@ -52,7 +54,7 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     User
                                 </NavLink>
-                                
+
                                 <NavLink
                                     :href="route('role.index')"
                                     :active="
