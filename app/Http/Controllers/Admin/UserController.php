@@ -40,6 +40,12 @@ class UserController extends Controller
 
         $key = CacheServices::getUserCacheKey($currentPage);
 
+        if (!empty($request->search)) {
+            $q = $request->search;
+            $users = User::with(['roles'])->where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->orderBy('id', 'desc')->paginate(10);
+            return Inertia::render('User/Index', ['users'=>$users]);
+        }
+
         $users = Cache::remember($key, 10, function () {
             return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
         });
