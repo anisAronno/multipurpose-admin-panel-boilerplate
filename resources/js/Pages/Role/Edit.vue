@@ -44,7 +44,7 @@ defineProps({
                                 Create a new roles with permission.
                             </p>
                         </div>
-                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-2">
+                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0">
                             <Link
                                 :href="route('role.show', role.id)"
                                 class="btn btn-primary"

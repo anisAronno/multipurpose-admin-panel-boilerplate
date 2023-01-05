@@ -1,35 +1,12 @@
 <script setup>
 import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
+import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
-import { watch } from "vue";
+import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     users: Object,
 });
-
-const form = useForm({
-    search: "",
-});
-
-watch(
-    () => form.search,
-    (val) => {
-        searchHandaler();
-    }
-);
-
-const searchHandaler = () => {
-    form.get(route("user.index"), {
-        preserveScroll: true,
-        onSuccess: () => form.reset(),
-        onError: () => {
-            if (form.errors.search) {
-                searchInput.value.focus();
-            }
-        },
-    });
-};
 </script>
 
 <template>
@@ -63,7 +40,9 @@ const searchHandaler = () => {
                                     A list of all the users.
                                 </p>
                             </div>
-                            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                            <div
+                                class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
+                            >
                                 <Link
                                     :href="route('user.create')"
                                     class="btn btn-primary"
@@ -73,6 +52,16 @@ const searchHandaler = () => {
                                         class="mr-1"
                                     />
                                     Create New
+                                </Link>
+                                <Link
+                                    :href="route('user.index')"
+                                    class="btn btn-primary"
+                                >
+                                    <font-awesome-icon
+                                        icon="fa-solid fa-eye"
+                                        class="mr-1"
+                                    />
+                                    View All
                                 </Link>
                             </div>
                         </div>
@@ -84,45 +73,18 @@ const searchHandaler = () => {
                                     class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
                                 >
                                     <div
-                                        class="flex items-center justify-between pb-4 bg-white dark:bg-gray-900"
+                                        class="flex items-center justify-between pb-4 bg-white dark:bg-gray-800 pt-3 pr-0.5"
                                     >
-                                        <div>
+                                        <div class="flex-1">
                                             <!-- Action Item Here -->
                                         </div>
-                                        <label
-                                            for="table-search"
-                                            class="sr-only"
-                                            >Search</label
-                                        >
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-                                            >
-                                                <svg
-                                                    class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                    aria-hidden="true"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                                        clip-rule="evenodd"
-                                                    ></path>
-                                                </svg>
-                                            </div>
-                                            <input
-                                                type="text"
-                                                id="table-search-users"
-                                                class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Search for users"
-                                                v-model.lazy="form.search"
-                                                ref="searchInput"
-                                            />
+
+                                        <div class="flex-auto">
+                                            <Search></Search>
                                         </div>
                                     </div>
                                     <div
+                                        v-if="users.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -303,6 +265,9 @@ const searchHandaler = () => {
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                    </div>
+                                    <div v-else class="h-32 grid place-items-center text-2xl">
+                                        <p>Result not found</p>
                                     </div>
                                 </div>
                             </div>

@@ -1,5 +1,6 @@
 <script setup>
 import DeleteForm from "@/Components/DeleteForm.vue";
+import Search from "@/Components/Search.vue";
 import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
@@ -39,7 +40,9 @@ defineProps({
                                     A list of all the Roles.
                                 </p>
                             </div>
-                            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                            <div
+                                class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
+                            >
                                 <Link
                                     :href="route('role.create')"
                                     class="btn btn-primary"
@@ -49,6 +52,16 @@ defineProps({
                                         class="mr-1"
                                     />
                                     Create New
+                                </Link>
+                                <Link
+                                    :href="route('role.index')"
+                                    class="btn btn-primary"
+                                >
+                                    <font-awesome-icon
+                                        icon="fa-solid fa-eye"
+                                        class="mr-1"
+                                    />
+                                    View All
                                 </Link>
                             </div>
                         </div>
@@ -60,6 +73,18 @@ defineProps({
                                     class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
                                 >
                                     <div
+                                        class="flex items-center justify-between pb-4 bg-white dark:bg-gray-800 pt-3 pr-0.5"
+                                    >
+                                        <div class="flex-1">
+                                            <!-- Action Item Here -->
+                                        </div>
+
+                                        <div class="flex-auto">
+                                            <Search></Search>
+                                        </div>
+                                    </div>
+                                    <div
+                                        v-if="roles.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -127,7 +152,7 @@ defineProps({
                                                         </p>
                                                     </td>
                                                     <td
-                                                        class="w-[15%] text-left p-4  text-gray-900 "
+                                                        class="w-[15%] text-left p-4 text-gray-900"
                                                     >
                                                         {{ role.created_at }}
                                                     </td>
@@ -190,7 +215,6 @@ defineProps({
                                                             ></DeleteForm>
                                                         </div>
                                                     </td>
-                                                    
                                                 </tr>
                                             </tbody>
                                             <tfoot class="bg-gray-50">
@@ -211,6 +235,12 @@ defineProps({
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                    </div>
+                                    <div
+                                        v-else
+                                        class="h-32 grid place-items-center text-2xl"
+                                    >
+                                        <p>Result not found</p>
                                     </div>
                                 </div>
                             </div>

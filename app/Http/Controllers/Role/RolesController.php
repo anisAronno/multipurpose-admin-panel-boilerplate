@@ -37,6 +37,14 @@ class RolesController extends Controller
     {
         $currentPage = isset($request->page) ? (int)[$request->page] : 1;
 
+        if (!empty($request->search)) {
+            $q = $request->search;
+            $roles = Role::with(['permissions'=>function ($query) {
+                $query->select('id', 'name');
+            }])->where('name', 'LIKE', '%' . $q . '%')->orderBy('id', 'desc')->paginate(10);
+            return Inertia::render('Role/Index', [ 'roles' => $roles]);
+        }
+
         $key = CacheServices::getRoleCacheKey($currentPage);
 
         $roles = Cache::remember($key, 10, function () {
