@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
     Route::post('/role/update/{role}', [RolesController::class, 'update'])->name('role.update');
     Route::resource('user', UserController::class, ['except' => ['update']]);
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/image/{user}', [UserController::class, 'imageDelete'])->name('user.image.destroy');
 });
 
 require __DIR__.'/auth.php';

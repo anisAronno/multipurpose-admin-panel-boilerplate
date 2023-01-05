@@ -107,7 +107,7 @@ const storeUser = () => {
                                     autocomplete="email"
                                 />
                                 <InputError
-                                    :message="form.errors.name"
+                                    :message="form.errors.email"
                                     class="mt-2 col-start-2 col-span-4"
                                 />
                             </div>
@@ -159,7 +159,7 @@ const storeUser = () => {
                                         :options="props.roles"
                                         :selected="form.roles"
                                         placeholder="Pick some..."
-                                        class="block w-full multiselect-green"
+                                          class="block w-full multiselect-green form-controll dark:text-gray-900"
                                         mode="tags"
                                         :searchable="true"
                                         :close-on-select="false"
@@ -183,8 +183,12 @@ const storeUser = () => {
                                         :options="statusArr"
                                         :selected="form.status"
                                         placeholder="Pick some..."
-                                        class="block w-full multiselect-green form-controll"
-                                        :searchable="true" 
+                                        class="block w-full multiselect-green form-controll dark:text-black"  
+                                        :searchable="true"
+                                        :classes="{
+                                            search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                                            singleLabelText: 'bg-[#10B981] text-white  rounded py-0.5 px-3 text-sm  font-semibold', 
+                                        }"
                                     >
                                     </Multiselect>
                                     <InputError

@@ -15,7 +15,7 @@ const confirmDeletion = () => {
     modalShow.value = true;
 };
 
-const deleteRole = (id) => {
+const deleteRecord = (id) => {
     form.delete(route(`${props.data.model}.destroy`, id), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
@@ -31,7 +31,7 @@ const closeModal = () => {
 
 <template>
     <section>
-        <DangerButton @click="confirmDeletion">
+        <DangerButton @click.prevent="confirmDeletion">
             <font-awesome-icon icon="fa-solid fa-trash" class="mr-1" />
         </DangerButton>
 
@@ -57,7 +57,7 @@ const closeModal = () => {
                         class="ml-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
-                        @click="deleteRole(data.id)"
+                        @click="deleteRecord(data.id)"
                     >
                         <font-awesome-icon
                             icon="fa-solid fa-trash"

@@ -1,6 +1,7 @@
 <script setup>
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import DeleteForm from "@/Components/DeleteForm.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -101,7 +102,7 @@ const storeUser = () => {
                                     autocomplete="email"
                                 />
                                 <InputError
-                                    :message="form.errors.name"
+                                    :message="form.errors.email"
                                     class="mt-2 col-start-2 col-span-4"
                                 />
                             </div>
@@ -131,12 +132,23 @@ const storeUser = () => {
                                     />
                                 </div>
                                 <span
-                                    class="inline-block h-24 w-24 overflow-hidden rounded-full bg-gray-100"
+                                    class="flex items-center justify-center h-24 w-24 overflow-hidden rounded-full bg-gray-100 relative group"
                                 >
                                     <img
                                         :src="form.avatarPreview"
-                                        class="w-full h-full object-contain"
+                                        class="w-full h-full object-contain inset-0 group-hover:opacity-50"
                                     />
+                                    <span
+                                        class="w-full h-full absolute top-1/3 left-6 transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
+                                    >
+                                        <DeleteForm
+                                            class="cursor-pointer"
+                                            :data="{
+                                                id: user.id,
+                                                model: 'user.image',
+                                            }"
+                                        ></DeleteForm>
+                                    </span>
                                 </span>
                             </div>
                             <div
@@ -156,7 +168,7 @@ const storeUser = () => {
                                         :options="roleArr"
                                         :selected="form.roles"
                                         placeholder="Pick some..."
-                                        class="block w-full multiselect-green form-controll"
+                                        class="block w-full multiselect-green form-controll dark:text-gray-900"
                                         mode="tags"
                                         :searchable="true"
                                         :close-on-select="false"
@@ -179,8 +191,13 @@ const storeUser = () => {
                                         :options="statusArr"
                                         :selected="form.status"
                                         placeholder="Pick some..."
-                                        class="block w-full multiselect-green form-controll"
-                                        :searchable="true" 
+                                        class="block w-full multiselect-green form-controll dark:text-black"
+                                        :searchable="true"
+                                        :classes="{
+                                            search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                                            singleLabelText:
+                                                '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                        }"
                                     >
                                     </Multiselect>
                                     <InputError
