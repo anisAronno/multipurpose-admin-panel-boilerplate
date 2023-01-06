@@ -77,4 +77,26 @@ class ProfileController extends Controller
 
         return Redirect::to('/')->with('message', 'Profile Deleted');
     }
+    /**
+     * Update the user's profile information.
+     *
+     * @param  \App\Http\Requests\ProfileUpdateRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function avatarUpdate(ProfileUpdateRequest $request)
+    {
+        try {
+            $user = $request->user();
+
+            if ($request->avatar) {
+                FileServices::deleteFile($user->avatar);
+                $user->avatar = FileServices::upload($request, 'avatar', 'users');
+                $user->save();
+            }
+
+            return Redirect::route('profile.edit')->with('message', 'Profile picture updated');
+        } catch (\Throwable $th) {
+            return Redirect::back()->with('message', 'Something went wrong');
+        }
+    }
 }

@@ -1,4 +1,5 @@
 <script setup>
+import DeleteForm from "@/Components/DeleteForm.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -11,12 +12,13 @@ const props = defineProps({
 });
 
 const avatarInput = ref(null);
+const defaultImage = ref(`${route()?.t?.url}/uploads/users/avatar.png`);
 
 const user = usePage().props.value.auth.user;
 
 const form = useForm({
     avatar: user.avatar,
-    avatarPreview: user.avatar || `${route()?.t?.url}/uploads/users/avatar.png`,
+    avatarPreview: user.avatar,
 });
 
 const previewImage = (e) => {
@@ -38,9 +40,11 @@ const avatarHandaler = () => {};
                 Update your account's profile Picture.
             </p>
         </header>
-        <div class="flex flex-wrap justify-between items-center w-full">
+        <div
+            class="flex flex-wrap sm:justify-between sm:items-center w-full space-y-5"
+        >
             <form
-                @submit.prevent="form.patch(route('profile.image'))"
+                @submit.prevent="form.post(route('profile.image'))"
                 class="mt-6 space-y-6 flex-1"
             >
                 <div>
@@ -77,12 +81,29 @@ const avatarHandaler = () => {};
                     </Transition>
                 </div>
             </form>
-            <div class="flex-1 w-full">
-                <img
-                    :src="form.avatarPreview"
-                    alt=""
-                    class="w-16 h-16 block sm:w-32 sm:h-32"
-                />
+            <div class="flex-1 w-full order-first sm:order-last">
+                <span
+                    class="flex items-center justify-center w-32 h-32 sm:w-40 sm:h-40 overflow-hidden rounded-full bg-gray-100 relative group"
+                >
+                    <img
+                        :src="form.avatarPreview"
+                        alt=""
+                        class="w-full h-full object-contain inset-0 group-hover:opacity-50"
+                    />
+                    <span
+                        v-if="defaultImage != form.avatarPreview"
+                        class="w-full h-full absolute grid place-items-center transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
+                    >
+                        <DeleteForm
+                            class="cursor-pointer"
+                            :data="{
+                                id: user.id,
+                                model: 'user.image',
+                            }"
+                            @success="form.avatarPreview = defaultImage"
+                        ></DeleteForm>
+                    </span>
+                </span>
             </div>
         </div>
     </section>

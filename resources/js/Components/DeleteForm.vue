@@ -6,8 +6,8 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
 const modalShow = ref(false);
-
-const props =defineProps({
+const emit = defineEmits(["success"]);
+const props = defineProps({
     data: Object,
 });
 const form = useForm();
@@ -26,6 +26,7 @@ const deleteRecord = (id) => {
 
 const closeModal = () => {
     modalShow.value = false;
+    emit("success", true);
 };
 </script>
 
@@ -40,7 +41,7 @@ const closeModal = () => {
                 <h2
                     class="text-lg font-medium text-gray-900 dark:text-gray-100"
                 >
-                    Are you sure you want to delete this {{data.model}}?
+                    Are you sure you want to delete this {{ data.model }}?
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

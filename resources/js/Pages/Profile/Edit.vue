@@ -1,5 +1,5 @@
 <script setup>
-import ProfilePicture from "@/Components/ProfilePicture.vue";
+import ProfilePicture from "./Partials/ProfilePicture.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import DeleteUserForm from "./Partials/DeleteUserForm.vue";

@@ -1,7 +1,7 @@
 <script setup>
+import DeleteForm from "@/Components/DeleteForm.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import DeleteForm from "@/Components/DeleteForm.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -20,12 +20,13 @@ const avatarInput = ref(null);
 const statusInput = ref(null);
 const roleInput = ref(null);
 
+const defaultImage = ref(`${route()?.t?.url}/uploads/users/avatar.png`);
+
 const form = useForm({
     name: props.user.name,
     email: props.user.email,
     avatar: "",
-    avatarPreview:
-        props.user.avatar || `${route()?.t?.url}/uploads/users/avatar.png`,
+    avatarPreview: props.user.avatar,
     status: props.user.status,
     roles: props.user.has_roles,
 });
@@ -139,7 +140,10 @@ const storeUser = () => {
                                         class="w-full h-full object-contain inset-0 group-hover:opacity-50"
                                     />
                                     <span
-                                        class="w-full h-full absolute top-1/3 left-6 transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
+                                        v-if="
+                                            defaultImage != form.avatarPreview
+                                        "
+                                        class="w-full h-full absolute grid place-items-center transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
                                     >
                                         <DeleteForm
                                             class="cursor-pointer"
@@ -147,6 +151,10 @@ const storeUser = () => {
                                                 id: user.id,
                                                 model: 'user.image',
                                             }"
+                                            @success="
+                                                form.avatarPreview =
+                                                    defaultImage
+                                            "
                                         ></DeleteForm>
                                     </span>
                                 </span>

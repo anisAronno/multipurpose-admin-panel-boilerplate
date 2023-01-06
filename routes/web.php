@@ -34,13 +34,13 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.image');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); 
+    Route::post('/profile', [ProfileController::class, 'avatarUpdate'])->name('profile.image');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('role', RolesController::class, ['except' => ['update']]);
     Route::post('/role/update/{role}', [RolesController::class, 'update'])->name('role.update');
     Route::resource('user', UserController::class, ['except' => ['update']]);
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/user/image/{user}', [UserController::class, 'imageDelete'])->name('user.image.destroy');
+    Route::delete('/user/image/{user}', [UserController::class, 'avatarDelete'])->name('user.image.destroy');
 });
 
 require __DIR__.'/auth.php';

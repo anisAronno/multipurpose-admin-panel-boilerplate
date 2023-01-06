@@ -191,15 +191,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   public function imageDelete(User $user)
+   public function avatarDelete(User $user)
    {
        FileServices::deleteFile($user->avatar);
 
        $user->update([$user->avatar=null]);
-
-       if (session('last_visited_url')) {
-           return Redirect::to(session('last_visited_url'))->with('message', 'Deleted successfull');
-       }
 
        return Redirect::back()->with('message', 'Deleted successfull');
    }
