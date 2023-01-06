@@ -4,7 +4,7 @@ namespace App\Observers\User;
 
 use App\Models\User;
 use App\Services\Cache\CacheServices;
-use App\Services\FileServices;
+use App\Helpers\FileHelpers;
 use App\Traits\ClearCache;
 
 class UserObserver
@@ -49,7 +49,7 @@ class UserObserver
     {
         $this->clearCache($this->key);
 
-        FileServices::deleteFile($user->avatar);
+        FileHelpers::deleteFile($user->avatar);
     }
 
     /**
@@ -73,6 +73,6 @@ class UserObserver
     {
         $this->clearCache($this->key);
 
-        FileServices::deleteFile($user->avatar);
+        FileHelpers::deleteFile($user->avatar);
     }
 }

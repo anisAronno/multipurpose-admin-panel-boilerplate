@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Helpers;
 
-class FileServices
+class FileHelpers
 {
     public static function upload($request, $file_name, $upload_dir)
     {

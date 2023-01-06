@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Services\FileServices;
+use App\Helpers\FileHelpers;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         Auth::logout();
 
         if (! $user->isDeletable) {
-            FileServices::deleteFile($user->avatar);
+            FileHelpers::deleteFile($user->avatar);
             $user->delete();
         }
 
@@ -89,8 +89,8 @@ class ProfileController extends Controller
             $user = $request->user();
 
             if ($request->avatar) {
-                FileServices::deleteFile($user->avatar);
-                $user->avatar = FileServices::upload($request, 'avatar', 'users');
+                FileHelpers::deleteFile($user->avatar);
+                $user->avatar = FileHelpers::upload($request, 'avatar', 'users');
                 $user->save();
             }
 

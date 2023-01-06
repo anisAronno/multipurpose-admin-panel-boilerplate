@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Setting;
 use App\Services\Cache\CacheServices;
-use App\Services\FileServices;
+use App\Helpers\FileHelpers;
 use App\Traits\ClearCache;
 
 class SettingsObjerver
@@ -48,9 +48,9 @@ class SettingsObjerver
     public function deleted(Setting $setting)
     {
         $this->clearCache($this->settingsCacheKey);
-        FileServices::deleteFile($setting->logo);
-        FileServices::deleteFile($setting->banner);
-        FileServices::deleteFile($setting->fav_icon);
+        FileHelpers::deleteFile($setting->logo);
+        FileHelpers::deleteFile($setting->banner);
+        FileHelpers::deleteFile($setting->fav_icon);
     }
 
     /**
@@ -74,8 +74,8 @@ class SettingsObjerver
     {
         $this->clearCache($this->settingsCacheKey);
 
-        FileServices::deleteFile($setting->logo);
-        FileServices::deleteFile($setting->banner);
-        FileServices::deleteFile($setting->fav_icon);
+        FileHelpers::deleteFile($setting->logo);
+        FileHelpers::deleteFile($setting->banner);
+        FileHelpers::deleteFile($setting->fav_icon);
     }
 }

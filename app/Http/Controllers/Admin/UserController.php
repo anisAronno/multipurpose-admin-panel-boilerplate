@@ -8,7 +8,7 @@ use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Services\Cache\CacheServices;
-use App\Services\FileServices;
+use App\Helpers\FileHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
@@ -78,7 +78,7 @@ class UserController extends Controller
         $data = $request->only('name', 'email', 'password', 'status');
 
         if ($request->avatar) {
-            $data['avatar'] = FileServices::upload($request, 'avatar', 'users');
+            $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
         }
 
         $user = User::create($data);
@@ -137,8 +137,8 @@ class UserController extends Controller
         $data = $request->only('name', 'email', 'status');
 
         if ($request->avatar) {
-            $data['avatar'] = FileServices::upload($request, 'avatar', 'users');
-            FileServices::deleteFile($user->avatar);
+            $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
+            FileHelpers::deleteFile($user->avatar);
         }
 
         $user->update($data);
@@ -193,7 +193,7 @@ class UserController extends Controller
      */
    public function avatarDelete(User $user)
    {
-       FileServices::deleteFile($user->avatar);
+       FileHelpers::deleteFile($user->avatar);
 
        $user->update([$user->avatar=null]);
 

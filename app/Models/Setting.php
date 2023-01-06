@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\FileServices;
+use App\Helpers\FileHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,27 +28,27 @@ class Setting extends Model
     public function getFavIconAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['fav_icon'] = FileServices::getUrl($value);
+            return  $this->attributes['fav_icon'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['fav_icon'] = FileServices::getUrl('uploads/settings/fav_icon.png');
+            return  $this->attributes['fav_icon'] = FileHelpers::getUrl('uploads/settings/fav_icon.png');
         }
     }
 
     public function getLogoAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['logo'] = FileServices::getUrl($value);
+            return  $this->attributes['logo'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['logo'] = FileServices::getUrl('uploads/settings/logo.png');
+            return  $this->attributes['logo'] = FileHelpers::getUrl('uploads/settings/logo.png');
         }
     }
 
     public function getBannerAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['banner'] = FileServices::getUrl($value);
+            return  $this->attributes['banner'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['banner'] = FileServices::getUrl('uploads/settings/banner.png');
+            return  $this->attributes['banner'] = FileHelpers::getUrl('uploads/settings/banner.png');
         }
     }
 

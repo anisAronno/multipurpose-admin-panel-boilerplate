@@ -88,7 +88,7 @@ const avatarHandaler = () => {};
                     <img
                         :src="form.avatarPreview"
                         alt=""
-                        class="w-full h-full object-contain inset-0 group-hover:opacity-50"
+                        class="w-full h-full object-contain inset-0 group-hover:opacity-50 shadow-md shadow-gray-900"
                     />
                     <span
                         v-if="defaultImage != form.avatarPreview"

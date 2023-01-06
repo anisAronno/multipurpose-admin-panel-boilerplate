@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserStatus;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
-use App\Services\FileServices;
+use App\Helpers\FileHelpers;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -95,9 +95,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['avatar'] = FileServices::getUrl($value);
+            return  $this->attributes['avatar'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['avatar'] = FileServices::getUrl('uploads/users/avatar.png');
+            return  $this->attributes['avatar'] = FileHelpers::getUrl('uploads/users/avatar.png');
         }
     }
       /**
