@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\LoginEvent;
+use App\Listeners\LoginListener;
 use App\Models\Setting;
 use App\Models\User;
 use App\Observers\RoleObserver;
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        LoginEvent::class=>[
+            LoginListener::class
+        ]
     ];
 
     /**

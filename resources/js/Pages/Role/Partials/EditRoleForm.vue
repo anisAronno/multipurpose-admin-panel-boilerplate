@@ -187,7 +187,7 @@ const updateRole = () => {
                     :checked="form.is_all_selected"
                     @change="allCheckSubmit(form.is_all_selected)"
                 />
-                 <InputError
+                <InputError
                     :message="form.errors.permissions"
                     class="mt-2 col-start-2 col-span-4 ml-3"
                 />
@@ -245,7 +245,7 @@ const updateRole = () => {
                         v-if="form.recentlySuccessful"
                         class="text-sm text-gray-600 dark:text-gray-400"
                     >
-                        updated.
+                        Updated.
                     </p>
                 </Transition>
             </div>

@@ -50,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'token',
     ];
 
     /**
@@ -142,4 +143,9 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         return $hasPermission;
     }
+
+     public function addresses()
+     {
+         return $this->morphMany(Address::class, 'addressable');
+     }
 }

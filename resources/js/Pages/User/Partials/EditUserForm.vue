@@ -213,7 +213,7 @@ const storeUser = () => {
 
             <div class="flex items-center justify-end pr-5 py-5">
                 <PrimaryButton :disabled="form.processing"
-                    >Submit</PrimaryButton
+                    >Update</PrimaryButton
                 >
 
                 <Transition
@@ -225,7 +225,7 @@ const storeUser = () => {
                         v-if="form.recentlySuccessful"
                         class="text-sm text-gray-600 dark:text-gray-400"
                     >
-                        Saved.
+                        Ppdated.
                     </p>
                 </Transition>
             </div>
