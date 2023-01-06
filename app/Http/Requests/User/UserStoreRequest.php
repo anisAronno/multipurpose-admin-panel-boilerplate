@@ -31,7 +31,7 @@ class UserStoreRequest extends FormRequest
             'avatar'                => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'roles'                 => "required|array|present|min:0",
             'status'                => 'required|string',
-            'password'              => 'required| min:8| max:32 |confirmed|alpha_dash',
+            'password'              => 'required| min:8| max:32 |confirmed',
             'password_confirmation' => 'required| min:8',
         ];
     }

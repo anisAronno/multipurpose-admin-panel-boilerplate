@@ -61,12 +61,12 @@ class ProfileController extends Controller
         $user = $request->user();
         Auth::logout();
 
-        if ($user->id !==1) {
+        if (! $user->isDeletable) {
             FileServices::deleteFile($user->avatar);
             $user->delete();
         }
 
-        if ($user->id !==1) {
+        if (! $user->isDeletable) {
             $user->delete();
         }
 

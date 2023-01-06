@@ -233,7 +233,7 @@ defineProps({
 
                                                             <DeleteForm
                                                                 v-if="
-                                                                    user.id != 1
+                                                                    user.isDeletable
                                                                 "
                                                                 :data="{
                                                                     id: user.id,
@@ -266,7 +266,10 @@ defineProps({
                                             </tfoot>
                                         </table>
                                     </div>
-                                    <div v-else class="h-32 grid place-items-center text-2xl">
+                                    <div
+                                        v-else
+                                        class="h-32 grid place-items-center text-2xl"
+                                    >
                                         <p>Result not found</p>
                                     </div>
                                 </div>

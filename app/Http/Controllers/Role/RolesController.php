@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Models\User;
+use App\Enums\AdministrativeRole;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -157,7 +158,9 @@ class RolesController extends Controller
     {
         $permissions = $request->input('permissions');
 
-        if (!empty($permissions && $role->id!=1)) {
+        if (empty($permissions) || !$role->isEditable) {
+            return Redirect::back()->with(['message'=>'Role is not Updateable']);
+        } else {
             $role->name = $request->name;
             $role->save();
             $role->syncPermissions($permissions);
@@ -179,9 +182,11 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        if (!in_array($role->id, [1,2])) {
-            $role->delete();
+        if ( ! $role->isDelatable) {
+            return Redirect::back()->with(['message'=>'Role is not delatable']);
         }
+
+        $role->delete();
 
         if (session('last_visited_url')) {
             return Redirect::to(session('last_visited_url'))->with(['message'=>'successfully Deleted']);

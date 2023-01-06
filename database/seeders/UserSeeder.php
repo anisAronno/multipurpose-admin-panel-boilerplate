@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class UserSeeder extends Seeder
 {
@@ -15,10 +14,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        User::truncate();
-        Schema::enableForeignKeyConstraints();
-
-        User::factory()->count(100)->create();
+        User::factory()->count(100)->create()->each(function ($user) {
+            $user->assignRole('user');
+        });
     }
 }

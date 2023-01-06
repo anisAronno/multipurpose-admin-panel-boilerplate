@@ -42,7 +42,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'global' => [
                 'settings' =>  Setting::first(),
-                'options' =>  Option::all(),
+                // 'options' =>  Option::all(),
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message')

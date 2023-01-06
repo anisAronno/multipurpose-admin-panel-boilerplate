@@ -144,6 +144,27 @@ class User extends Authenticatable implements MustVerifyEmail
         return $hasPermission;
     }
 
+
+     protected $appends = array('isDeletable', 'isEditable');
+
+    public function getIsDeletableAttribute($value)
+    {
+        if ($this->id === 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+       public function getIsEditableAttribute($value)
+       {
+           if ($this->id == 1) {
+               return false;
+           } else {
+               return true;
+           }
+       }
+
      public function addresses()
      {
          return $this->morphMany(Address::class, 'addressable');

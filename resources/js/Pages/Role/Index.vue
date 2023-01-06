@@ -1,7 +1,7 @@
 <script setup>
 import DeleteForm from "@/Components/DeleteForm.vue";
-import Search from "@/Components/Search.vue";
 import Pagination from "@/Components/Pagination.vue";
+import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
@@ -181,7 +181,7 @@ defineProps({
 
                                                             <div
                                                                 v-if="
-                                                                    role.id != 1
+                                                                    role.isEditable
                                                                 "
                                                             >
                                                                 <Link
@@ -202,11 +202,7 @@ defineProps({
 
                                                             <DeleteForm
                                                                 v-if="
-                                                                    ![
-                                                                        1, 2,
-                                                                    ].includes(
-                                                                        role.id
-                                                                    )
+                                                                    role.isDeletable
                                                                 "
                                                                 :data="{
                                                                     id: role.id,

@@ -44,6 +44,7 @@ class RolePermissionSeeder extends Seeder
         $roleUser = Role::create([ 'name' => 'user']);
         $roleAdmin = Role::create([ 'name' => 'admin']);
         $roleEditor = Role::create([ 'name' => 'editor']);
+        $roleAuthor = Role::create([ 'name' => 'author']);
 
 
         // Permission List as array
@@ -342,6 +343,28 @@ class RolePermissionSeeder extends Seeder
 
         $roleUser->syncPermissions($userPermissions);
 
+        //User Permission
+
+        $authorPermissions = [
+
+            'dashboard.view',
+
+            'blog.create',
+            'blog.view',
+            'blog.edit',
+            'blog.delete',
+            'blog.status',
+
+            'category.create',
+            'category.view',
+
+            'tag.create',
+            'tag.view',
+
+        ];
+
+        $roleAuthor->syncPermissions($authorPermissions);
+
         //Model Has Roles Create
 
         DB::table('model_has_roles')->insert([
@@ -364,6 +387,12 @@ class RolePermissionSeeder extends Seeder
 
         DB::table('model_has_roles')->insert([
             'role_id' => $roleUser->id,
+            'model_type' => 'App\Models\User',
+            'model_id' => $user->id
+        ]);
+
+        DB::table('model_has_roles')->insert([
+            'role_id' => $roleAuthor->id,
             'model_type' => 'App\Models\User',
             'model_id' => $user->id
         ]);

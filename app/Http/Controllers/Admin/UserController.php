@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -143,12 +143,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-
-        if ($user) {
-            $user->assignRole($request->get('roles'));
-        }
-
-        if ($user && $user->id==1) {
+        if (! $user->isEditable) {
             $user->roles()->detach();
 
             $roles = $request->roles;
@@ -178,9 +173,11 @@ class UserController extends Controller
      */
    public function destroy(User $user)
    {
-       if ($user->id !==1) {
-           $user->delete();
+       if (! $user->isDeletable) {
+           return Redirect::back()->with(['message'=>'User is not delatable']);
        }
+
+       $user->delete();
 
        if (session('last_visited_url')) {
            return Redirect::to(session('last_visited_url'))->with('message', 'Deleted successfull');
