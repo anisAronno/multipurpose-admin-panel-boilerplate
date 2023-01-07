@@ -19,6 +19,7 @@ class SettingSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         Setting::truncate();
         Schema::enableForeignKeyConstraints();
-        Setting::factory()->count(1)->create(); 
+
+        Setting::factory()->count(1)->hasImages(10)->create();
     }
 }
