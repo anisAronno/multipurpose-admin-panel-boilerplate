@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Role\RolesController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +42,15 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
     Route::post('/role/update/{role}', [RolesController::class, 'update'])->name('role.update');
     Route::resource('user', UserController::class, ['except' => ['update']]);
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
+    
     Route::delete('/user/image/{user}', [UserController::class, 'avatarDelete'])->name('user.image.destroy');
+
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+
+    /**
+     * Common Controller
+     */
+    Route::post('/file-delete', [CommonController::class, 'fileDelete'])->name('file.destroy');
 });
 
 require __DIR__.'/auth.php';

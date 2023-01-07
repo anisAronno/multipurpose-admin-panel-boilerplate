@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Address;
-use App\Models\User;
+use App\Models\Image;
+use App\Models\Setting;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class AddressSeeder extends Seeder
+class ImageSeeder extends Seeder
 {
+    protected $model = Image::class;
     /**
      * Run the database seeds.
      *
@@ -17,13 +19,13 @@ class AddressSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        Address::truncate();
+        Image::truncate();
+        Setting::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Address::factory()->count(5)->for(
-            User::factory(),
-            'addressable'
+        Image::factory()->count(10)->for(
+            Setting::factory(),
+            'imageable'
         )->create();
-
     }
 }

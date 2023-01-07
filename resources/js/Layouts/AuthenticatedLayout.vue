@@ -60,6 +60,13 @@ onMounted(() => {
                                 </NavLink>
 
                                 <NavLink
+                                    :href="route('settings.index')"
+                                    :active="route().current('settings.index')"
+                                >
+                                    Settings
+                                </NavLink>
+
+                                <NavLink
                                     :href="route('user.index')"
                                     :active="
                                         route().current('user.index') ||

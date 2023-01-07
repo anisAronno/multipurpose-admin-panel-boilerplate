@@ -8,15 +8,25 @@ import { ref } from "vue";
 const modalShow = ref(false);
 const emit = defineEmits(["success"]);
 const props = defineProps({
-    data: Object,
+    id: Number,
+    route: String,
+    field: String,
+    table: String,
+    oldFile: String,
 });
-const form = useForm();
+
+const form = useForm({
+    id: props.id,
+    table: props.table,
+    field: props.field,
+    oldFile: props.oldFile,
+});
 const confirmDeletion = () => {
     modalShow.value = true;
 };
 
-const deleteRecord = (id) => {
-    form.delete(route(`${props.data.model}.destroy`, id), {
+const processDelete = () => {
+    form.post(route(props.route), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),
@@ -37,11 +47,12 @@ const closeModal = () => {
         </DangerButton>
 
         <Modal :show="modalShow" @close="closeModal">
+            {{ id }}
             <div class="p-6">
                 <h2
                     class="text-lg font-medium text-gray-900 dark:text-gray-100"
                 >
-                    Are you sure you want to delete this {{ data.model }}?
+                    Are you sure you want to delete this?
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -58,7 +69,7 @@ const closeModal = () => {
                         class="ml-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
-                        @click="deleteRecord(data.id)"
+                        @click="processDelete"
                     >
                         <font-awesome-icon
                             icon="fa-solid fa-trash"

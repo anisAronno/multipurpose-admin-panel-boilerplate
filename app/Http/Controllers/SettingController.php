@@ -5,9 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
+use App\Services\Cache\CacheServices;
+use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class SettingController extends Controller
 {
+    /**
+    * Filter role and permission
+    */
+    public function __construct()
+    {
+        $this->middleware('permission:settings.view|settings.create|settings.edit|settings.delete|settings.status', ['only' => ['index','store']]);
+        $this->middleware('permission:settings.create', ['only' => ['create','store']]);
+        $this->middleware('permission:settings.edit|permission:settings.status|', ['only' => ['edit','update']]);
+        $this->middleware('permission:settings.delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +29,15 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+        $key = CacheServices::getSettingsCacheKey();
+        $settings =  Setting::with(['images'])->first();
+        return $settings;
+
+        $settings = Cache::remember($key, 10, function () {
+            return Setting::first();
+        });
+
+        return Inertia::render('Settings/Index', ['settings'=>$settings]);
     }
 
     /**

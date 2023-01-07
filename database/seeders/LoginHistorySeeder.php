@@ -19,6 +19,6 @@ class LoginHistorySeeder extends Seeder
         LoginHistory::truncate();
         Schema::enableForeignKeyConstraints();
 
-        LoginHistory::factory()->count(500)->create();
+        LoginHistory::factory()->count(100)->create();
     }
 }

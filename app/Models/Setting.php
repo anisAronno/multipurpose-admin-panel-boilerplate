@@ -56,4 +56,13 @@ class Setting extends Model
       'social' => 'array',
       'address' => 'array',
     ];
+
+    /**
+     * Summary of addresses
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

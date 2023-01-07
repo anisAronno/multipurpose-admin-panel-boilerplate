@@ -29,7 +29,8 @@ class FileHelpers
     public static function getUrl($value)
     {
         if ($value !== null) {
-            return  url($value);
+            $path = stristr($value, 'uploads');
+            return  url($path);
         } else {
             return url('uploads/placeholder.png');
         }
@@ -39,7 +40,13 @@ class FileHelpers
     {
         $path = stristr($value, 'uploads');
 
-        $defaultFile = ['uploads/users/avatar.png','uploads/placeholder.png'];
+        $defaultFile = [
+            'uploads/users/avatar.png',
+            'uploads/placeholder.png',
+            'uploads/settings/logo.png',
+            'uploads/settings/banner.png',
+            'uploads/settings/fav_icon.png',
+        ];
 
         if (in_array($path, $defaultFile)) {
             return false;
