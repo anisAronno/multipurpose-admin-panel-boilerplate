@@ -29,13 +29,12 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $key = CacheServices::getSettingsCacheKey();
-        $settings =  Setting::with(['images'])->first();
-        return $settings;
+        $key = CacheServices::getUserCacheKey();
 
         $settings = Cache::remember($key, 10, function () {
-            return Setting::first();
+            return Setting::with(['images'])->first();
         });
+
 
         return Inertia::render('Settings/Index', ['settings'=>$settings]);
     }

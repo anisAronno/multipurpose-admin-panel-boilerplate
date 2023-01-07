@@ -58,7 +58,7 @@ class Setting extends Model
     ];
 
     /**
-     * Summary of addresses
+     * Summary of images
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function images()

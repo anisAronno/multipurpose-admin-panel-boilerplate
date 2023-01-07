@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Option;
+use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +19,13 @@ class OptionFactory extends Factory
      */
     public function definition()
     {
+        /** @var mixed $sesttings */
+        $sesttings = SettingsFields::values();
+
         return [
-            'option_key'=>$this->faker->name(),
-            'option_value'=>$this->faker->paragraph(3),
-            'option_meta'=>json_encode([$this->faker->randomElement(["house","flat","apartment","room", "shop","lot", "garage"])]),
+            'option_key'   => $this->faker->unique()->randomElement($sesttings),
+            'option_value' => $this->faker->imageUrl(),
+            'option_meta'  => json_encode([$this->faker->randomElement(["house","flat","apartment","room", "shop","lot", "garage"])]),
         ];
     }
 }

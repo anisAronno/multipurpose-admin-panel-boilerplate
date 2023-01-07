@@ -16,6 +16,16 @@ class Option extends Model
     ];
 
     protected $casts = [
-      'option_meta' => 'array', 
+      'option_meta' => 'array',
     ];
+
+
+    /**
+     * Summary of images
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

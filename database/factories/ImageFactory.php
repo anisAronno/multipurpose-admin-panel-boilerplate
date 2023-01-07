@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Setting;
+use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +17,10 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
+        $sesttings = SettingsFields::values();
         return [
-            'key'=>$this->faker->randomElement(['banner'|'logo'|'fav_icon']) ,
-            'path'=>$this->faker->imageUrl(), 
+            'key'=>$this->faker->randomElement($sesttings) ,
+            'path'=>$this->faker->imageUrl(),
         ];
     }
 }
