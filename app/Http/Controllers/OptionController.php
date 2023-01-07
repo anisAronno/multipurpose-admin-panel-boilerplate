@@ -5,18 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
+use Illuminate\Http\Request; 
+use Inertia\Inertia;
 
 class OptionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:user.view|user.create|user.edit|user.delete|user.status', ['only' => ['index','store']]);
+        $this->middleware('permission:user.create', ['only' => ['create','store']]);
+        $this->middleware('permission:user.edit|permission:user.status|', ['only' => ['edit','update']]);
+        $this->middleware('permission:user.delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Option $option)
+    public function index(Request $request)
     {
-        $opt =  Option::getAllOptions();
-        return $opt;
+        return Inertia::render('Settings/Index');
     }
 
 

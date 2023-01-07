@@ -71,9 +71,5 @@ class OptionObserver
     {
         $this->clearCache($this->optionsCacheKey);
 
-        FileHelpers::deleteFile($option->logo);
-        FileHelpers::deleteFile($option->banner);
-        FileHelpers::deleteFile($option->fav_icon);
-
     }
 }

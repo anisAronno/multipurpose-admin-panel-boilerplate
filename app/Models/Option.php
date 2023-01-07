@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\TransformOptions;
+use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,4 +17,16 @@ class Option extends Model
         'option_value'
     ];
 
+    protected $appends = array('isDeletable');
+
+    public function getIsDeletableAttribute($value)
+    {
+        $settingFields = SettingsFields::values();
+
+        if (! in_array($this->option_key, $settingFields)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
