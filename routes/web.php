@@ -35,20 +35,35 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(function () {
+    /**
+     * Profile ROute
+     */
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile', [ProfileController::class, 'avatarUpdate'])->name('profile.image');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    /**
+     * Role Route
+     */
     Route::resource('role', RolesController::class, ['except' => ['update']]);
     Route::post('/role/update/{role}', [RolesController::class, 'update'])->name('role.update');
+
+    /**
+     * User Route
+     */
     Route::resource('user', UserController::class, ['except' => ['update']]);
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
-
     Route::delete('/user/image/{user}', [UserController::class, 'avatarDelete'])->name('user.image.destroy');
 
-    Route::resource('options', OptionController::class, ['except' => ['update']]);
     /**
-     * Image Controller
+     * Options Route
+     */
+    Route::resource('options', OptionController::class, ['except' => ['update']]);
+    Route::post('/options/update/{option:option_key}', [OptionController::class, 'update'])->name('options.update');
+
+    /**
+     * Image Route
      */
 
     Route::resource('image', ImageController::class, ['except' => ['update']]);

@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
+import defaultFile from "@/Stores/defaultFile.js";
 
 const props = defineProps({
     roles: Object,
@@ -23,7 +24,7 @@ const form = useForm({
     name: "",
     email: "",
     avatar: "",
-    avatarPreview: `${route()?.t?.url}/uploads/users/avatar.png`,
+    avatarPreview: defaultFile.avatar,
     status: "",
     password: "",
     password_confirmation: "",

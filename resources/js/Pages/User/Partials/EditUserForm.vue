@@ -4,6 +4,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 import { ref } from "vue";
@@ -20,7 +21,7 @@ const avatarInput = ref(null);
 const statusInput = ref(null);
 const roleInput = ref(null);
 
-const defaultImage = ref(`${route()?.t?.url}/uploads/users/avatar.png`);
+const defaultImage = ref(defaultFile.avatar);
 
 const form = useForm({
     name: props.user.name,

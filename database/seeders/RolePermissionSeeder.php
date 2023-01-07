@@ -146,6 +146,7 @@ class RolePermissionSeeder extends Seeder
                     'slider.status',
                 ]
             ],
+
             [
                 'group_name' => 'options',
                 'permissions' => [

@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FileHelpers;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class OptionController extends Controller
 {
+    /**
+      * Filter role and permission
+      */
     public function __construct()
     {
-        $this->middleware('permission:user.view|user.create|user.edit|user.delete|user.status', ['only' => ['index','store']]);
-        $this->middleware('permission:user.create', ['only' => ['create','store']]);
-        $this->middleware('permission:user.edit|permission:user.status|', ['only' => ['edit','update']]);
-        $this->middleware('permission:user.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:options.view|options.create|options.edit|options.delete|options.status', ['only' => ['index','store']]);
+        $this->middleware('permission:options.create', ['only' => ['create','store']]);
+        $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit','update']]);
+        $this->middleware('permission:options.delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -35,7 +40,7 @@ class OptionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::back()->with('message', 'Updated successfull');
     }
 
     /**
@@ -46,7 +51,7 @@ class OptionController extends Controller
      */
     public function store(StoreOptionRequest $request)
     {
-        //
+        return Inertia::back()->with('message', 'Updated successfull');
     }
 
     /**
@@ -57,7 +62,7 @@ class OptionController extends Controller
      */
     public function show(Option $option)
     {
-        //
+        return Inertia::back()->with('message', 'Updated successfull');
     }
 
     /**
@@ -68,7 +73,7 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-        //
+        return Inertia::back()->with('message', 'Updated successfull');
     }
 
     /**
@@ -80,7 +85,15 @@ class OptionController extends Controller
      */
     public function update(UpdateOptionRequest $request, Option $option)
     {
-        //
+        if ($request->image) {
+            $path = FileHelpers::upload($request, 'image', 'settings');
+            if (!empty($path)) {
+                FileHelpers::deleteFile($option->option_value);
+                $option::setOption($option->option_key, $path);
+            }
+        }
+
+        return Redirect::back()->with('message', 'Updated successfull');
     }
 
     /**
@@ -91,6 +104,12 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        //
+        if ($option->option_value) {
+            FileHelpers::deleteFile($option->option_value);
+        }
+
+        $option::setOption($option->option_key, null);
+
+        return Redirect::back()->with('message', 'Deleted successfull')->with(['options'=>$option]);
     }
 }

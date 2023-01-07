@@ -2,31 +2,30 @@
 import DangerButton from "@/Components/DangerButton.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
 const modalShow = ref(false);
-const emit = defineEmits(["success"]);
+const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
-    id: Number,
+    id: String | Number,
     route: String,
     field: String,
-    table: String,
-    oldFile: String,
+    modelValue: String,
 });
 
 const form = useForm({
-    id: props.id,
-    table: props.table,
     field: props.field,
-    oldFile: props.oldFile,
+    modelValue: props.modelValue,
 });
+
 const confirmDeletion = () => {
     modalShow.value = true;
 };
 
 const processDelete = () => {
-    form.post(route(props.route), {
+    form.delete(route(`${props.route}.destroy`, props.id), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),
@@ -36,7 +35,7 @@ const processDelete = () => {
 
 const closeModal = () => {
     modalShow.value = false;
-    emit("success", true);
+    emit("update:modelValue", defaultFile.placeholder);
 };
 </script>
 
@@ -47,7 +46,6 @@ const closeModal = () => {
         </DangerButton>
 
         <Modal :show="modalShow" @close="closeModal">
-            {{ id }}
             <div class="p-6">
                 <h2
                     class="text-lg font-medium text-gray-900 dark:text-gray-100"

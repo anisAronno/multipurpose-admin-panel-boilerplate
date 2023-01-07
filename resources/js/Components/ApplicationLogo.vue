@@ -1,7 +1,10 @@
 <template>
     <img
-        :src="$page.props.global.options.logo"
-        :alt="$page.props.global.options.site_name"
+        :src="$page.props.global.options.logo || defaultFile.logo"
+        alt="logo"
+        class="rounded-full"
     />
 </template>
-<script setup lang="ts"></script>
+<script setup>
+import defaultFile from "@/Stores/defaultFile.js";
+</script>

@@ -9,6 +9,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import Toast from "@/Components/Toast.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
+
 const isLoaded = ref(false);
 const showingNavigationDropdown = ref(false);
 

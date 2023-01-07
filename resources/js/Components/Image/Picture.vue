@@ -1,31 +1,68 @@
 <script setup>
 import DeleteImage from "@/Components/Image/DeleteImage.vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
+import defaultFile from "@/Stores/defaultFile.js";
 
 const props = defineProps({
     modelValue: String,
-    id: String || Number,
+    id: {
+        type: [Number, String],
+        default: 1,
+        require: false,
+    },
+
     route: {
         type: String,
-        default: "file.destroy",
+        default: "options",
+        require: false,
     },
-    table: String,
-    field: String,
+
+    field: {
+        type: String,
+        default: "option_value",
+        require: false,
+    },
+
+    isDeleteable: {
+        type: Boolean,
+        default: false,
+        require: false,
+    },
 });
 
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const input = ref(null);
-
-const defaultImage = ref(
-    props.modelValue || `${route()?.t?.url}/uploads/placeholder.png`
-);
+const defaultImage = ref(defaultFile.placeholder);
 
 defineExpose({ focus: () => input.value.focus() });
 
+const form = useForm({
+    id: props.id,
+    field: props.field,
+    image: "",
+    imagePreview: props.modelValue || defaultImage.value,
+});
+
 const previewImage = (e) => {
     const file = e.target.files[0];
-    defaultImage.value = URL.createObjectURL(file);
+    form.imagePreview = URL.createObjectURL(file);
+
+    form.post(route(`${props.route}.update`, props.id), {
+        preserveScroll: true,
+        onSuccess: () => successEvent(),
+        onError: () => {
+            if (form.errors.image) {
+                input.value.focus();
+                form.reset();
+            }
+        },
+    });
+};
+
+const successEvent = () => {
+    emit("update:modelValue", form.imagePreview);
 };
 </script>
 
@@ -38,16 +75,16 @@ const previewImage = (e) => {
                         class="flex items-center justify-center overflow-hidden rounded-full bg-gray-100 relative group w-32 h-32 sm:w-40 sm:h-40"
                     >
                         <img
-                            :src="defaultImage"
-                            :alt="modelValue"
+                            :src="form.imagePreview"
+                            alt="logo"
                             class="w-full h-full object-contain inset-0 group-hover:opacity-50 shadow-md shadow-gray-900"
                         />
                         <span
-                            class="w-full h-full absolute grid grid-cols-2 place-items-center transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
+                            class="w-full h-full absolute flex items-center justify-center space-x-2 transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
                         >
                             <div>
                                 <label
-                                    :for="modelValue"
+                                    for="image"
                                     class="btn btn-primary cursor-pointer"
                                 >
                                     <font-awesome-icon
@@ -55,29 +92,25 @@ const previewImage = (e) => {
                                     />
                                 </label>
                                 <input
-                                    :id="modelValue"
+                                    id="image"
                                     type="file"
-                                    name="avatar"
+                                    name="image"
                                     class="mt-1 form-controll cursor-pointer hidden"
                                     @change="previewImage"
                                     ref="input"
-                                    @input="
-                                        $emit(
-                                            'update:modelValue',
-                                            $event.target.files[0]
-                                        )
-                                    "
+                                    @input="form.image = $event.target.files[0]"
                                 />
                             </div>
                             <DeleteImage
-                                v-if="defaultImage == modelValue"
+                                v-if="
+                                    isDeleteable ||
+                                    form.imagePreview != defaultImage
+                                "
                                 class="cursor-pointer"
                                 :id="id"
                                 :route="route"
-                                :table="table"
                                 :field="field"
-                                :oldFile="modelValue"
-                                @success="$emit('update:modelValue')"
+                                v-model="form.imagePreview"
                             ></DeleteImage>
                         </span>
                     </span>

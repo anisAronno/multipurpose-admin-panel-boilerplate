@@ -3,6 +3,7 @@ import DeleteForm from "@/Components/DeleteForm.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import defaultFile from "@/Stores/defaultFile.js";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
@@ -12,7 +13,7 @@ const props = defineProps({
 });
 
 const avatarInput = ref(null);
-const defaultImage = ref(`${route()?.t?.url}/uploads/users/avatar.png`);
+const defaultImage = ref(defaultFile.avatar);
 
 const user = usePage().props.value.auth.user;
 

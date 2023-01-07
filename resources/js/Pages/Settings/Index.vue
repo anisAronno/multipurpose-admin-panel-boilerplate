@@ -9,7 +9,7 @@ const options = usePage().props.value.global.options;
 <template>
     <Head title="Profile" />
 
-    <AuthenticatedLayout> 
+    <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
@@ -23,10 +23,9 @@ const options = usePage().props.value.global.options;
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 text-black dark:text-white shadow sm:rounded-lg"
                 >
                     <Picture
-                        :id="options.id"
-                        table="options"
-                        field="logo"
+                        id="logo"
                         class="max-w-full"
+                        :isDeleteable="false"
                         v-model="options.logo"
                     />
                 </div>

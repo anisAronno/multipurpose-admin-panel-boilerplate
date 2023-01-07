@@ -54,7 +54,7 @@ trait TransformOptions
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheServices::getOptionsCacheKey(1);
+        $key = CacheServices::getOptionsCacheKey(2);
 
         try {
             $options = Cache::remember($key, 10, function () use ($settingFields) {
