@@ -6,25 +6,41 @@ use Illuminate\Support\Facades\Cache;
 
 trait TransformOptions
 {
-    public static function getOptions($key=null)
+    public static function getAllOptions()
     {
         try {
-            $result = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()
+            $options = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()
             ->flatMap(function ($name) {
                 return [$name->option_key => $name->option_value];
             });
 
-            $allKeys = $result->keys()->toArray();
-
-            if (empty($key)) {
-                return $result;
-            } elseif (in_array($key, $allKeys)) {
-                return $result[$key];
+            if ($options) {
+                return $options;
             } else {
-                return 'Key is not Exists';
+                return [];
             }
         } catch (\Throwable $th) {
-            return "Result not found";
+            return [];
+        }
+    }
+
+    public static function setOption(string $key, $value='')
+    {
+        try {
+            $option = self::where('option_key', $key)->first();
+            $option->option_value = $value;
+            return $option->save();
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+    public static function getOption(string $key)
+    {
+        try {
+            $option = self::where('option_key', $key)->first();
+            return $option['option_value'];
+        } catch (\Throwable $th) {
+            return false;
         }
     }
 }

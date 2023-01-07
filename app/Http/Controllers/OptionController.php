@@ -15,7 +15,7 @@ class OptionController extends Controller
      */
     public function index(Option $option)
     {
-        $opt =  $option::getOptions();
+        $opt =  Option::getAllOptions();
         return $opt;
     }
 

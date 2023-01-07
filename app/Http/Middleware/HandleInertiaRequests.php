@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'global' => [
-                'options' =>  Option::getOptions(),
+                'options' =>  Option::getAllOptions(),
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
