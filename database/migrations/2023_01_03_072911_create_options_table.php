@@ -14,9 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->string('option_key', 50);
-            $table->longText('option_value')->nullable();
-            $table->json('option_meta')->nullable();
+            $table->string('option_key', 200)->unique();
+            $table->longText('option_value')->nullable(); 
             $table->timestamps();
         });
     }

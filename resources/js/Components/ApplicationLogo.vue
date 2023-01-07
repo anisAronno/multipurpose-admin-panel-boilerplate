@@ -1,7 +1,7 @@
 <template>
     <img
-        :src="$page.props.global.settings.logo"
-        :alt="$page.props.global.settings.site_name"
+        :src="$page.props.global.options.logo"
+        :alt="$page.props.global.options.site_name"
     />
 </template>
 <script setup lang="ts"></script>

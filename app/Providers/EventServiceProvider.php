@@ -3,11 +3,9 @@
 namespace App\Providers;
 
 use App\Events\LoginEvent;
-use App\Listeners\LoginListener;
-use App\Models\Setting;
+use App\Listeners\LoginListener; 
 use App\Models\User;
-use App\Observers\RoleObserver;
-use App\Observers\SettingsObjerver;
+use App\Observers\RoleObserver; 
 use App\Observers\User\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -38,8 +36,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
-        Role::observe(RoleObserver::class);
-        Setting::observe(SettingsObjerver::class);
+        Role::observe(RoleObserver::class); 
     }
 
     /**

@@ -4,7 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    settings: Object,
+    options: Object,
 });
 
 </script>
@@ -26,11 +26,11 @@ defineProps({
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 text-black dark:text-white shadow sm:rounded-lg"
                 >
                     <Picture
-                        :id="settings.id"
-                        table="settings"
+                        :id="options.id"
+                        table="options"
                         field="logo"
                         class="max-w-full"
-                        v-model="settings.logo"
+                        v-model="options.logo"
                     />
                 </div>
             </div>

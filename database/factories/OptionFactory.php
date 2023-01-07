@@ -24,8 +24,7 @@ class OptionFactory extends Factory
 
         return [
             'option_key'   => $this->faker->unique()->randomElement($sesttings),
-            'option_value' => $this->faker->imageUrl(),
-            'option_meta'  => json_encode([$this->faker->randomElement(["house","flat","apartment","room", "shop","lot", "garage"])]),
+            'option_value' => $this->faker->imageUrl()
         ];
     }
 }

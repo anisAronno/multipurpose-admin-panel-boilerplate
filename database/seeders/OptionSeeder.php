@@ -23,6 +23,6 @@ class OptionSeeder extends Seeder
         Option::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Option::factory()->count($sesttings)->hasImages(1)->create();
+        Option::factory()->count($sesttings)->create();
     }
 }

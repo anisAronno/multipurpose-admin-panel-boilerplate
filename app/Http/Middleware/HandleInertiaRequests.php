@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Models\Option;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -41,8 +40,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'global' => [
-                'settings' =>  Setting::first(),
-                // 'options' =>  Option::all(),
+                'options' =>  Option::getOptions(),
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message')

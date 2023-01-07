@@ -147,13 +147,13 @@ class RolePermissionSeeder extends Seeder
                 ]
             ],
             [
-                'group_name' => 'settings',
+                'group_name' => 'options',
                 'permissions' => [
-                    'settings.create',
-                    'settings.view',
-                    'settings.edit',
-                    'settings.delete',
-                    'settings.status',
+                    'options.create',
+                    'options.view',
+                    'options.edit',
+                    'options.delete',
+                    'options.status',
                 ]
             ],
             [
@@ -230,10 +230,10 @@ class RolePermissionSeeder extends Seeder
             'slider.delete',
             'slider.status',
 
-            'settings.create',
-            'settings.view',
-            'settings.edit',
-            'settings.status',
+            'options.create',
+            'options.view',
+            'options.edit',
+            'options.status',
 
             'pages.create',
             'pages.view',
@@ -286,11 +286,11 @@ class RolePermissionSeeder extends Seeder
             'slider.delete',
             'slider.status',
 
-            'settings.create',
-            'settings.view',
-            'settings.edit',
-            'settings.delete',
-            'settings.status',
+            'options.create',
+            'options.view',
+            'options.edit',
+            'options.delete',
+            'options.status',
 
             'pages.create',
             'pages.view',

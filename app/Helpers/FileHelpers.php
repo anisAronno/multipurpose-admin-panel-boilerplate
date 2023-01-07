@@ -43,9 +43,9 @@ class FileHelpers
         $defaultFile = [
             'uploads/users/avatar.png',
             'uploads/placeholder.png',
-            'uploads/settings/logo.png',
-            'uploads/settings/banner.png',
-            'uploads/settings/fav_icon.png',
+            'uploads/options/logo.png',
+            'uploads/options/banner.png',
+            'uploads/options/fav_icon.png',
         ];
 
         if (in_array($path, $defaultFile)) {

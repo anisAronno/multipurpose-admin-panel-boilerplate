@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController; 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\Role\RolesController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\User\ProfileController;
@@ -45,8 +46,7 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
 
     Route::delete('/user/image/{user}', [UserController::class, 'avatarDelete'])->name('user.image.destroy');
 
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-
+    Route::resource('options', OptionController::class, ['except' => ['update']]);
     /**
      * Image Controller
      */

@@ -2,30 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\TransformOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
 {
     use HasFactory;
+    use TransformOptions;
 
     protected $fillable = [
         'option_key',
-        'option_value',
-        'option_meta',
+        'option_value'
     ];
 
-    protected $casts = [
-      'option_meta' => 'array',
-    ];
-
-
-    /**
-     * Summary of images
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
 }
