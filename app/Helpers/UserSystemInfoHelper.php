@@ -9,7 +9,7 @@ class UserSystemInfoHelper
         return $_SERVER['HTTP_USER_AGENT'];
     }
 
-      public static function get_ip()
+      public static function get_ip(): string
       {
           $ipaddress = '';
           if (isset($_SERVER['HTTP_CLIENT_IP'])) {
@@ -25,7 +25,7 @@ class UserSystemInfoHelper
           } elseif (isset($_SERVER['REMOTE_ADDR'])) {
               $ipaddress = $_SERVER['REMOTE_ADDR'];
           } else {
-              $ipaddress = 'UNKNOWN';
+              $ipaddress = '';
           }
           return $ipaddress;
       }

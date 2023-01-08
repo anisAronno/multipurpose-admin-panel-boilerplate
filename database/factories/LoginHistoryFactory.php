@@ -22,6 +22,8 @@ class LoginHistoryFactory extends Factory
         return [
             'ip'=>$this->faker->localIpv4(),
             'device_name'=>$this->faker->name(),
+            'os_name'=>$this->faker->name(),
+            'browser_name'=>$this->faker->name(),
             'country_name'=>$this->faker->country(),
             'country_code'=>$this->faker->countryCode(),
             'region_code'=>$this->faker->postcode(),
@@ -30,7 +32,11 @@ class LoginHistoryFactory extends Factory
             'zip_code'=>$this->faker->postcode(),
             'latitude'=>$this->faker->latitude($min = -90, $max = 90) ,
             'longitude'=>$this->faker->longitude($min = -180, $max = 180),
-            'time_zone'=>$this->faker->name(),
+            'time_zone'=>$this->faker->city(),
+            'area_ode'=>$this->faker->city(),
+            'metro_code'=>$this->faker->city(),
+            'iso_code'=>$this->faker->postcode(),
+            'postal_code'=>$this->faker->postcode(),
             'user_id'=>User::all(['id'])->random(),
         ];
     }

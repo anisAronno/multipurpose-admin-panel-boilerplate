@@ -11,6 +11,7 @@ class LoginHistory extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $timestamps = true;
     protected $fillable = [
         "device_name",
         "country_name",
@@ -23,4 +24,10 @@ class LoginHistory extends Model
         "longitude",
         "time_zone"
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'user_id');
+    }
 }
