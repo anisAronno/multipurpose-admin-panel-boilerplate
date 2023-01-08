@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Enums\SettingsFields;
+use App\Helpers\FileHelpers;
 use App\Services\Cache\CacheServices;
 use Illuminate\Support\Facades\Cache;
 
@@ -11,7 +12,7 @@ trait TransformOptions
     public static function getAllOptions()
     {
         $key = CacheServices::getOptionsCacheKey(1);
-        
+
         try {
             $options = Cache::remember($key, 10, function () {
                 $result =   self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
@@ -72,5 +73,13 @@ trait TransformOptions
         } catch (\Throwable $th) {
             return [];
         }
+    }
+
+    public function getOptionKeyAttribute($value)
+    {
+         
+        $isFile = FileHelpers::isAllowFileType($value);
+        dd($isFile);
+        return $isFile;
     }
 }

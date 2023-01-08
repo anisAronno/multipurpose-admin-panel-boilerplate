@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
      */
     Route::resource('user', UserController::class, ['except' => ['update']]);
     Route::post('/user/update/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::post('/user/image/{user}', [UserController::class, 'avatarUpdate'])->name('user.image.update');
     Route::delete('/user/image/{user}', [UserController::class, 'avatarDelete'])->name('user.image.destroy');
 
     /**

@@ -1,5 +1,5 @@
 <script setup>
-import Picture from "@/Components/Image/Picture.vue";
+import Image from "@/Components/Image/Image.vue";
 import { usePage } from "@inertiajs/inertia-vue3";
 
 const options = usePage().props.value.global.options;
@@ -12,7 +12,7 @@ const options = usePage().props.value.global.options;
             class="p-4 space-x-5 shadow flex-1 min-h-full grid place-items-center h-[300px]"
         >
             <div class="text-2x block text-center text-2xl">Logo</div>
-            <Picture
+            <Image
                 id="logo"
                 field="logo"
                 :isDeleteable="true"
@@ -24,7 +24,7 @@ const options = usePage().props.value.global.options;
             class="p-4 space-x-5 shadow flex-1 min-h-full grid place-items-center h-[300px]"
         >
             <div class="text-2x block text-center text-2xl">Fav Icon</div>
-            <Picture
+            <Image
                 id="fav_icon"
                 field="fav_icon"
                 :isDeleteable="true"
@@ -36,7 +36,7 @@ const options = usePage().props.value.global.options;
             class="p-4 space-x-5 shadow flex-1 min-h-full grid place-items-center h-[300px]"
         >
             <div class="text-2x block text-center text-2xl">Banner</div>
-            <Picture
+            <Image
                 id="banner"
                 field="banner"
                 :isDeleteable="true"

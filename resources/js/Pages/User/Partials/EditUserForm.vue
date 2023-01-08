@@ -1,10 +1,9 @@
 <script setup>
-import DeleteForm from "@/Components/DeleteForm.vue";
+import Image from "@/Components/Image/Image.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 import { ref } from "vue";
@@ -17,25 +16,15 @@ const props = defineProps({
 
 const nameInput = ref(null);
 const emailInput = ref(null);
-const avatarInput = ref(null);
 const statusInput = ref(null);
 const roleInput = ref(null);
-
-const defaultImage = ref(defaultFile.avatar);
 
 const form = useForm({
     name: props.user.name,
     email: props.user.email,
-    avatar: "",
-    avatarPreview: props.user.avatar,
     status: props.user.status,
     roles: props.user.has_roles,
 });
-
-const previewImage = (e) => {
-    const file = e.target.files[0];
-    form.avatarPreview = URL.createObjectURL(file);
-};
 
 const storeUser = () => {
     form.post(route("user.update", props.user.id), {
@@ -53,9 +42,6 @@ const storeUser = () => {
             }
             if (form.errors.roles) {
                 roleInput.value.focus();
-            }
-            if (form.errors.avatar) {
-                avatarInput.value.focus();
             }
         },
     });
@@ -109,56 +95,24 @@ const storeUser = () => {
                                 />
                             </div>
 
-                            <div
-                                class="col-span-6 sm:col-span-3 flex items-center justify-between"
-                            >
-                                <div>
-                                    <InputLabel
-                                        for="avatar"
-                                        value="Avatar :"
-                                        class="block text-sm font-medium text-gray-700"
-                                    />
-                                    <input
-                                        id="avatar"
-                                        type="file"
-                                        class="mt-1 block form-controll cursor-pointer"
-                                        @change="previewImage"
-                                        ref="avatarInput"
-                                        @input="
-                                            form.avatar = $event.target.files[0]
-                                        "
-                                    />
-                                    <InputError
-                                        :message="form.errors.avatar"
-                                        class="mt-2 col-start-2 col-span-4"
+                            <div class="col-span-6 sm:col-span-3">
+                                <div
+                                    class="p-4 space-x-5 shadow flex items-center min-h-full h-[150px]"
+                                >
+                                    <div
+                                        class="text-2x block text-center text-2xl"
+                                    >
+                                        Avatar:
+                                    </div>
+                                    <Image
+                                        :id="user.id"
+                                        field="avatar"
+                                        :isDeleteable="true"
+                                        v-model="user.avatar"
+                                        route="user.image"
+                                        class="w-32 h-32 rounded-full overflow-clip bg-red-500"
                                     />
                                 </div>
-                                <span
-                                    class="flex items-center justify-center h-24 w-24 overflow-hidden rounded-full bg-gray-100 relative group"
-                                >
-                                    <img
-                                        :src="form.avatarPreview"
-                                        class="w-full h-full object-contain inset-0 group-hover:opacity-50"
-                                    />
-                                    <span
-                                        v-if="
-                                            defaultImage != form.avatarPreview
-                                        "
-                                        class="w-full h-full absolute grid place-items-center transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
-                                    >
-                                        <DeleteForm
-                                            class="cursor-pointer"
-                                            :data="{
-                                                id: user.id,
-                                                model: 'user.image',
-                                            }"
-                                            @success="
-                                                form.avatarPreview =
-                                                    defaultImage
-                                            "
-                                        ></DeleteForm>
-                                    </span>
-                                </span>
                             </div>
                             <div
                                 class="col-span-6 sm:col-span-3 grid grid-cols-6 gap-5 items-center justify-between"

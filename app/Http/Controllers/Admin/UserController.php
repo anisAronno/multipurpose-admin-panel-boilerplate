@@ -134,14 +134,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $data = $request->only('name', 'email', 'status');
-
-        if ($request->avatar) {
-            $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
-            FileHelpers::deleteFile($user->avatar);
-        }
-
-        $user->update($data);
+        $user->update($request->only('name', 'email', 'status'));
 
         if (! $user->isEditable) {
             $user->roles()->detach();
@@ -185,12 +178,32 @@ class UserController extends Controller
 
        return Redirect::back()->with('message', 'Deleted successfull');
    }
+
+   /**
+    * Summary of avatarUpdate
+    * @param User $user
+    * @return \Illuminate\Http\RedirectResponse
+    */
+   public function avatarUpdate(Request $request, User $user)
+   {
+
+       if ($request->image) {
+           $path = FileHelpers::upload($request, 'image', 'users');
+           FileHelpers::deleteFile($user->avatar);
+           if ($path) {
+               $user->update([$user->avatar = $path]);
+           }
+       }
+
+       return Redirect::back()->with('message', 'Successfully Updated');
+   }
     /**
      * Remove the specified user avatar.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
    public function avatarDelete(User $user)
    {
        FileHelpers::deleteFile($user->avatar);

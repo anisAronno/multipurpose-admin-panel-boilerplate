@@ -12,6 +12,12 @@ const props = defineProps({
         require: true,
     },
 
+    alt: {
+        type: String,
+        default: "image",
+        require: false,
+    },
+
     route: {
         type: String,
         default: "options",
@@ -73,7 +79,7 @@ const successEvent = () => {
         >
             <img
                 :src="form.imagePreview"
-                alt="logo"
+                :alt="alt"
                 class="min-w-sm max-w-xl h-full inset-0 group-hover:opacity-50 shadow-md shadow-gray-900 object-cover object-center"
             />
             <div
