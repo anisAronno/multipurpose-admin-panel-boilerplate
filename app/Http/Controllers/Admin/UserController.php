@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserStatus;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use App\Models\Role;
 
-class UserController extends Controller
+class UserController extends InertiaApplicationController
 {
     /**
     * Filter role and permission
@@ -87,7 +87,7 @@ class UserController extends Controller
             $user->assignRole($request->get('roles'));
         }
 
-        return Redirect::route('user.index')->with('message', 'Created successfull');
+        return Redirect::route('user.index')->with(['success' => true, 'message', 'Created successfull']);
     }
 
     /**
@@ -152,10 +152,10 @@ class UserController extends Controller
         }
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'))->with('message', 'Updated successfull');
+            return Redirect::to(session('last_visited_url'))->with(['success'=>true, 'message', 'Updated successfull']);
         }
 
-        return Redirect::route('user.index')->with('message', 'Updated successfull');
+        return Redirect::route('user.index')->with(['success'=>true,'message', 'Updated successfull']);
     }
 
     /**
@@ -167,16 +167,16 @@ class UserController extends Controller
    public function destroy(User $user)
    {
        if (! $user->isDeletable) {
-           return Redirect::back()->with(['message'=>'User is not delatable']);
+            return $this->failedWithMessage('User is not delatable');
        }
 
        $user->delete();
 
        if (session('last_visited_url')) {
-           return Redirect::to(session('last_visited_url'))->with('message', 'Deleted successfull');
+           return Redirect::to(session('last_visited_url'))->with(['success'=>true, 'message', 'Deleted successfull']);
        }
 
-       return Redirect::back()->with('message', 'Deleted successfull');
+        return $this->successWithMessage('Deleted successfull');
    }
 
    /**
@@ -186,7 +186,6 @@ class UserController extends Controller
     */
    public function avatarUpdate(Request $request, User $user)
    {
-
        if ($request->image) {
            $path = FileHelpers::upload($request, 'image', 'users');
            FileHelpers::deleteFile($user->avatar);
@@ -195,7 +194,7 @@ class UserController extends Controller
            }
        }
 
-       return Redirect::back()->with('message', 'Successfully Updated');
+        return $this->successWithMessage('Successfully Updated');
    }
     /**
      * Remove the specified user avatar.
@@ -210,6 +209,6 @@ class UserController extends Controller
 
        $user->update([$user->avatar=null]);
 
-       return Redirect::back()->with('message', 'Deleted successfull');
+        return $this->failedWithMessage('Deleted successfull');
    }
 }

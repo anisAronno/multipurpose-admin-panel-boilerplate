@@ -43,7 +43,8 @@ class HandleInertiaRequests extends Middleware
                 'options' =>  Option::getAllOptions(),
             ],
             'flash' => [
-                'message' => fn () => $request->session()->get('message')
+                'message' => fn () => $request->session()->get('message'),
+                'success' => fn () => $request->session()->get('success')
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [

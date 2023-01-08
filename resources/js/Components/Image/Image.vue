@@ -69,6 +69,7 @@ const previewImage = (e) => {
             }
             toast.add({
                 message: "Something went wrong!",
+                success: false,
             });
         },
     });

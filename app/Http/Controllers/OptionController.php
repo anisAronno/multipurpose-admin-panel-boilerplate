@@ -9,19 +9,20 @@ use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Http\Controllers\InertiaApplicationController;
 
-class OptionController extends Controller
+class OptionController extends InertiaApplicationController
 {
     /**
       * Filter role and permission
       */
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:options.view|options.create|options.edit|options.delete|options.status', ['only' => ['index','store']]);
-    //     $this->middleware('permission:options.create', ['only' => ['create','store']]);
-    //     $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit','update']]);
-    //     $this->middleware('permission:options.delete', ['only' => ['destroy']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('permission:options.view|options.create|options.edit|options.delete|options.status', ['only' => ['index','store']]);
+        $this->middleware('permission:options.create', ['only' => ['create','store']]);
+        $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit','update']]);
+        $this->middleware('permission:options.delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +41,7 @@ class OptionController extends Controller
      */
     public function create()
     {
-        return Inertia::back()->with('message', 'Updated successfull');
+       //
     }
 
     /**
@@ -51,7 +52,7 @@ class OptionController extends Controller
      */
     public function store(StoreOptionRequest $request)
     {
-        return Inertia::back()->with('message', 'Updated successfull');
+       //
     }
 
     /**
@@ -62,7 +63,7 @@ class OptionController extends Controller
      */
     public function show(Option $option)
     {
-        return Inertia::back()->with('message', 'Updated successfull');
+       //
     }
 
     /**
@@ -73,7 +74,7 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-        return Inertia::back()->with('message', 'Updated successfull');
+        //
     }
 
     /**
@@ -90,11 +91,11 @@ class OptionController extends Controller
             if (!empty($path)) {
                 FileHelpers::deleteFile($option->option_value);
                 $option::setOption($option->option_key, $path);
-                return Redirect::back()->with('message', 'Updated successfull');
+                return $this->successWithMessage('Successfully Updated');
             }
         }
 
-        return Redirect::back()->with('message', 'Update failed!');
+        return $this->failedWithMessage('Update failed!');
     }
 
 
@@ -107,11 +108,15 @@ class OptionController extends Controller
      */
     public function bulkUpdate(UpdateOptionRequest $request, Option $option)
     {
-        foreach ($request->all() as $key => $value) {
-            $option::setOption($key, $value);
+        try {
+            foreach ($request->all() as $key => $value) {
+                $option::setOption($key, $value);
+            }
+            return $this->successWithMessage('Successfully Updated');
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-
-        return Redirect::back()->with('message', 'Updated successfully');
+        return $this->failedWithMessage('Update failed!');
     }
 
     /**
@@ -122,12 +127,16 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        if ($option->option_value) {
-            FileHelpers::deleteFile($option->option_value);
+        try {
+            if ($option->option_value) {
+                FileHelpers::deleteFile($option->option_value);
+            }
+
+            $option::setOption($option->option_key, null);
+
+            return $this->successWithMessageAndData('Successfully Deleted', $option);
+        } catch (\Throwable $th) {
+            return $this->failedWithMessage('Delete failed!');
         }
-
-        $option::setOption($option->option_key, null);
-
-        return Redirect::back()->with('message', 'Deleted successfull')->with(['options'=>$option]);
     }
 }

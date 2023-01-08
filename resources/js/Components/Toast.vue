@@ -11,6 +11,7 @@ let removeFinshEventListener = Inertia.on("finish", () => {
     if (page.props.value.flash.message) {
         toast.add({
             message: page.props.value.flash.message,
+            success: page.props.value.flash.success,
         });
     }
 });
@@ -34,6 +35,7 @@ function remove(index) {
             v-for="(item, index) in toast.items"
             :key="item.key"
             :message="item.message"
+            :success="item.success"
             :duration="2000"
             @remove="remove(index)"
         />

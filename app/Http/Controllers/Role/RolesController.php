@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Role;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Models\User;
@@ -16,7 +16,7 @@ use Inertia\Inertia;
 use App\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class RolesController extends Controller
+class RolesController extends InertiaApplicationController
 {
     /**
      * Filter role and permission
@@ -99,7 +99,7 @@ class RolesController extends Controller
             $role->syncPermissions($permissions);
         }
 
-        return Redirect::route('role.index')->with(['message'=>'successfully Created']);
+        return Redirect::route('role.index')->with([ 'success'=>true, 'message'=>'successfully Created']);
     }
 
     /**
@@ -168,10 +168,10 @@ class RolesController extends Controller
 
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'))->with(['message'=>'successfully Updated']);
+            return Redirect::to(session('last_visited_url'))->with([ 'success'=>true,'message'=>'successfully Updated']);
         }
 
-        return Redirect::route('role.index')->with(['message'=>'successfully Updated']);
+        return Redirect::route('role.index')->with([ 'success'=>true, 'message'=>'successfully Updated']);
     }
 
     /**
@@ -182,16 +182,16 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        if ( ! $role->isDelatable) {
-            return Redirect::back()->with(['message'=>'Role is not delatable']);
+        if (! $role->isDelatable) {
+            return $this->failedWithMessage('Role is not delatable'); 
         }
 
         $role->delete();
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'))->with(['message'=>'successfully Deleted']);
+            return Redirect::to(session('last_visited_url'))->with([ 'success'=>true,'message'=>'successfully Deleted']);
         }
 
-        return Redirect::route('role.index')->with(['message'=>'successfully Deleted']);
+        return Redirect::route('role.index')->with([ 'success'=>true, 'message'=>'successfully Deleted']);
     }
 }
