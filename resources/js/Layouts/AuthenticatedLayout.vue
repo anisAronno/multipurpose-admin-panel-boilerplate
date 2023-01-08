@@ -7,7 +7,7 @@ import Loader from "@/Components/Loader.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import Toast from "@/Components/Toast.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
 
 const isLoaded = ref(false);
@@ -22,6 +22,13 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head> 
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            :href="$page.props.global.options.fav_icon"
+        />
+    </Head>
     <div>
         <div
             class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-900 opacity-75 flex flex-col items-center justify-center"

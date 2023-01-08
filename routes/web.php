@@ -61,6 +61,7 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
      */
     Route::resource('options', OptionController::class, ['except' => ['update']]);
     Route::post('/options/update/{option:option_key}', [OptionController::class, 'update'])->name('options.update');
+    Route::patch('/options/update', [OptionController::class, 'bulkUpdate'])->name('options.bulk.update');
 
     /**
      * Image Route

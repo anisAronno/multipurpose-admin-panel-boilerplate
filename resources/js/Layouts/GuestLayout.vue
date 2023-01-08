@@ -1,9 +1,18 @@
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Toast from "@/Components/Toast.vue";
+import { Head } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
+    <Head>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            :href="$page.props.global.options.fav_icon"
+        />
+    </Head>
+
     <div
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900"
     >

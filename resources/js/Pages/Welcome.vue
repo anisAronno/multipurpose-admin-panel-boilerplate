@@ -10,7 +10,14 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head>
+        <title>Home</title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            :href="$page.props.global.options.fav_icon"
+        />
+    </Head>
     <Toast></Toast>
     <div
         class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"

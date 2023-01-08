@@ -87,13 +87,31 @@ class OptionController extends Controller
     {
         if ($request->image) {
             $path = FileHelpers::upload($request, 'image', 'settings');
-            if (!empty($path)) {
+            if (!empty($path) && !empty($path)) {
                 FileHelpers::deleteFile($option->option_value);
                 $option::setOption($option->option_key, $path);
+                return Redirect::back()->with('message', 'Updated successfull');
             }
         }
 
-        return Redirect::back()->with('message', 'Updated successfull');
+        return Redirect::back()->with('message', 'Update failed!');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateOptionRequest  $request
+     * @param  \App\Models\Option  $option
+     * @return \Illuminate\Http\Response
+     */
+    public function bulkUpdate(UpdateOptionRequest $request, Option $option)
+    {
+        foreach ($request->all() as $key => $value) {
+            $option::setOption($key, $value);
+        }
+
+        return Redirect::back()->with('message', 'Updated successfully');
     }
 
     /**

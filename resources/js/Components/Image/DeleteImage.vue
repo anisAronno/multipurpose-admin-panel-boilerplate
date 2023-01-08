@@ -29,13 +29,13 @@ const processDelete = () => {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),
-        onFinish: () => form.reset(),
+        onFinish: () => emit("update:modelValue", defaultFile.placeholder),
     });
 };
 
 const closeModal = () => {
+    form.reset();
     modalShow.value = false;
-    emit("update:modelValue", defaultFile.placeholder);
 };
 </script>
 

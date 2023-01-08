@@ -1,15 +1,15 @@
 <script setup>
 import DeleteImage from "@/Components/Image/DeleteImage.vue";
+import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
-import defaultFile from "@/Stores/defaultFile.js";
 
 const props = defineProps({
     modelValue: String,
     id: {
         type: [Number, String],
-        default: 1,
-        require: false,
+        default: "logo",
+        require: true,
     },
 
     route: {
@@ -68,53 +68,41 @@ const successEvent = () => {
 
 <template>
     <section>
-        <div class="w-full space-y-5">
-            <div class="mt-6 space-y-6 flex-1">
-                <div class="flex-1 w-full order-first sm:order-last">
-                    <span
-                        class="flex items-center justify-center overflow-hidden rounded-full bg-gray-100 relative group w-32 h-32 sm:w-40 sm:h-40"
-                    >
-                        <img
-                            :src="form.imagePreview"
-                            alt="logo"
-                            class="w-full h-full object-contain inset-0 group-hover:opacity-50 shadow-md shadow-gray-900"
-                        />
-                        <span
-                            class="w-full h-full absolute flex items-center justify-center space-x-2 transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
-                        >
-                            <div>
-                                <label
-                                    for="image"
-                                    class="btn btn-primary cursor-pointer"
-                                >
-                                    <font-awesome-icon
-                                        icon="fa-solid fa-rotate"
-                                    />
-                                </label>
-                                <input
-                                    id="image"
-                                    type="file"
-                                    name="image"
-                                    class="mt-1 form-controll cursor-pointer hidden"
-                                    @change="previewImage"
-                                    ref="input"
-                                    @input="form.image = $event.target.files[0]"
-                                />
-                            </div>
-                            <DeleteImage
-                                v-if="
-                                    isDeleteable ||
-                                    form.imagePreview != defaultImage
-                                "
-                                class="cursor-pointer"
-                                :id="id"
-                                :route="route"
-                                :field="field"
-                                v-model="form.imagePreview"
-                            ></DeleteImage>
-                        </span>
-                    </span>
+        <div
+            class="flex items-center justify-center overflow-hidden bg-gray-100 relative group min-w-sm max-w-xl h-full"
+        >
+            <img
+                :src="form.imagePreview"
+                alt="logo"
+                class="min-w-sm max-w-xl h-full inset-0 group-hover:opacity-50 shadow-md shadow-gray-900 object-cover object-center"
+            />
+            <div
+                class="min-w-sm max-w-xl h-full absolute flex items-center justify-center transition-all transform translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 space-x-3"
+            >
+                <div>
+                    <label :for="id" class="btn btn-primary cursor-pointer">
+                        <font-awesome-icon icon="fa-solid fa-rotate" />
+                    </label>
+                    <input
+                        :id="id"
+                        type="file"
+                        name="image"
+                        class="mt-1 form-controll cursor-pointer hidden"
+                        @change="previewImage"
+                        ref="input"
+                        @input="form.image = $event.target.files[0]"
+                    />
                 </div>
+                <span v-if="isDeleteable">
+                    <DeleteImage
+                        v-if="form.imagePreview != defaultImage"
+                        class="cursor-pointer"
+                        :id="id"
+                        :route="route"
+                        :field="field"
+                        v-model="form.imagePreview"
+                    ></DeleteImage>
+                </span>
             </div>
         </div>
     </section>
