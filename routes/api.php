@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\OptionController; 
+use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::resource('options', OptionController::class, ['except' => ['update']]);
+Route::post('/options/update/{option:option_key}', [OptionController::class, 'update'])->name('options.update');
+Route::patch('/options/update', [OptionController::class, 'bulkUpdate'])->name('options.bulk.update');

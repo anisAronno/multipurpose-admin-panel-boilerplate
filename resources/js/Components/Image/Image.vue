@@ -1,6 +1,7 @@
 <script setup>
 import DeleteImage from "@/Components/Image/DeleteImage.vue";
 import defaultFile from "@/Stores/defaultFile.js";
+import toast from "@/Stores/toast.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
@@ -60,9 +61,15 @@ const previewImage = (e) => {
         onSuccess: () => successEvent(),
         onError: () => {
             if (form.errors.image) {
+                toast.add({
+                    message: form.errors.image,
+                });
                 input.value.focus();
                 form.reset();
             }
+            toast.add({
+                message: "Something went wrong!",
+            });
         },
     });
 };

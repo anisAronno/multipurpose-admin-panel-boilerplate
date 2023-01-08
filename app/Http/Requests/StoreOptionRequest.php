@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Options\OptoinKeyUniqueRule;
+use App\Rules\Options\OptoinValueFilterRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOptionRequest extends FormRequest
@@ -13,7 +15,7 @@ class StoreOptionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,8 @@ class StoreOptionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'option_key'  => ['nullable', 'max:255', new OptoinKeyUniqueRule()],
+            'option_value'  => ['nullable', 'max:2000', new OptoinValueFilterRule()],
         ];
     }
 }

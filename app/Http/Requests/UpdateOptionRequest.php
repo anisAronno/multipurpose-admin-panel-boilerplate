@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Options\OptoinKeyUniqueRule;
+use App\Rules\Options\OptoinValueFilterRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOptionRequest extends FormRequest
@@ -24,7 +26,8 @@ class UpdateOptionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+             'option_key'  => ['nullable', 'max:255', new OptoinKeyUniqueRule()],
+             'option_value'  => ['nullable', 'max:2000', new OptoinValueFilterRule()],
         ];
     }
 }

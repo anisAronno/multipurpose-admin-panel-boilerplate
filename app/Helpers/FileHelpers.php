@@ -2,53 +2,35 @@
 
 namespace App\Helpers;
 
-use PhpParser\Node\Expr\Cast\Bool_;
+use App\Enums\AllowedFileType;
 
 class FileHelpers
 {
-    public $allowedFileType;
-    public function __construct()
-    {
-        $this->allowedFileType = ["jpeg", "jpg", "png", "gif", "svg", "webp"];
-    }
     /**
-     * Summary of uploads
-     * @param mixed $request
-     * @param mixed $file_name
-     * @param mixed $upload_dir
-     * @return array|string
+     * Filter $fileType
+     * @param mixed $file
+     * @return bool
      */
-    public static function upload($request, $file_name, $upload_dir)
+    public static function isAllowFileType($path): Bool
     {
-        try {
-            if ($request->hasFile($file_name)) {
-                $file = $request->$file_name;
-                $filename = time() . '.' . $file->extension();
-                $up_path = "uploads/".$upload_dir."/".date('Y-m');
-                $filePath = $up_path.'/'.$filename;
+        $extension =   pathinfo(
+            parse_url($path, PHP_URL_PATH),
+            PATHINFO_EXTENSION
+        );
 
-                $isAllowd =  (new self())->isAllowFileType($filePath);
-
-                if (!$isAllowd) {
-                    return false;
-                }
-
-                $file->move($up_path, $filename);
-
-                if ($file->getError()) {
-                    $request->session()->flash('warning', $file->getErrorMessage());
-
-                    return [];
-                }
-
-                return $filePath;
-            }
-        } catch (\Throwable $th) {
-            return [];
+        if (in_array($extension, AllowedFileType::values())) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public static function getUrl($value)
+    /**
+     * Summary of get_url_in_content( $content:string )
+     * @param mixed $value
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    public static function getUrl($value): string
     {
         if ($value !== null) {
             $path = stristr($value, 'uploads');
@@ -57,12 +39,55 @@ class FileHelpers
             return url('uploads/placeholder.png');
         }
     }
+    /**
+     * Summary of upload
+     * @param mixed $request
+     * @param mixed $file_name
+     * @param mixed $upload_dir
+     * @return mixed
+     */
+    public static function upload($request, $file_name, string $upload_dir): mixed
+    {
+        try {
+            if ($request->hasFile($file_name)) {
+                $file = $request->$file_name;
+                $filename = time() . '.' . $file->extension();
+                $up_path = "uploads/".$upload_dir."/".date('Y-m');
+                $filePath = $up_path.'/'.$filename;
 
-    public static function deleteFile($value)
+                $isAllowd =  self::isAllowFileType($filePath);
+
+                if (!$isAllowd) {
+                    return null;
+                }
+
+                $file->move($up_path, $filename);
+
+                if ($file->getError()) {
+                    $request->session()->flash('warning', $file->getErrorMessage());
+
+                    return null;
+                }
+
+                return $filePath;
+            } else {
+                return null;
+            }
+        } catch (\Throwable $th) {
+            return null;
+        }
+    }
+
+    /**
+     * Summary of deleteFile
+     * @param mixed $value
+     * @return bool
+     */
+    public static function deleteFile($value): bool
     {
         $path = stristr($value, 'uploads');
 
-        $isAllowd =  (new self())->isAllowFileType($path);
+        $isAllowd =  self::isAllowFileType($path);
 
         if (!$isAllowd) {
             return false;
@@ -86,24 +111,6 @@ class FileHelpers
             }
             return true;
         } catch (\Throwable $th) {
-            return false;
-        }
-    }
-    /**
-     * Summary of $fileType
-     * @param mixed $file
-     * @return bool
-     */
-    private function isAllowFileType($path): Bool
-    {
-        $extension =   pathinfo(
-            parse_url($path, PHP_URL_PATH),
-            PATHINFO_EXTENSION
-        );
-
-        if (in_array($extension, $this->allowedFileType)) {
-            return true;
-        } else {
             return false;
         }
     }

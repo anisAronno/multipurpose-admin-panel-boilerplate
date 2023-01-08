@@ -17,6 +17,12 @@ class Option extends Model
         'option_value'
     ];
 
+    protected $primaryKey = 'option_key';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     protected $appends = array('isDeletable');
 
     public function getIsDeletableAttribute($value)
@@ -28,15 +34,5 @@ class Option extends Model
         } else {
             return false;
         }
-    }
-
-     /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'option_key';
     }
 }

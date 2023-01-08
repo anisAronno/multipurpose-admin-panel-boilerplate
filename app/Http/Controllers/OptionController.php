@@ -15,13 +15,13 @@ class OptionController extends Controller
     /**
       * Filter role and permission
       */
-    public function __construct()
-    {
-        $this->middleware('permission:options.view|options.create|options.edit|options.delete|options.status', ['only' => ['index','store']]);
-        $this->middleware('permission:options.create', ['only' => ['create','store']]);
-        $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit','update']]);
-        $this->middleware('permission:options.delete', ['only' => ['destroy']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:options.view|options.create|options.edit|options.delete|options.status', ['only' => ['index','store']]);
+    //     $this->middleware('permission:options.create', ['only' => ['create','store']]);
+    //     $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:options.delete', ['only' => ['destroy']]);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -87,7 +87,7 @@ class OptionController extends Controller
     {
         if ($request->image) {
             $path = FileHelpers::upload($request, 'image', 'settings');
-            if (!empty($path) && !empty($path)) {
+            if (!empty($path)) {
                 FileHelpers::deleteFile($option->option_value);
                 $option::setOption($option->option_key, $path);
                 return Redirect::back()->with('message', 'Updated successfull');
