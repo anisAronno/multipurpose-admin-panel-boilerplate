@@ -166,7 +166,6 @@ class RolesController extends InertiaApplicationController
             $role->syncPermissions($permissions);
         }
 
-
         if (session('last_visited_url')) {
             return Redirect::to(session('last_visited_url'))->with([ 'success'=>true,'message'=>'successfully Updated']);
         }

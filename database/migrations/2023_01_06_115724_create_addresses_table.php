@@ -16,11 +16,11 @@ return new class () extends Migration {
             $table->id();
             $table->morphs('addressable');
             $table->longText('address')->nullable();
-            $table->string('city')->nullable();
+            $table->string('city')->nullable()->index();
             $table->string('state')->nullable();
-            $table->string('district')->nullable();
+            $table->string('district')->nullable()->index();
             $table->string('zip_code')->nullable();
-            $table->string('country')->nullable();
+            $table->string('country')->nullable()->index();
             $table->timestamps();
         });
     }
