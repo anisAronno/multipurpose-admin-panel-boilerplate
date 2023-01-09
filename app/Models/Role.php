@@ -8,9 +8,23 @@ use Illuminate\Support\Carbon;
 use App\Enums\AdministrativeRole;
 use Spatie\Permission\Models\Role as ModelsRole;
 
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
 class Role extends ModelsRole
 {
     use HasFactory;
+
+    use LogsActivity;
+
+    protected static $recordEvents = ['deleted', 'created', 'updated'];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['name', 'permissions'])
+        ->logOnlyDirty()
+        ->dontSubmitEmptyLogs();
+    }
 
     public function getCreatedAtAttribute($value)
     {

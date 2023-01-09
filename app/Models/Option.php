@@ -7,11 +7,15 @@ use App\Traits\OptionTransform;
 use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Option extends Model
 {
     use HasFactory;
     use OptionTransform;
+    use LogsActivity;
+
 
     protected $fillable = [
         'option_key',
@@ -25,6 +29,15 @@ class Option extends Model
     protected $keyType = 'string';
 
     protected $appends = array('isDeletable');
+
+    protected static $recordEvents = ['deleted', 'created', 'updated'];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['option_meta', 'option_value'])
+        ->logOnlyDirty()
+        ->dontSubmitEmptyLogs();
+    }
 
     public function getIsDeletableAttribute($value)
     {

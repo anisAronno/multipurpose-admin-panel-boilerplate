@@ -20,7 +20,7 @@ class ImageFactory extends Factory
         $sesttings = SettingsFields::values();
         return [
             'key'=>$this->faker->randomElement($sesttings) ,
-            'path'=>$this->faker->imageUrl(),
+            'image'=>$this->faker->imageUrl(),
         ];
     }
 }

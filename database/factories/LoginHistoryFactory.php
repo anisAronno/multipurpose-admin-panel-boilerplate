@@ -33,7 +33,7 @@ class LoginHistoryFactory extends Factory
             'latitude'=>$this->faker->latitude($min = -90, $max = 90) ,
             'longitude'=>$this->faker->longitude($min = -180, $max = 180),
             'time_zone'=>$this->faker->city(),
-            'area_ode'=>$this->faker->city(),
+            'area_code'=>$this->faker->city(),
             'metro_code'=>$this->faker->city(),
             'iso_code'=>$this->faker->postcode(),
             'postal_code'=>$this->faker->postcode(),

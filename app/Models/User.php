@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -25,6 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use HasRoles;
     use SoftDeletes;
+    use LogsActivity;
+
 
 
     /**
@@ -64,6 +68,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'status' => UserStatus::class,
     ];
 
+    protected static $recordEvents = ['deleted', 'created', 'updated'];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['name', 'email', 'password', 'avatar', 'status'])
+        ->logOnlyDirty()
+        ->dontSubmitEmptyLogs();
+    }
+    
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailQueued());

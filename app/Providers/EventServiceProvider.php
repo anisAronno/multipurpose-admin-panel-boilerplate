@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\LoginEvent;
 use App\Listeners\LoginListener;
+use App\Listeners\UserRegistrationListener;
 use App\Models\Option;
 use App\Models\User;
 use App\Observers\OptionObserver;
@@ -24,6 +25,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            UserRegistrationListener::class,
         ],
         LoginEvent::class=>[
             LoginListener::class

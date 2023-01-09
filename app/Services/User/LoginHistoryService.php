@@ -40,11 +40,11 @@ class LoginHistoryService
         $data['latitude']       = $location->latitude ?? "";
         $data['longitude']      = $location->longitude ?? "";
         $data['time_zone']      = $location->timezone ?? "";
-        $data['area_ode']       = $location->areaCode ?? "";
+        $data['area_code']       = $location->areaCode ?? "";
         $data['metro_code']     = $location->metroCode ?? "";
         $data['iso_code']       = $location->isoCode ?? "";
         $data['postal_code']    = $location->postalCode ?? "";
-        
+
         return $data;
     }
 }

@@ -179,6 +179,17 @@ class RolePermissionSeeder extends Seeder
                     'social.delete',
                     'social.status',
                 ]
+            ],
+
+            [
+                'group_name' => 'notification',
+                'permissions' => [
+                    'notification.create',
+                    'notification.view',
+                    'notification.edit',
+                    'notification.delete',
+                    'notification.status',
+                ]
             ]
         ];
 
