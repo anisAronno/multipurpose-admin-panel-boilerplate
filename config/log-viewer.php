@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'enabled' => env('LOG_VIEWER_ENABLED', true),
+    'enabled' => env('LOG_VIEWER_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'route_path' => 'log-viewer',
+    'route_path' => 'logs',
 
     /*
     |--------------------------------------------------------------------------
