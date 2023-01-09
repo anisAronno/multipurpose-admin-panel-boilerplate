@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\FileHelpers;
 use App\Traits\TransformOptions;
 use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,5 +35,17 @@ class Option extends Model
         } else {
             return false;
         }
+    }
+
+
+    public function getOptionValueAttribute($value)
+    {
+        $isFile = FileHelpers::isAllowFileType($value);
+
+        if ($isFile) {
+            $value =  FileHelpers::getUrl($value);
+        }
+
+        return $value;
     }
 }

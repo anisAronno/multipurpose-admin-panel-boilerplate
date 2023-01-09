@@ -7,6 +7,27 @@ use App\Enums\AllowedFileType;
 class FileHelpers
 {
     /**
+     * check if isDefaultFile
+     * @param mixed $path
+     * @return bool
+     */
+    public static function isDefaultFile($path): Bool
+    {
+        $defaultFile = [
+                   'uploads/users/avatar.png',
+                   'uploads/placeholder.png',
+                   'uploads/options/logo.png',
+                   'uploads/options/banner.png',
+                   'uploads/options/fav_icon.png',
+                ];
+
+        if (in_array($path, $defaultFile)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
      * Filter $fileType
      * @param mixed $file
      * @return bool
@@ -32,9 +53,14 @@ class FileHelpers
      */
     public static function getUrl($value): string
     {
-        if ($value !== null) {
+        if (!empty($value)) {
             $path = stristr($value, 'uploads');
-            return  url($path);
+
+            if (file_exists(public_path($path))) {
+                return  url($path);
+            }
+
+            return url('uploads/placeholder.png');
         } else {
             return url('uploads/placeholder.png');
         }
@@ -55,17 +81,14 @@ class FileHelpers
                 $up_path = "uploads/".$upload_dir."/".date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
-                $isAllowd =  self::isAllowFileType($filePath);
-
-                if (!$isAllowd) {
-                    return null;
-                }
+                if (! self::isAllowFileType($filePath)) {
+                    return false;
+                } 
 
                 $file->move($up_path, $filename);
 
                 if ($file->getError()) {
-                    $request->session()->flash('warning', $file->getErrorMessage());
-
+                    $request->session()->flash('message', $file->getErrorMessage());
                     return null;
                 }
 
@@ -87,29 +110,20 @@ class FileHelpers
     {
         $path = stristr($value, 'uploads');
 
-        $isAllowd =  self::isAllowFileType($path);
-
-        if (!$isAllowd) {
+        if (! self::isAllowFileType($path)) {
             return false;
         }
 
-        $defaultFile = [
-            'uploads/users/avatar.png',
-            'uploads/placeholder.png',
-            'uploads/options/logo.png',
-            'uploads/options/banner.png',
-            'uploads/options/fav_icon.png',
-        ];
-
-        if (in_array($path, $defaultFile)) {
+        if ( self::isDefaultFile($path)) {
             return false;
         }
 
         try {
             if (file_exists(public_path($path))) {
                 unlink(public_path($path));
+                return true;
             }
-            return true;
+            return false;
         } catch (\Throwable $th) {
             return false;
         }

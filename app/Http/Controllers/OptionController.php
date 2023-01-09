@@ -6,8 +6,7 @@ use App\Helpers\FileHelpers;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request; 
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaApplicationController;
 
@@ -88,12 +87,24 @@ class OptionController extends InertiaApplicationController
     {
         if ($request->image) {
             $path = FileHelpers::upload($request, 'image', 'settings');
-            if (!empty($path)) {
-                FileHelpers::deleteFile($option->option_value);
-                $option::setOption($option->option_key, $path);
-                return $this->successWithMessage('Successfully Updated');
+
+            if (empty($path)) {
+                return $this->failedWithMessage('Update failed!');
             }
+
+            FileHelpers::deleteFile($option->option_value);
+
+            $result  = $option::setOption($option->option_key, $path);
+
+            return $this->successWithMessage('Successfully Updated');
         }
+
+        $result = $option::setOption($option->option_key, $request->option_value);
+
+        if ($result) {
+            return $this->successWithMessage('Successfully Updated');
+        }
+
 
         return $this->failedWithMessage('Update failed!');
     }
@@ -114,9 +125,8 @@ class OptionController extends InertiaApplicationController
             }
             return $this->successWithMessage('Successfully Updated');
         } catch (\Throwable $th) {
-            //throw $th;
+            return $this->failedWithMessage('Update failed!');
         }
-        return $this->failedWithMessage('Update failed!');
     }
 
     /**

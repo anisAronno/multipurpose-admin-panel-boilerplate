@@ -75,14 +75,4 @@ trait TransformOptions
         }
     }
 
-    public function getOptionValueAttribute($value)
-    {
-        $isFile = FileHelpers::isAllowFileType($value);
-
-        if ($isFile) {
-            $value =  FileHelpers::getUrl($value);
-        }
-
-        return $value;
-    }
 }
