@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\FileHelpers;
-use App\Traits\TransformOptions;
+use App\Traits\OptionTransform;
 use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Option extends Model
 {
     use HasFactory;
-    use TransformOptions;
+    use OptionTransform;
 
     protected $fillable = [
         'option_key',

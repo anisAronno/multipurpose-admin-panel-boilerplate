@@ -7,7 +7,7 @@ use App\Helpers\FileHelpers;
 use App\Services\Cache\CacheServices;
 use Illuminate\Support\Facades\Cache;
 
-trait TransformOptions
+trait OptionTransform
 {
     public static function getAllOptions()
     {
@@ -31,12 +31,23 @@ trait TransformOptions
         }
     }
 
-    public static function setOption(string $key, $value='')
+    public static function updateOption(string $key, $value='')
     {
         try {
             $option = self::where('option_key', $key)->first();
             $option->option_value = $value;
             return $option->save();
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public static function setOption(string $key, $value='')
+    {
+        $data = ['option_key' => $key, 'option_value' => $value];
+
+        try {
+            return self::create($data);
         } catch (\Throwable $th) {
             return false;
         }
@@ -74,5 +85,4 @@ trait TransformOptions
             return [];
         }
     }
-
 }

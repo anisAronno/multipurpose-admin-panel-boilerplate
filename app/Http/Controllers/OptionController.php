@@ -6,9 +6,10 @@ use App\Helpers\FileHelpers;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaApplicationController;
+use Spatie\Permission\Models\Role;
 
 class OptionController extends InertiaApplicationController
 {
@@ -29,7 +30,9 @@ class OptionController extends InertiaApplicationController
      */
     public function index(Request $request)
     {
-        return Inertia::render('Settings/Index');
+        $roleArr = Role::pluck('name');
+
+        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr]);
     }
 
 
@@ -94,12 +97,12 @@ class OptionController extends InertiaApplicationController
 
             FileHelpers::deleteFile($option->option_value);
 
-            $result  = $option::setOption($option->option_key, $path);
+            $result  = $option::updateOption($option->option_key, $path);
 
             return $this->successWithMessage('Successfully Updated');
         }
 
-        $result = $option::setOption($option->option_key, $request->option_value);
+        $result = $option::updateOption($option->option_key, $request->option_value);
 
         if ($result) {
             return $this->successWithMessage('Successfully Updated');
@@ -121,7 +124,7 @@ class OptionController extends InertiaApplicationController
     {
         try {
             foreach ($request->all() as $key => $value) {
-                $option::setOption($key, $value);
+                $option::updateOption($key, $value);
             }
             return $this->successWithMessage('Successfully Updated');
         } catch (\Throwable $th) {
@@ -142,7 +145,7 @@ class OptionController extends InertiaApplicationController
                 FileHelpers::deleteFile($option->option_value);
             }
 
-            $option::setOption($option->option_key, null);
+            $option::updateOption($option->option_key, null);
 
             return $this->successWithMessageAndData('Successfully Deleted', $option);
         } catch (\Throwable $th) {

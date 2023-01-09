@@ -26,8 +26,8 @@ class StoreOptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'option_key'  => ['nullable', 'max:255', new OptoinKeyUniqueRule()],
-            'option_value'  => ['nullable', 'max:2000', new OptoinValueFilterRule()],
+            'option_key'  => ['nullable', 'string', 'max:255', new OptoinKeyUniqueRule()],
+            'option_value'  => ['nullable', 'string', 'max:2000', new OptoinValueFilterRule()],
         ];
     }
 }

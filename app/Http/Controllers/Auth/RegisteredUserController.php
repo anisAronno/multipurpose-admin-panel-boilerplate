@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Option;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -47,7 +48,8 @@ class RegisteredUserController extends Controller
         ]);
 
         if ($user) {
-            $user->assignRole('user');
+            $role = Option::getOption('user_default_role');
+            $user->assignRole($role);
         }
 
         event(new Registered($user));

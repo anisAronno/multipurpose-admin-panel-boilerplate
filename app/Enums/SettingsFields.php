@@ -10,6 +10,7 @@ enum SettingsFields: string
 
     case SITE_NAME =  "site_name";
     case SITE_TITLE =  "site_title";
+    case ORGANIZATION_NAME =  "organization_name";
     case SITE_URL =  "site_url";
     case LOGO =  "logo";
     case BANNER =  "banner";
@@ -18,7 +19,7 @@ enum SettingsFields: string
     case EMAIL =  "email";
     case PHONE =  "phone";
     case TIME_ZONE =  "time_zone";
-    case USER_DEFAULT_ROLE =  "user_defeult_role";
+    case USER_DEFAULT_ROLE =  "user_default_role";
     case ANY_ONE_CAN_REGISTER =  "any_one_can_register";
     case ACTIVE_SOCIAL_LOGIN =  "active_social_login";
     case PAGINATION_LIMIT =  "pagination_limit";

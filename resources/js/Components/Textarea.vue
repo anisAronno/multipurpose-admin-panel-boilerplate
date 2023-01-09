@@ -22,7 +22,7 @@ defineExpose({ focus: () => input.value.focus() });
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         ref="input"
-        cols="30"
-        rows="10"
+        cols="20"
+        rows="5"
     ></textarea>
 </template>
