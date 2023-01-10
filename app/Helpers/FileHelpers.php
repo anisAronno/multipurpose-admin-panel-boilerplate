@@ -6,12 +6,7 @@ use App\Enums\AllowedFileType;
 
 class FileHelpers
 {
-    /**
-     * Upload directory
-     * @var mixed
-     */
-    private static $uploadRootDir = "uploads";
-
+    
     /**
      * check if isDefaultFile
      * @param mixed $path
@@ -20,14 +15,17 @@ class FileHelpers
     public static function isDefaultFile($path): Bool
     {
         $defaultFile = [
-                   'uploads/users/avatar.png',
-                   'uploads/placeholder.png',
-                   'uploads/options/logo.png',
-                   'uploads/options/banner.png',
-                   'uploads/options/fav_icon.png',
-                ];
+            'uploads/defaults/avatar.png',
+            'uploads/defaults/placeholder.png',
+            'uploads/defaults/logo.png',
+            'uploads/defaults/banner.png',
+            'uploads/defaults/fav_icon.png',
+        ];
+        
 
-        if (in_array($path, $defaultFile)) {
+        $trimPath = stristr($path, 'uploads');
+
+        if (in_array($trimPath, $defaultFile)) {
             return true;
         } else {
             return false;
@@ -60,7 +58,7 @@ class FileHelpers
     public static function getUrl($value): string
     {
         if (!empty($value)) {
-            $path = stristr($value, self::$uploadRootDir);
+            $path = stristr($value, 'uploads');
 
             if (file_exists(public_path($path))) {
                 return  url($path);
@@ -68,7 +66,7 @@ class FileHelpers
 
             return $value;
         } else {
-            return url(self::$uploadRootDir.'/placeholder.png');
+            return url('uploads/defaults/placeholder.png');
         }
     }
     /**
@@ -84,7 +82,7 @@ class FileHelpers
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
                 $filename = time() . '.' . $file->extension();
-                $up_path = self::$uploadRootDir."/".$upload_dir."/".date('Y-m');
+                $up_path = "uploads/".$upload_dir."/".date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
                 if (! self::isAllowFileType($filePath)) {
@@ -95,15 +93,15 @@ class FileHelpers
 
                 if ($file->getError()) {
                     $request->session()->flash('message', $file->getErrorMessage());
-                    return null;
+                    return false;
                 }
 
                 return $filePath;
             } else {
-                return null;
+                return false;
             }
         } catch (\Throwable $th) {
-            return null;
+            return false;
         }
     }
 
@@ -114,7 +112,7 @@ class FileHelpers
      */
     public static function deleteFile($value): bool
     {
-        $path = stristr($value, self::$uploadRootDir);
+        $path = stristr($value, 'uploads');
 
         if (! self::isAllowFileType($path)) {
             return false;

@@ -30,8 +30,5 @@ class InertiaApplicationController extends Controller
     {
         return Redirect::back()->with(['success' => true, 'data' => $data], $code);
     }
-    protected function successWithMessageAndData($message, $data, $code = 200)
-    {
-        return Redirect::back()->with(['success' => true, 'message' => $message,'data' => $data], $code);
-    }
+
 }

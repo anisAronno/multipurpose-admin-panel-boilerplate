@@ -1,7 +1,4 @@
 *
-!.gitignore
-!placeholder.png
-!/user/avatar.png
-!/settings/banner.png
-!/settings/fav_icon.png
-!/settings/logo.png
+!.gitignore 
+!/defaults
+!/defaults/*

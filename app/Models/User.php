@@ -114,7 +114,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($value !== null) {
             return  $this->attributes['avatar'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl('uploads/users/avatar.png');
+            return  $this->attributes['avatar'] = FileHelpers::getUrl('uploads/defaults/avatar.png');
         }
     }
       /**

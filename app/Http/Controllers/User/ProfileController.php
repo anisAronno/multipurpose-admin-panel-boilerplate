@@ -43,7 +43,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('message', 'Profile updated');
+        return Redirect::route('profile.edit')->with(['success'=>true,'message', 'Profile updated']);
     }
 
     /**
@@ -75,7 +75,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with('message', 'Profile Deleted');
+        return Redirect::to('/')->with(['success'=>true, 'message', 'Profile Deleted']);
     }
     /**
      * Update the user's profile information.
@@ -87,16 +87,22 @@ class ProfileController extends Controller
     {
         try {
             $user = $request->user();
-
             if ($request->avatar) {
-                FileHelpers::deleteFile($user->avatar);
-                $user->avatar = FileHelpers::upload($request, 'avatar', 'users');
-                $user->save();
-            }
+                $path = FileHelpers::upload($request, 'avatar', 'users');
 
-            return Redirect::route('profile.edit')->with('message', 'Profile picture updated');
+                if ($path) {
+                    FileHelpers::deleteFile($user->avatar);
+                    $user->avatar = $path;
+                    $user->save();
+                    return Redirect::route('profile.edit')->with(['success'=>true, 'message', 'Profile picture updated']);
+                } else {
+                    return Redirect::back()->with(['success'=>false, 'message', 'Failed Update']);
+                }
+            } else {
+                return Redirect::back()->with(['success'=>false, 'message', 'Something went wrong']);
+            }
         } catch (\Throwable $th) {
-            return Redirect::back()->with('message', 'Something went wrong');
+            return Redirect::back()->with(['success'=>false, 'message', 'Something went wrong']);
         }
     }
 }

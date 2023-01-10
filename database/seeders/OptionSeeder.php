@@ -34,9 +34,9 @@ class OptionSeeder extends Seeder
          * Create Settings Filed with choosing value
         */
         $option = new Option();
-        $option::setOption('logo', '/uploads/settings/logo.png');
-        $option::setOption('fav_icon', '/uploads/settings/fav_icon.png');
-        $option::setOption('banner', '/uploads/settings/banner.png');
+        $option::setOption('logo', 'uploads/defaults/logo.png');
+        $option::setOption('fav_icon', 'uploads/defaults/fav_icon.png');
+        $option::setOption('banner', 'uploads/defaults/banner.png');
         $option::setOption('site_name', 'Portfolio');
         $option::setOption('site_title', 'My WebSite');
         $option::setOption('organization_name', 'My Startup');

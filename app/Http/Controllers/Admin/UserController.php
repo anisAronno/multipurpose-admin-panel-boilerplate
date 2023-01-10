@@ -167,7 +167,7 @@ class UserController extends InertiaApplicationController
    public function destroy(User $user)
    {
        if (! $user->isDeletable) {
-            return $this->failedWithMessage('User is not delatable');
+           return $this->failedWithMessage('User is not delatable');
        }
 
        $user->delete();
@@ -176,7 +176,7 @@ class UserController extends InertiaApplicationController
            return Redirect::to(session('last_visited_url'))->with(['success'=>true, 'message', 'Deleted successfull']);
        }
 
-        return $this->successWithMessage('Deleted successfull');
+       return $this->successWithMessage('Deleted successfull');
    }
 
    /**
@@ -188,13 +188,15 @@ class UserController extends InertiaApplicationController
    {
        if ($request->image) {
            $path = FileHelpers::upload($request, 'image', 'users');
-           FileHelpers::deleteFile($user->avatar);
-           if ($path) {
+           if (!$path) {
+               return $this->successWithMessage('Update Failed');
+           } else {
+               FileHelpers::deleteFile($user->avatar);
                $user->update([$user->avatar = $path]);
            }
        }
 
-        return $this->successWithMessage('Successfully Updated');
+       return $this->successWithMessage('Successfully Updated');
    }
     /**
      * Remove the specified user avatar.
@@ -209,6 +211,6 @@ class UserController extends InertiaApplicationController
 
        $user->update([$user->avatar=null]);
 
-        return $this->failedWithMessage('Deleted successfull');
+       return $this->failedWithMessage('Deleted successfull');
    }
 }
