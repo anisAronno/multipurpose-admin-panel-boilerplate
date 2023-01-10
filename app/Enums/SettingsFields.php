@@ -24,4 +24,5 @@ enum SettingsFields: string
     case IS_ACTIVE_SSO =  "is_active_sso";
     case SSO_FIELDS =  "sso_fields";
     case PAGINATION_LIMIT =  "pagination_limit";
+    case USER_DEFAULT_STATUS =  "user_default_status";
 }

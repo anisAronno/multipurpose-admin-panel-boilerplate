@@ -51,5 +51,6 @@ class OptionSeeder extends Seeder
         $option::setOption('is_active_sso', 'false');
         $option::setOption('sso_fields', json_encode(SocialLoginFields::values()));
         $option::setOption('pagination_limit', 10);
+        $option::setOption('user_default_status', 'Active');
     }
 }

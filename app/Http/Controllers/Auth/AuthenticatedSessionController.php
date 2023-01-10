@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Enums\UserStatus;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -37,6 +38,11 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
+
+        if ($request->user()->status != UserStatus::ACTIVE) {
+            Auth::guard('web')->logout();
+            return redirect()->back()->with(['success'=>false, 'message'=>'You Are not active user. Please Wait for administrative response.']);
+        }
 
         $request->session()->regenerate();
 

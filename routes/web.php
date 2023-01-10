@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified', 'permission:options.create'])->group(function () {
+Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(function () {
     /**
      * Profile ROute
      */
@@ -74,7 +74,6 @@ Route::middleware(['auth', 'verified', 'permission:options.create'])->group(func
 
     Route::post('mark-read', [NotificationController::class, 'markNotification'])
     ->name('notification.mark.read');
-    
 });
 
 require __DIR__.'/auth.php';

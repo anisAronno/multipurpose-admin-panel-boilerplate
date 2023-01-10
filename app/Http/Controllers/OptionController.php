@@ -7,6 +7,7 @@ use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
 use App\Enums\SocialLoginFields;
+use App\Enums\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -34,8 +35,9 @@ class OptionController extends InertiaApplicationController
     {
         $roleArr = Role::pluck('name');
         $ssoFieldsArr = SocialLoginFields::values();
+        $userDefaultStatus = UserStatus::values();
 
-        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr, 'ssoFieldsArr' => $ssoFieldsArr]);
+        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr, 'ssoFieldsArr' => $ssoFieldsArr, 'userDefaultStatus'=>$userDefaultStatus]);
     }
 
 

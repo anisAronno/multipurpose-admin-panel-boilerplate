@@ -9,11 +9,12 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash; 
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Models\User;
+use App\Enums\UserStatus;
 use Laravel\Socialite\Two\InvalidStateException;
 use Spatie\Permission\Models\Role;
 
@@ -62,6 +63,7 @@ class SocialLoginController extends InertiaApplicationController
                 $image =$socialiteUser->getAvatar() ?? '';
                 $id = $socialiteUser->id ?? '';
                 $password = Hash::make(Str::random(32));
+                $userDefaultStatus = Option::getOption('user_default_status');
 
                 $user = User::firstOrCreate(
                     [
@@ -75,8 +77,13 @@ class SocialLoginController extends InertiaApplicationController
                         'avatar' => $image,
                         'email_verified_at' => Carbon::now(),
                         'email_verification_token' => '',
+                        'status' => $userDefaultStatus,
                     ]
                 );
+
+                if ($userDefaultStatus !== UserStatus::ACTIVE) {
+                    return redirect()->route('login')->with(["success"=>true,"Registration is complete. Please Wait for administrative response."]);
+                }
 
                 $request->session()->regenerate();
 
@@ -115,6 +122,8 @@ class SocialLoginController extends InertiaApplicationController
         $user->load('roles:name');
 
         $hasRole = $user->hasAllRoles(Role::all());
+
+        logger()->debug($hasRole);
 
         if (!$hasRole) {
             $role = Option::getOption('user_default_role');

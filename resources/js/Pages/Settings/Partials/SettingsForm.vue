@@ -11,6 +11,7 @@ import Multiselect from "@vueform/multiselect";
 defineProps({
     roleArr: Object,
     ssoFieldsArr: Object,
+    userDefaultStatus: Object,
 });
 
 const options = usePage().props.value.global.options;
@@ -27,6 +28,7 @@ const form = useForm({
     any_one_can_register: options.any_one_can_register,
     pagination_limit: options.pagination_limit,
     organization_name: options.organization_name,
+    user_default_status: options.user_default_status,
     is_active_sso: options.is_active_sso,
     sso_fields: JSON.parse(options.sso_fields),
 });
@@ -166,6 +168,37 @@ const form = useForm({
                 <InputError
                     class="mt-2"
                     :message="form.errors.user_default_role"
+                />
+            </div>
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <InputLabel
+                    class="text-xl"
+                    for="user_default_status"
+                    value="User Default Status:"
+                />
+
+                <select
+                    name="user_default_status"
+                    id="user_default_status"
+                    class="block w-full form-controll"
+                    v-model="form.user_default_status"
+                    required
+                >
+                    <option
+                        :value="status"
+                        v-for="status in userDefaultStatus"
+                        :key="status"
+                        :class="
+                            status === form.user_default_status ? 'selected' : ''
+                        "
+                    >
+                        {{ status }}
+                    </option>
+                </select>
+
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.user_default_status"
                 />
             </div>
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
