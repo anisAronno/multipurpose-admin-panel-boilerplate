@@ -17,11 +17,10 @@ class OptionSeeder extends Seeder
      */
     public function run()
     {
-        
         Schema::disableForeignKeyConstraints();
         Option::truncate();
         Schema::enableForeignKeyConstraints();
-        
+
         /**
          * You can create random options field with this factory
          *  Its Insert only setting type value
@@ -31,7 +30,7 @@ class OptionSeeder extends Seeder
         // Option::factory()->count($sesttings)->create();
 
 
-        /** @var mixed $option 
+        /** @var mixed $option
          * Create Settings Filed with choosing value
         */
         $option = new Option();
@@ -47,8 +46,9 @@ class OptionSeeder extends Seeder
         $option::setOption('site_url', env('APP_URL', 'http://multipurpose-admin-panel-boilerplate.test'));
         $option::setOption('time_zone', 'Dhaka, Bangladesh');
         $option::setOption('address', 'Dhaka, Bangladesh');
-        $option::setOption('ANY_ONE_CAN_REGISTER', false);
-        $option::setOption('ACTIVE_SOCIAL_LOGIN', false);
-        $option::setOption('PAGINATION_LIMIT', 10);
+        $option::setOption('any_one_can_register', false);
+        $option::setOption('is_active_sso', false);
+        $option::setOption('sso_fields', json_encode(['github', 'google', 'facebook', 'linkedin', 'twitter', 'instagram']));
+        $option::setOption('pagination_limit', 10);
     }
 }
