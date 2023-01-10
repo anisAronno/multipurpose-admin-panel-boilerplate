@@ -21,6 +21,7 @@ enum SettingsFields: string
     case TIME_ZONE =  "time_zone";
     case USER_DEFAULT_ROLE =  "user_default_role";
     case ANY_ONE_CAN_REGISTER =  "any_one_can_register";
-    case ACTIVE_SOCIAL_LOGIN =  "active_social_login";
+    case IS_ACTIVE_SSO =  "is_active_sso";
+    case SSO_FIELDS =  "sso_fields";
     case PAGINATION_LIMIT =  "pagination_limit";
 }

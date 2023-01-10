@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Option;
 use Illuminate\Database\Seeder;
 use App\Enums\SettingsFields;
+use App\Enums\SocialLoginFields;
 
 use Illuminate\Support\Facades\Schema;
 
@@ -46,9 +47,9 @@ class OptionSeeder extends Seeder
         $option::setOption('site_url', env('APP_URL', 'http://multipurpose-admin-panel-boilerplate.test'));
         $option::setOption('time_zone', 'Dhaka, Bangladesh');
         $option::setOption('address', 'Dhaka, Bangladesh');
-        $option::setOption('any_one_can_register', false);
-        $option::setOption('is_active_sso', false);
-        $option::setOption('sso_fields', json_encode(['github', 'google', 'facebook', 'linkedin', 'twitter', 'instagram']));
+        $option::setOption('any_one_can_register', 'false');
+        $option::setOption('is_active_sso', 'false');
+        $option::setOption('sso_fields', json_encode(SocialLoginFields::values()));
         $option::setOption('pagination_limit', 10);
     }
 }

@@ -5,6 +5,7 @@ import Images from "./Partials/Images.vue";
 import SettingsForm from "./Partials/SettingsForm.vue";
 defineProps({
     roleArr: Object,
+    ssoFieldsArr: Object,
 });
 
 const options = usePage().props.value.global.options;
@@ -35,7 +36,7 @@ const options = usePage().props.value.global.options;
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
                 >
-                    <SettingsForm :roleArr="roleArr"></SettingsForm>
+                    <SettingsForm :roleArr="roleArr" :ssoFieldsArr="ssoFieldsArr"></SettingsForm>
                 </div>
             </div>
         </div>

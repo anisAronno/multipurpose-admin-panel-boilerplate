@@ -4,10 +4,13 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
+import Toggle from "@/Components/Toggle.vue";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import Multiselect from "@vueform/multiselect";
 
 defineProps({
     roleArr: Object,
+    ssoFieldsArr: Object,
 });
 
 const options = usePage().props.value.global.options;
@@ -24,6 +27,8 @@ const form = useForm({
     any_one_can_register: options.any_one_can_register,
     pagination_limit: options.pagination_limit,
     organization_name: options.organization_name,
+    is_active_sso: options.is_active_sso,
+    sso_fields: JSON.parse(options.sso_fields),
 });
 </script>
 
@@ -41,9 +46,9 @@ const form = useForm({
 
         <form
             @submit.prevent="form.patch(route('options.bulk.update'))"
-            class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-center"
+            class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-between"
         >
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel
                     class="text-xl"
                     for="site_name"
@@ -63,7 +68,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.site_name" />
             </div>
 
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel
                     class="text-xl"
                     for="site_title"
@@ -81,7 +86,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.site_title" />
             </div>
 
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel class="text-xl" for="email" value="Email:" />
 
                 <TextInput
@@ -96,7 +101,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel class="text-xl" for="phone" value="Phone:" />
 
                 <TextInput
@@ -111,8 +116,12 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.phone" />
             </div>
 
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
-                <InputLabel class="text-xl" for="organization_name" value="Organization Name: " />
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <InputLabel
+                    class="text-xl"
+                    for="organization_name"
+                    value="Organization Name: "
+                />
 
                 <TextInput
                     id="organization_name"
@@ -123,9 +132,12 @@ const form = useForm({
                     autocomplete="organization_name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.organization_name" />
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.organization_name"
+                />
             </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel
                     class="text-xl"
                     for="user_default_role"
@@ -156,7 +168,45 @@ const form = useForm({
                     :message="form.errors.user_default_role"
                 />
             </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-80 ">
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <div class="flex justify-between items-center">
+                    <InputLabel
+                        class="text-xl"
+                        for="address"
+                        value="Active Social Login: "
+                    />
+                    <Toggle v-model="form.is_active_sso"></Toggle>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.is_active_sso"
+                    />
+                </div>
+                <div v-if="form.is_active_sso == true">
+                    <InputLabel
+                        class="text-xl block font-medium text-gray-700 mb-1"
+                        for="user_default_role"
+                        value="Select Social Login Provider :"
+                    />
+                    <Multiselect
+                        v-model="form.sso_fields"
+                        :options="ssoFieldsArr"
+                        :selected="form.sso_fields"
+                        placeholder="Pick some..."
+                        class="block w-full multiselect-green form-controll dark:text-gray-900"
+                        mode="tags"
+                        :searchable="true"
+                        :close-on-select="false"
+                        id="sso_fields"
+                    >
+                    </Multiselect>
+
+                    <InputError
+                        :message="form.errors.sso_fields"
+                        class="mt-2 col-start-2 col-span-4"
+                    />
+                </div>
+            </div>
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel class="text-xl" for="address" value="Address: " />
 
                 <Textarea
@@ -171,7 +221,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="flex items-center justify-center gap-4 py-5">
+            <div class="flex items-center justify-center gap-4 py-5 flex-auto">
                 <PrimaryButton
                     class="btn btn-primary w-32 h-12"
                     :disabled="form.processing"
@@ -194,3 +244,5 @@ const form = useForm({
         </form>
     </section>
 </template>
+
+<style src="@vueform/multiselect/themes/default.css"></style>

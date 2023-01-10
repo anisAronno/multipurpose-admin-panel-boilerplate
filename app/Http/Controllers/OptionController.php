@@ -6,6 +6,7 @@ use App\Helpers\FileHelpers;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
+use App\Enums\SocialLoginFields;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -32,8 +33,9 @@ class OptionController extends InertiaApplicationController
     public function index(Request $request)
     {
         $roleArr = Role::pluck('name');
+        $ssoFieldsArr = SocialLoginFields::values();
 
-        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr]);
+        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr, 'ssoFieldsArr' => $ssoFieldsArr]);
     }
 
 
@@ -148,8 +150,7 @@ class OptionController extends InertiaApplicationController
 
             $option::updateOption($option->option_key, null);
 
-              return Redirect::back()->with(['success' => true, 'message' => 'Succefully Updated','data' => $option]);
-
+            return Redirect::back()->with(['success' => true, 'message' => 'Succefully Updated','data' => $option]);
         } catch (\Throwable $th) {
             return $this->failedWithMessage('Delete failed!');
         }
