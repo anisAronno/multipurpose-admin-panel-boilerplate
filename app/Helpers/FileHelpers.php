@@ -7,6 +7,12 @@ use App\Enums\AllowedFileType;
 class FileHelpers
 {
     /**
+     * Upload directory
+     * @var mixed
+     */
+    private static $uploadRootDir = "uploads";
+
+    /**
      * check if isDefaultFile
      * @param mixed $path
      * @return bool
@@ -54,7 +60,7 @@ class FileHelpers
     public static function getUrl($value): string
     {
         if (!empty($value)) {
-            $path = stristr($value, 'uploads');
+            $path = stristr($value, self::$uploadRootDir);
 
             if (file_exists(public_path($path))) {
                 return  url($path);
@@ -62,7 +68,7 @@ class FileHelpers
 
             return $value;
         } else {
-            return url('uploads/placeholder.png');
+            return url(self::$uploadRootDir.'/placeholder.png');
         }
     }
     /**
@@ -78,7 +84,7 @@ class FileHelpers
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
                 $filename = time() . '.' . $file->extension();
-                $up_path = "uploads/".$upload_dir."/".date('Y-m');
+                $up_path = self::$uploadRootDir."/".$upload_dir."/".date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
                 if (! self::isAllowFileType($filePath)) {
@@ -108,7 +114,7 @@ class FileHelpers
      */
     public static function deleteFile($value): bool
     {
-        $path = stristr($value, 'uploads');
+        $path = stristr($value, self::$uploadRootDir);
 
         if (! self::isAllowFileType($path)) {
             return false;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OptionController;
@@ -69,6 +70,11 @@ Route::middleware(['auth', 'verified', 'permission:options.create'])->group(func
      */
 
     Route::resource('image', ImageController::class, ['except' => ['update']]);
+
+
+    Route::post('mark-read', [NotificationController::class, 'markNotification'])
+    ->name('notification.mark.read');
+    
 });
 
 require __DIR__.'/auth.php';
