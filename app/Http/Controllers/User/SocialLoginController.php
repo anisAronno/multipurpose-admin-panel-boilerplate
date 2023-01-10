@@ -26,6 +26,12 @@ class SocialLoginController extends InertiaApplicationController
      */
     public function socialLoginRedirect($provider)
     {
+        $isActiveSSO = Option::getOption('is_active_sso');
+
+        if (!$isActiveSSO || $isActiveSSO == false) {
+            return $this->failedWithMessage('Social Login Is Not Active');
+        }
+
         return Socialite::driver($provider)->redirect();
     }
     /**
@@ -36,6 +42,12 @@ class SocialLoginController extends InertiaApplicationController
      */
     public function socialLoginCallback(Request $request, $provider)
     {
+        $isActiveSSO = Option::getOption('is_active_sso');
+
+        if (!$isActiveSSO || $isActiveSSO == false) {
+            return $this->failedWithMessage('Social Login Is Not Active');
+        }
+
         try {
             $socialiteUser = Socialite::driver($provider)->user();
         } catch (InvalidStateException $e) {
@@ -63,10 +75,6 @@ class SocialLoginController extends InertiaApplicationController
                         'avatar' => $image,
                         'email_verified_at' => Carbon::now(),
                         'email_verification_token' => '',
-                        'sso_id' => $id,
-                        'sso_provider' => $provider,
-                        'sso_token' => $socialiteUser->token,
-                        'sso_refresh_token' => $socialiteUser->refreshToken,
                     ]
                 );
 
@@ -75,6 +83,14 @@ class SocialLoginController extends InertiaApplicationController
                 Auth::login($user, true);
 
                 $logedInUser = auth()->user();
+
+                $logedInUser->socialLogins()->create([
+                        'sso_id' => $id,
+                        'sso_provider' => $provider,
+                        'sso_token' => $socialiteUser->token,
+                        'sso_refresh_token' => $socialiteUser->refreshToken,
+                        'user_id' => $logedInUser->id,
+                ]);
 
                 $this->setRole($logedInUser);
 
@@ -86,7 +102,7 @@ class SocialLoginController extends InertiaApplicationController
             }
         } catch (\Throwable $th) {
             return $this->failedWithMessage("Failed ". $th->getMessage());
-}
+        }
     }
 
     /**

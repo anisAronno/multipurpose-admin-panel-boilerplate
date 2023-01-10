@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class SocialLoginFactory extends Factory
             "sso_id"=>$this->faker->name(),
             "sso_token"=>$this->faker->name(),
             "sso_refresh_token"=>$this->faker->name(),
+            'user_id'=>User::all(['id'])->random(),
         ];
     }
 }

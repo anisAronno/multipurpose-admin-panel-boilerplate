@@ -14,15 +14,16 @@ class SocialLogin extends Model
     protected $fillable = [
             'socilloginable_type',
             'socilloginable_id',
-            "sso_provider", 
+            "sso_provider",
             "sso_id",
             "sso_token",
             "sso_refresh_token",
+            "user_id",
         ];
 
 
-    public function socilloginable()
+    public function user()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

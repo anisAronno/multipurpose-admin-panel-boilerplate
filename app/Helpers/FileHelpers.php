@@ -6,7 +6,6 @@ use App\Enums\AllowedFileType;
 
 class FileHelpers
 {
-    
     /**
      * check if isDefaultFile
      * @param mixed $path
@@ -21,7 +20,7 @@ class FileHelpers
             'uploads/defaults/banner.png',
             'uploads/defaults/fav_icon.png',
         ];
-        
+
 
         $trimPath = stristr($path, 'uploads');
 
@@ -60,7 +59,7 @@ class FileHelpers
         if (!empty($value)) {
             $path = stristr($value, 'uploads');
 
-            if (file_exists(public_path($path))) {
+            if (file_exists(url($path))) {
                 return  url($path);
             }
 

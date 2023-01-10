@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
@@ -11,6 +12,8 @@ class Address extends Model
 {
     use HasFactory;
     use LogsActivity;
+    use SoftDeletes;
+
 
     protected $fillable = [
      'addressable_type',
@@ -21,6 +24,7 @@ class Address extends Model
      'district',
      'zip_code',
      'country',
+     'user_id',
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
@@ -33,8 +37,8 @@ class Address extends Model
     }
 
 
-    public function addressable()
+    public function user()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

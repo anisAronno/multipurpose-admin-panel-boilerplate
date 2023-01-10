@@ -159,7 +159,7 @@ class RolesController extends InertiaApplicationController
         $permissions = $request->input('permissions');
 
         if (empty($permissions) || !$role->isEditable) {
-            return Redirect::back()->with(['message'=>'Role is not Updateable']);
+            return Redirect::back()->with(['success'=>false, 'message'=>'Role is not Updateable']);
         } else {
             $role->name = $request->name;
             $role->save();
@@ -182,7 +182,7 @@ class RolesController extends InertiaApplicationController
     public function destroy(Role $role)
     {
         if (! $role->isDelatable) {
-            return $this->failedWithMessage('Role is not delatable'); 
+            return $this->failedWithMessage('Role is not delatable');
         }
 
         $role->delete();

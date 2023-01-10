@@ -24,6 +24,7 @@ class AddressFactory extends Factory
             'state'=>$this->faker->city(),
             'city'=>$this->faker->city(),
             'zip_code'=>$this->faker->postcode(),
+            'user_id'=>User::all(['id'])->random(),
         ];
     }
 }

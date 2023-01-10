@@ -9,7 +9,6 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
-
 class PasswordResetLinkController extends Controller
 {
     /**
@@ -47,7 +46,7 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status))->with('message', 'We have emailed your password reset link!');
+            return back()->with('status', __($status))->with(['success'=>true,'message', 'We have emailed your password reset link!']);
         }
 
         throw ValidationException::withMessages([

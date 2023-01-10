@@ -184,16 +184,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
      public function addresses()
      {
-         return $this->morphMany(Address::class, 'addressable');
+         return $this->hasMany(Address::class, 'user_id', 'id');
      }
-     
+
      public function socialLogins()
      {
-         return $this->morphMany(SocialLogin::class, 'socilloginable');
+         return $this->hasMany(SocialLogin::class, 'user_id', 'id');
      }
 
      public function loginHistories()
      {
-         return $this->hasMany(LoginHistory::class, 'id', 'user_id');
+         return $this->hasMany(LoginHistory::class, 'user_id', 'id');
      }
 }

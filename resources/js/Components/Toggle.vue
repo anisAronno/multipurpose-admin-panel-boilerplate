@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="modelValue==true ? 'bg-orange-500' : 'bg-gray-300'"
+        :class="modelValue==true ? 'bg-green-600' : 'bg-gray-300'"
         @click="toggle"
         class="w-14 transition-all duration-500 h-8 flex items-center rounded-full p-1"
     >

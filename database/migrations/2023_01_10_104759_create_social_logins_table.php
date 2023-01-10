@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class () extends Migration {
             $table->string('sso_id')->nullable();
             $table->string('sso_token')->nullable();
             $table->string('sso_refresh_token')->nullable();
-             $table->morphs('socilloginable');
+            $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
             $table->softDeletes();
         });
