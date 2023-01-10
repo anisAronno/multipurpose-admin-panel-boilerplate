@@ -21,6 +21,7 @@ class LoginHistoryFactory extends Factory
     {
         return [
             'ip'=>$this->faker->localIpv4(),
+            'auth_source' =>'own',
             'device_name'=>$this->faker->name(),
             'os_name'=>$this->faker->name(),
             'browser_name'=>$this->faker->name(),

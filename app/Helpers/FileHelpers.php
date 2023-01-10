@@ -60,7 +60,7 @@ class FileHelpers
                 return  url($path);
             }
 
-            return url('uploads/placeholder.png');
+            return $value;
         } else {
             return url('uploads/placeholder.png');
         }
@@ -83,7 +83,7 @@ class FileHelpers
 
                 if (! self::isAllowFileType($filePath)) {
                     return false;
-                } 
+                }
 
                 $file->move($up_path, $filename);
 
@@ -114,7 +114,7 @@ class FileHelpers
             return false;
         }
 
-        if ( self::isDefaultFile($path)) {
+        if (self::isDefaultFile($path)) {
             return false;
         }
 

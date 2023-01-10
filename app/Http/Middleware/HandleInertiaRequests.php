@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user()->load('unreadNotifications'),
+                'user' => $request->user() ? $request->user()->load('unreadNotifications') : $request->user(),
             ],
             'global' => [
                 'options' =>  Option::getAllOptions(),

@@ -6,7 +6,7 @@ use App\Events\LoginEvent;
 use App\Helpers\UserSystemInfoHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider; 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
 
         $this->storeLoginDetails($request->user());
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with(['message'=>'Login Successfull']);
+        return redirect()->intended(RouteServiceProvider::HOME)->with(['success'=>true, 'message'=>'Login Successfull']);
     }
 
       /**

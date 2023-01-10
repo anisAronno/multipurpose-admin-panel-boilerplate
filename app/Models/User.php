@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserStatus;
+use App\Enums\UserGender;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
 use App\Helpers\FileHelpers;
@@ -44,6 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'status',
         'password',
+        'email_verified_at',
+        'gender'
     ];
 
     /**
@@ -66,6 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'created_at' => 'datetime',
         'status' => UserStatus::class,
+        'gender' => UserGender::class,
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
@@ -76,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
-    
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailQueued());

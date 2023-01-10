@@ -28,6 +28,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name'                  => 'required|string|max:250|min:3',
+            'gender'                => 'nullable|string|max:50|min:3', 
             'email'                 => 'email:rfc,dns|max:255|unique:users,email,'. optional($this->user)->id,
             'avatar'                => 'nullable|image|mimes:jpeg,jpg,png,gif,svg,webp|max:2048',
             'roles'                 => "required|array|present|min:0",

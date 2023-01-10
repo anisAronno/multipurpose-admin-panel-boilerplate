@@ -75,7 +75,7 @@ class UserController extends InertiaApplicationController
      */
     public function store(UserStoreRequest $request)
     {
-        $data = $request->only('name', 'email', 'password', 'status');
+        $data = $request->only('name', 'email', 'password', 'status', 'gender');
 
         if ($request->avatar) {
             $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
@@ -134,7 +134,7 @@ class UserController extends InertiaApplicationController
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $user->update($request->only('name', 'email', 'status'));
+        $user->update($request->only('name', 'email', 'status', 'gender'));
 
         if (! $user->isEditable) {
             $user->roles()->detach();

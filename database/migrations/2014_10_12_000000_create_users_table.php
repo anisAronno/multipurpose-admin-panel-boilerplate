@@ -19,6 +19,7 @@ return new class () extends Migration {
             $table->string('token')->unique();
             $table->string('email')->unique()->index();
             $table->string('avatar')->nullable();
+            $table->string('gender', 50)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('status')->default('Pending');

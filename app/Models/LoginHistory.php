@@ -13,16 +13,25 @@ class LoginHistory extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        "device_name",
-        "country_name",
-        "country_code",
-        "region_code",
-        "region_name",
-        "city_name",
-        "zip_code",
-        "latitude",
-        "longitude",
-        "time_zone"
+        "ip.
+        auth_source,
+        device_name,
+        os_name,
+        browser_name,
+        country_name,
+        country_code,
+        region_code,
+        region_name,
+        city_name,
+        zip_code,
+        latitude,
+        longitude,
+        time_zone,
+        area_code,
+        metro_code,
+        iso_code,
+        postal_code,
+        user_id"
     ];
 
 

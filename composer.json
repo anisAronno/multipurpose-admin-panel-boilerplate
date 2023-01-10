@@ -13,6 +13,7 @@
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.8",
+        "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
         "opcodesio/log-viewer": "^1.8",
         "predis/predis": "^2.0",
