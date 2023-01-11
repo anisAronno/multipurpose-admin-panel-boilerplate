@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Option;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
@@ -28,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $option = Option::getOption('time_zone');
+
+        if ($option) {
+            date_default_timezone_set($option);
+        }
+
         LogViewer::auth(function ($request) {
             return $request->user()->hasRole(['superadmin', 'admin']);
         });

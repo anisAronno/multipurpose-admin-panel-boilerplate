@@ -143,6 +143,20 @@ const form = useForm({
                     :message="form.errors.organization_name"
                 />
             </div>
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <InputLabel class="text-xl" for="address" value="Address: " />
+
+                <Textarea
+                    id="address"
+                    type="text"
+                    class="block w-full"
+                    v-model="form.address"
+                    required
+                    autocomplete="address"
+                />
+
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
             <div
                 class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full flex justify-between items-center"
             >
@@ -167,7 +181,7 @@ const form = useForm({
                     for="user_default_role"
                     value="User Default Role:"
                 />
- 
+
                 <Multiselect
                     v-model="form.user_default_role"
                     :options="roleArr"
@@ -214,26 +228,21 @@ const form = useForm({
                     value="User Default Status:"
                 />
 
-                <select
-                    name="user_default_status"
-                    id="user_default_status"
-                    class="block w-full form-controll"
+                <Multiselect
                     v-model="form.user_default_status"
-                    required
+                    :options="userDefaultStatus"
+                    :selected="form.user_default_status"
+                    placeholder="Pick some..."
+                    class="block w-full multiselect-green form-controll dark:text-black"
+                    :searchable="true"
+                    :classes="{
+                        search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                        singleLabelText:
+                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                    }"
+                    id="user_default_status"
                 >
-                    <option
-                        :value="status"
-                        v-for="status in userDefaultStatus"
-                        :key="status"
-                        :class="
-                            status === form.user_default_status
-                                ? 'selected'
-                                : ''
-                        "
-                    >
-                        {{ status }}
-                    </option>
-                </select>
+                </Multiselect>
 
                 <InputError
                     class="mt-2"
@@ -309,24 +318,11 @@ const form = useForm({
                     class="mt-2 col-start-2 col-span-4"
                 />
             </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel class="text-xl" for="address" value="Address: " />
+            
 
-                <Textarea
-                    id="address"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.address"
-                    required
-                    autocomplete="address"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="flex items-center justify-center gap-4 py-5 flex-auto">
+            <div class="flex items-center justify-center gap-4 py-5 sm:py-10 flex-auto col-span-full">
                 <PrimaryButton
-                    class="btn btn-primary w-32 h-12"
+                    class="btn btn-primary w-32 h-12 sm:w-40 sm:h-14 sm:text-xl"
                     :disabled="form.processing"
                     >Update</PrimaryButton
                 >

@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
 use App\Enums\SocialLoginFields;
 use App\Enums\UserStatus;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaApplicationController;
@@ -48,7 +48,7 @@ class OptionController extends InertiaApplicationController
      */
     public function create()
     {
-       //
+        //
     }
 
     /**
@@ -70,7 +70,7 @@ class OptionController extends InertiaApplicationController
      */
     public function show(Option $option)
     {
-       //
+        //
     }
 
     /**
