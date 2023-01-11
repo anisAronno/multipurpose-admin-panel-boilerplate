@@ -35,6 +35,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $isAnyOneCanRegister = Option::getOption('any_one_can_register');
+
+        if (!$isAnyOneCanRegister) {
+            return $this->failedWithMessage('Registration is not allowed!');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email:rfc,dns|max:255|unique:'.User::class,

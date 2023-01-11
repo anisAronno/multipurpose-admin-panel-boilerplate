@@ -5,8 +5,11 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
+import { useCountries } from "@/composables/useCountries";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
+
+const { countries, timeZoneArr, userTimeZone, userCountry } = useCountries();
 
 defineProps({
     roleArr: Object,
@@ -140,45 +143,64 @@ const form = useForm({
                     :message="form.errors.organization_name"
                 />
             </div>
+            <div
+                class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full flex justify-between items-center"
+            >
+                <InputLabel
+                    class="text-xl"
+                    for="any_one_can_register"
+                    value="Any One Can Register? :"
+                />
+
+                <Toggle
+                    id="any_one_can_register"
+                    v-model="form.any_one_can_register"
+                ></Toggle>
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.any_one_can_register"
+                />
+            </div>
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel
                     class="text-xl"
                     for="user_default_role"
                     value="User Default Role:"
                 />
-
-                <select
-                    name="user_default_role"
-                    id="user_default_role"
-                    class="block w-full form-controll"
+ 
+                <Multiselect
                     v-model="form.user_default_role"
-                    required
+                    :options="roleArr"
+                    :selected="form.user_default_role"
+                    placeholder="Pick some..."
+                    class="block w-full multiselect-green form-controll dark:text-black"
+                    :searchable="true"
+                    :classes="{
+                        search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                        singleLabelText:
+                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                    }"
+                    id="user_default_role"
                 >
-                    <option
-                        :value="role"
-                        v-for="role in roleArr"
-                        :key="role"
-                        :class="
-                            role === form.user_default_role ? 'selected' : ''
-                        "
-                    >
-                        {{ role }}
-                    </option>
-                </select>
-
+                </Multiselect>
                 <InputError
                     class="mt-2"
                     :message="form.errors.user_default_role"
                 />
             </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full flex justify-between items-center">
+            <div
+                class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full flex justify-between items-center"
+            >
                 <InputLabel
                     class="text-xl"
                     for="collect_user_location"
                     value="Collect User Location:"
                 />
 
-                <Toggle id="collect_user_location" v-model="form.collect_user_location"></Toggle>
+                <Toggle
+                    id="collect_user_location"
+                    v-model="form.collect_user_location"
+                ></Toggle>
                 <InputError
                     class="mt-2"
                     :message="form.errors.collect_user_location"
@@ -218,7 +240,7 @@ const form = useForm({
                     :message="form.errors.user_default_status"
                 />
             </div>
-            
+
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <div class="flex justify-between items-center">
                     <InputLabel
@@ -226,7 +248,10 @@ const form = useForm({
                         for="allow_social_login"
                         value="Active Social Login: "
                     />
-                    <Toggle id="allow_social_login" v-model="form.allow_social_login"></Toggle>
+                    <Toggle
+                        id="allow_social_login"
+                        v-model="form.allow_social_login"
+                    ></Toggle>
                     <InputError
                         class="mt-2"
                         :message="form.errors.allow_social_login"
@@ -235,7 +260,7 @@ const form = useForm({
                 <div v-if="form.allow_social_login == true">
                     <InputLabel
                         class="text-xl block font-medium text-gray-700 mb-1"
-                        for="user_default_role"
+                        for="social_login_fields"
                         value="Select Social Login Provider :"
                     />
                     <Multiselect
@@ -256,6 +281,33 @@ const form = useForm({
                         class="mt-2 col-start-2 col-span-4"
                     />
                 </div>
+            </div>
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <InputLabel
+                    class="text-xl block font-medium text-gray-700 mb-1"
+                    for="time_zone"
+                    value="Select time zone :"
+                />
+                <Multiselect
+                    v-model="form.time_zone"
+                    :options="timeZoneArr"
+                    :selected="form.time_zone"
+                    placeholder="Pick some..."
+                    class="block w-full multiselect-green form-controll dark:text-black"
+                    :searchable="true"
+                    :classes="{
+                        search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                        singleLabelText:
+                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                    }"
+                    id="time_zone"
+                >
+                </Multiselect>
+
+                <InputError
+                    :message="form.errors.time_zone"
+                    class="mt-2 col-start-2 col-span-4"
+                />
             </div>
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel class="text-xl" for="address" value="Address: " />

@@ -28,8 +28,9 @@ class SocialLoginController extends InertiaApplicationController
     public function socialLoginRedirect($provider)
     {
         $isActiveSSO = Option::getOption('allow_social_login');
+        $isAnyOneCanRegister = Option::getOption('any_one_can_register');
 
-        if (!$isActiveSSO || $isActiveSSO == false) {
+        if (!$isActiveSSO || $isActiveSSO == false || !$isAnyOneCanRegister) {
             return $this->failedWithMessage('Social Login Is Not Active');
         }
 
@@ -44,9 +45,10 @@ class SocialLoginController extends InertiaApplicationController
     public function socialLoginCallback(Request $request, $provider)
     {
         $isActiveSSO = Option::getOption('allow_social_login');
+        $isAnyOneCanRegister = Option::getOption('any_one_can_register');
 
-        if (!$isActiveSSO || $isActiveSSO == false) {
-            return $this->failedWithMessage('Social Login Is Not Active');
+        if (!$isActiveSSO || $isActiveSSO == false || !$isAnyOneCanRegister) {
+            return $this->failedWithMessage('Process denied.');
         }
 
         try {

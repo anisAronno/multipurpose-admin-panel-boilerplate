@@ -45,7 +45,7 @@ class OptionSeeder extends Seeder
         $option::setOption('phone', '01816366535');
         $option::setOption('user_default_role', 'user');
         $option::setOption('site_url', env('APP_URL', 'http://multipurpose-admin-panel-boilerplate.test'));
-        $option::setOption('time_zone', 'Dhaka, Bangladesh');
+        $option::setOption('time_zone', 'Asia/Dhaka');
         $option::setOption('address', 'Dhaka, Bangladesh');
         $option::setOption('any_one_can_register', 'false');
         $option::setOption('allow_social_login', 'false');
