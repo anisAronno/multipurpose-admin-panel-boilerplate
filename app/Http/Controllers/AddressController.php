@@ -5,29 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class AddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -36,29 +19,13 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        //
-    }
+        $result  = $request->user()->addresses()->create($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Address $address)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Address $address)
-    {
-        //
+        if ($result) {
+            return Redirect::back()->with(['success'=>true, 'message', 'Created successfully']);
+        } else {
+            return Redirect::back()->with(['success'=>false, 'message', 'You are not permitted.']);
+        }
     }
 
     /**
@@ -70,7 +37,12 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address)
     {
-        //
+        $result = $address->update($request->all());
+        if ($result) {
+            return Redirect::back()->with(['success' => true, 'message', 'Updated successfully.']);
+        } else {
+            return Redirect::back()->with(['success'=>false, 'message', 'Updated failed']);
+        }
     }
 
     /**
@@ -81,6 +53,11 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        //
+        $result = $address->delete();
+        if ($result) {
+            return Redirect::back()->with(['success'=>true, 'message', 'Address Deleted']);
+        } else {
+            return Redirect::back()->with(['success'=>false, 'message', 'Deleted failed']);
+        }
     }
 }

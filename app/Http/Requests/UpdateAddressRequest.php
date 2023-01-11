@@ -13,7 +13,7 @@ class UpdateAddressRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class UpdateAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title'   => ['string', 'max:255'],
+            'address' =>['nullable', 'string', "max:999"],
+            'city' =>['nullable', 'string', "max:250"],
+            'state' =>['nullable', 'string', "max:250"],
+            'district' =>['nullable', 'string', "max:250"],
+            'zip_code' =>['nullable', 'string', "max:250"],
+            'country' =>['nullable', 'string', "max:250"],
         ];
     }
 }

@@ -34,6 +34,7 @@ const closeModal = () => {
     <section>
         <DangerButton @click.prevent="confirmDeletion">
             <font-awesome-icon icon="fa-solid fa-trash" class="mr-1" />
+            <slot></slot>
         </DangerButton>
 
         <Modal :show="modalShow" @close="closeModal">

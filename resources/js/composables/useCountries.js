@@ -6,7 +6,7 @@ import { countries as countryData } from "../data/countries.json";
  * --------------------*/
 
 let countryArr = Object.values(countryData);
-let timeZoneArr = Object.keys(countryData);
+let timeZoneArr = Object.keys(countryData); 
 
 let userCountry = {};
 let userTimeZone;
@@ -21,11 +21,15 @@ if (Intl) {
  * ------------------*/
 
 const timeZoneList = ref(timeZoneArr); 
-const countries = reactive([
-  ...new Map(countryArr.map((item) => [item["country"], item])).values(),
-]);
 
+ 
+const countryWithCode = reactive([
+    ...new Map(countryArr.map((item) => [item["country"], item])).values(),
+]);
    
+const countries = ref(countryWithCode.map((a) => a.country));
+ 
+
 
 /**--------------------------------------
  * @Export Data and
@@ -34,9 +38,10 @@ const countries = reactive([
 
 export function useCountries() {
   return {
-      countries,
-      timeZoneArr,
-      userTimeZone,
       userCountry,
+      timeZoneList,
+      userTimeZone,
+      countries,
+      countryWithCode,
   };
 }

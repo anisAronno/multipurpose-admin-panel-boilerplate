@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head> 
+    <Head>
         <link
             rel="icon"
             type="image/svg+xml"
@@ -146,6 +146,7 @@ onMounted(() => {
                                         >
                                             Profile
                                         </DropdownLink>
+
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"

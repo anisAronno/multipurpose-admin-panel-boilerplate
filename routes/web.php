@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ImageController;
@@ -70,6 +71,9 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
      */
 
     Route::resource('image', ImageController::class, ['except' => ['update']]);
+
+    Route::resource('address', AddressController::class, ['except' => ['update', 'index', 'edit']]);
+    Route::post('/address/update/{address}', [AddressController::class, 'update'])->name('address.update');
 
 
     Route::post('mark-read', [NotificationController::class, 'markNotification'])

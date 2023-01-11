@@ -9,7 +9,7 @@ import { useCountries } from "@/composables/useCountries";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 
-const { countries, timeZoneArr, userTimeZone, userCountry } = useCountries();
+const { userCountry, timeZoneList, userTimeZone, countries } = useCountries();
 
 defineProps({
     roleArr: Object,
@@ -299,7 +299,7 @@ const form = useForm({
                 />
                 <Multiselect
                     v-model="form.time_zone"
-                    :options="timeZoneArr"
+                    :options="timeZoneList"
                     :selected="form.time_zone"
                     placeholder="Pick some..."
                     class="block w-full multiselect-green form-controll dark:text-black"
@@ -318,9 +318,10 @@ const form = useForm({
                     class="mt-2 col-start-2 col-span-4"
                 />
             </div>
-            
 
-            <div class="flex items-center justify-center gap-4 py-5 sm:py-10 flex-auto col-span-full">
+            <div
+                class="flex items-center justify-center gap-4 py-5 sm:py-10 flex-auto col-span-full"
+            >
                 <PrimaryButton
                     class="btn btn-primary w-32 h-12 sm:w-40 sm:h-14 sm:text-xl"
                     :disabled="form.processing"
