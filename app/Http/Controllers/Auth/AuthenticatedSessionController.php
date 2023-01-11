@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Events\LoginEvent;
+use App\Models\Option;
 use App\Helpers\UserSystemInfoHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -46,7 +47,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $this->storeLoginDetails($request->user());
+
+        if (Option::getOption('collect_user_location' == true)) { 
+            $this->storeLoginDetails($request->user());
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME)->with(['success'=>true, 'message'=>'Login Successfull']);
     }
