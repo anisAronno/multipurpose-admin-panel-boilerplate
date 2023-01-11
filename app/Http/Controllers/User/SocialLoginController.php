@@ -9,7 +9,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\InertiaApplicationController;
@@ -27,7 +27,7 @@ class SocialLoginController extends InertiaApplicationController
      */
     public function socialLoginRedirect($provider)
     {
-        $isActiveSSO = Option::getOption('is_active_sso');
+        $isActiveSSO = Option::getOption('allow_social_login');
 
         if (!$isActiveSSO || $isActiveSSO == false) {
             return $this->failedWithMessage('Social Login Is Not Active');
@@ -43,7 +43,7 @@ class SocialLoginController extends InertiaApplicationController
      */
     public function socialLoginCallback(Request $request, $provider)
     {
-        $isActiveSSO = Option::getOption('is_active_sso');
+        $isActiveSSO = Option::getOption('allow_social_login');
 
         if (!$isActiveSSO || $isActiveSSO == false) {
             return $this->failedWithMessage('Social Login Is Not Active');
@@ -101,7 +101,9 @@ class SocialLoginController extends InertiaApplicationController
 
                 $this->setRole($logedInUser);
 
-                $this->storeLoginDetails($logedInUser, $provider);
+                if (Option::getOption('collect_user_location' == true)) {
+                    $this->storeLoginDetails($logedInUser, $provider);
+                }
 
                 return redirect()->intended(RouteServiceProvider::HOME)->with(['success'=>true, 'message'=>'Login Successfull']);
             } else {
@@ -138,7 +140,6 @@ class SocialLoginController extends InertiaApplicationController
        */
       public function storeLoginDetails($user, $provider)
       {
-          $data = [];
           $data['ip'] = UserSystemInfoHelper::get_ip();
           $data['auth_source'] = $provider;
           $data['device_name'] = UserSystemInfoHelper::get_device();

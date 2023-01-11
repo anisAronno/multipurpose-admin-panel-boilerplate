@@ -48,8 +48,9 @@ class OptionSeeder extends Seeder
         $option::setOption('time_zone', 'Dhaka, Bangladesh');
         $option::setOption('address', 'Dhaka, Bangladesh');
         $option::setOption('any_one_can_register', 'false');
-        $option::setOption('is_active_sso', 'false');
-        $option::setOption('sso_fields', json_encode(SocialLoginFields::values()));
+        $option::setOption('allow_social_login', 'false');
+        $option::setOption('collect_user_location', 'true');
+        $option::setOption('social_login_fields', json_encode(SocialLoginFields::values()));
         $option::setOption('pagination_limit', 10);
         $option::setOption('user_default_status', 'Active');
     }

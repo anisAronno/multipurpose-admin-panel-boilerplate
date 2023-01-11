@@ -5,7 +5,7 @@ import Images from "./Partials/Images.vue";
 import SettingsForm from "./Partials/SettingsForm.vue";
 defineProps({
     roleArr: Object,
-    ssoFieldsArr: Object,
+    socialLoginFields: Object,
     userDefaultStatus: Object,
 });
 
@@ -39,7 +39,7 @@ const options = usePage().props.value.global.options;
                 >
                     <SettingsForm
                         :roleArr="roleArr"
-                        :ssoFieldsArr="ssoFieldsArr"
+                        :socialLoginFields="socialLoginFields"
                         :userDefaultStatus="userDefaultStatus"
                     ></SettingsForm>
                 </div>

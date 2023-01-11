@@ -34,10 +34,10 @@ class OptionController extends InertiaApplicationController
     public function index(Request $request)
     {
         $roleArr = Role::pluck('name');
-        $ssoFieldsArr = SocialLoginFields::values();
+        $socialLoginFields = SocialLoginFields::values();
         $userDefaultStatus = UserStatus::values();
 
-        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr, 'ssoFieldsArr' => $ssoFieldsArr, 'userDefaultStatus'=>$userDefaultStatus]);
+        return Inertia::render('Settings/Index')->with(['roleArr'=>$roleArr, 'socialLoginFields' => $socialLoginFields, 'userDefaultStatus'=>$userDefaultStatus]);
     }
 
 

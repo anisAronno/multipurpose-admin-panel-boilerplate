@@ -10,7 +10,7 @@ import Multiselect from "@vueform/multiselect";
 
 defineProps({
     roleArr: Object,
-    ssoFieldsArr: Object,
+    socialLoginFields: Object,
     userDefaultStatus: Object,
 });
 
@@ -29,8 +29,9 @@ const form = useForm({
     pagination_limit: options.pagination_limit,
     organization_name: options.organization_name,
     user_default_status: options.user_default_status,
-    is_active_sso: options.is_active_sso,
-    sso_fields: JSON.parse(options.sso_fields),
+    collect_user_location: options.collect_user_location,
+    allow_social_login: options.allow_social_login,
+    social_login_fields: JSON.parse(options.social_login_fields),
 });
 </script>
 
@@ -170,6 +171,20 @@ const form = useForm({
                     :message="form.errors.user_default_role"
                 />
             </div>
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full flex justify-between items-center">
+                <InputLabel
+                    class="text-xl"
+                    for="collect_user_location"
+                    value="Collect User Location:"
+                />
+
+                <Toggle id="collect_user_location" v-model="form.collect_user_location"></Toggle>
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.collect_user_location"
+                />
+            </div>
+
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel
                     class="text-xl"
@@ -189,7 +204,9 @@ const form = useForm({
                         v-for="status in userDefaultStatus"
                         :key="status"
                         :class="
-                            status === form.user_default_status ? 'selected' : ''
+                            status === form.user_default_status
+                                ? 'selected'
+                                : ''
                         "
                     >
                         {{ status }}
@@ -201,40 +218,41 @@ const form = useForm({
                     :message="form.errors.user_default_status"
                 />
             </div>
+            
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <div class="flex justify-between items-center">
                     <InputLabel
                         class="text-xl"
-                        for="address"
+                        for="allow_social_login"
                         value="Active Social Login: "
                     />
-                    <Toggle v-model="form.is_active_sso"></Toggle>
+                    <Toggle id="allow_social_login" v-model="form.allow_social_login"></Toggle>
                     <InputError
                         class="mt-2"
-                        :message="form.errors.is_active_sso"
+                        :message="form.errors.allow_social_login"
                     />
                 </div>
-                <div v-if="form.is_active_sso == true">
+                <div v-if="form.allow_social_login == true">
                     <InputLabel
                         class="text-xl block font-medium text-gray-700 mb-1"
                         for="user_default_role"
                         value="Select Social Login Provider :"
                     />
                     <Multiselect
-                        v-model="form.sso_fields"
-                        :options="ssoFieldsArr"
-                        :selected="form.sso_fields"
+                        v-model="form.social_login_fields"
+                        :options="socialLoginFields"
+                        :selected="form.social_login_fields"
                         placeholder="Pick some..."
                         class="block w-full multiselect-green form-controll dark:text-gray-900"
                         mode="tags"
                         :searchable="true"
                         :close-on-select="false"
-                        id="sso_fields"
+                        id="social_login_fields"
                     >
                     </Multiselect>
 
                     <InputError
-                        :message="form.errors.sso_fields"
+                        :message="form.errors.social_login_fields"
                         class="mt-2 col-start-2 col-span-4"
                     />
                 </div>
