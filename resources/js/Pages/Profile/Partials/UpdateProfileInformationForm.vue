@@ -60,7 +60,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div v-if="props.mustVerifyEmail && user.email_verified_at === null">
+            <div v-if="props.mustVerifyEmail && user.email_verified_at === null && user.status !== 'Active'">
                 <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                     Your email address is unverified.
                     <Link
