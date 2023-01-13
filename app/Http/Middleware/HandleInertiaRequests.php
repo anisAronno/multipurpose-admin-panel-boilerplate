@@ -40,14 +40,14 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user() ? $request->user()->load('unreadNotifications') : $request->user(),
             ],
             'global' => [
-                'options' =>  Option::getAllOptions(),
+                'options' => Option::getAllOptions(),
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),
-                'success' => fn () => $request->session()->get('success')
+                'success' => fn () => $request->session()->get('success'),
             ],
             'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy())->toArray(), [
+                return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
                 ]);
             },

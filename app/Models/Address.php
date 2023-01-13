@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Address extends Model
 {
@@ -14,19 +14,19 @@ class Address extends Model
     use LogsActivity;
     use SoftDeletes;
 
-
     protected $fillable = [
-     'title',
-     'address',
-     'city',
-     'state',
-     'district',
-     'zip_code',
-     'country',
-     'user_id',
+        'title',
+        'address',
+        'city',
+        'state',
+        'district',
+        'zip_code',
+        'country',
+        'user_id',
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -34,7 +34,6 @@ class Address extends Model
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
-
 
     public function user()
     {

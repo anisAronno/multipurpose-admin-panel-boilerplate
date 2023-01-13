@@ -14,14 +14,14 @@ class LoginEvent
     use SerializesModels;
 
     /**
-      * @var User
-      */
+     * @var User
+     */
     public $user;
 
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param  User  $user
      */
     public function __construct($user)
     {

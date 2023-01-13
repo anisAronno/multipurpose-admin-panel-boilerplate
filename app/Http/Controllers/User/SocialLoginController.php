@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\UserStatus;
 use App\Events\LoginEvent;
 use App\Helpers\UserSystemInfoHelper;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Models\Option;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -12,9 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\InertiaApplicationController;
-use App\Models\User;
-use App\Enums\UserStatus;
 use Laravel\Socialite\Two\InvalidStateException;
 use Spatie\Permission\Models\Role;
 
@@ -22,7 +22,8 @@ class SocialLoginController extends InertiaApplicationController
 {
     /**
      * Redirect to provider
-     * @param mixed $provider
+     *
+     * @param  mixed  $provider
      * @return mixed
      */
     public function socialLoginRedirect($provider)
@@ -30,16 +31,18 @@ class SocialLoginController extends InertiaApplicationController
         $isActiveSSO = Option::getOption('allow_social_login');
         $isAnyOneCanRegister = Option::getOption('any_one_can_register');
 
-        if (!$isActiveSSO || $isActiveSSO == false || !$isAnyOneCanRegister) {
+        if (! $isActiveSSO || $isActiveSSO == false || ! $isAnyOneCanRegister) {
             return $this->failedWithMessage('Social Login Is Not Active');
         }
 
         return Socialite::driver($provider)->redirect();
     }
+
     /**
      * Handle callback from provider
-     * @param Request $request
-     * @param mixed $provider
+     *
+     * @param  Request  $request
+     * @param  mixed  $provider
      * @return \Illuminate\Http\RedirectResponse
      */
     public function socialLoginCallback(Request $request, $provider)
@@ -47,7 +50,7 @@ class SocialLoginController extends InertiaApplicationController
         $isActiveSSO = Option::getOption('allow_social_login');
         $isAnyOneCanRegister = Option::getOption('any_one_can_register');
 
-        if (!$isActiveSSO || $isActiveSSO == false || !$isAnyOneCanRegister) {
+        if (! $isActiveSSO || $isActiveSSO == false || ! $isAnyOneCanRegister) {
             return $this->failedWithMessage('Process denied.');
         }
 
@@ -60,16 +63,16 @@ class SocialLoginController extends InertiaApplicationController
         try {
             if (filter_var($socialiteUser->getEmail(), FILTER_VALIDATE_EMAIL)) {
                 $email = $socialiteUser->getEmail();
-                $name =  $socialiteUser->getName() ?? '';
+                $name = $socialiteUser->getName() ?? '';
                 $phone_number = $socialiteUser->user['mobile'] ?? '';
-                $image =$socialiteUser->getAvatar() ?? '';
+                $image = $socialiteUser->getAvatar() ?? '';
                 $id = $socialiteUser->id ?? '';
                 $password = Hash::make(Str::random(32));
                 $userDefaultStatus = Option::getOption('user_default_status');
 
                 $user = User::firstOrCreate(
                     [
-                        'email' => $email
+                        'email' => $email,
                     ],
                     [
                         'name' => $name,
@@ -84,7 +87,7 @@ class SocialLoginController extends InertiaApplicationController
                 );
 
                 if ($userDefaultStatus !== UserStatus::ACTIVE) {
-                    return redirect()->route('login')->with(["success"=>true,"Registration is complete. Please Wait for administrative response."]);
+                    return redirect()->route('login')->with(['success' => true, 'Registration is complete. Please Wait for administrative response.']);
                 }
 
                 $request->session()->regenerate();
@@ -94,11 +97,11 @@ class SocialLoginController extends InertiaApplicationController
                 $logedInUser = auth()->user();
 
                 $logedInUser->socialLogins()->create([
-                        'sso_id' => $id,
-                        'sso_provider' => $provider,
-                        'sso_token' => $socialiteUser->token,
-                        'sso_refresh_token' => $socialiteUser->refreshToken,
-                        'user_id' => $logedInUser->id,
+                    'sso_id' => $id,
+                    'sso_provider' => $provider,
+                    'sso_token' => $socialiteUser->token,
+                    'sso_refresh_token' => $socialiteUser->refreshToken,
+                    'user_id' => $logedInUser->id,
                 ]);
 
                 $this->setRole($logedInUser);
@@ -107,18 +110,19 @@ class SocialLoginController extends InertiaApplicationController
                     $this->storeLoginDetails($logedInUser, $provider);
                 }
 
-                return redirect()->intended(RouteServiceProvider::HOME)->with(['success'=>true, 'message'=>'Login Successfull']);
+                return redirect()->intended(RouteServiceProvider::HOME)->with(['success' => true, 'message' => 'Login Successfull']);
             } else {
-                return $this->failedWithMessage("Something went wrong!");
+                return $this->failedWithMessage('Something went wrong!');
             }
         } catch (\Throwable $th) {
-            return $this->failedWithMessage("Failed ". $th->getMessage());
+            return $this->failedWithMessage('Failed '.$th->getMessage());
         }
     }
 
     /**
      * set user role
-     * @param mixed $user
+     *
+     * @param  mixed  $user
      * @return void
      */
     private function setRole($user): void
@@ -129,15 +133,16 @@ class SocialLoginController extends InertiaApplicationController
 
         logger()->debug($hasRole);
 
-        if (!$hasRole) {
+        if (! $hasRole) {
             $role = Option::getOption('user_default_role');
             $user->assignRole($role);
         }
     }
 
-     /**
+      /**
        * Summary of storeUserLoginDetails
-       * @param mixed $user
+       *
+       * @param  mixed  $user
        * @return void
        */
       public function storeLoginDetails($user, $provider)
@@ -149,7 +154,7 @@ class SocialLoginController extends InertiaApplicationController
           $data['os_name'] = UserSystemInfoHelper::get_os();
           $data['auth_source'] = '';
 
-          $userDetails = array_merge($data, ['user_id'=>$user->id]);
+          $userDetails = array_merge($data, ['user_id' => $user->id]);
 
           LoginEvent::dispatch($userDetails);
       }

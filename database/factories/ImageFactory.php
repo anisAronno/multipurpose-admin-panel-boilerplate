@@ -18,9 +18,10 @@ class ImageFactory extends Factory
     public function definition()
     {
         $sesttings = SettingsFields::values();
+
         return [
-            'key'=>$this->faker->randomElement($sesttings) ,
-            'image'=>$this->faker->imageUrl(),
+            'key' => $this->faker->randomElement($sesttings),
+            'image' => $this->faker->imageUrl(),
         ];
     }
 }

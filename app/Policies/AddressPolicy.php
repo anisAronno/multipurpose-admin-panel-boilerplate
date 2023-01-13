@@ -98,6 +98,6 @@ class AddressPolicy
     {
         return $user->id === $address->user_id
                 ? Response::allow()
-                : Response::deny(['message','You do not own this Address.']);
+                : Response::deny(['message', 'You do not own this Address.']);
     }
 }

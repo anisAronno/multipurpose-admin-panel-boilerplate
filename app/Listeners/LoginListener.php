@@ -19,16 +19,16 @@ class LoginListener implements ShouldQueue
     public function handle(LoginEvent $event)
     {
         try {
-            $user =  $event->user;
+            $user = $event->user;
 
-            if (!empty($user['ip']) && $user['user_id']) {
+            if (! empty($user['ip']) && $user['user_id']) {
                 $locaition = LoginHistoryService::getLocation($user['ip']);
 
                 if (count(array_keys($locaition)) > 0) {
                     $loginHistoryData = array_merge($locaition, $user);
 
-                    $loginHistoryData['created_at']     = Carbon::now();
-                    $loginHistoryData['updated_at']     = Carbon::now();
+                    $loginHistoryData['created_at'] = Carbon::now();
+                    $loginHistoryData['updated_at'] = Carbon::now();
 
                     LoginHistory::insert($loginHistoryData);
                 }

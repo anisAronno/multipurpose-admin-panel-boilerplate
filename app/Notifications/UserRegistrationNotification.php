@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 
 class UserRegistrationNotification extends Notification
 {
@@ -18,9 +17,10 @@ class UserRegistrationNotification extends Notification
      * @return void
      */
     private $user;
+
     public function __construct(User $user)
     {
-        $this->user=$user;
+        $this->user = $user;
     }
 
     /**
@@ -42,10 +42,10 @@ class UserRegistrationNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())
+        return (new MailMessage)
         ->line('New User Registered')
-        ->line('User Email: '. $this->user->email)
-        ->line('User id: '. $this->user->id)
+        ->line('User Email: '.$this->user->email)
+        ->line('User id: '.$this->user->id)
         ->line('Thanks For Choose us');
     }
 
@@ -59,7 +59,7 @@ class UserRegistrationNotification extends Notification
     {
         return [
             'user_id' => $this->user->id,
-            'message' =>  "Registered new user ( ".$this->user->name ." ).",
+            'message' => 'Registered new user ( '.$this->user->name.' ).',
         ];
     }
 }

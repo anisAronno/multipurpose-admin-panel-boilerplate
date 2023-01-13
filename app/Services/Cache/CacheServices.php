@@ -13,6 +13,7 @@ class CacheServices
     {
         return 'user'.$token;
     }
+
     public static function getOptionsCacheKey(int $token = null): string
     {
         return 'option'.$token;

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserStatus;
 use App\Events\LoginEvent;
-use App\Models\Option;
 use App\Helpers\UserSystemInfoHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Option;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Enums\UserStatus;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -42,22 +42,23 @@ class AuthenticatedSessionController extends Controller
 
         if ($request->user()->status != UserStatus::ACTIVE) {
             Auth::guard('web')->logout();
-            return redirect()->back()->with(['success'=>false, 'message'=>'You Are not active user. Please Wait for administrative response.']);
+
+            return redirect()->back()->with(['success' => false, 'message' => 'You Are not active user. Please Wait for administrative response.']);
         }
 
         $request->session()->regenerate();
 
-
-        if (Option::getOption('collect_user_location' == true)) { 
+        if (Option::getOption('collect_user_location' == true)) {
             $this->storeLoginDetails($request->user());
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with(['success'=>true, 'message'=>'Login Successfull']);
+        return redirect()->intended(RouteServiceProvider::HOME)->with(['success' => true, 'message' => 'Login Successfull']);
     }
 
       /**
        * Summary of storeUserLoginDetails
-       * @param mixed $user
+       *
+       * @param  mixed  $user
        * @return void
        */
       public function storeLoginDetails($user)
@@ -68,16 +69,17 @@ class AuthenticatedSessionController extends Controller
           $data['browser_name'] = UserSystemInfoHelper::get_browsers();
           $data['os_name'] = UserSystemInfoHelper::get_os();
 
-          $userDetails = array_merge($data, ['user_id'=>$user->id]);
+          $userDetails = array_merge($data, ['user_id' => $user->id]);
 
           LoginEvent::dispatch($userDetails);
       }
+
     /**
-       * Destroy an authenticated session.
-       *
-       * @param  \Illuminate\Http\Request  $request
-       * @return \Illuminate\Http\RedirectResponse
-       */
+     * Destroy an authenticated session.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Request $request)
     {
         Auth::guard('web')->logout();
@@ -86,6 +88,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->with(['success'=>true,'message'=>'Logout Successfull']);
+        return redirect('/')->with(['success' => true, 'message' => 'Logout Successfull']);
     }
 }

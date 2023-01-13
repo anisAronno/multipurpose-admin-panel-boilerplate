@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Helpers\FileHelpers;
 use App\Models\Option;
 use App\Services\Cache\CacheServices;
 use App\Traits\ClearCache;
@@ -17,6 +16,7 @@ class OptionObserver
     {
         $this->optionsCacheKey = CacheServices::getOptionsCacheKey();
     }
+
     /**
      * Handle the Option "created" event.
      *

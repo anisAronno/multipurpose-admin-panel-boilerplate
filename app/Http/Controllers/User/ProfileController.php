@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\UserGender;
+use App\Helpers\FileHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Helpers\FileHelpers;
-use App\Enums\UserGender;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +46,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with(['success'=>true,'message', 'Profile updated']);
+        return Redirect::route('profile.edit')->with(['success' => true, 'message', 'Profile updated']);
     }
 
     /**
@@ -73,13 +73,12 @@ class ProfileController extends Controller
             $user->delete();
         }
 
-
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with(['success'=>true, 'message', 'Profile Deleted']);
+        return Redirect::to('/')->with(['success' => true, 'message', 'Profile Deleted']);
     }
+
     /**
      * Update the user's profile information.
      *
@@ -97,15 +96,16 @@ class ProfileController extends Controller
                     FileHelpers::deleteFile($user->avatar);
                     $user->avatar = $path;
                     $user->save();
-                    return Redirect::route('profile.edit')->with(['success'=>true, 'message', 'Profile picture updated']);
+
+                    return Redirect::route('profile.edit')->with(['success' => true, 'message', 'Profile picture updated']);
                 } else {
-                    return Redirect::back()->with(['success'=>false, 'message', 'Failed Update']);
+                    return Redirect::back()->with(['success' => false, 'message', 'Failed Update']);
                 }
             } else {
-                return Redirect::back()->with(['success'=>false, 'message', 'Something went wrong']);
+                return Redirect::back()->with(['success' => false, 'message', 'Something went wrong']);
             }
         } catch (\Throwable $th) {
-            return Redirect::back()->with(['success'=>false, 'message', 'Something went wrong']);
+            return Redirect::back()->with(['success' => false, 'message', 'Something went wrong']);
         }
     }
 }

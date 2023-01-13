@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Models\User;
 use App\Notifications\UserRegistrationNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class UserRegistrationListener implements ShouldQueue
 {
@@ -27,8 +26,8 @@ class UserRegistrationListener implements ShouldQueue
      */
     public function handle($event)
     {
-        $administrativeUser = User::with("roles")->where('status', 'Active')->whereHas("roles", function ($q) {
-            $q->where("name", "=", "superadmin");
+        $administrativeUser = User::with('roles')->where('status', 'Active')->whereHas('roles', function ($q) {
+            $q->where('name', '=', 'superadmin');
         })->get();
 
         foreach ($administrativeUser as $admin) {

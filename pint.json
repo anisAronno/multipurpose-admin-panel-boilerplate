@@ -1,6 +1,7 @@
 {
     "preset": "laravel",
     "rules": {
+        "final_internal_class": false,
         "simplified_null_return": true,
         "braces": false,
         "new_with_braces": {

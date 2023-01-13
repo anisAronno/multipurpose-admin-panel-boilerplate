@@ -26,8 +26,8 @@ class OptoinValueFilterRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (is_file($value)) { 
-            return !! FileHelpers::isAllowFileType($value->getClientOriginalName());
+        if (is_file($value)) {
+            return (bool) FileHelpers::isAllowFileType($value->getClientOriginalName());
         } else {
             return true;
         }

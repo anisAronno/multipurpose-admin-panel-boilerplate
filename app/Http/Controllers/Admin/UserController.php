@@ -3,47 +3,48 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\UserStatus;
+use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\Cache\CacheServices;
-use App\Helpers\FileHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-use App\Models\Role;
 
 class UserController extends InertiaApplicationController
 {
     /**
-    * Filter role and permission
-    */
+     * Filter role and permission
+     */
     public function __construct()
     {
-        $this->middleware('permission:user.view|user.create|user.edit|user.delete|user.status', ['only' => ['index','store']]);
-        $this->middleware('permission:user.create', ['only' => ['create','store']]);
-        $this->middleware('permission:user.edit|permission:user.status|', ['only' => ['edit','update']]);
+        $this->middleware('permission:user.view|user.create|user.edit|user.delete|user.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:user.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:user.edit|permission:user.status|', ['only' => ['edit', 'update']]);
         $this->middleware('permission:user.delete', ['only' => ['destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int)[$request->page] : 1;
+        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
         $key = CacheServices::getUserCacheKey($currentPage);
 
-        if (!empty($request->search)) {
+        if (! empty($request->search)) {
             $q = $request->search;
-            $users = User::with(['roles'])->where('name', 'LIKE', '%' . $q . '%')->orWhere('email', 'LIKE', '%' . $q . '%')->orderBy('id', 'desc')->paginate(10);
-            return Inertia::render('User/Index', ['users'=>$users]);
+            $users = User::with(['roles'])->where('name', 'LIKE', '%'.$q.'%')->orWhere('email', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+
+            return Inertia::render('User/Index', ['users' => $users]);
         }
 
         $users = Cache::remember($key, 10, function () {
@@ -52,7 +53,7 @@ class UserController extends InertiaApplicationController
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('User/Index', ['users'=>$users]);
+        return Inertia::render('User/Index', ['users' => $users]);
     }
 
     /**
@@ -63,8 +64,9 @@ class UserController extends InertiaApplicationController
     public function create()
     {
         $role = Role::pluck('name');
-        $statusArr =  UserStatus::values();
-        return Inertia::render('User/Create', ['roles'=>$role,'statusArr'=>$statusArr]);
+        $statusArr = UserStatus::values();
+
+        return Inertia::render('User/Create', ['roles' => $role, 'statusArr' => $statusArr]);
     }
 
     /**
@@ -100,7 +102,7 @@ class UserController extends InertiaApplicationController
     {
         $user->load(['roles']);
 
-        return Inertia::render('User/Show', ['user'=>$user]);
+        return Inertia::render('User/Show', ['user' => $user]);
     }
 
     /**
@@ -117,12 +119,11 @@ class UserController extends InertiaApplicationController
             return $value->name;
         });
 
-        $statusArr =  UserStatus::values();
-
+        $statusArr = UserStatus::values();
 
         $roleArr = Role::pluck('name');
 
-        return Inertia::render('User/Edit', ['user'=>$user, 'statusArr'=>$statusArr, 'roleArr'=>$roleArr]);
+        return Inertia::render('User/Edit', ['user' => $user, 'statusArr' => $statusArr, 'roleArr' => $roleArr]);
     }
 
     /**
@@ -141,7 +142,7 @@ class UserController extends InertiaApplicationController
 
             $roles = $request->roles;
 
-            if (!in_array('superadmin', $roles)) {
+            if (! in_array('superadmin', $roles)) {
                 array_push($roles, 'superadmin');
             }
 
@@ -152,18 +153,18 @@ class UserController extends InertiaApplicationController
         }
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'))->with(['success'=>true, 'message', 'Updated successfull']);
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
         }
 
-        return Redirect::route('user.index')->with(['success'=>true,'message', 'Updated successfull']);
+        return Redirect::route('user.index')->with(['success' => true, 'message', 'Updated successfull']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
    public function destroy(User $user)
    {
        if (! $user->isDeletable) {
@@ -173,7 +174,7 @@ class UserController extends InertiaApplicationController
        $user->delete();
 
        if (session('last_visited_url')) {
-           return Redirect::to(session('last_visited_url'))->with(['success'=>true, 'message', 'Deleted successfull']);
+           return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
        }
 
        return $this->successWithMessage('Deleted successfull');
@@ -181,14 +182,15 @@ class UserController extends InertiaApplicationController
 
    /**
     * Summary of avatarUpdate
-    * @param User $user
+    *
+    * @param  User  $user
     * @return \Illuminate\Http\RedirectResponse
     */
    public function avatarUpdate(Request $request, User $user)
    {
        if ($request->image) {
            $path = FileHelpers::upload($request, 'image', 'users');
-           if (!$path) {
+           if (! $path) {
                return $this->successWithMessage('Update Failed');
            } else {
                FileHelpers::deleteFile($user->avatar);
@@ -198,18 +200,18 @@ class UserController extends InertiaApplicationController
 
        return $this->successWithMessage('Successfully Updated');
    }
-    /**
-     * Remove the specified user avatar.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
+   /**
+    * Remove the specified user avatar.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
    public function avatarDelete(User $user)
    {
        FileHelpers::deleteFile($user->avatar);
 
-       $user->update([$user->avatar=null]);
+       $user->update([$user->avatar = null]);
 
        return $this->failedWithMessage('Deleted successfull');
    }

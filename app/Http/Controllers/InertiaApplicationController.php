@@ -30,5 +30,4 @@ class InertiaApplicationController extends Controller
     {
         return Redirect::back()->with(['success' => true, 'data' => $data], $code);
     }
-
 }

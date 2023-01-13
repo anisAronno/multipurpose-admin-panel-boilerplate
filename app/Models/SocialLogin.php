@@ -12,15 +12,14 @@ class SocialLogin extends Model
     use SoftDeletes;
 
     protected $fillable = [
-            'socilloginable_type',
-            'socilloginable_id',
-            "sso_provider",
-            "sso_id",
-            "sso_token",
-            "sso_refresh_token",
-            "user_id",
-        ];
-
+        'socilloginable_type',
+        'socilloginable_id',
+        'sso_provider',
+        'sso_id',
+        'sso_token',
+        'sso_refresh_token',
+        'user_id',
+    ];
 
     public function user()
     {

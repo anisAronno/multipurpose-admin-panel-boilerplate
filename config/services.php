@@ -50,7 +50,7 @@ return [
         'auth_url' => env('GOOGLE_AUTH_URL'),
     ],
 
-      'twitter' => [
+    'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
         'redirect' => env('TWITTER_REDIRECT_URL'),
@@ -62,10 +62,10 @@ return [
         'redirect' => env('LINKEDIN_REDIRECT_URL'),
     ],
 
-    'instagram' => [  
-     'client_id' => env('INSTAGRAM_CLIENT_ID'),  
-     'client_secret' => env('INSTAGRAM_CLIENT_SECRET'),  
-     'redirect' => env('INSTAGRAM_REDIRECT_URI'),  
-],
+    'instagram' => [
+        'client_id' => env('INSTAGRAM_CLIENT_ID'),
+        'client_secret' => env('INSTAGRAM_CLIENT_SECRET'),
+        'redirect' => env('INSTAGRAM_REDIRECT_URI'),
+    ],
 
 ];

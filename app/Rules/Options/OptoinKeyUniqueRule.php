@@ -26,8 +26,8 @@ class OptoinKeyUniqueRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $option =  Option::where($attribute, $value)->first(); 
-        
+        $option = Option::where($attribute, $value)->first();
+
         if (empty($option)) {
             return true;
         } else {

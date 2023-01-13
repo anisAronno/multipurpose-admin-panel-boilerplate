@@ -22,11 +22,11 @@ class RoleUpdateRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    { 
+    {
         return [
-            'name' => 'required|max:100|unique:roles,name,' . $this->id,
-            "permissions"  => "required|array|present|min:0",
-            "permissions.*"  => "required|string|distinct|min:3"
+            'name' => 'required|max:100|unique:roles,name,'.$this->id,
+            'permissions' => 'required|array|present|min:0',
+            'permissions.*' => 'required|string|distinct|min:3',
         ];
     }
 }

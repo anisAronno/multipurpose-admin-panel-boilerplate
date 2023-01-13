@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Option;
 use App\Enums\SettingsFields;
+use App\Models\Option;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class OptionFactory extends Factory
 {
     protected $model = Option::class;
+
     /**
      * Define the model's default state.
      *
@@ -23,8 +24,8 @@ class OptionFactory extends Factory
         $sesttings = SettingsFields::values();
 
         return [
-            'option_key'   => $this->faker->unique()->randomElement($sesttings),
-            'option_value' => $this->faker->imageUrl()
+            'option_key' => $this->faker->unique()->randomElement($sesttings),
+            'option_value' => $this->faker->imageUrl(),
         ];
     }
 }

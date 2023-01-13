@@ -3,13 +3,13 @@
 namespace Database\Seeders;
 
 use App\Enums\UserStatus;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -28,9 +28,7 @@ class RolePermissionSeeder extends Seeder
         DB::table('role_has_permissions')->truncate();
         Schema::enableForeignKeyConstraints();
 
-
-
-        $user = new User();
+        $user = new User;
         $user->name = 'Anichur Rahaman';
         $user->email = 'admin@gmail.com';
         $user->password = bcrypt('password');
@@ -39,14 +37,12 @@ class RolePermissionSeeder extends Seeder
         $user->gender = 'Male';
         $user->save();
 
-
         // Create Roles
-        $roleSuperAdmin = Role::create([ 'name' => 'superadmin']);
-        $roleUser = Role::create([ 'name' => 'user']);
-        $roleAdmin = Role::create([ 'name' => 'admin']);
-        $roleEditor = Role::create([ 'name' => 'editor']);
-        $roleAuthor = Role::create([ 'name' => 'author']);
-
+        $roleSuperAdmin = Role::create(['name' => 'superadmin']);
+        $roleUser = Role::create(['name' => 'user']);
+        $roleAdmin = Role::create(['name' => 'admin']);
+        $roleEditor = Role::create(['name' => 'editor']);
+        $roleAuthor = Role::create(['name' => 'author']);
 
         // Permission List as array
         $permissions = [
@@ -55,7 +51,7 @@ class RolePermissionSeeder extends Seeder
                 'group_name' => 'dashboard',
                 'permissions' => [
                     'dashboard.view',
-                ]
+                ],
             ],
             [
                 'group_name' => 'blog',
@@ -65,7 +61,7 @@ class RolePermissionSeeder extends Seeder
                     'blog.edit',
                     'blog.delete',
                     'blog.status',
-                ]
+                ],
             ],
             [
                 'group_name' => 'user',
@@ -76,7 +72,7 @@ class RolePermissionSeeder extends Seeder
                     'user.edit',
                     'user.delete',
                     'user.status',
-                ]
+                ],
             ],
             [
                 'group_name' => 'role',
@@ -86,9 +82,8 @@ class RolePermissionSeeder extends Seeder
                     'role.edit',
                     'role.delete',
                     'role.status',
-                ]
+                ],
             ],
-
 
             [
                 'group_name' => 'category',
@@ -99,7 +94,7 @@ class RolePermissionSeeder extends Seeder
                     'category.edit',
                     'category.delete',
                     'category.status',
-                ]
+                ],
             ],
 
             [
@@ -111,9 +106,8 @@ class RolePermissionSeeder extends Seeder
                     'tag.edit',
                     'tag.delete',
                     'tag.status',
-                ]
+                ],
             ],
-
 
             [
                 'group_name' => 'about',
@@ -124,7 +118,7 @@ class RolePermissionSeeder extends Seeder
                     'about.edit',
                     'about.delete',
                     'about.status',
-                ]
+                ],
             ],
             [
                 'group_name' => 'contact',
@@ -135,7 +129,7 @@ class RolePermissionSeeder extends Seeder
                     'contact.edit',
                     'contact.delete',
                     'contact.status',
-                ]
+                ],
             ],
             [
                 'group_name' => 'slider',
@@ -145,7 +139,7 @@ class RolePermissionSeeder extends Seeder
                     'slider.edit',
                     'slider.delete',
                     'slider.status',
-                ]
+                ],
             ],
 
             [
@@ -156,7 +150,7 @@ class RolePermissionSeeder extends Seeder
                     'options.edit',
                     'options.delete',
                     'options.status',
-                ]
+                ],
             ],
             [
                 'group_name' => 'pages',
@@ -167,7 +161,7 @@ class RolePermissionSeeder extends Seeder
                     'pages.edit',
                     'pages.delete',
                     'pages.status',
-                ]
+                ],
             ],
 
             [
@@ -179,7 +173,7 @@ class RolePermissionSeeder extends Seeder
                     'social.edit',
                     'social.delete',
                     'social.status',
-                ]
+                ],
             ],
 
             [
@@ -190,10 +184,9 @@ class RolePermissionSeeder extends Seeder
                     'notification.edit',
                     'notification.delete',
                     'notification.status',
-                ]
-            ]
+                ],
+            ],
         ];
-
 
         for ($i = 0; $i < count($permissions); $i++) {
             $permissionGroup = $permissions[$i]['group_name'];
@@ -203,7 +196,6 @@ class RolePermissionSeeder extends Seeder
                 $permission->assignRole($roleSuperAdmin);
             }
         }
-
 
         // Editor Permission
 
@@ -260,8 +252,6 @@ class RolePermissionSeeder extends Seeder
 
         $roleEditor->syncPermissions($editorPermissions);
 
-
-
         //Admin Permission
 
         $adminPermissions = [
@@ -279,7 +269,6 @@ class RolePermissionSeeder extends Seeder
             'category.edit',
             'category.delete',
             'category.status',
-
 
             'about.create',
             'about.view',
@@ -311,7 +300,6 @@ class RolePermissionSeeder extends Seeder
             'pages.delete',
             'pages.status',
 
-
             'social.create',
             'social.view',
             'social.edit',
@@ -332,7 +320,6 @@ class RolePermissionSeeder extends Seeder
         ];
 
         $roleAdmin->syncPermissions($adminPermissions);
-
 
         //User Permission
 
@@ -383,31 +370,31 @@ class RolePermissionSeeder extends Seeder
         DB::table('model_has_roles')->insert([
             'role_id' => $roleSuperAdmin->id,
             'model_type' => 'App\Models\User',
-            'model_id' => $user->id
+            'model_id' => $user->id,
         ]);
 
         DB::table('model_has_roles')->insert([
             'role_id' => $roleAdmin->id,
             'model_type' => 'App\Models\User',
-            'model_id' => $user->id
+            'model_id' => $user->id,
         ]);
 
         DB::table('model_has_roles')->insert([
             'role_id' => $roleEditor->id,
             'model_type' => 'App\Models\User',
-            'model_id' => $user->id
+            'model_id' => $user->id,
         ]);
 
         DB::table('model_has_roles')->insert([
             'role_id' => $roleUser->id,
             'model_type' => 'App\Models\User',
-            'model_id' => $user->id
+            'model_id' => $user->id,
         ]);
 
         DB::table('model_has_roles')->insert([
             'role_id' => $roleAuthor->id,
             'model_type' => 'App\Models\User',
-            'model_id' => $user->id
+            'model_id' => $user->id,
         ]);
     }
 }

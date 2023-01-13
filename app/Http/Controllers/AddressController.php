@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class AddressController extends Controller
 {
@@ -19,12 +17,12 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        $result  = $request->user()->addresses()->create($request->all());
+        $result = $request->user()->addresses()->create($request->all());
 
         if ($result) {
-            return Redirect::back()->with(['success'=>true, 'message', 'Created successfully']);
+            return Redirect::back()->with(['success' => true, 'message', 'Created successfully']);
         } else {
-            return Redirect::back()->with(['success'=>false, 'message', 'You are not permitted.']);
+            return Redirect::back()->with(['success' => false, 'message', 'You are not permitted.']);
         }
     }
 
@@ -41,7 +39,7 @@ class AddressController extends Controller
         if ($result) {
             return Redirect::back()->with(['success' => true, 'message', 'Updated successfully.']);
         } else {
-            return Redirect::back()->with(['success'=>false, 'message', 'Updated failed']);
+            return Redirect::back()->with(['success' => false, 'message', 'Updated failed']);
         }
     }
 
@@ -55,9 +53,9 @@ class AddressController extends Controller
     {
         $result = $address->delete();
         if ($result) {
-            return Redirect::back()->with(['success'=>true, 'message', 'Address Deleted']);
+            return Redirect::back()->with(['success' => true, 'message', 'Address Deleted']);
         } else {
-            return Redirect::back()->with(['success'=>false, 'message', 'Deleted failed']);
+            return Redirect::back()->with(['success' => false, 'message', 'Deleted failed']);
         }
     }
 }

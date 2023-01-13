@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Image extends Model
 {
@@ -13,13 +13,14 @@ class Image extends Model
     use LogsActivity;
 
     protected $fillable = [
-    'imageable_type',
-    'imageable_id',
-    'key',
-    'image',
+        'imageable_type',
+        'imageable_id',
+        'key',
+        'image',
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

@@ -3,13 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\Image;
-use App\Models\Setting; 
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
 class ImageSeeder extends Seeder
 {
     protected $model = Image::class;
+
     /**
      * Run the database seeds.
      *
@@ -18,7 +19,7 @@ class ImageSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        Image::truncate(); 
+        Image::truncate();
         Schema::enableForeignKeyConstraints();
 
         Image::factory()->count(10)->for(

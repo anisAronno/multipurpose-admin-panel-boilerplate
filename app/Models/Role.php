@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use App\Enums\AdministrativeRole;
-use Spatie\Permission\Models\Role as ModelsRole;
-
-use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Models\Role as ModelsRole;
 
 class Role extends ModelsRole
 {
     use HasFactory;
-
     use LogsActivity;
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -33,7 +31,7 @@ class Role extends ModelsRole
         }
     }
 
-    protected $appends = array('isDeletable', 'isEditable');
+    protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)
     {
@@ -45,6 +43,7 @@ class Role extends ModelsRole
             return false;
         }
     }
+
     public function getIsEditableAttribute($value)
     {
         if ($this->id === 1) {

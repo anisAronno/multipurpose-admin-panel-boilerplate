@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
 
 class PasswordResetLinkController extends Controller
 {
@@ -46,7 +46,7 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status))->with(['success'=>true,'message', 'We have emailed your password reset link!']);
+            return back()->with('status', __($status))->with(['success' => true, 'message', 'We have emailed your password reset link!']);
         }
 
         throw ValidationException::withMessages([

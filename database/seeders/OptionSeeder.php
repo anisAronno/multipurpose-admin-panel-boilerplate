@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Option; 
+use App\Models\Option;
 use Illuminate\Database\Seeder;
-use App\Enums\SocialLoginFields;
 use Illuminate\Support\Facades\Schema;
 
 class OptionSeeder extends Seeder
@@ -24,7 +23,7 @@ class OptionSeeder extends Seeder
          * -------------------------------------------------------
          * You can create random options field with this factory
          *  Its Insert only setting type value
-         * If you want uncomment settings factory 
+         * If you want uncomment settings factory
          ------------------------------------------------------------
          **************************************************************/
 
@@ -36,8 +35,7 @@ class OptionSeeder extends Seeder
          * ------------------------------------------
          * ***********************************************/
 
-       
-        $option = new Option();
+        $option = new Option;
         $option::setOption('logo', 'uploads/defaults/logo.png');
         $option::setOption('fav_icon', 'uploads/defaults/fav_icon.png');
         $option::setOption('banner', 'uploads/defaults/banner.png');
@@ -49,7 +47,7 @@ class OptionSeeder extends Seeder
         $option::setOption('user_default_role', 'user');
         $option::setOption('site_url', env('APP_URL', 'http://multipurpose-admin-panel-boilerplate.test'));
         $option::setOption('time_zone', 'Asia/Dhaka');
-        $option::setOption('address', $location['time_zone'] ?? "Asia/Dhaka");
+        $option::setOption('address', $location['time_zone'] ?? 'Asia/Dhaka');
         $option::setOption('any_one_can_register', 'false');
         $option::setOption('allow_social_login', 'false');
         $option::setOption('collect_user_location', 'true');

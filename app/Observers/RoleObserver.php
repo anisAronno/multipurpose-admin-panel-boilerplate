@@ -11,13 +11,15 @@ class RoleObserver
     use ClearCache;
 
     public $roleCacheKey = '';
+
     public $userCacheKey = '';
 
     public function __construct()
     {
-        $this->roleCacheKey = CacheServices::getUserCacheKey() ;
-        $this->userCacheKey = CacheServices::getRoleCacheKey() ;
+        $this->roleCacheKey = CacheServices::getUserCacheKey();
+        $this->userCacheKey = CacheServices::getRoleCacheKey();
     }
+
     /**
      * Handle the Role "created" event.
      *

@@ -12,8 +12,9 @@ class LoginHistory extends Model
     use SoftDeletes;
 
     public $timestamps = true;
+
     protected $fillable = [
-        "ip.
+        'ip.
         auth_source,
         device_name,
         os_name,
@@ -31,9 +32,8 @@ class LoginHistory extends Model
         metro_code,
         iso_code,
         postal_code,
-        user_id"
+        user_id',
     ];
-
 
     public function user()
     {

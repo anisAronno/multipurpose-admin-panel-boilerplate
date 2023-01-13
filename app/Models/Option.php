@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\SettingsFields;
 use App\Helpers\FileHelpers;
 use App\Traits\OptionTransform;
-use App\Enums\SettingsFields;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Option extends Model
 {
@@ -16,10 +16,9 @@ class Option extends Model
     use OptionTransform;
     use LogsActivity;
 
-
     protected $fillable = [
         'option_key',
-        'option_value'
+        'option_value',
     ];
 
     protected $primaryKey = 'option_key';
@@ -28,9 +27,10 @@ class Option extends Model
 
     protected $keyType = 'string';
 
-    protected $appends = array('isDeletable');
+    protected $appends = ['isDeletable'];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -50,13 +50,12 @@ class Option extends Model
         }
     }
 
-
     public function getOptionValueAttribute($value)
     {
         $isFile = FileHelpers::isAllowFileType($value);
 
         if ($isFile) {
-            $value =  FileHelpers::getUrl($value);
+            $value = FileHelpers::getUrl($value);
         }
 
         return $value;

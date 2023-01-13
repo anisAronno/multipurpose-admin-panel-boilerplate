@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
     {
         $isAnyOneCanRegister = Option::getOption('any_one_can_register');
 
-        if (!$isAnyOneCanRegister) {
+        if (! $isAnyOneCanRegister) {
             return $this->failedWithMessage('Registration is not allowed!');
         }
 
@@ -63,6 +63,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME)->with(['success'=>true,'message', 'Registration successfull']);
+        return redirect(RouteServiceProvider::HOME)->with(['success' => true, 'message', 'Registration successfull']);
     }
 }

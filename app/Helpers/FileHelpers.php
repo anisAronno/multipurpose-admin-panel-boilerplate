@@ -8,10 +8,11 @@ class FileHelpers
 {
     /**
      * check if isDefaultFile
-     * @param mixed $path
+     *
+     * @param  mixed  $path
      * @return bool
      */
-    public static function isDefaultFile($path): Bool
+    public static function isDefaultFile($path): bool
     {
         $defaultFile = [
             'uploads/defaults/avatar.png',
@@ -21,7 +22,6 @@ class FileHelpers
             'uploads/defaults/fav_icon.png',
         ];
 
-
         $trimPath = stristr($path, 'uploads');
 
         if (in_array($trimPath, $defaultFile)) {
@@ -30,14 +30,16 @@ class FileHelpers
             return false;
         }
     }
+
     /**
      * Filter $fileType
-     * @param mixed $file
+     *
+     * @param  mixed  $file
      * @return bool
      */
-    public static function isAllowFileType($path): Bool
+    public static function isAllowFileType($path): bool
     {
-        $extension =   pathinfo(
+        $extension = pathinfo(
             parse_url($path, PHP_URL_PATH),
             PATHINFO_EXTENSION
         );
@@ -51,12 +53,13 @@ class FileHelpers
 
     /**
      * Summary of get_url_in_content( $content:string )
-     * @param mixed $value
+     *
+     * @param  mixed  $value
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public static function getUrl($value): string
     {
-        if (!empty($value)) {
+        if (! empty($value)) {
             $path = stristr($value, 'uploads');
 
             if (file_exists(url($path))) {
@@ -68,11 +71,13 @@ class FileHelpers
             return url('uploads/defaults/placeholder.png');
         }
     }
+
     /**
      * Summary of upload
-     * @param mixed $request
-     * @param mixed $file_name
-     * @param mixed $upload_dir
+     *
+     * @param  mixed  $request
+     * @param  mixed  $file_name
+     * @param  mixed  $upload_dir
      * @return mixed
      */
     public static function upload($request, $file_name, string $upload_dir): mixed
@@ -80,8 +85,8 @@ class FileHelpers
         try {
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
-                $filename = time() . '.' . $file->extension();
-                $up_path = "uploads/".$upload_dir."/".date('Y-m');
+                $filename = time().'.'.$file->extension();
+                $up_path = 'uploads/'.$upload_dir.'/'.date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
                 if (! self::isAllowFileType($filePath)) {
@@ -92,6 +97,7 @@ class FileHelpers
 
                 if ($file->getError()) {
                     $request->session()->flash('message', $file->getErrorMessage());
+
                     return false;
                 }
 
@@ -106,7 +112,8 @@ class FileHelpers
 
     /**
      * Summary of deleteFile
-     * @param mixed $value
+     *
+     * @param  mixed  $value
      * @return bool
      */
     public static function deleteFile($value): bool
@@ -124,8 +131,10 @@ class FileHelpers
         try {
             if (file_exists(public_path($path))) {
                 unlink(public_path($path));
+
                 return true;
             }
+
             return false;
         } catch (\Throwable $th) {
             return false;

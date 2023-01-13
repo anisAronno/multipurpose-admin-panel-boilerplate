@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use App\Enums\UserStatus;
 use App\Enums\UserGender;
+use App\Enums\UserStatus;
+use App\Helpers\FileHelpers;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
-use App\Helpers\FileHelpers;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Traits\HasRoles;
-use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
-use Spatie\Activitylog\Traits\LogsActivity;
+use Laravel\Sanctum\HasApiTokens;
+use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -29,8 +29,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
     use SoftDeletes;
     use LogsActivity;
-
-
 
     /**
      * The attributes that are mass assignable.
@@ -46,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'status',
         'password',
         'email_verified_at',
-        'gender'
+        'gender',
     ];
 
     /**
@@ -73,6 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -83,27 +82,28 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmailQueued());
+        $this->notify(new VerifyEmailQueued);
     }
 
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
     }
-        /**
+
+    /**
      * Override the default boot method to register some extra stuff for every child model.
      */
     protected static function boot()
     {
         static::creating(function ($model) {
             $model->token = Uuid::uuid4()->toString();
-            $model->username = Str::slug($model->name)."_".(User::max('id') + 1).random_int(1, 9999);
+            $model->username = Str::slug($model->name).'_'.(User::max('id') + 1).random_int(1, 9999);
         });
 
         parent::boot();
     }
 
-      /**
+    /**
      * Picture
      *
      * @param [type] $uid
@@ -117,7 +117,8 @@ class User extends Authenticatable implements MustVerifyEmail
             return  $this->attributes['avatar'] = FileHelpers::getUrl('uploads/defaults/avatar.png');
         }
     }
-      /**
+
+    /**
      * Date
      *
      * @param [type] $uid
@@ -130,13 +131,13 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-
     public static function getpermissionGroups()
     {
         $permission_groups = DB::table('permissions')
             ->select('group_name as name')
             ->groupBy('group_name')
             ->get();
+
         return $permission_groups;
     }
 
@@ -146,6 +147,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->select('name', 'id')
             ->where('group_name', $group_name)
             ->get();
+
         return $permissions;
     }
 
@@ -153,16 +155,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $hasPermission = true;
         foreach ($permissions as $permission) {
-            if (!$role->hasPermissionTo($permission->name)) {
+            if (! $role->hasPermissionTo($permission->name)) {
                 $hasPermission = false;
+
                 return $hasPermission;
             }
         }
+
         return $hasPermission;
     }
 
-
-     protected $appends = array('isDeletable', 'isEditable');
+     protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)
     {

@@ -35,7 +35,6 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
 
-
     Route::get('login/{provider}', [SocialLoginController::class, 'socialLoginRedirect'])
                 ->name('socialLogin.redirect');
 
@@ -63,5 +62,5 @@ Route::middleware('auth')->group(function () {
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout'); 
+                ->name('logout');
 });

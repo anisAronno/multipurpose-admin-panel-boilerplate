@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class PageFactory extends Factory
 {
     protected $model = Page::class;
+
     /**
      * Define the model's default state.
      *
@@ -20,9 +21,9 @@ class PageFactory extends Factory
     public function definition()
     {
         return [
-            'title'=>$this->faker->sentence(),
-            'body'=>$this->faker->paragraph(3),
-            'user_id'=>User::all(['id'])->random(),
+            'title' => $this->faker->sentence(),
+            'body' => $this->faker->paragraph(3),
+            'user_id' => User::all(['id'])->random(),
         ];
     }
 }

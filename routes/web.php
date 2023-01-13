@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\Role\RolesController;
-use App\Http\Controllers\SettingController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -69,12 +68,10 @@ Route::middleware(['auth', 'verified', 'permission:dashboard.view'])->group(func
     /**
      * Image Route
      */
-
     Route::resource('image', ImageController::class, ['except' => ['update']]);
 
     Route::resource('address', AddressController::class, ['except' => ['update', 'index', 'edit']]);
     Route::post('/address/update/{address}', [AddressController::class, 'update'])->name('address.update');
-
 
     Route::post('mark-read', [NotificationController::class, 'markNotification'])
     ->name('notification.mark.read');

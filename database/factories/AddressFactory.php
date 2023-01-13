@@ -18,14 +18,14 @@ class AddressFactory extends Factory
     public function definition()
     {
         return [
-            'title'=>$this->faker->randomElement(["Shipping", "Billing"]),
-            'address'=>$this->faker->name(),
-            'district'=>$this->faker->city(),
-            'country'=>$this->faker->country(),
-            'state'=>$this->faker->city(),
-            'city'=>$this->faker->city(),
-            'zip_code'=>$this->faker->postcode(),
-            'user_id'=>User::all(['id'])->random(),
+            'title' => $this->faker->randomElement(['Shipping', 'Billing']),
+            'address' => $this->faker->name(),
+            'district' => $this->faker->city(),
+            'country' => $this->faker->country(),
+            'state' => $this->faker->city(),
+            'city' => $this->faker->city(),
+            'zip_code' => $this->faker->postcode(),
+            'user_id' => User::all(['id'])->random(),
         ];
     }
 }

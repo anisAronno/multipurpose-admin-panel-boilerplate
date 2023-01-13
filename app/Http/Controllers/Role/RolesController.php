@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Role;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
+use App\Models\Role;
 use App\Models\User;
-use App\Enums\AdministrativeRole;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-use App\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class RolesController extends InertiaApplicationController
@@ -23,9 +22,9 @@ class RolesController extends InertiaApplicationController
      */
     public function __construct()
     {
-        $this->middleware('permission:role.view|role.create|role.edit|role.status|role.delete', ['only' => ['index','store']]);
-        $this->middleware('permission:role.create', ['only' => ['create','store']]);
-        $this->middleware('permission:role.edit|permission:role.status', ['only' => ['edit','update']]);
+        $this->middleware('permission:role.view|role.create|role.edit|role.status|role.delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:role.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:role.edit|permission:role.status', ['only' => ['edit', 'update']]);
         $this->middleware('permission:role.delete', ['only' => ['destroy']]);
     }
 
@@ -36,27 +35,28 @@ class RolesController extends InertiaApplicationController
      */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int)[$request->page] : 1;
+        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        if (!empty($request->search)) {
+        if (! empty($request->search)) {
             $q = $request->search;
-            $roles = Role::with(['permissions'=>function ($query) {
+            $roles = Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
-            }])->where('name', 'LIKE', '%' . $q . '%')->orderBy('id', 'desc')->paginate(10);
-            return Inertia::render('Role/Index', [ 'roles' => $roles]);
+            }])->where('name', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+
+            return Inertia::render('Role/Index', ['roles' => $roles]);
         }
 
         $key = CacheServices::getRoleCacheKey($currentPage);
 
         $roles = Cache::remember($key, 10, function () {
-            return Role::with(['permissions'=>function ($query) {
+            return Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
             }])->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Role/Index', [ 'roles' => $roles]);
+        return Inertia::render('Role/Index', ['roles' => $roles]);
     }
 
     /**
@@ -68,18 +68,18 @@ class RolesController extends InertiaApplicationController
     {
         $permissions = Permission::orderBy('group_name')->get();
 
-        $permissionWithGroup  = $permissions->groupBy(function ($data) {
+        $permissionWithGroup = $permissions->groupBy(function ($data) {
             return $data->group_name;
         });
 
-        $all_group  = User::getpermissionGroups()->pluck('name');
+        $all_group = User::getpermissionGroups()->pluck('name');
 
         return Inertia::render('Role/Create', [
-            'permissionWithGroup'=>$permissionWithGroup,
-            'permissions'=>$permissions->pluck('name'),
-            'all_group'=>$all_group,
-            'total_permissions'=>$permissions->count(),
-            'total_group'=>$all_group->count(),
+            'permissionWithGroup' => $permissionWithGroup,
+            'permissions' => $permissions->pluck('name'),
+            'all_group' => $all_group,
+            'total_permissions' => $permissions->count(),
+            'total_group' => $all_group->count(),
         ]);
     }
 
@@ -95,55 +95,54 @@ class RolesController extends InertiaApplicationController
 
         $permissions = $request->input('permissions');
 
-        if (!empty($permissions)) {
+        if (! empty($permissions)) {
             $role->syncPermissions($permissions);
         }
 
-        return Redirect::route('role.index')->with([ 'success'=>true, 'message'=>'successfully Created']);
+        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Created']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-  public function show(Role $role)
-  {
-      $role->load('permissions');
-      return Inertia::render('Role/Show', compact('role'));
-  }
-
-    /**
-   * Show the form for editing the specified resource.
+  /**
+   * Display the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+  public function show(Role $role)
+  {
+      $role->load('permissions');
+
+      return Inertia::render('Role/Show', compact('role'));
+  }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Role $role)
     {
         $permissions = Permission::orderBy('group_name')->get();
 
-        $role->load(['permissions'=>function ($query) {
+        $role->load(['permissions' => function ($query) {
             $query->orderBy('name');
         }]);
 
-
-        $permissionWithGroup  = $permissions->groupBy(function ($data) {
+        $permissionWithGroup = $permissions->groupBy(function ($data) {
             return $data->group_name;
         });
 
-        $all_group  = User::getpermissionGroups()->pluck('name');
-
+        $all_group = User::getpermissionGroups()->pluck('name');
 
         return Inertia::render('Role/Edit', [
-            'permissionWithGroup'=>$permissionWithGroup,
-            'permissions'=>$permissions->pluck('name'),
-            'all_group'=>$all_group,
-            'total_permissions'=>$permissions->count(),
-            'total_group'=>$all_group->count(),
-            'role'=>$role,
-            'permissionArr'  => $role->permissions->pluck('name')
+            'permissionWithGroup' => $permissionWithGroup,
+            'permissions' => $permissions->pluck('name'),
+            'all_group' => $all_group,
+            'total_permissions' => $permissions->count(),
+            'total_group' => $all_group->count(),
+            'role' => $role,
+            'permissionArr' => $role->permissions->pluck('name'),
         ]);
     }
 
@@ -158,8 +157,8 @@ class RolesController extends InertiaApplicationController
     {
         $permissions = $request->input('permissions');
 
-        if (empty($permissions) || !$role->isEditable) {
-            return Redirect::back()->with(['success'=>false, 'message'=>'Role is not Updateable']);
+        if (empty($permissions) || ! $role->isEditable) {
+            return Redirect::back()->with(['success' => false, 'message' => 'Role is not Updateable']);
         } else {
             $role->name = $request->name;
             $role->save();
@@ -167,10 +166,10 @@ class RolesController extends InertiaApplicationController
         }
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'))->with([ 'success'=>true,'message'=>'successfully Updated']);
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message' => 'successfully Updated']);
         }
 
-        return Redirect::route('role.index')->with([ 'success'=>true, 'message'=>'successfully Updated']);
+        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Updated']);
     }
 
     /**
@@ -188,9 +187,9 @@ class RolesController extends InertiaApplicationController
         $role->delete();
 
         if (session('last_visited_url')) {
-            return Redirect::to(session('last_visited_url'))->with([ 'success'=>true,'message'=>'successfully Deleted']);
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message' => 'successfully Deleted']);
         }
 
-        return Redirect::route('role.index')->with([ 'success'=>true, 'message'=>'successfully Deleted']);
+        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Deleted']);
     }
 }

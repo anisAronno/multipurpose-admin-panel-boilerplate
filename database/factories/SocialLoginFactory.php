@@ -18,11 +18,11 @@ class SocialLoginFactory extends Factory
     public function definition()
     {
         return [
-            "sso_provider"=>$this->faker->randomElement(['github', 'google', 'facebook', 'linkedin', 'twitter', 'instagram']),
-            "sso_id"=>$this->faker->name(),
-            "sso_token"=>$this->faker->name(),
-            "sso_refresh_token"=>$this->faker->name(),
-            'user_id'=>User::all(['id'])->random(),
+            'sso_provider' => $this->faker->randomElement(['github', 'google', 'facebook', 'linkedin', 'twitter', 'instagram']),
+            'sso_id' => $this->faker->name(),
+            'sso_token' => $this->faker->name(),
+            'sso_refresh_token' => $this->faker->name(),
+            'user_id' => User::all(['id'])->random(),
         ];
     }
 }
