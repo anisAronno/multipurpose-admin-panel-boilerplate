@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Enums\AllowedFileType;
+use Illuminate\Support\Facades\Storage;
 
 class FileHelpers
 {
@@ -15,14 +16,14 @@ class FileHelpers
     public static function isDefaultFile($path): bool
     {
         $defaultFile = [
-            'uploads/defaults/avatar.png',
-            'uploads/defaults/placeholder.png',
-            'uploads/defaults/logo.png',
-            'uploads/defaults/banner.png',
-            'uploads/defaults/fav_icon.png',
+            'images/defaults/avatar.png',
+            'images/defaults/placeholder.png',
+            'images/defaults/logo.png',
+            'images/defaults/banner.png',
+            'images/defaults/fav_icon.png',
         ];
 
-        $trimPath = stristr($path, 'uploads');
+        $trimPath = stristr($path, 'images');
 
         if (in_array($trimPath, $defaultFile)) {
             return true;
@@ -60,16 +61,30 @@ class FileHelpers
     public static function getUrl($value): string
     {
         if (! empty($value)) {
-            $path = stristr($value, 'uploads');
-
-            if (file_exists(url($path))) {
-                return  url($path);
+            $path = stristr($value, 'images');
+            if (Storage::exists($path)) {
+                return Storage::url($path);
             }
 
             return $value;
         } else {
-            return url('uploads/defaults/placeholder.png');
+            return Storage::url('images/defaults/placeholder.png');
         }
+    }
+
+    /**
+     * Upload the file to the path.
+     *
+     * @param $file
+     * @param $file_path
+     * @return mixed
+     */
+    public static function store($file, $file_path)
+    {
+        $disk = Storage::disk('local');
+        $disk->put('public/'.$file_path, file_get_contents($file));
+
+        return $file_path;
     }
 
     /**
@@ -86,22 +101,15 @@ class FileHelpers
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
                 $filename = time().'.'.$file->extension();
-                $up_path = 'uploads/'.$upload_dir.'/'.date('Y-m');
+                $up_path = 'images/'.$upload_dir.'/'.date('Y-m');
                 $filePath = $up_path.'/'.$filename;
+
 
                 if (! self::isAllowFileType($filePath)) {
                     return false;
                 }
 
-                $file->move($up_path, $filename);
-
-                if ($file->getError()) {
-                    $request->session()->flash('message', $file->getErrorMessage());
-
-                    return false;
-                }
-
-                return $filePath;
+                return self::store($file, $filePath);
             } else {
                 return false;
             }
@@ -118,7 +126,7 @@ class FileHelpers
      */
     public static function deleteFile($value): bool
     {
-        $path = stristr($value, 'uploads');
+        $path = stristr($value, 'images');
 
         if (! self::isAllowFileType($path)) {
             return false;
@@ -127,11 +135,10 @@ class FileHelpers
         if (self::isDefaultFile($path)) {
             return false;
         }
-
+        
         try {
-            if (file_exists(public_path($path))) {
-                unlink(public_path($path));
-
+            if (Storage::disk('local')->exists('public/'.$path)) {
+                Storage::disk('local')->delete('public/'.$path);
                 return true;
             }
 

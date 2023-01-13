@@ -97,7 +97,7 @@ class ProfileController extends Controller
                     $user->avatar = $path;
                     $user->save();
 
-                    return Redirect::route('profile.edit')->with(['success' => true, 'message', 'Profile picture updated']);
+                    return Redirect::back()->with(['success' => true, 'message', 'Profile picture updated']);
                 } else {
                     return Redirect::back()->with(['success' => false, 'message', 'Failed Update']);
                 }

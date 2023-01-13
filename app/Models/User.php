@@ -82,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmailQueued);
+        $this->notify(new VerifyEmailQueued());
     }
 
     public function sendPasswordResetNotification($token)
@@ -114,7 +114,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($value !== null) {
             return  $this->attributes['avatar'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl('uploads/defaults/avatar.png');
+            return  $this->attributes['avatar'] = FileHelpers::getUrl('images/defaults/avatar.png');
         }
     }
 
