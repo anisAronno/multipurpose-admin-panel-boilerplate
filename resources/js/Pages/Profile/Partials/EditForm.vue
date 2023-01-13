@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import TextArea from "@/Components/Textarea.vue";
+import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useCountries } from "@/composables/useCountries";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -116,7 +116,7 @@ const editRecord = (id) => {
                             class="text-xl"
                         />
 
-                        <TextArea
+                        <Textarea
                             id="address"
                             ref="addresslInput"
                             v-model="form.address"
@@ -124,7 +124,7 @@ const editRecord = (id) => {
                             class="block w-full h-8 p-1"
                             @keyup.enter="deleteUser"
                         >
-                        </TextArea>
+                        </Textarea>
 
                         <InputError
                             :message="form.errors.address"
