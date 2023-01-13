@@ -6,6 +6,7 @@ use App\Models\Option;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,10 +30,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $option = Option::getOption('time_zone');
+        Schema::defaultStringLength(191);
 
-        if ($option) {
-            date_default_timezone_set($option);
+        if (! app()->runningInConsole()) {
+            $option = Option::getOption('time_zone');
+
+            if ($option) {
+                date_default_timezone_set($option);
+            }
         }
 
         LogViewer::auth(function ($request) {

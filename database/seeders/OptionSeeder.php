@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Option;
-use App\Services\User\LoginHistoryService;
+use App\Models\Option; 
 use Illuminate\Database\Seeder;
 use App\Enums\SocialLoginFields;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +19,6 @@ class OptionSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         Option::truncate();
         Schema::enableForeignKeyConstraints();
-
-        $location = LoginHistoryService::getLocation(getenv("REMOTE_ADDR"));
 
         /********************************************************
          * -------------------------------------------------------
@@ -56,7 +53,7 @@ class OptionSeeder extends Seeder
         $option::setOption('any_one_can_register', 'false');
         $option::setOption('allow_social_login', 'false');
         $option::setOption('collect_user_location', 'true');
-        $option::setOption('social_login_fields', json_encode(SocialLoginFields::values()));
+        $option::setOption('social_login_fields', '');
         $option::setOption('pagination_limit', 10);
         $option::setOption('user_default_status', 'Active');
     }
