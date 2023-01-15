@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
         $isAnyOneCanRegister = Option::getOption('any_one_can_register');
 
         if (! $isAnyOneCanRegister) {
-            return $this->failedWithMessage('Registration is not allowed!');
+            return redirect()->back()->with(['success' => false, 'message', 'Registration is not allowed!']);
         }
 
         $request->validate([
