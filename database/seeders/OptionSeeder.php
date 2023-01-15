@@ -51,7 +51,7 @@ class OptionSeeder extends Seeder
         $option::setOption('any_one_can_register', 'false');
         $option::setOption('allow_social_login', 'false');
         $option::setOption('collect_user_location', 'true');
-        $option::setOption('social_login_fields', '');
+        $option::setOption('social_login_fields', json_encode(['google', 'github']));
         $option::setOption('pagination_limit', 10);
         $option::setOption('user_default_status', 'Active');
     }

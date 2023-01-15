@@ -34,7 +34,7 @@ const form = useForm({
     user_default_status: options.user_default_status,
     collect_user_location: options.collect_user_location,
     allow_social_login: options.allow_social_login,
-    social_login_fields: JSON.parse(options.social_login_fields),
+    social_login_fields: JSON.parse(options.social_login_fields || [ '' ]),
 });
 </script>
 
