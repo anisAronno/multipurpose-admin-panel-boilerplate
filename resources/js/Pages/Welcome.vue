@@ -19,20 +19,38 @@ defineProps({
         />
     </Head>
     <Toast></Toast>
-    <!-- Component Code -->
-
     <div
-        class="relative h-screen w-full flex items-center justify-center bg-cover bg-center text-center"
-        style="
-            background-image: url(https://images.pexels.com/photos/260689/pexels-photo-260689.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500);
-        "
+        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0 z-50"
     >
         <div
-            class="absolute top-0 right-0 bottom-0 left-0 bg-gray-900 opacity-75"
-        ></div>
+            v-if="canLogin"
+            class="hidden fixed top-0 right-0 px-6 py-4 sm:block"
+        >
+            <Link
+                v-if="$page.props.auth.user"
+                :href="route('dashboard')"
+                class="text-sm text-gray-700 dark:text-gray-500 underline"
+                >Dashboard</Link
+            >
+
+            <template v-else>
+                <Link
+                    :href="route('login')"
+                    class="text-sm text-gray-700 dark:text-gray-500 underline"
+                    >Log in</Link
+                >
+
+                <Link
+                    v-if="canRegister"
+                    :href="route('register')"
+                    class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline"
+                    >Register</Link
+                >
+            </template>
+        </div>
 
         <div
-            class="z-50 flex gap-5 flex-col justify-center items-center text-white w-full h-screen"
+            class="z-50 flex gap-5 flex-col justify-center items-center text-white w-full"
         >
             <span class="text-bold text-4xl">Coming soon</span>
             <a class="text-xl text-blue-500" href="https://github.com/anis3139">
