@@ -1,0 +1,68 @@
+name: Test and Deploy My App
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  laravel-tests:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest 
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup PHP with composer v2
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        tools: composer:v2
+
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+ 
+    - name: Install Dependencies
+      run: composer install
+
+    - name: Generate key
+      run: php artisan key:generate
+
+    - name: Directory Permissions
+      run: chmod -R 777 storage bootstrap/cache
+
+    - name: Clear application cache
+      run: php artisan config:clear && php artisan cache:clear
+
+    - name: Execute tests (Unit and Feature tests) via PHPUnit
+      run: vendor/bin/phpunit
+
+  build:
+    needs: laravel-tests
+    # Run if tests succeeded and branch is develop
+    if: needs.laravel-tests.result == 'success' && github.ref_name == 'develop'
+    name: Build Application
+
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+  
+      - name: Build Docker image
+        run: |
+          docker build -t my-image .
+          docker tag my-image:latest 1234567890.dkr.ecr.us-east-1.amazonaws.com/my-image:latest
+        with:
+            image: anis3139/multipurpose-admin-panel-boilerplate
+            registry: docker.io
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+ 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
