@@ -47,16 +47,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-  
-      - name: Build Docker image
-        run: |
-          docker build -t my-image .
-          docker tag my-image:latest 1234567890.dkr.ecr.us-east-1.amazonaws.com/my-image:latest
+
+      - name: Build and Push Docker Image 
+        uses: mr-smithers-excellent/docker-build-push@v4
         with:
-            image: anis3139/multipurpose-admin-panel-boilerplate
-            registry: docker.io
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
+          image: anis3139/multipurpose-admin-panel-boilerplate
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
  
   deploy:
     needs: build
