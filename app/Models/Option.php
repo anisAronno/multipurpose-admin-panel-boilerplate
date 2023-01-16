@@ -56,8 +56,7 @@ class Option extends Model
 
 
         if ($isFile) {
-            $value = FileHelpers::getUrl($value);
-            logger()->debug($value);
+            $value = FileHelpers::getUrl($value); 
             return $value;
         }
 

@@ -131,8 +131,6 @@ class SocialLoginController extends InertiaApplicationController
 
         $hasRole = $user->hasAllRoles(Role::all());
 
-        logger()->debug($hasRole);
-
         if (! $hasRole) {
             $role = Option::getOption('user_default_role');
             $user->assignRole($role);
