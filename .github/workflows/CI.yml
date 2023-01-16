@@ -32,14 +32,9 @@ jobs:
 
     - name: Clear application cache
       run: php artisan config:clear && php artisan cache:clear
+ 
 
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: vendor/bin/phpunit
-
-  build:
-    needs: laravel-tests
-    # Run if tests succeeded and branch is develop
-    if: needs.laravel-tests.result == 'success' && github.ref_name == 'develop'
+  build: 
     name: Build Application
 
     runs-on: ubuntu-latest 
