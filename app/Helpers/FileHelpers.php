@@ -62,11 +62,11 @@ class FileHelpers
     {
         if (! empty($value)) {
             $path = stristr($value, 'images');
-            if (Storage::exists($path)) {
+            // if (Storage::exists($path)) {
                 return Storage::url($path);
-            }
+            // }
 
-            return $value;
+            // return $value;
         } else {
             return Storage::url('images/defaults/placeholder.png');
         }
