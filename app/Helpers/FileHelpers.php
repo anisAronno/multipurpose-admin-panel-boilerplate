@@ -38,7 +38,7 @@ class FileHelpers
      * @param  mixed  $file
      * @return bool
      */
-    public static function isAllowFileType($path): bool
+    public static function isAllowFileType($path=''): bool
     {
         $extension = pathinfo(
             parse_url($path, PHP_URL_PATH),
