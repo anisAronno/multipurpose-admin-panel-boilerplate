@@ -1,4 +1,4 @@
-## Modern monolithic pwa with ssr boilerplate
+## Modern monolithic pwa Admin Panel boilerplate with ssr
 
 Application with laravel, vue js, vite, inertia js, tailwind css, typescript
   
