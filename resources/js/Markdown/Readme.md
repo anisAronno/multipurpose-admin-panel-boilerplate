@@ -76,12 +76,11 @@ Currently, working as a **Software Engineer** in **[weDevs](https://wedevs.com/a
 <br/>
 
 [![willianrod's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=anis3139&layout=compact&theme=radical&count_private=true)](https://github.com/anis3139)
-
-<h1 class="my-5 sm:my-10 underline underline-offset-8 text-center text-2xl">My Some Project</h1>
+ 
 <div class=" my-10 text-black dark:text-white grid grid-cols-1 sm:grid-cols-2 gap-5">
 <div>
 <h1 class="text-xl mb-5 underline underline-offset-8 ">
-PHP Projects
+Some of my PHP Projects
 </h1>
 
 <div >
@@ -118,19 +117,19 @@ Multiperpose Admin Panel BoilerPlate</a>
 </div>
 <div>
 <h1 class="text-xl mb-5 underline underline-offset-8 ">
-Node Projects
+Some of my Node Projects
 </h1>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/appsero/appsero-pay"> Appsero Pay</a> (Appsero pay as a 
+<a  class="text-blue-700 " href="https://github.com/appsero"> Appsero Pay</a> (Appsero pay as a 
 payment method for Appsero and it's Private Project)
 </div>
 <div >
-<a  class="text-blue-700 " href="https://github.com/appsero/my-appsero"> My Appsero</a> (My Appsero is 
+<a  class="text-blue-700 " href="https://github.com/appsero"> My Appsero</a> (My Appsero is 
 customer panel for Appsero Client and it's Private Project)
 </div>
 <div>
-<a  class="text-blue-700 " href="https://github.com/appsero/node-and-vue-fullstack-boilerplate"> Node & Vue 
+<a  class="text-blue-700 " href="https://github.com/anis3139/node-and-vue-fullstack-boilerplate"> Node & Vue 
 js Fullstack Boilerplate</a>
 </div>
 </div>
