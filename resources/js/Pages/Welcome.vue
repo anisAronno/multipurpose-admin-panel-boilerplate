@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Toast from "@/Components/Toast.vue";
+import Readme from "@/Markdown/Readme.md";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 defineProps({
     canLogin: Boolean,
@@ -50,13 +51,9 @@ defineProps({
         </div>
 
         <div
-            class="z-50 flex gap-5 flex-col justify-center items-center text-white w-full"
+            class="text-white"
         >
-            <span class="text-bold text-4xl">Coming soon</span>
-            <a class="text-xl text-blue-500" href="https://github.com/anis3139">
-                <font-awesome-icon icon="fa-brands fa-github" />
-                My Github Account
-            </a>
+            <Readme></Readme>
         </div>
     </div>
 </template>
