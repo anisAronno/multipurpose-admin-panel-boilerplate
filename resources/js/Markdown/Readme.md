@@ -10,7 +10,7 @@
 Full-stack web developer from Dhaka, Bangladesh. I have rich experience in laravel and vuejs based web application development, also I am good at WordPress. Using PHP as primary backend language since 2017. Have working experience in Python, PHP, Golang, JavaScript, TypeScript, Laravel, Lumen, Node JS, Express JS, VueJs, React Js, MySQL, MongoDB, Google Cloud, BigQuery, Datastore, Nginx, Docker and Git also.
 Currently, working as a **Software Engineer** in **[weDevs](https://wedevs.com/about/team)** ([Appsero](https://appsero.com) Project).
 <div class="flex my-5">
-  <a align="bottom" href="https://github.com/anis3139/anis3139/raw/main/anis3139.pdf" download>Download Resume </a>
+  <a align="bottom" class="text-blue-500" href="https://github.com/anis3139/anis3139/raw/main/anis3139.pdf" download>Download Resume </a>
   <img align="top" src="https://img.icons8.com/windows/32/000000/download--v1.png"/>
 </div>
 </div>
@@ -29,14 +29,16 @@ Currently, working as a **Software Engineer** in **[weDevs](https://wedevs.com/a
 <img alt="Typescript" src="https://img.shields.io/badge/typescript%20-%230769AD.svg?&style=for-the-badge&logo=typescript&logoColor=white"/>
 <img alt="Laravel" src="https://img.shields.io/badge/laravel%20-%23563D7C.svg?&style=for-the-badge&logo=laravel&logoColor=red"/>
 <img alt="Vue js" src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D"/>
-<img alt="Tailwind" src="https://img.shields.io/badge/tailwind%20-%23563D7C.svg?&style=for-the-badge&logo=tailwind&logoColor=white"/>
+<img alt="Tailwind" src="https://img.shields.io/badge/tailwind%20-%23563D7C.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
 <img alt="MySQL" src="https://img.shields.io/badge/mysql-%2300f.svg?&style=for-the-badge&logo=mysql&logoColor=white"/>
 <img alt="MySQL" src="https://img.shields.io/badge/redis-%2300f.svg?&style=for-the-badge&logo=redis&logoColor=white"/>
-<img alt="Google Cloud" src="https://img.shields.io/badge/VPS%20-%23563D7C.svg?&style=for-the-badge&logo=cloud&logoColor=white"/>
-<img alt="Google Cloud" src="https://img.shields.io/badge/ngnix%20-%23563D7C.svg?&style=for-the-badge&logo=NGNIX&logoColor=white"/>
-<img alt="Google Cloud" src="https://img.shields.io/badge/google cloud%20-%23563D7C.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
-<img alt="Google Datastore" src="https://img.shields.io/badge/Google Datastore%20-%23563D7C.svg?&style=for-the-badge&logo=Datastore&logoColor=white"/>
-<img alt="Big Data" src="https://img.shields.io/badge/Big Data%20-%23563D7C.svg?&style=for-the-badge&logo=DataBig Datastore&logoColor=white"/>
+<img alt="Google Cloud" src="https://img.shields.io/badge/ngnix%20-%2300f.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
+<img alt="docker" src="https://img.shields.io/badge/docker%20-%2300f.svg?&style=for-the-badge&logo=docker&logoColor=white"/>
+<img alt="Google Cloud" src="https://img.shields.io/badge/VPS%20-%23563D7C.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
+<img alt="AWS" src="https://img.shields.io/badge/aws%20-%23FF9900.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
+<img alt="Google Cloud" src="https://img.shields.io/badge/google cloud%20-%ff0.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
+<img alt="Google Datastore" src="https://img.shields.io/badge/Google Datastore%20-%ff0.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
+<img alt="Big Data" src="https://img.shields.io/badge/Big Data%20-%ff0.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
 <img alt="HTML5" src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/>
 <img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
 <img alt="jQuery" src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/>
