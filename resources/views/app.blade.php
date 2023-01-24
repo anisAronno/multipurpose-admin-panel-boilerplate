@@ -18,7 +18,7 @@
 
 <body class="font-sans antialiased">
     @inertia
-
+   <x-translations></x-translations>
     <script>
         if (
             localStorage.getItem("color-theme") === "dark" ||
