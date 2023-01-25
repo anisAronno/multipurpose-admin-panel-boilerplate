@@ -1,5 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
-
+ const colors = require("tailwindcss/colors");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: "class",
@@ -7,7 +7,7 @@ module.exports = {
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
-        "./resources/js/**/*.vue", 
+        "./resources/js/**/*.vue",
     ],
 
     theme: {
@@ -29,8 +29,16 @@ module.exports = {
                     '"Noto Color Emoji"',
                 ],
             },
+            colors: {
+                teal: colors.teal,
+                cyan: colors.cyan,
+            },
         },
     },
 
-    plugins: [require("@tailwindcss/forms")],
+    plugins: [
+        // ...
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/aspect-ratio"),
+    ],
 };
