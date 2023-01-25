@@ -14,6 +14,18 @@ for frontend build
 npm run build
 ```
 
+Run Job
+
+```
+php artisan queue:work
+```
+
+Or
+
+```
+php artisan schedule:run
+```
+
 for ssr
 
 ```
