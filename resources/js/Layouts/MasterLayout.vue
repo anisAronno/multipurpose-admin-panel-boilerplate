@@ -110,6 +110,7 @@ const footerNavigation = {
 };
 
 const isLoaded = ref(false);
+
 function loaded(data = true) {
     isLoaded.value = data;
 }
@@ -148,7 +149,7 @@ onMounted(() => {
                             <div
                                 class="flex w-full items-center justify-between md:w-auto"
                             >
-                                <a href="#">
+                                <Link :href="route('home')">
                                     <span class="sr-only">Your Company</span>
                                     <img
                                         class="h-8 w-auto sm:h-10"
@@ -157,7 +158,7 @@ onMounted(() => {
                                             $page.props.global.options.site_name
                                         "
                                     />
-                                </a>
+                                </Link>
                                 <div class="-mr-2 flex items-center md:hidden">
                                     <PopoverButton
                                         class="focus-ring-inset inline-flex items-center justify-center rounded-md bg-gray-900 p-2 text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
