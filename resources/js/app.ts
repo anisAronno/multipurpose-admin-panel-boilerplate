@@ -10,6 +10,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 library.add(fas);
+import { translations } from "./Mixins/translations";
 
 createInertiaApp({
     title: (title) => `${title} - ${usePage().props.value?.global?.options?.site_name}`,
@@ -24,6 +25,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
+            .mixin(translations)
             .mount(el);
     },
 });
