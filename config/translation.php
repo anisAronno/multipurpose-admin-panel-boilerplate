@@ -23,7 +23,7 @@ return [
     |
     */
     'route_group_config' => [
-        'middleware' => ['web', 'auth'],
+        'middleware' => ['web', 'auth', 'permission:options.create'],
     ],
 
     /*
