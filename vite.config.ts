@@ -1,6 +1,5 @@
 import vue from '@vitejs/plugin-vue';
-import laravel from 'laravel-vite-plugin';
-import Markdown from "vite-plugin-vue-markdown";
+import laravel from 'laravel-vite-plugin'; 
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -16,10 +15,8 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
-            },
-            include: [/\.vue$/, /\.md$/],
-        }),
-        Markdown(),
+            }
+        })
     ],
     ssr: {
         noExternal: ["@inertiajs/server"],
