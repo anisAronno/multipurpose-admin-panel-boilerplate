@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import MasterLayout from "@/Layouts/MasterLayout.vue";
+import Banner from "@/Components/Banner.vue";
+import MasterLayout from "@/Layouts/MasterLayout.vue"; 
+import ContactForm from "@/Pages/Frontend/Contact/Partials/ContactForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 </script>
 
@@ -8,6 +10,9 @@ import { Head } from "@inertiajs/inertia-vue3";
         <title>Contact</title>
     </Head>
     <MasterLayout>
-        <!-- Contact grid -->
+        <div>
+            <Banner></Banner>
+            <ContactForm></ContactForm> 
+        </div>
     </MasterLayout>
 </template>

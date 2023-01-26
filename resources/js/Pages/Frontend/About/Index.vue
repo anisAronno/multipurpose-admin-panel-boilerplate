@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
+import Banner from "@/Components/Banner.vue";
 </script>
 
 <template>
@@ -8,6 +9,8 @@ import { Head } from "@inertiajs/inertia-vue3";
         <title>About</title>
     </Head>
     <MasterLayout>
-        <div></div>
+        <div>
+            <Banner></Banner>
+        </div>
     </MasterLayout>
 </template>

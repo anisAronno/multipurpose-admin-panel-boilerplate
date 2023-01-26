@@ -61,7 +61,7 @@ const blogPosts = [
 </script>
 
 <template>
-    <div class="relative bg-gray-50 py-16 sm:py-24 lg:py-32">
+    <div class="relative bg-gray-50 py-6 sm:py-10 lg:py-12">
         <div class="relative">
             <div
                 class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
