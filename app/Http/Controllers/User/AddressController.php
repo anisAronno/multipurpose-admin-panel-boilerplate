@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\User;
+
 
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Models\Address;
 use Illuminate\Support\Facades\Redirect;
+
+use App\Http\Controllers\Controller;
 
 class AddressController extends Controller
 {

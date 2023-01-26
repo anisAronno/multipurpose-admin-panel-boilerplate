@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
+
 
 use App\Enums\SocialLoginFields;
 use App\Enums\UserStatus;
 use App\Helpers\FileHelpers;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Models\Option;
@@ -37,7 +40,7 @@ class OptionController extends InertiaApplicationController
         $socialLoginFields = SocialLoginFields::values();
         $userDefaultStatus = UserStatus::values();
 
-        return Inertia::render('Settings/Index')->with(['roleArr' => $roleArr, 'socialLoginFields' => $socialLoginFields, 'userDefaultStatus' => $userDefaultStatus]);
+        return Inertia::render('Dashboard/Settings/Index')->with(['roleArr' => $roleArr, 'socialLoginFields' => $socialLoginFields, 'userDefaultStatus' => $userDefaultStatus]);
     }
 
     /**

@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePageRequest;
-use App\Http\Requests\UpdatePageRequest;
-use App\Models\Page;
+namespace App\Http\Controllers\Admin;
 
-class PageController extends Controller
+
+use App\Http\Requests\StoreLoginHistoryRequest;
+use App\Http\Requests\UpdateLoginHistoryRequest;
+use App\Models\LoginHistory;
+use App\Http\Controllers\Controller;
+
+
+class LoginHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +35,10 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePageRequest  $request
+     * @param  \App\Http\Requests\StoreLoginHistoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePageRequest $request)
+    public function store(StoreLoginHistoryRequest $request)
     {
         //
     }
@@ -42,10 +46,10 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\LoginHistory  $loginHistory
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show(LoginHistory $loginHistory)
     {
         //
     }
@@ -53,10 +57,10 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\LoginHistory  $loginHistory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Page $page)
+    public function edit(LoginHistory $loginHistory)
     {
         //
     }
@@ -64,11 +68,11 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePageRequest  $request
-     * @param  \App\Models\Page  $page
+     * @param  \App\Http\Requests\UpdateLoginHistoryRequest  $request
+     * @param  \App\Models\LoginHistory  $loginHistory
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePageRequest $request, Page $page)
+    public function update(UpdateLoginHistoryRequest $request, LoginHistory $loginHistory)
     {
         //
     }
@@ -76,10 +80,10 @@ class PageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\LoginHistory  $loginHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Page $page)
+    public function destroy(LoginHistory $loginHistory)
     {
         //
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Role;
+namespace App\Http\Controllers\Admin\Role;
 
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
@@ -43,7 +43,7 @@ class RolesController extends InertiaApplicationController
                 $query->select('id', 'name');
             }])->where('name', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
 
-            return Inertia::render('Role/Index', ['roles' => $roles]);
+            return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
         }
 
         $key = CacheServices::getRoleCacheKey($currentPage);
@@ -56,7 +56,7 @@ class RolesController extends InertiaApplicationController
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Role/Index', ['roles' => $roles]);
+        return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
     }
 
     /**
@@ -74,7 +74,7 @@ class RolesController extends InertiaApplicationController
 
         $all_group = User::getpermissionGroups()->pluck('name');
 
-        return Inertia::render('Role/Create', [
+        return Inertia::render('Dashboard/Role/Create', [
             'permissionWithGroup' => $permissionWithGroup,
             'permissions' => $permissions->pluck('name'),
             'all_group' => $all_group,
@@ -112,7 +112,7 @@ class RolesController extends InertiaApplicationController
   {
       $role->load('permissions');
 
-      return Inertia::render('Role/Show', compact('role'));
+      return Inertia::render('Dashboard/Role/Show', compact('role'));
   }
 
     /**
@@ -135,7 +135,7 @@ class RolesController extends InertiaApplicationController
 
         $all_group = User::getpermissionGroups()->pluck('name');
 
-        return Inertia::render('Role/Edit', [
+        return Inertia::render('Dashboard/Role/Edit', [
             'permissionWithGroup' => $permissionWithGroup,
             'permissions' => $permissions->pluck('name'),
             'all_group' => $all_group,

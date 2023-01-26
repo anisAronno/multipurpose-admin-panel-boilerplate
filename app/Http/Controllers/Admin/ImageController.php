@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
+
 
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Models\Image;
+use App\Http\Controllers\Controller;
+
 
 class ImageController extends Controller
 {

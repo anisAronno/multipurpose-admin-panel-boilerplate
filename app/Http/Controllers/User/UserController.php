@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Enums\UserStatus;
 use App\Helpers\FileHelpers;
@@ -44,7 +44,7 @@ class UserController extends InertiaApplicationController
             $q = $request->search;
             $users = User::with(['roles'])->where('name', 'LIKE', '%'.$q.'%')->orWhere('email', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
 
-            return Inertia::render('User/Index', ['users' => $users]);
+            return Inertia::render('Dashboard/User/Index', ['users' => $users]);
         }
 
         $users = Cache::remember($key, 10, function () {
@@ -53,7 +53,7 @@ class UserController extends InertiaApplicationController
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('User/Index', ['users' => $users]);
+        return Inertia::render('Dashboard/User/Index', ['users' => $users]);
     }
 
     /**
@@ -66,7 +66,7 @@ class UserController extends InertiaApplicationController
         $role = Role::pluck('name');
         $statusArr = UserStatus::values();
 
-        return Inertia::render('User/Create', ['roles' => $role, 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/User/Create', ['roles' => $role, 'statusArr' => $statusArr]);
     }
 
     /**
@@ -102,7 +102,7 @@ class UserController extends InertiaApplicationController
     {
         $user->load(['roles']);
 
-        return Inertia::render('User/Show', ['user' => $user]);
+        return Inertia::render('Dashboard/User/Show', ['user' => $user]);
     }
 
     /**
@@ -123,7 +123,7 @@ class UserController extends InertiaApplicationController
 
         $roleArr = Role::pluck('name');
 
-        return Inertia::render('User/Edit', ['user' => $user, 'statusArr' => $statusArr, 'roleArr' => $roleArr]);
+        return Inertia::render('Dashboard/User/Edit', ['user' => $user, 'statusArr' => $statusArr, 'roleArr' => $roleArr]);
     }
 
     /**
