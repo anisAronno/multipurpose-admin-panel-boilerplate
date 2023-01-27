@@ -8,7 +8,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { useCountries } from "@/composables/useCountries";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
-import { watch } from "vue";
+import { watch, ref } from "vue";
 
 const { userCountry, countries } = useCountries();
 
