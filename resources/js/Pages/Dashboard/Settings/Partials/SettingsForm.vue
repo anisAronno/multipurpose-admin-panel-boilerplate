@@ -5,18 +5,12 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
-import { useCountries } from "@/composables/useCountries";
+import { useCountries, useLanguage } from "@/composables/useCountries";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 
-const {
-    userCountry,
-    timeZoneList,
-    userTimeZone,
-    countries,
-    countryWithCode,
-    languagesList,
-} = useCountries();
+const { userCountry, timeZoneList, userTimeZone, countries, countryWithCode } =
+    useCountries();
 
 defineProps({
     roleArr: Object,
@@ -25,6 +19,8 @@ defineProps({
 });
 
 const options = usePage().props.value.global.options;
+
+const languageArray = useLanguage(JSON.parse(options.existing_language_file));
 
 const form = useForm({
     site_name: options.site_name,
@@ -35,6 +31,7 @@ const form = useForm({
     phone: options.phone,
     time_zone: options.time_zone,
     language: options.language,
+    languageArray: languageArray,
     user_default_role: options.user_default_role,
     any_one_can_register: options.any_one_can_register,
     pagination_limit: options.pagination_limit,
@@ -330,12 +327,12 @@ const form = useForm({
                 <InputLabel
                     class="text-xl"
                     for="languages"
-                    value="Application Languase:"
+                    value="Application Default Language:"
                 />
 
                 <Multiselect
                     v-model="form.language"
-                    :options="languagesList"
+                    :options="form.languageArray"
                     :selected="form.language"
                     placeholder="Pick some..."
                     class="block w-full multiselect-green form-controll dark:text-black"
