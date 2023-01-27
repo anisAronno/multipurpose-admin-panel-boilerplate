@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditRoleForm from "@/Pages/Role/Partials/EditRoleForm.vue";
+import EditRoleForm from "@/Pages/Dashboard/Role/Partials/EditRoleForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({

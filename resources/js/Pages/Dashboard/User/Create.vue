@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateUserForm from "@/Pages/User/Partials/CreateUserForm.vue";
+import CreateUserForm from "@/Pages/Dashboard/User/Partials/CreateUserForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({

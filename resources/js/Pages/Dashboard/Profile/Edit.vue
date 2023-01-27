@@ -1,11 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import DeleteUserForm from "./Partials/DeleteUserForm.vue";
-import ProfilePicture from "./Partials/ProfilePicture.vue";
-import Address from "./Partials/Address.vue";
-import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
-import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
+import DeleteUserForm from "@/Pages/Dashboard/Profile/Partials/DeleteUserForm.vue";
+import ProfilePicture from "@/Pages/Dashboard/Profile/Partials/ProfilePicture.vue";
+import Address from "@/Pages/Dashboard/Profile/Partials/Address.vue";
+import UpdatePasswordForm from "@/Pages/Dashboard/Profile/Partials/UpdatePasswordForm.vue";
+import UpdateProfileInformationForm from "@/Pages/Dashboard/Profile/Partials/UpdateProfileInformationForm.vue";
 
 defineProps({
     mustVerifyEmail: Boolean,

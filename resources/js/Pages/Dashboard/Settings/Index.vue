@@ -1,8 +1,8 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, usePage } from "@inertiajs/inertia-vue3";
-import Images from "./Partials/Images.vue";
-import SettingsForm from "./Partials/SettingsForm.vue";
+import Images from "@/Pages/Dashboard/Settings/Partials/Images.vue";
+import SettingsForm from "@/Pages/Dashboard/Settings/Partials/SettingsForm.vue";
 defineProps({
     roleArr: Object,
     socialLoginFields: Object,
