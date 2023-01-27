@@ -35,6 +35,14 @@ class OptionSeeder extends Seeder
          * ------------------------------------------
          * ***********************************************/
 
+
+        $languageFile = glob(resource_path('lang/*.json'));
+        $languageFileArr = [];
+        foreach ($languageFile as $file) {
+            array_push($languageFileArr, pathinfo($file, PATHINFO_FILENAME));
+        }
+
+
         $option = new Option();
         $option::setOption('logo', 'images/defaults/logo.png');
         $option::setOption('fav_icon', 'images/defaults/fav_icon.png');
@@ -48,6 +56,8 @@ class OptionSeeder extends Seeder
         $option::setOption('user_default_role', 'user');
         $option::setOption('site_url', env('APP_URL', 'http://multipurpose-admin-panel-boilerplate.test'));
         $option::setOption('time_zone', 'Asia/Dhaka');
+        $option::setOption('language', env('APP_LANGUAGE', 'en'));
+        $option::setOption('existing_language_file', json_encode($languageFileArr));
         $option::setOption('address', 'Asia/Dhaka');
         $option::setOption('any_one_can_register', 'false');
         $option::setOption('allow_social_login', 'false');

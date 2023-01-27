@@ -29,6 +29,7 @@ class Translations extends Component
     public function render()
     {
         $locale = App::getLocale();
+ 
         $key = CacheServices::getOptionsCacheKey();
 
         $translations = Cache::rememberForever($key, function () use ($locale) {

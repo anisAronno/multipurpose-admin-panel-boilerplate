@@ -31,26 +31,6 @@ const countryWithCode = reactive([
    
 const countries = ref(countryWithCode.map((a) => a.country));
 
-const languageArray = [];
-const seenLabels = new Set();
-
-for (const obj of countryWithCode) {
-    if (!obj.languages.code || !obj.languages.name || !obj.languages.native) {
-        continue;
-    }
-    if (seenLabels.has(obj.languages.name)) {
-        continue;
-    }
-    seenLabels.add(obj.languages.name);
-    languageArray.push({
-        value: obj.languages.code,
-        label: obj.languages.name,
-    });
-} 
-
-const languagesList = ref(languageArray);
-  
-
 /**--------------------------------------
  * @Export Data and
  * Variable Data
@@ -62,7 +42,40 @@ export function useCountries() {
       timeZoneList,
       userTimeZone,
       countries,
-      countryWithCode,
-      languagesList,
+      countryWithCode, 
   };
+}
+
+/**
+ * 
+ * @param {*} existingLanguages 
+ * @returns 
+ */
+export function useLanguage(existingLanguages) {
+    const languageArray = [];
+    const seenLabels = new Set();
+    for (const obj of countryWithCode) {
+        if (
+            !obj.languages.code ||
+            !obj.languages.name ||
+            !obj.languages.native
+        ) {
+            continue;
+        }
+        if (seenLabels.has(obj.languages.name)) {
+            continue;
+        }
+
+        if (!existingLanguages.includes(obj.languages.code)) {
+            continue;
+        }
+
+        seenLabels.add(obj.languages.name);
+        languageArray.push({
+            value: obj.languages.code,
+            label: obj.languages.name,
+        });
+    }
+
+    return languageArray;
 }

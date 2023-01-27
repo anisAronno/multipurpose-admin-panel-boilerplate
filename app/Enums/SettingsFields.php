@@ -20,6 +20,8 @@ enum SettingsFields: string
     case EMAIL = 'email';
     case PHONE = 'phone';
     case TIME_ZONE = 'time_zone';
+    case LANGUAGE = 'language';
+    case EXISTING_LANGUAGE_FILE = 'existing_language_file';
     case USER_DEFAULT_ROLE = 'user_default_role';
     case ANY_ONE_CAN_REGISTER = 'any_one_can_register';
     case ALLOW_SOCIAL_LOGIN = 'allow_social_login';
