@@ -39,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        app()->setLocale(Option::getOption('language'));
+
         LogViewer::auth(function ($request) {
             return $request->user()->hasRole(['superadmin', 'admin']);
         });

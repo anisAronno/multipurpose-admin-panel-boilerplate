@@ -10,12 +10,14 @@ let timeZoneArr = Object.keys(countryData);
 
 let userCountry = {};
 let userTimeZone;
+let userLanguages;
 
 if (Intl) {
   userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   userCountry = countryData[userTimeZone];
+  userLanguages = countryData[userTimeZone].languages.code;
 }
-
+ 
 /** -------------------
  * Variable
  * ------------------*/
@@ -28,8 +30,26 @@ const countryWithCode = reactive([
 ]);
    
 const countries = ref(countryWithCode.map((a) => a.country));
- 
 
+const languageArray = [];
+const seenLabels = new Set();
+
+for (const obj of countryWithCode) {
+    if (!obj.languages.code || !obj.languages.name || !obj.languages.native) {
+        continue;
+    }
+    if (seenLabels.has(obj.languages.name)) {
+        continue;
+    }
+    seenLabels.add(obj.languages.name);
+    languageArray.push({
+        value: obj.languages.code,
+        label: obj.languages.name,
+    });
+} 
+
+const languagesList = ref(languageArray);
+  
 
 /**--------------------------------------
  * @Export Data and
@@ -43,5 +63,6 @@ export function useCountries() {
       userTimeZone,
       countries,
       countryWithCode,
+      languagesList,
   };
 }
