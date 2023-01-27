@@ -36,6 +36,7 @@ const editAddress = () => {
                 </p>
             </div>
             <div>
+                <Form v-model="visible" v-if="visible"></Form>
                 <span
                     class="btn btn-primary cursor-pointer"
                     @click="addAddress"
@@ -54,7 +55,6 @@ const editAddress = () => {
                 v-for="address in addresses"
                 :key="address.id"
             >
-                <Form v-model="visible" v-if="visible"></Form>
                 <EditForm
                     v-model="showEditModal"
                     :address="address"
