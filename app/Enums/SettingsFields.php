@@ -10,6 +10,7 @@ enum SettingsFields: string
 
     case SITE_NAME = 'site_name';
     case SITE_TITLE = 'site_title';
+    case LANGUAGE = 'language';
     case ORGANIZATION_NAME = 'organization_name';
     case SITE_URL = 'site_url';
     case LOGO = 'logo';

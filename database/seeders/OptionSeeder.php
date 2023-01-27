@@ -41,6 +41,7 @@ class OptionSeeder extends Seeder
         $option::setOption('banner', 'images/defaults/banner.png');
         $option::setOption('site_name', 'Portfolio');
         $option::setOption('site_title', 'My WebSite');
+        $option::setOption('language', env('APP_LANGUAGE', 'en'));
         $option::setOption('organization_name', 'My Startup');
         $option::setOption('email', 'anis904692@gmail.com');
         $option::setOption('phone', '01816366535');

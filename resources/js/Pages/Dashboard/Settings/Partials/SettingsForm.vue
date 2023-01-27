@@ -9,7 +9,14 @@ import { useCountries } from "@/composables/useCountries";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 
-const { userCountry, timeZoneList, userTimeZone, countries } = useCountries();
+const {
+    userCountry,
+    timeZoneList,
+    userTimeZone,
+    countries,
+    countryWithCode,
+    languagesList,
+} = useCountries();
 
 defineProps({
     roleArr: Object,
@@ -27,6 +34,7 @@ const form = useForm({
     email: options.email,
     phone: options.phone,
     time_zone: options.time_zone,
+    language: options.language,
     user_default_role: options.user_default_role,
     any_one_can_register: options.any_one_can_register,
     pagination_limit: options.pagination_limit,
@@ -34,7 +42,7 @@ const form = useForm({
     user_default_status: options.user_default_status,
     collect_user_location: options.collect_user_location,
     allow_social_login: options.allow_social_login,
-    social_login_fields: JSON.parse(options.social_login_fields || [ '' ]),
+    social_login_fields: JSON.parse(options.social_login_fields || [""]),
 });
 </script>
 
@@ -49,7 +57,6 @@ const form = useForm({
                 Change Your Web Site Details
             </p>
         </header>
-
         <form
             @submit.prevent="form.patch(route('options.bulk.update'))"
             class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-between"
@@ -190,7 +197,7 @@ const form = useForm({
                     class="block w-full multiselect-green form-controll dark:text-black"
                     :searchable="true"
                     :classes="{
-                        search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
                         singleLabelText:
                             '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
                     }"
@@ -236,7 +243,7 @@ const form = useForm({
                     class="block w-full multiselect-green form-controll dark:text-black"
                     :searchable="true"
                     :classes="{
-                        search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
                         singleLabelText:
                             '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
                     }"
@@ -305,7 +312,7 @@ const form = useForm({
                     class="block w-full multiselect-green form-controll dark:text-black"
                     :searchable="true"
                     :classes="{
-                        search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
                         singleLabelText:
                             '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
                     }"
@@ -317,6 +324,30 @@ const form = useForm({
                     :message="form.errors.time_zone"
                     class="mt-2 col-start-2 col-span-4"
                 />
+            </div>
+
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <InputLabel
+                    class="text-xl"
+                    for="languages"
+                    value="Application Languase:"
+                />
+                <Multiselect
+                    v-model="form.language"
+                    :options="languagesList"
+                    :selected="form.language"
+                    placeholder="Pick some..."
+                    class="block w-full multiselect-green form-controll dark:text-black"
+                    :searchable="true"
+                    :classes="{
+                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
+                        singleLabelText:
+                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                    }"
+                    id="language"
+                >
+                </Multiselect>
+                <InputError class="mt-2" :message="form.errors.language" />
             </div>
 
             <div
