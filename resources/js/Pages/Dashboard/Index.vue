@@ -10,7 +10,7 @@ import { Head } from "@inertiajs/inertia-vue3";
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Dashboard
+                {{ __("dashboard") }}
             </h2>
         </template>
 
