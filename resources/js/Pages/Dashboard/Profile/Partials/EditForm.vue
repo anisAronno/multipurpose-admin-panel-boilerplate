@@ -8,7 +8,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { useCountries } from "@/composables/useCountries";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
-import { watch } from "vue";
+import { watch, ref } from "vue";
 
 const { userCountry, countries } = useCountries();
 
@@ -221,7 +221,7 @@ const editRecord = (id) => {
                             class="block w-full multiselect-green form-controll dark:text-black"
                             :searchable="true"
                             :classes="{
-                                search: 'dark:text-gray-50   border-none dark:bg-gray-900 border-l-0',
+                                 search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
                                 singleLabelText:
                                     '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
                             }"

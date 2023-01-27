@@ -135,7 +135,7 @@ defineProps({
                                                     </td>
 
                                                     <td
-                                                        class="w-60% whitespace-normal p-3 text-md text-gray-500 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                                                        class="w-60% whitespace-normal p-3 text-md text-gray-500 grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-2"
                                                     >
                                                         <p
                                                             v-for="permission in role.permissions"

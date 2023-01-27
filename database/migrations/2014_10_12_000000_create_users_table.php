@@ -24,6 +24,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('status')->default('Pending');
+            $table->string('time_zone')->default('Asia/Dhaka');
+            $table->string('language')->default('Asia/Dhaka'); 
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
