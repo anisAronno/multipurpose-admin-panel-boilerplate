@@ -27,6 +27,9 @@
         "@fortawesome/free-regular-svg-icons": "^6.2.1",
         "@fortawesome/free-solid-svg-icons": "^6.2.1",
         "@fortawesome/vue-fontawesome": "^3.0.2",
+        "@headlessui/vue": "^1.7.7",
+        "@heroicons/vue": "^2.0.13",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
         "@vueform/multiselect": "^2.5.8",
         "@vueuse/core": "^9.9.0"
     }

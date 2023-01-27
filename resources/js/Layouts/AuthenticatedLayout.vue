@@ -1,15 +1,72 @@
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import DarkMode from "@/Components/DarkMode.vue";
-import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
 import Loader from "@/Components/Loader.vue";
-import NavLink from "@/Components/NavLink.vue";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import Toast from "@/Components/Toast.vue";
+import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
 
+import {
+    Dialog,
+    DialogPanel,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    TransitionChild,
+    TransitionRoot,
+} from "@headlessui/vue";
+import {
+    Bars3BottomLeftIcon,
+    BellIcon,
+    CogIcon,
+    HomeIcon,
+    UserGroupIcon,
+    UsersIcon,
+    XMarkIcon,
+} from "@heroicons/vue/24/outline";
+
+const navigation = [
+    {
+        name: "Dashboard",
+        route: "dashboard",
+        icon: HomeIcon,
+        current: route().current("dashboard"),
+    },
+    {
+        name: "User",
+        route: "user.index",
+        icon: UsersIcon,
+        current:
+            route().current("user.index") ||
+            route().current("user.create") ||
+            route().current("user.edit") ||
+            route().current("user.show"),
+    },
+    {
+        name: "Role",
+        route: "role.index",
+        icon: UserGroupIcon,
+        current:
+            route().current("role.index") ||
+            route().current("role.create") ||
+            route().current("role.edit") ||
+            route().current("role.show"),
+    },
+    {
+        name: "Settings",
+        route: "options.index",
+        icon: CogIcon,
+        current: route().current("options.index"),
+    },
+];
+const userNavigation = [
+    { name: "Your Profile", route: "profile.edit" },
+    { name: "Sign out", route: "logout" },
+];
+
+const sidebarOpen = ref(false);
 const isLoaded = ref(false);
 const showingNavigationDropdown = ref(false);
 
@@ -39,231 +96,267 @@ onMounted(() => {
             </span>
         </div>
         <Toast></Toast>
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav
-                class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700"
-            >
-                <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
-                                    />
-                                </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
-                            >
-                                <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
-                                >
-                                    Dashboard
-                                </NavLink>
-
-                                <NavLink
-                                    :href="route('options.index')"
-                                    :active="route().current('options.index')"
-                                >
-                                    Settings
-                                </NavLink>
-
-                                <NavLink
-                                    :href="route('user.index')"
-                                    :active="
-                                        route().current('user.index') ||
-                                        route().current('user.create') ||
-                                        route().current('user.edit') ||
-                                        route().current('user.show')
-                                    "
-                                >
-                                    User
-                                </NavLink>
-
-                                <NavLink
-                                    :href="route('role.index')"
-                                    :active="
-                                        route().current('role.index') ||
-                                        route().current('role.create') ||
-                                        route().current('role.edit') ||
-                                        route().current('role.show')
-                                    "
-                                >
-                                    Role & Permission
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <DarkMode></DarkMode>
-                            <!-- Settings Dropdown -->
-                            <div class="ml-3 relative">
-                                <Dropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 capitalize"
-                                            >
-                                                <img
-                                                    :src="
-                                                        $page.props.auth.user
-                                                            .avatar
-                                                    "
-                                                    :alt="
-                                                        $page.props.auth.user
-                                                            .name
-                                                    "
-                                                    class="w-8 h-8 rounded-full mr-2"
-                                                />
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg
-                                                    class="ml-2 -mr-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content>
-                                        <DropdownLink
-                                            :href="route('profile.edit')"
-                                        >
-                                            Profile
-                                        </DropdownLink>
-
-                                        <DropdownLink
-                                            :href="route('logout')"
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </DropdownLink>
-                                    </template>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <!-- Hamburger -->
-                        <div class="-mr-2 flex items-center sm:hidden">
-                            <button
-                                @click="
-                                    showingNavigationDropdown =
-                                        !showingNavigationDropdown
-                                "
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
-                            >
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex':
-                                                !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex':
-                                                showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{
-                        block: showingNavigationDropdown,
-                        hidden: !showingNavigationDropdown,
-                    }"
-                    class="sm:hidden"
+        <div>
+            <TransitionRoot as="template" :show="sidebarOpen">
+                <Dialog
+                    as="div"
+                    class="relative z-40 md:hidden"
+                    @close="sidebarOpen = false"
                 >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <!-- Responsive Settings Options -->
-                    <div
-                        class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600"
+                    <TransitionChild
+                        as="template"
+                        enter="transition-opacity ease-linear duration-300"
+                        enter-from="opacity-0"
+                        enter-to="opacity-100"
+                        leave="transition-opacity ease-linear duration-300"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
                     >
-                        <div class="px-4">
-                            <div
-                                class="font-medium text-base text-gray-800 dark:text-gray-200 capitalize"
-                            >
-                                {{ $page.props.auth.user.name }}
-                            </div>
-                            <div class="font-medium text-sm text-gray-500">
-                                {{ $page.props.auth.user.email }}
-                            </div>
-                        </div>
+                        <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+                    </TransitionChild>
 
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
+                    <div class="fixed inset-0 z-40 flex">
+                        <TransitionChild
+                            as="template"
+                            enter="transition ease-in-out duration-300 transform"
+                            enter-from="-translate-x-full"
+                            enter-to="translate-x-0"
+                            leave="transition ease-in-out duration-300 transform"
+                            leave-from="translate-x-0"
+                            leave-to="-translate-x-full"
+                        >
+                            <DialogPanel
+                                class="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700 pt-5 pb-4"
                             >
-                                Log Out
-                            </ResponsiveNavLink>
+                                <TransitionChild
+                                    as="template"
+                                    enter="ease-in-out duration-300"
+                                    enter-from="opacity-0"
+                                    enter-to="opacity-100"
+                                    leave="ease-in-out duration-300"
+                                    leave-from="opacity-100"
+                                    leave-to="opacity-0"
+                                >
+                                    <div
+                                        class="absolute top-0 right-0 -mr-12 pt-2"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                            @click="sidebarOpen = false"
+                                        >
+                                            <span class="sr-only"
+                                                >Close sidebar</span
+                                            >
+                                            <XMarkIcon
+                                                class="h-6 w-6 text-white"
+                                                aria-hidden="true"
+                                            />
+                                        </button>
+                                    </div>
+                                </TransitionChild>
+                                <div
+                                    class="flex flex-shrink-0 items-center px-4"
+                                >
+                                    <img
+                                        class="h-8 w-auto"
+                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
+                                        alt="Your Company"
+                                    />
+                                </div>
+                                <div class="mt-5 h-0 flex-1 overflow-y-auto">
+                                    <nav class="space-y-1 px-2">
+                                        <a
+                                            v-for="item in navigation"
+                                            :key="item.name"
+                                            :href="item.href"
+                                            :class="[
+                                                item.current
+                                                    ? 'bg-indigo-800 text-white'
+                                                    : 'text-indigo-100 hover:bg-indigo-600',
+                                                'group flex items-center px-2 py-2 text-base font-medium rounded-md',
+                                            ]"
+                                        >
+                                            <component
+                                                :is="item.icon"
+                                                class="mr-4 h-6 w-6 flex-shrink-0 text-indigo-300"
+                                                aria-hidden="true"
+                                            />
+                                            {{ item.name }}
+                                        </a>
+                                    </nav>
+                                </div>
+                            </DialogPanel>
+                        </TransitionChild>
+                        <div class="w-14 flex-shrink-0" aria-hidden="true">
+                            <!-- Dummy element to force sidebar to shrink to fit close icon -->
+                        </div>
+                    </div>
+                </Dialog>
+            </TransitionRoot>
+
+            <!-- Static sidebar for desktop -->
+            <div
+                class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col"
+            >
+                <!-- Sidebar component, swap this element with another sidebar if you like -->
+                <div
+                    class="flex flex-grow flex-col overflow-y-auto bg-indigo-700 pt-5"
+                >
+                    <div class="flex flex-shrink-0 items-center px-4">
+                        <Link :href="route('dashboard')">
+                            <ApplicationLogo
+                                class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
+                            />
+                        </Link>
+                    </div>
+                    <div class="mt-5 flex flex-1 flex-col">
+                        <nav class="flex-1 space-y-1 px-2 pb-4">
+                            <Link
+                                v-for="item in navigation"
+                                :key="item.name"
+                                :href="route(item.route)"
+                                :class="[
+                                    item.current
+                                        ? 'bg-indigo-800 text-white'
+                                        : 'text-indigo-100 hover:bg-indigo-600',
+                                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                                ]"
+                            >
+                                <component
+                                    :is="item.icon"
+                                    class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300"
+                                    aria-hidden="true"
+                                />
+                                {{ item.name }}
+                            </Link>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-1 flex-col md:pl-64 dark:bg-gray-900 dark:text-white">
+                <div
+                    class="sticky top-0 z-10 flex h-16 flex-shrink-0   shadow "
+                >
+                    <button
+                        type="button"
+                        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                        @click="sidebarOpen = true"
+                    >
+                        <span class="sr-only">Open sidebar</span>
+                        <Bars3BottomLeftIcon
+                            class="h-6 w-6"
+                            aria-hidden="true"
+                        />
+                    </button>
+                    <div class="flex flex-1 justify-between px-4 dark:bg-gray-900 dark:text-white">
+                        <div class="flex flex-1 dark:bg-gray-900 dark:text-white">
+                            <form
+                                class="flex w-full md:ml-0 "
+                                action="#"
+                                method="GET"
+                            >
+                                <label for="search-field" class="sr-only"
+                                    >Search</label
+                                >
+                                <div
+                                    class="relative w-full text-gray-400 focus-within:text-gray-600"
+                                >
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 left-1 flex items-center"
+                                    >
+                                        <MagnifyingGlassIcon
+                                            class="h-6 w-6"
+                                            aria-hidden="true"
+                                        />
+                                    </div>
+                                    <input
+                                        id="search-field"
+                                        class="block h-full w-full border-transparent py-2 px-5 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm dark:bg-gray-900 dark:text-white"
+                                        placeholder="Search"
+                                        type="search"
+                                        name="search"
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="ml-4 flex items-center md:ml-6 dark:bg-gray-900 dark:text-white">
+                            <button
+                                type="button"
+                                class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
+                                <span class="sr-only">View notifications</span>
+                                <BellIcon class="h-6 w-6" aria-hidden="true" />
+                            </button>
+
+                            <DarkMode
+                                class="rounded-full hover:rounded-full"
+                            ></DarkMode>
+                            <!-- Profile dropdown -->
+                            <Menu as="div" class="relative ml-3">
+                                <div>
+                                    <MenuButton
+                                        class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    >
+                                        <span class="sr-only"
+                                            >Open user menu</span
+                                        >
+                                        <img
+                                            class="h-8 w-8 rounded-full"
+                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            alt=""
+                                        />
+                                    </MenuButton>
+                                </div>
+                                <transition
+                                    enter-active-class="transition ease-out duration-100"
+                                    enter-from-class="transform opacity-0 scale-95"
+                                    enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="transform opacity-100 scale-100"
+                                    leave-to-class="transform opacity-0 scale-95"
+                                >
+                                    <MenuItems
+                                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    >
+                                        <MenuItem
+                                            v-for="item in userNavigation"
+                                            :key="item.name"
+                                            v-slot="{ active }"
+                                        >
+                                            <Link
+                                                :href="route(item.route)"
+                                                :class="[
+                                                    active ? 'bg-gray-100' : '',
+                                                    'block px-4 py-2 text-sm text-gray-700',
+                                                ]"
+                                                >{{ item.name }}</Link
+                                            >
+                                        </MenuItem>
+                                    </MenuItems>
+                                </transition>
+                            </Menu>
                         </div>
                     </div>
                 </div>
-            </nav>
 
-            <!-- Page Heading -->
-            <header
-                class="bg-white dark:bg-gray-800 shadow"
-                v-if="$slots.header"
-            >
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+                <main>
+                    <div class="py-6 bg-white dark:bg-gray-900 dark:text-white">
+                        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+                            <h1 class="text-2xl font-semibold">Dashboard</h1>
+                        </div>
+                        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+                            <div class="py-4">
+                                <div
+                                    class="h-full rounded-lg border-4 border-dashed border-gray-200"
+                                >
+                                    <slot></slot>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
     </div>
 </template>
