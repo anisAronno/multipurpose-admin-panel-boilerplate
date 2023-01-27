@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserGender;
 use App\Enums\UserStatus;
 use App\Helpers\FileHelpers;
+use App\Helpers\UniqueSlug;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -14,7 +15,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
@@ -97,7 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         static::creating(function ($model) {
             $model->token = Uuid::uuid4()->toString();
-            $model->username = Str::slug($model->name).'_'.(User::max('id') + 1).random_int(1, 9999);
+            $model->username = UniqueSlug::generate($model, 'username', $model->name);
         });
 
         parent::boot();
