@@ -55,7 +55,9 @@ defineProps({
 
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink href="#" :active="false"> Message </NavLink>
+                        <NavLink :href="route('home')" :active="true">
+                            Visit website
+                        </NavLink>
                     </div>
                 </div>
 
