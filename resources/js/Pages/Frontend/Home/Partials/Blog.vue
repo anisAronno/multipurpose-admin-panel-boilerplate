@@ -61,14 +61,14 @@ const blogPosts = [
 </script>
 
 <template>
-    <div class="relative bg-gray-50 py-6 sm:py-10 lg:py-12">
+    <div class="relative bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:py-12">
         <div class="relative">
             <div
                 class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
             >
                 <h2 class="text-lg font-semibold text-cyan-600">Learn</h2>
                 <p
-                    class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+                    class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl"
                 >
                     Helpful Resources
                 </p>

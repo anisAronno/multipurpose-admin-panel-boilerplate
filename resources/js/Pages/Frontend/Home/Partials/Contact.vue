@@ -2,14 +2,14 @@
 
 <template>
     <section aria-labelledby="sale-heading">
-        <div class="overflow-hidden pt-32 sm:pt-14">
-            <div class="bg-gray-800">
+        <div class="overflow-hidden pt-32 sm:pt-14 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+            <div class="bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-gray-50">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="relative pt-48 pb-16 sm:pb-24">
                         <div>
                             <h2
                                 id="sale-heading"
-                                class="text-4xl font-bold tracking-tight text-white md:text-5xl"
+                                class="text-4xl font-bold tracking-tight md:text-5xl"
                             >
                                 Final Stock.
                                 <br />

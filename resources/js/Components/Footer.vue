@@ -85,7 +85,10 @@ const footerNavigation = {
 };
 </script>
 <template>
-    <footer class="bg-gray-50" aria-labelledby="footer-heading">
+    <footer
+        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+        aria-labelledby="footer-heading"
+    >
         <h2 id="footer-heading" class="sr-only">Footer</h2>
         <div class="mx-auto max-w-md px-6 pt-12 sm:max-w-7xl lg:px-8 lg:pt-16">
             <div class="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -104,7 +107,7 @@ const footerNavigation = {
                             v-for="item in footerNavigation.social"
                             :key="item.name"
                             :href="item.href"
-                            class="text-gray-400 hover:text-gray-500"
+                            class="text-gray-700 dark:text-gray-400"
                         >
                             <span class="sr-only">{{ item.name }}</span>
                             <component
@@ -118,7 +121,7 @@ const footerNavigation = {
                 <div class="mt-12 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
-                            <h3 class="text-base font-medium text-gray-900">
+                            <h3 class="text-base font-medium text-gray-900 dark:text-gray-200">
                                 Solutions
                             </h3>
                             <ul role="list" class="mt-4 space-y-4">
@@ -135,7 +138,7 @@ const footerNavigation = {
                             </ul>
                         </div>
                         <div class="mt-12 md:mt-0">
-                            <h3 class="text-base font-medium text-gray-900">
+                            <h3 class="text-base font-medium text-gray-900 dark:text-gray-200">
                                 Support
                             </h3>
                             <ul role="list" class="mt-4 space-y-4">
@@ -154,7 +157,7 @@ const footerNavigation = {
                     </div>
                     <div class="md:grid md:grid-cols-2 md:gap-8">
                         <div>
-                            <h3 class="text-base font-medium text-gray-900">
+                            <h3 class="text-base font-medium text-gray-900 dark:text-gray-200">
                                 Company
                             </h3>
                             <ul role="list" class="mt-4 space-y-4">
@@ -171,7 +174,7 @@ const footerNavigation = {
                             </ul>
                         </div>
                         <div class="mt-12 md:mt-0">
-                            <h3 class="text-base font-medium text-gray-900">
+                            <h3 class="text-base font-medium text-gray-900 dark:text-gray-200">
                                 Legal
                             </h3>
                             <ul role="list" class="mt-4 space-y-4">

@@ -2,7 +2,7 @@
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 </script>
 <template>
-    <div class="bg-gray-100">
+    <div class="bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-50">
         <div class="mx-auto max-w-7xl py-16 px-6 sm:py-24 lg:px-8">
             <div class="relative bg-white shadow-xl">
                 <h2 class="sr-only">Contact us</h2>

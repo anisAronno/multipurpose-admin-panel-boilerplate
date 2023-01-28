@@ -120,7 +120,7 @@ onMounted(() => {
     </Head>
     <div>
         <div
-            class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-900 opacity-75 flex flex-col items-center justify-center"
+            class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 opacity-75 flex flex-col items-center justify-center"
             v-if="!isLoaded"
         >
             <span class="w-10 h-10">
@@ -150,7 +150,8 @@ onMounted(() => {
             >
                 <Header
                     @toggleMenu="
-                        (sidebarOpen = !sidebarOpen), (isOpenSidebar = !isOpenSidebar)
+                        (sidebarOpen = !sidebarOpen),
+                            (isOpenSidebar = !isOpenSidebar)
                     "
                     :isOpenSidebar="isOpenSidebar"
                 ></Header>
@@ -166,7 +167,7 @@ onMounted(() => {
                         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                             <div class="py-4">
                                 <div
-                                    class="h-full rounded-lg border-4 border-dashed border-gray-200"
+                                    class="h-full rounded-lg border-4 border-dashed border-gray-200 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
                                 >
                                     <slot></slot>
                                 </div>

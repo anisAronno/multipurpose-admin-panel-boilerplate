@@ -1,6 +1,8 @@
 <script setup>
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Menu from "@/Components/Menu.vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 const navigation = [
     { name: "Home", route: "home" },
     { name: "About", route: "about" },
@@ -10,7 +12,7 @@ const navigation = [
 </script>
 <template>
     <Popover as="header" class="relative">
-        <div class="bg-gray-900 pt-6">
+        <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-6 pb-3">
             <Menu :navigation="navigation"></Menu>
         </div>
 
@@ -27,15 +29,13 @@ const navigation = [
                 class="absolute inset-x-0 top-0 origin-top transform p-2 transition md:hidden"
             >
                 <div
-                    class="overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5"
+                    class="overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow-md ring-1 ring-black ring-opacity-5"
                 >
                     <div class="flex items-center justify-between px-5 pt-4">
                         <div>
-                            <img
-                                class="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?from-color=teal&from-shade=500&to-color=cyan&to-shade=600&toShade=600"
-                                alt=""
-                            />
+                            <ApplicationLogo
+                                class="h-12 w-12"
+                            ></ApplicationLogo>
                         </div>
                         <div class="-mr-2">
                             <PopoverButton
@@ -55,7 +55,7 @@ const navigation = [
                                 :class="
                                     route().current() == item.route
                                         ? 'block rounded-md px-3 py-2 text-base font-medium text-cyan-300   hover:text-cyan-600 underline decoration-cyan-300  underline-offset-4 '
-                                        : 'block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:text-cyan-300 hover:underline hover:decoration-cyan-300  hover:underline-offset-4'
+                                        : 'block rounded-md px-3 py-2 text-base font-medium text-gray-900 dark:text-gray-50 hover:text-cyan-300 hover:underline hover:decoration-cyan-300  hover:underline-offset-4'
                                 "
                             >
                                 {{ item.name }}
@@ -81,4 +81,3 @@ const navigation = [
         </transition>
     </Popover>
 </template>
-

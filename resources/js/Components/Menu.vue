@@ -1,4 +1,7 @@
 <script setup>
+import DarkMode from "@/Components/DarkMode.vue";
+import { PopoverButton } from "@headlessui/vue";
+import { Bars3Icon } from "@heroicons/vue/24/outline";
 defineProps({
     navigation: Object,
 });
@@ -18,6 +21,7 @@ defineProps({
                         :alt="$page.props.global.options.site_name"
                     />
                 </Link>
+                <DarkMode class="mx-2 md:hidden"></DarkMode>
                 <div class="-mr-2 flex items-center md:hidden">
                     <PopoverButton
                         class="focus-ring-inset inline-flex items-center justify-center rounded-md bg-gray-900 p-2 text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
@@ -27,6 +31,7 @@ defineProps({
                     </PopoverButton>
                 </div>
             </div>
+
             <div class="hidden space-x-8 md:ml-10 md:flex">
                 <Link
                     v-for="item in navigation"
@@ -35,7 +40,7 @@ defineProps({
                     :class="
                         route().current() == item.route
                             ? 'text-base font-medium text-cyan-300    hover:text-cyan-600 underline decoration-cyan-300  underline-offset-4 '
-                            : 'text-base font-medium text-white hover:text-cyan-300 hover:underline hover:decoration-cyan-300  hover:underline-offset-4 '
+                            : 'text-base font-medium   hover:text-cyan-300 hover:underline hover:decoration-cyan-300  hover:underline-offset-4 '
                     "
                 >
                     {{ item.name }}
@@ -43,26 +48,27 @@ defineProps({
             </div>
         </div>
 
+        <DarkMode class="mx-2 hidden md:block"></DarkMode>
         <div
             class="hidden md:flex md:items-center md:space-x-6"
             v-if="$page.props.auth.user"
         >
             <Link
                 :href="route('dashboard')"
-                class="text-base font-medium text-white hover:text-gray-300"
+                class="text-base font-medium   hover:text-gray-300"
                 >Dashboard</Link
             >
         </div>
         <div v-else class="hidden md:flex md:items-center md:space-x-6">
             <Link
                 :href="route('login')"
-                class="text-base font-medium text-white hover:text-gray-300"
+                class="text-base font-medium   hover:text-gray-300"
                 >Log in</Link
             >
             <Link
                 v-if="$page.props.global.options.any_one_can_register == true"
                 :href="route('register')"
-                class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-base font-medium text-white hover:bg-gray-700"
+                class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-base font-medium  text-gray-100 hover:bg-gray-700"
                 >Registration</Link
             >
         </div>
