@@ -97,7 +97,7 @@ defineProps({
                     :key="item.name"
                     :class="[
                         item.current
-                            ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
+                            ? 'bg-indigo-600 text-white p-0.5 rounded-sm my-2'
                             : '',
                     ]"
                 >

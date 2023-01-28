@@ -106,7 +106,7 @@ const userNavigation = [
 ];
 
 const sidebarOpen = ref(false);
-const isOpenSidebar = ref(true);
+const isOpenSidebar = ref(false);
 const isLoaded = ref(false);
 
 function toggleCurrent(item) {
