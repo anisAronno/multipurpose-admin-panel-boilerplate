@@ -20,14 +20,17 @@ import {
 import {
     Bars3BottomLeftIcon,
     BellIcon,
+    ChevronDoubleDownIcon,
+    ChevronDoubleRightIcon,
     CogIcon,
     HomeIcon,
+    PlusCircleIcon,
     UserGroupIcon,
     UsersIcon,
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
 
-const navigation = [
+const navigation = ref([
     {
         name: "Dashboard",
         route: "dashboard",
@@ -43,6 +46,20 @@ const navigation = [
             route().current("user.create") ||
             route().current("user.edit") ||
             route().current("user.show"),
+        children: [
+            {
+                name: "All User",
+                route: "user.index",
+                icon: UsersIcon,
+                current: route().current("user.index"),
+            },
+            {
+                name: "Create",
+                route: "user.create",
+                icon: PlusCircleIcon,
+                current: route().current("user.create"),
+            },
+        ],
     },
     {
         name: "Role",
@@ -53,14 +70,36 @@ const navigation = [
             route().current("role.create") ||
             route().current("role.edit") ||
             route().current("role.show"),
+        children: [
+            {
+                name: "Role",
+                route: "role.index",
+                icon: UserGroupIcon,
+                current: route().current("role.index"),
+            },
+            {
+                name: "Create",
+                route: "role.create",
+                icon: PlusCircleIcon,
+                current: route().current("role.create"),
+            },
+        ],
     },
     {
         name: "Settings",
         route: "options.index",
         icon: CogIcon,
         current: route().current("options.index"),
+        children: [
+            {
+                name: "Settings",
+                route: "options.index",
+                icon: CogIcon,
+                current: route().current("options.index"),
+            },
+        ],
     },
-];
+]);
 const userNavigation = [
     { name: "Your Profile", route: "profile.edit" },
     { name: "Sign out", route: "logout" },
@@ -69,6 +108,14 @@ const userNavigation = [
 const sidebarOpen = ref(false);
 const isLoaded = ref(false);
 const showingNavigationDropdown = ref(false);
+
+function toggleCurrent(item) {
+    if (item.route.split(".")[0] == route().current().split(".")[0]) {
+        return;
+    }
+
+    item.current = !item.current;
+}
 
 function loaded(data = true) {
     isLoaded.value = data;
@@ -166,24 +213,96 @@ onMounted(() => {
                                 </div>
                                 <div class="mt-5 h-0 flex-1 overflow-y-auto">
                                     <nav class="space-y-1 px-2">
-                                        <a
+                                        <div
                                             v-for="item in navigation"
                                             :key="item.name"
-                                            :href="item.href"
                                             :class="[
                                                 item.current
-                                                    ? 'bg-indigo-800 text-white'
-                                                    : 'text-indigo-100 hover:bg-indigo-600',
-                                                'group flex items-center px-2 py-2 text-base font-medium rounded-md',
+                                                    ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
+                                                    : '',
                                             ]"
+                                            @click="toggleCurrent(item)"
                                         >
-                                            <component
-                                                :is="item.icon"
-                                                class="mr-4 h-6 w-6 flex-shrink-0 text-indigo-300"
-                                                aria-hidden="true"
-                                            />
-                                            {{ item.name }}
-                                        </a>
+                                            <div
+                                                :class="[
+                                                    item.current
+                                                        ? 'bg-indigo-800 text-white'
+                                                        : 'text-indigo-100 hover:bg-indigo-600',
+                                                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                                                ]"
+                                            >
+                                                <component
+                                                    :is="item.icon"
+                                                    class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300"
+                                                    aria-hidden="true"
+                                                />
+                                                {{ item.name }}
+                                                <span
+                                                    v-if="
+                                                        item.current &&
+                                                        item?.children?.length >
+                                                            0
+                                                    "
+                                                    class="absolute right-0 mr-2"
+                                                >
+                                                    <ChevronDoubleDownIcon
+                                                        class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
+                                                        aria-hidden="true"
+                                                    ></ChevronDoubleDownIcon>
+                                                </span>
+                                                <span
+                                                    v-else-if="
+                                                        !item.current &&
+                                                        item?.children?.length >
+                                                            0
+                                                    "
+                                                    class="absolute right-0 mr-2"
+                                                >
+                                                    <ChevronDoubleRightIcon
+                                                        class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
+                                                        aria-hidden="true"
+                                                    ></ChevronDoubleRightIcon>
+                                                </span>
+                                            </div>
+                                            <div
+                                                class="p-2 my-1 mx-3 border border-indigo-600 rounded-md bg-indigo-700 shadow-md"
+                                                :class="{
+                                                    'transition duration-500 ease-in-out':
+                                                        item.current,
+                                                }"
+                                                v-show="
+                                                    item.current &&
+                                                    item?.children?.length > 0
+                                                "
+                                            >
+                                                <div
+                                                    aria-level="childreen"
+                                                    v-for="children in item.children"
+                                                    :key="children.name"
+                                                    class="px-2 py-1"
+                                                >
+                                                    <Link
+                                                        :href="
+                                                            route(
+                                                                children.route
+                                                            )
+                                                        "
+                                                        :class="[
+                                                            children.current
+                                                                ? 'bg-indigo-800 text-white'
+                                                                : 'text-indigo-100 bg-indigo-600 hover:bg-indigo-600',
+                                                        ]"
+                                                        class="px-1 py-1.5 group flex items-center text-sm font-medium rounded-md"
+                                                        ><component
+                                                            :is="children.icon"
+                                                            class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
+                                                            aria-hidden="true"
+                                                        />
+                                                        {{ children.name }}
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </nav>
                                 </div>
                             </DialogPanel>
@@ -212,32 +331,100 @@ onMounted(() => {
                     </div>
                     <div class="mt-5 flex flex-1 flex-col">
                         <nav class="flex-1 space-y-1 px-2 pb-4">
-                            <Link
+                            <div
                                 v-for="item in navigation"
                                 :key="item.name"
-                                :href="route(item.route)"
                                 :class="[
                                     item.current
-                                        ? 'bg-indigo-800 text-white'
-                                        : 'text-indigo-100 hover:bg-indigo-600',
-                                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                                        ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
+                                        : '',
                                 ]"
+                                @mouseover="toggleCurrent(item)"
+                                @mouseout="toggleCurrent(item)"
                             >
-                                <component
-                                    :is="item.icon"
-                                    class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300"
-                                    aria-hidden="true"
-                                />
-                                {{ item.name }}
-                            </Link>
+                                <Link
+                                    :href="route(item.route)"
+                                    :class="[
+                                        item.current
+                                            ? 'bg-indigo-800 text-white'
+                                            : 'text-indigo-100 hover:bg-indigo-600',
+                                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                                    ]"
+                                >
+                                    <component
+                                        :is="item.icon"
+                                        class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300"
+                                        aria-hidden="true"
+                                    />
+                                    {{ item.name }}
+                                    <span
+                                        v-if="
+                                            item.current &&
+                                            item?.children?.length > 0
+                                        "
+                                        class="absolute right-0 mr-2"
+                                    >
+                                        <ChevronDoubleDownIcon
+                                            class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
+                                            aria-hidden="true"
+                                        ></ChevronDoubleDownIcon>
+                                    </span>
+                                    <span
+                                        v-else-if="
+                                            !item.current &&
+                                            item?.children?.length > 0
+                                        "
+                                        class="absolute right-0 mr-2"
+                                    >
+                                        <ChevronDoubleRightIcon
+                                            class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
+                                            aria-hidden="true"
+                                        ></ChevronDoubleRightIcon>
+                                    </span>
+                                </Link>
+                                <div
+                                    class="p-2 my-1 mx-3 border border-indigo-600 rounded-md bg-indigo-700 shadow-md"
+                                    :class="{
+                                        'transition duration-500 ease-in-out':
+                                            item.current,
+                                    }"
+                                    v-show="
+                                        item.current &&
+                                        item?.children?.length > 0
+                                    "
+                                >
+                                    <div
+                                        aria-level="childreen"
+                                        v-for="children in item.children"
+                                        :key="children.name"
+                                        class="px-2 py-1"
+                                    >
+                                        <Link
+                                            :href="route(children.route)"
+                                            :class="[
+                                                children.current
+                                                    ? 'bg-indigo-800 text-white'
+                                                    : 'text-indigo-100 bg-indigo-600 hover:bg-indigo-600',
+                                            ]"
+                                            class="px-1 py-1.5 group flex items-center text-sm font-medium rounded-md"
+                                            ><component
+                                                :is="children.icon"
+                                                class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
+                                                aria-hidden="true"
+                                            />
+                                            {{ children.name }}
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
                         </nav>
                     </div>
                 </div>
             </div>
-            <div class="flex flex-1 flex-col md:pl-64 dark:bg-gray-900 dark:text-white">
-                <div
-                    class="sticky top-0 z-10 flex h-16 flex-shrink-0   shadow "
-                >
+            <div
+                class="flex flex-1 flex-col md:pl-64 dark:bg-gray-900 dark:text-white"
+            >
+                <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 shadow">
                     <button
                         type="button"
                         class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -249,10 +436,14 @@ onMounted(() => {
                             aria-hidden="true"
                         />
                     </button>
-                    <div class="flex flex-1 justify-between px-4 dark:bg-gray-900 dark:text-white">
-                        <div class="flex flex-1 dark:bg-gray-900 dark:text-white">
+                    <div
+                        class="flex flex-1 justify-between px-4 dark:bg-gray-900 dark:text-white"
+                    >
+                        <div
+                            class="flex flex-1 dark:bg-gray-900 dark:text-white"
+                        >
                             <form
-                                class="flex w-full md:ml-0 "
+                                class="flex w-full md:ml-0"
                                 action="#"
                                 method="GET"
                             >
@@ -280,7 +471,9 @@ onMounted(() => {
                                 </div>
                             </form>
                         </div>
-                        <div class="ml-4 flex items-center md:ml-6 dark:bg-gray-900 dark:text-white">
+                        <div
+                            class="ml-4 flex items-center md:ml-6 dark:bg-gray-900 dark:text-white"
+                        >
                             <button
                                 type="button"
                                 class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -290,7 +483,7 @@ onMounted(() => {
                             </button>
 
                             <DarkMode
-                                class="rounded-full hover:rounded-full"
+                                class="rounded-full hover:rounded-full ml-2"
                             ></DarkMode>
                             <!-- Profile dropdown -->
                             <Menu as="div" class="relative ml-3">
@@ -343,7 +536,7 @@ onMounted(() => {
                 <main>
                     <div class="py-6 bg-white dark:bg-gray-900 dark:text-white">
                         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                            <h1 class="text-2xl font-semibold">Dashboard</h1> 
+                            <h1 class="text-2xl font-semibold">Dashboard</h1>
                         </div>
                         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                             <div class="py-4">
