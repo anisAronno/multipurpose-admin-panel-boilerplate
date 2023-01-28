@@ -3,6 +3,8 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import DarkMode from "@/Components/DarkMode.vue";
 import Loader from "@/Components/Loader.vue";
 import Toast from "@/Components/Toast.vue";
+import DesktopMenu from "@/Layouts/Partials/DesktopMenu.vue";
+import MobileMenu from "@/Layouts/Partials/MobileMenu.vue";
 import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
@@ -20,8 +22,6 @@ import {
 import {
     Bars3BottomLeftIcon,
     BellIcon,
-    ChevronDoubleDownIcon,
-    ChevronDoubleRightIcon,
     CogIcon,
     HomeIcon,
     PlusCircleIcon,
@@ -106,10 +106,14 @@ const userNavigation = [
 ];
 
 const sidebarOpen = ref(false);
+const isOpenSidebar = ref(true);
 const isLoaded = ref(false);
-const showingNavigationDropdown = ref(false);
 
 function toggleCurrent(item) {
+    if (!isOpenSidebar) {
+        return;
+    }
+
     if (item.route.split(".")[0] == route().current().split(".")[0]) {
         return;
     }
@@ -205,106 +209,14 @@ onMounted(() => {
                                 <div
                                     class="flex flex-shrink-0 items-center px-4"
                                 >
-                                    <img
-                                        class="h-8 w-auto"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                                        alt="Your Company"
-                                    />
+                                    <ApplicationLogo
+                                        class="h-8 auto"
+                                    ></ApplicationLogo>
                                 </div>
-                                <div class="mt-5 h-0 flex-1 overflow-y-auto">
-                                    <nav class="space-y-1 px-2">
-                                        <div
-                                            v-for="item in navigation"
-                                            :key="item.name"
-                                            :class="[
-                                                item.current
-                                                    ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
-                                                    : '',
-                                            ]"
-                                            @click="toggleCurrent(item)"
-                                        >
-                                            <div
-                                                :class="[
-                                                    item.current
-                                                        ? 'bg-indigo-800 text-white'
-                                                        : 'text-indigo-100 hover:bg-indigo-600',
-                                                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-                                                ]"
-                                            >
-                                                <component
-                                                    :is="item.icon"
-                                                    class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300"
-                                                    aria-hidden="true"
-                                                />
-                                                {{ item.name }}
-                                                <span
-                                                    v-if="
-                                                        item.current &&
-                                                        item?.children?.length >
-                                                            0
-                                                    "
-                                                    class="absolute right-0 mr-2"
-                                                >
-                                                    <ChevronDoubleDownIcon
-                                                        class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                                        aria-hidden="true"
-                                                    ></ChevronDoubleDownIcon>
-                                                </span>
-                                                <span
-                                                    v-else-if="
-                                                        !item.current &&
-                                                        item?.children?.length >
-                                                            0
-                                                    "
-                                                    class="absolute right-0 mr-2"
-                                                >
-                                                    <ChevronDoubleRightIcon
-                                                        class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                                        aria-hidden="true"
-                                                    ></ChevronDoubleRightIcon>
-                                                </span>
-                                            </div>
-                                            <div
-                                                class="p-2 my-1 mx-3 border border-indigo-600 rounded-md bg-indigo-700 shadow-md"
-                                                :class="{
-                                                    'transition duration-500 ease-in-out':
-                                                        item.current,
-                                                }"
-                                                v-show="
-                                                    item.current &&
-                                                    item?.children?.length > 0
-                                                "
-                                            >
-                                                <div
-                                                    aria-level="childreen"
-                                                    v-for="children in item.children"
-                                                    :key="children.name"
-                                                    class="px-2 py-1"
-                                                >
-                                                    <Link
-                                                        :href="
-                                                            route(
-                                                                children.route
-                                                            )
-                                                        "
-                                                        :class="[
-                                                            children.current
-                                                                ? 'bg-indigo-800 text-white'
-                                                                : 'text-indigo-100 bg-indigo-600 hover:bg-indigo-600',
-                                                        ]"
-                                                        class="px-1 py-1.5 group flex items-center text-sm font-medium rounded-md"
-                                                        ><component
-                                                            :is="children.icon"
-                                                            class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                                            aria-hidden="true"
-                                                        />
-                                                        {{ children.name }}
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </nav>
-                                </div>
+                                <MobileMenu
+                                    :navigation="navigation"
+                                    @toggleCurrent="toggleCurrent"
+                                ></MobileMenu>
                             </DialogPanel>
                         </TransitionChild>
                         <div class="w-14 flex-shrink-0" aria-hidden="true">
@@ -316,7 +228,8 @@ onMounted(() => {
 
             <!-- Static sidebar for desktop -->
             <div
-                class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col"
+                class="hidden md:fixed md:inset-y-0 md:flex md:flex-col"
+                :class="isOpenSidebar ? 'md:w-64' : 'md:w-20'"
             >
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div
@@ -325,114 +238,33 @@ onMounted(() => {
                     <div class="flex flex-shrink-0 items-center px-4">
                         <Link :href="route('dashboard')">
                             <ApplicationLogo
-                                class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
+                                class="block h-12 w-auto fill-current text-gray-800 dark:text-gray-200"
                             />
                         </Link>
                     </div>
-                    <div class="mt-5 flex flex-1 flex-col">
-                        <nav class="flex-1 space-y-1 px-2 pb-4">
-                            <div
-                                v-for="item in navigation"
-                                :key="item.name"
-                                :class="[
-                                    item.current
-                                        ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
-                                        : '',
-                                ]"
-                                @mouseover="toggleCurrent(item)"
-                                @mouseout="toggleCurrent(item)"
-                            >
-                                <Link
-                                    :href="route(item.route)"
-                                    :class="[
-                                        item.current
-                                            ? 'bg-indigo-800 text-white'
-                                            : 'text-indigo-100 hover:bg-indigo-600',
-                                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-                                    ]"
-                                >
-                                    <component
-                                        :is="item.icon"
-                                        class="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300"
-                                        aria-hidden="true"
-                                    />
-                                    {{ item.name }}
-                                    <span
-                                        v-if="
-                                            item.current &&
-                                            item?.children?.length > 0
-                                        "
-                                        class="absolute right-0 mr-2"
-                                    >
-                                        <ChevronDoubleDownIcon
-                                            class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                            aria-hidden="true"
-                                        ></ChevronDoubleDownIcon>
-                                    </span>
-                                    <span
-                                        v-else-if="
-                                            !item.current &&
-                                            item?.children?.length > 0
-                                        "
-                                        class="absolute right-0 mr-2"
-                                    >
-                                        <ChevronDoubleRightIcon
-                                            class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                            aria-hidden="true"
-                                        ></ChevronDoubleRightIcon>
-                                    </span>
-                                </Link>
-                                <div
-                                    class="p-2 my-1 mx-3 border border-indigo-600 rounded-md bg-indigo-700 shadow-md"
-                                    :class="{
-                                        'transition duration-500 ease-in-out':
-                                            item.current,
-                                    }"
-                                    v-show="
-                                        item.current &&
-                                        item?.children?.length > 0
-                                    "
-                                >
-                                    <div
-                                        aria-level="childreen"
-                                        v-for="children in item.children"
-                                        :key="children.name"
-                                        class="px-2 py-1"
-                                    >
-                                        <Link
-                                            :href="route(children.route)"
-                                            :class="[
-                                                children.current
-                                                    ? 'bg-indigo-800 text-white'
-                                                    : 'text-indigo-100 bg-indigo-600 hover:bg-indigo-600',
-                                            ]"
-                                            class="px-1 py-1.5 group flex items-center text-sm font-medium rounded-md"
-                                            ><component
-                                                :is="children.icon"
-                                                class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                                aria-hidden="true"
-                                            />
-                                            {{ children.name }}
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </nav>
-                    </div>
+                    <DesktopMenu
+                        :navigation="navigation"
+                        :isOpenSidebar="isOpenSidebar"
+                        @toggleCurrent="toggleCurrent"
+                    ></DesktopMenu>
                 </div>
             </div>
             <div
-                class="flex flex-1 flex-col md:pl-64 dark:bg-gray-900 dark:text-white"
+                class="flex flex-1 flex-col dark:bg-gray-900 dark:text-white"
+                :class="isOpenSidebar ? 'md:pl-64' : 'md:pl-20'"
             >
                 <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 shadow">
                     <button
                         type="button"
-                        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
-                        @click="sidebarOpen = true"
+                        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:focus:ring-0 md:dark:text-gray-50 md:dark:bg-gray-900"
+                        @click="
+                            (sidebarOpen = true),
+                                (isOpenSidebar = !isOpenSidebar)
+                        "
                     >
                         <span class="sr-only">Open sidebar</span>
                         <Bars3BottomLeftIcon
-                            class="h-6 w-6"
+                            class="h-6 w-6 md:h-10 md:w-10"
                             aria-hidden="true"
                         />
                     </button>
