@@ -19,10 +19,10 @@ return new class () extends Migration {
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2)->nullable();
-            $table->string('status')->default('Dreaft');
+            $table->string('status')->default('Draft');
             $table->foreignIdFor(User::class)->constrained();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

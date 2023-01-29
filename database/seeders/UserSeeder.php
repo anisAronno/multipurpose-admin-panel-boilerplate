@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\LoginHistory;
 use App\Models\Product;
@@ -20,6 +21,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::factory()->count(10)
+        ->has(Blog::factory()->count(3))
         ->has(Address::factory()->count(3))
         ->has(SocialLogin::factory()->count(3))
         ->has(Product::factory()->count(3)

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->string('country')->nullable()->index();
             $table->foreignIdFor(User::class)->constrained();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

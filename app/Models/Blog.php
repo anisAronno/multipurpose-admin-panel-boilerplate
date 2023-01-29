@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
-use App\Enums\Status;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Enums\Status;
 
-class Category extends Model
+class Blog extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -49,10 +49,6 @@ class Category extends Model
         'status' => Status::class,
     ];
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'category_product')->withTimestamps();
-    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

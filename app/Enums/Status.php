@@ -10,6 +10,6 @@ enum Status: string
 
     case ACTIVE = 'Active';
     case PENDING = 'Pending';
-    case DRAFT = 'Draft';
+    case DRAFT =  'Draft';
     case REJECTED = 'Rejected';
 }
