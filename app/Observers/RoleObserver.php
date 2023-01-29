@@ -10,9 +10,9 @@ class RoleObserver
 {
     use ClearCache;
 
-    public $roleCacheKey = '';
+    protected $roleCacheKey = '';
 
-    public $userCacheKey = '';
+    protected $userCacheKey = '';
 
     public function __construct()
     {

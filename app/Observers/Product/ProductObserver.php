@@ -10,8 +10,8 @@ class ProductObserver
 {
     use ClearCache;
 
-    public $key = '';
-    public $fetureProductKey = '';
+    protected $key = '';
+    protected $fetureProductKey = '';
     public function __construct()
     {
         $this->key = CacheServices::getProductCacheKey();

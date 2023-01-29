@@ -2,26 +2,21 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
-use App\Helpers\FileHelpers;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use App\Enums\Status;
+use App\Http\Controllers\Controller;
 
 class BlogController extends Controller
 {
     /**
-     * Summary of index
-     * @return \Inertia\Response
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $blogs = Blog::where('status', Status::ACTIVE)->get();
-        return Inertia::render('Frontend/Products/Index')->with(['blogs' => $blogs]);
+        //
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,9 @@ Route::get('/contact', function () {
     return Inertia::render('Frontend/Contact/Index');
 })->name('contact');
 
+
+Route::get('/category', [CategoryController::class, 'index'])->name('category');
+Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::get('/products', [ProductController::class, 'index'])->name('product');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');

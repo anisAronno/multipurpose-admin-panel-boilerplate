@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
@@ -19,12 +20,17 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $key = CacheServices::getFeatureProductCacheKey();
+        $catKey = CacheServices::getFeatureCategoryCacheKey();
 
-        $products = Cache::remember($key, now()->addMinutes(10), function () {
-            return Product::isActive()->isFeatured()->limit(8)->get();
+        $products = Cache::remember($key, 10, function () {
+            return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
         });
 
-        return Inertia::render('Frontend/Home/Index')->with(['products' => $products]);
+        $featuredCategory = Cache::remember($catKey, 10, function () {
+            return Category::isActive()->isFeatured()->orderBy('id', 'desc')->limit(3)->get();
+        });
+
+        return Inertia::render('Frontend/Home/Index')->with(['products' => $products, 'featuredCategory'=>$featuredCategory]);
     }
 
     /**

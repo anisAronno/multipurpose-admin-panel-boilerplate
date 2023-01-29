@@ -10,7 +10,7 @@ class BlogObserver
 {
     use ClearCache;
 
-    public $key = '';
+    protected $key = '';
     public function __construct()
     {
         $this->key = CacheServices::getBlogCacheKey();

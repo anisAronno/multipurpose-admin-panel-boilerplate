@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Enums\Status;
 use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
@@ -25,7 +24,7 @@ class ProductController extends Controller
         $key = CacheServices::getProductCacheKey($currentPage);
 
         $products = Cache::remember($key, 10, function () {
-            return Product::where('status', Status::ACTIVE)->paginate(16);
+            return Product::isActive()->paginate(16);
         });
 
         return Inertia::render('Frontend/Products/Index')->with(['products' => $products]);
@@ -63,7 +62,7 @@ class ProductController extends Controller
                 'slug' => 'string|max:255'
         ]);
 
-        if ($product->status !== Status::ACTIVE) {
+        if (! $product->isActive()) {
             abort(403);
         }
 

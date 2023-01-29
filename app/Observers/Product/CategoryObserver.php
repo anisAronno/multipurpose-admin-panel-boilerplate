@@ -10,10 +10,12 @@ class CategoryObserver
 {
     use ClearCache;
 
-    public $key = '';
+    protected $key = '';
+    protected $featureCategory = '';
     public function __construct()
     {
         $this->key = CacheServices::getCategoryCacheKey();
+        $this->featureCategory = CacheServices::getFeatureCategoryCacheKey();
     }
     /**
      * Handle the Category "created" event.
@@ -24,6 +26,7 @@ class CategoryObserver
     public function created(Category $category)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featureCategory);
     }
 
     /**
@@ -35,6 +38,7 @@ class CategoryObserver
     public function updated(Category $category)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featureCategory);
     }
 
     /**
@@ -46,6 +50,7 @@ class CategoryObserver
     public function deleted(Category $category)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featureCategory);
     }
 
     /**
@@ -57,6 +62,7 @@ class CategoryObserver
     public function restored(Category $category)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featureCategory);
     }
 
     /**
@@ -68,5 +74,6 @@ class CategoryObserver
     public function forceDeleted(Category $category)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featureCategory);
     }
 }

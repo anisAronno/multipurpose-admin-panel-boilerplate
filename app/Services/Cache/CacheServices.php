@@ -34,4 +34,9 @@ class CacheServices
     {
         return 'category'.$token;
     }
+
+     public static function getFeatureCategoryCacheKey(int $token = null): string
+    {
+        return 'feature_category'.$token;
+    }
 }

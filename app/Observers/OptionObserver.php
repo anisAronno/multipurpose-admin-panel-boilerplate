@@ -10,7 +10,7 @@ class OptionObserver
 {
     use ClearCache;
 
-    public $optionsCacheKey = '';
+    protected $optionsCacheKey = '';
 
     public function __construct()
     {

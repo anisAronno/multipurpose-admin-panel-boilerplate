@@ -1,21 +1,33 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\Cache\CacheServices;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    * Summary of index
+    * @return \Inertia\Response
+    */
+    public function index(Request $request)
     {
-        //
+        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+
+        $key = CacheServices::getCategoryCacheKey($currentPage);
+
+        $categories = Cache::remember($key, now()->addMinutes(10), function () {
+            return Category::isActive()->isFeatured()->paginate(9);
+        });
+
+        return Inertia::render('Frontend/Category/Index')->with(['categories' => $categories]);
     }
 
     /**
@@ -40,14 +52,17 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * Summary of show
+     * @param Category $category
+     * @return \Inertia\Response
      */
     public function show(Category $category)
     {
-        //
+        if (! $category->isActive()) {
+            abort(403);
+        } 
+
+        return Inertia::render('Frontend/Category/Show')->with(['category' => $category->load('products')]);
     }
 
     /**
