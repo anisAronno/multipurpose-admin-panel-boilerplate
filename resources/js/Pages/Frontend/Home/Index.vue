@@ -5,9 +5,12 @@ import Blog from "@/Pages/Frontend/Home/Partials/Blog.vue";
 import Category from "@/Pages/Frontend/Home/Partials/Category.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
 import Feature from "@/Pages/Frontend/Products/Partials/Feature.vue";
-import Products from "@/Pages/Frontend/Products/Partials/Products.vue";
-
+import FeatureProducts from "@/Pages/Frontend/Products/Partials/FeatureProducts.vue";
 import { Head } from "@inertiajs/inertia-vue3";
+
+defineProps({
+    products: Object,
+});
 </script>
 
 <template>
@@ -24,7 +27,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 
             <Feature></Feature>
             <!-- Product section -->
-            <Products></Products>
+            <FeatureProducts :products="products" v-if="products"></FeatureProducts>
             <!-- Blog section -->
 
             <Blog></Blog>

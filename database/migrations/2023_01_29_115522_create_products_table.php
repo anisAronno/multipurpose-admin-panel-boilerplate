@@ -16,9 +16,11 @@ return new class () extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
+            $table->string('slug', 255)->unique();
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2)->nullable();
+            $table->tinyInteger('is_featured')->default(0);
             $table->string('status')->default('Draft');
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

@@ -1,5 +1,4 @@
 <script setup>
-import Pagination from "@/Components/Pagination.vue";
 defineProps({
     products: Object,
 });
@@ -7,6 +6,7 @@ defineProps({
 <template>
     <div
         class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
+        v-if="products.length > 0"
     >
         <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
             <h2 class="sr-only">Products</h2>
@@ -15,7 +15,7 @@ defineProps({
                 class="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"
             >
                 <div
-                    v-for="product in products.data"
+                    v-for="product in products"
                     :key="product.id"
                     class="group border border-gray-200 p-4 sm:p-6"
                 >
@@ -41,11 +41,6 @@ defineProps({
                     </div>
                 </div>
             </div>
-            <Pagination
-                v-if="products.last_page > 1"
-                class="mt-6 dark:text-white flex justify-end p-3"
-                :links="products.links"
-            ></Pagination>
         </div>
     </div>
 </template>

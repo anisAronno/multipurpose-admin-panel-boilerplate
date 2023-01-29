@@ -1,24 +1,22 @@
 <script setup lang="ts">
 import Banner from "@/Components/Banner.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
-import About from "@/Pages/Frontend/About/Partials/About.vue";
-import Goal from "@/Pages/Frontend/About/Partials/Goal.vue";
-import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
+import ProductsShow from "@/Pages/Frontend/Products/Partials/ProductsShow.vue";
 import { Head } from "@inertiajs/inertia-vue3";
+defineProps({
+    product: Object,
+});
 </script>
 
 <template>
     <Head>
-        <title>About</title>
+        <title>{{ product.title }}</title>
     </Head>
     <MasterLayout>
         <div
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
-        >
-            <Banner></Banner>
-            <About></About>
-            <Goal></Goal>
-            <Contact class="px-6"></Contact>
+        > 
+            <ProductsShow :product="product"></ProductsShow>
         </div>
     </MasterLayout>
 </template>

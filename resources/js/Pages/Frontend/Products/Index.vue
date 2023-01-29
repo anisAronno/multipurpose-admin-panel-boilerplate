@@ -4,6 +4,9 @@ import MasterLayout from "@/Layouts/MasterLayout.vue";
 import Feature from "@/Pages/Frontend/Products/Partials/Feature.vue";
 import Products from "@/Pages/Frontend/Products/Partials/Products.vue";
 import { Head } from "@inertiajs/inertia-vue3";
+defineProps({
+    products: Object,
+});
 </script>
 
 <template>
@@ -16,7 +19,7 @@ import { Head } from "@inertiajs/inertia-vue3";
         >
             <Banner></Banner>
 
-            <Products></Products>
+            <Products :products="products"></Products>
             <Feature></Feature>
         </div>
     </MasterLayout>

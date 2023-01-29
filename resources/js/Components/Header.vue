@@ -6,13 +6,15 @@ import { XMarkIcon } from "@heroicons/vue/24/outline";
 const navigation = [
     { name: "Home", route: "home" },
     { name: "About", route: "about" },
-    { name: "Products", route: "products" },
+    { name: "Products", route: "product" },
     { name: "Contact", route: "contact" },
 ];
 </script>
 <template>
     <Popover as="header" class="relative">
-        <div class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-6 pb-3">
+        <div
+            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-6 pb-3"
+        >
             <Menu :navigation="navigation"></Menu>
         </div>
 
@@ -71,7 +73,7 @@ const navigation = [
                             <Link
                                 v-else
                                 :href="route('login')"
-                                class="block w-full rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 px-4 text-center font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700 "
+                                class="block w-full rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 px-4 text-center font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700"
                                 >Log in</Link
                             >
                         </div>

@@ -5,9 +5,15 @@ namespace App\Providers;
 use App\Events\LoginEvent;
 use App\Listeners\LoginListener;
 use App\Listeners\UserRegistrationListener;
+use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Option;
+use App\Models\Product;
 use App\Models\User;
+use App\Observers\Blog\BlogObserver;
 use App\Observers\OptionObserver;
+use App\Observers\Product\CategoryObserver;
+use App\Observers\Product\ProductObserver;
 use App\Observers\RoleObserver;
 use App\Observers\User\UserObserver;
 use Illuminate\Auth\Events\Registered;
@@ -42,6 +48,9 @@ class EventServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Role::observe(RoleObserver::class);
         Option::observe(OptionObserver::class);
+        Blog::observe(BlogObserver::class);
+        Category::observe(CategoryObserver::class);
+        Product::observe(ProductObserver::class);
     }
 
     /**

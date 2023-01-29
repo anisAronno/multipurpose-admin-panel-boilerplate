@@ -5,7 +5,7 @@
                 <div
                     v-if="link.url === null"
                     class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded dark:text-white dark:bg-gray-700 hover:dark:bg-gray-800"
-                    v-html="link.label"
+                    v-html="__(link.label)"
                 />
                 <Link
                     v-else
@@ -15,14 +15,14 @@
                             link.active,
                     }"
                     :href="link.url"
-                    v-html="link.label"
+                    v-html="__(link.label)"
                 >
                 </Link>
             </template>
         </div>
     </div>
 </template>
-<script setup> 
+<script setup>
 defineProps({
     links: Array,
 });

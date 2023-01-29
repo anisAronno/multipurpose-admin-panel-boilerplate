@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,23 +17,21 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Frontend/Home/Index');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/about', function () {
     return Inertia::render('Frontend/About/Index');
 })->name('about');
 
-Route::get('/product', function () {
-    return Inertia::render('Frontend/Products/Index');
-})->name('products');
 
 Route::get('/contact', function () {
     return Inertia::render('Frontend/Contact/Index');
 })->name('contact');
 
 
+Route::get('/products', [ProductController::class, 'index'])->name('product');
+Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
 require __DIR__.'/admin.php';
 require __DIR__.'/auth.php';
