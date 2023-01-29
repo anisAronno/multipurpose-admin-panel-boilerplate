@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
+use App\Models\Category;
 use App\Models\LoginHistory;
+use App\Models\Product;
 use App\Models\SocialLogin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -17,7 +19,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(20)->has(Address::factory()->count(3))->has(SocialLogin::factory()->count(3))->has(LoginHistory::factory()->count(3))->create()->each(function ($user) {
+        User::factory()->count(10)
+        ->has(Address::factory()->count(3))
+        ->has(SocialLogin::factory()->count(3))
+        ->has(Product::factory()->count(3)
+        ->has(Category::factory()->count(2), 'categories', 'category_product'))
+        ->has(LoginHistory::factory()->count(3))->create()->each(function ($user) {
             $user->assignRole('user');
         });
     }
