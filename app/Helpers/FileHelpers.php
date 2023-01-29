@@ -63,7 +63,7 @@ class FileHelpers
         if (! empty($value)) {
             $path = stristr($value, 'images');
             
-            if (Storage::disk('local')->exists('public/'.$path)) {
+            if ( ! empty($path) && Storage::disk('local')->exists('public/'.$path)) {
                 return Storage::url($path);
             }
 
