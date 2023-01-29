@@ -55,20 +55,20 @@ defineProps({
         >
             <Link
                 :href="route('dashboard')"
-                class="text-base font-medium   hover:text-gray-300"
+                class="text-base font-medium hover:text-gray-800 dark:hover:text-gray-300 hover:scale-105"
                 >Dashboard</Link
             >
         </div>
         <div v-else class="hidden md:flex md:items-center md:space-x-6">
             <Link
                 :href="route('login')"
-                class="text-base font-medium   hover:text-gray-300"
+                class="text-base font-medium hover:text-gray-800 dark:hover:text-gray-300 hover:scale-105"
                 >Log in</Link
             >
             <Link
                 v-if="$page.props.global.options.any_one_can_register == true"
                 :href="route('register')"
-                class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-base font-medium  text-gray-100 hover:bg-gray-700"
+                class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-base font-medium text-gray-100 hover:bg-gray-700"
                 >Registration</Link
             >
         </div>

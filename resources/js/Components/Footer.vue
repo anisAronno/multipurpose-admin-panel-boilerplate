@@ -86,7 +86,7 @@ const footerNavigation = {
 </script>
 <template>
     <footer
-        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         aria-labelledby="footer-heading"
     >
         <h2 id="footer-heading" class="sr-only">Footer</h2>

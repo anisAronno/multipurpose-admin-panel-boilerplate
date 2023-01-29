@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14"
+        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14"
     >
         <div class="mx-auto max-w-7xl lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8">
