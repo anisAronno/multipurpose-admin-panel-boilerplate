@@ -25,4 +25,5 @@ trait CheckStatusAndFeture
     {
         return $query->where('is_featured', '=', Featured::OK);
     }
+    
 }

@@ -8,6 +8,7 @@ const navigation = [
     { name: "About", route: "about" },
     { name: "Products", route: "product" },
     { name: "Category", route: "category" },
+    { name: "Blog", route: "blog" },
     { name: "Contact", route: "contact" },
 ];
 </script>

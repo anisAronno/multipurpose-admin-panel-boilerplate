@@ -11,9 +11,11 @@ class BlogObserver
     use ClearCache;
 
     protected $key = '';
+    protected $featuredBlogKey = '';
     public function __construct()
     {
         $this->key = CacheServices::getBlogCacheKey();
+        $this->featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
     }
     /**
      * Handle the Blog "created" event.
@@ -24,6 +26,7 @@ class BlogObserver
     public function created(Blog $blog)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featuredBlogKey);
     }
 
     /**
@@ -35,6 +38,7 @@ class BlogObserver
     public function updated(Blog $blog)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featuredBlogKey);
     }
 
     /**
@@ -46,6 +50,7 @@ class BlogObserver
     public function deleted(Blog $blog)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featuredBlogKey);
     }
 
     /**
@@ -57,6 +62,7 @@ class BlogObserver
     public function restored(Blog $blog)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featuredBlogKey);
     }
 
     /**
@@ -68,5 +74,6 @@ class BlogObserver
     public function forceDeleted(Blog $blog)
     {
         $this->clearCache($this->key);
+        $this->clearCache($this->featuredBlogKey);
     }
 }

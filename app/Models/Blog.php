@@ -8,6 +8,7 @@ use App\Traits\CheckStatusAndFeture;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Enums\Status;
@@ -36,9 +37,9 @@ class Blog extends Model
         'slug',
         'user_id',
     ];
- /**
-     * Override the default boot method to register some extra stuff for every child model.
-     */
+    /**
+        * Override the default boot method to register some extra stuff for every child model.
+        */
     protected static function boot()
     {
         static::creating(function ($model) {
@@ -78,9 +79,15 @@ class Blog extends Model
         return  $this->attributes['image'] = FileHelpers::getUrl($value);
     }
 
+     public function getCreatedAtAttribute($value)
+     {
+         if ($value !== null) {
+             return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
+         }
+     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
 }

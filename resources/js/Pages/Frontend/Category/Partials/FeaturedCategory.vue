@@ -9,8 +9,21 @@ defineProps({
         v-if="categories.length > 0"
     >
         <div
-            class="mx-auto max-w-xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 py-6 sm:py-10 lg:py-12"
+            class="mx-auto max-w-xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 py-2 sm:py-3 lg:py-5"
         >
+            <div class="text-center mb-5">
+                <h1 class="text-2xl md:text-4xl mb-2">
+                    {{ __("Feature Category") }}
+                </h1>
+                <p>
+                    {{
+                        __(
+                            `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
+                        )
+                    }}
+                </p>
+            </div>
+
             <div
                 class="mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0 gap-10"
             >
@@ -30,7 +43,9 @@ defineProps({
                             class="h-full w-full object-cover object-center"
                         />
                     </div>
-                    <h3 class="mt-4 text-base font-semibold text-gray-900">
+                    <h3
+                        class="mt-4 text-base font-semibold text-gray-900 dark:text-gray-100"
+                    >
                         {{ category.title }}
                     </h3>
                     <p class="mt-2 text-sm text-gray-500">

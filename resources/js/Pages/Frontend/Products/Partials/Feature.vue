@@ -37,7 +37,18 @@ const perks = [
         aria-labelledby="perks-heading"
         class="border-t border-gray-200 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
     >
-        <h2 id="perks-heading" class="sr-only">Our perks</h2>
+        <div class="text-center mt-5">
+            <h1 class="text-2xl md:text-4xl mb-2">
+                {{ __("Our Special Feature") }}
+            </h1>
+            <p>
+                {{
+                    __(
+                        `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
+                    )
+                }}
+            </p>
+        </div>
 
         <div class="mx-auto max-w-7xl py-8 px-4 sm:px-4 sm:py-12 lg:px-8">
             <div

@@ -23,7 +23,7 @@ class CategoryController extends Controller
 
         $key = CacheServices::getCategoryCacheKey($currentPage);
 
-        $categories = Cache::remember($key, now()->addMinutes(10), function () {
+        $categories = Cache::remember($key, 10, function () {
             return Category::isActive()->isFeatured()->paginate(9);
         });
 

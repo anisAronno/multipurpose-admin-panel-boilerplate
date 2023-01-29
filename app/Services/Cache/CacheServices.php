@@ -22,21 +22,25 @@ class CacheServices
     {
         return 'product'.$token;
     }
-    public static function getFeatureProductCacheKey(int $token = null): string
+    public static function getFeaturedProductCacheKey(int $token = null): string
     {
-        return 'feature_product'.$token;
+        return 'featured_product'.$token;
     }
     public static function getBlogCacheKey(int $token = null): string
     {
         return 'blog'.$token;
+    }
+    public static function getFeaturedBlogCacheKey(int $token = null): string
+    {
+        return 'featured_blog'.$token;
     }
     public static function getCategoryCacheKey(int $token = null): string
     {
         return 'category'.$token;
     }
 
-     public static function getFeatureCategoryCacheKey(int $token = null): string
-    {
-        return 'feature_category'.$token;
-    }
+     public static function getFeaturedCategoryCacheKey(int $token = null): string
+     {
+         return 'featured_category'.$token;
+     }
 }

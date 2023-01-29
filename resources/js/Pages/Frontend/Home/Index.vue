@@ -2,7 +2,7 @@
 import Banner from "@/Components/Banner.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import FeaturedCategory from "@/Pages/Frontend/Category/Partials/FeaturedCategory.vue";
-import Blog from "@/Pages/Frontend/Home/Partials/Blog.vue";
+import FeaturedBlog from "@/Pages/Frontend/Blog/Partials/FeaturedBlog.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
 import Feature from "@/Pages/Frontend/Products/Partials/Feature.vue";
 import FeatureProducts from "@/Pages/Frontend/Products/Partials/FeatureProducts.vue";
@@ -11,6 +11,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     products: Object,
     featuredCategory: Object,
+    featuredBlog: Object,
 });
 </script>
 
@@ -37,7 +38,7 @@ defineProps({
             ></FeatureProducts>
             <!-- Blog section -->
 
-            <Blog></Blog>
+            <FeaturedBlog :featuredBlog="featuredBlog"></FeaturedBlog>
             <!-- CTA Section -->
             <Contact></Contact>
         </div>

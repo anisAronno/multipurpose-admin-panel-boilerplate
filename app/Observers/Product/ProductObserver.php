@@ -11,11 +11,11 @@ class ProductObserver
     use ClearCache;
 
     protected $key = '';
-    protected $fetureProductKey = '';
+    protected $feturedProductKey = '';
     public function __construct()
     {
         $this->key = CacheServices::getProductCacheKey();
-        $this->fetureProductKey = CacheServices::getFeatureProductCacheKey();
+        $this->feturedProductKey = CacheServices::getFeaturedProductCacheKey();
     }
     /**
      * Handle the Product "created" event.
@@ -26,7 +26,7 @@ class ProductObserver
     public function created(Product $product)
     {
         $this->clearCache($this->key);
-        $this->clearCache($this->fetureProductKey);
+        $this->clearCache($this->feturedProductKey);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductObserver
     public function updated(Product $product)
     {
         $this->clearCache($this->key);
-        $this->clearCache($this->fetureProductKey);
+        $this->clearCache($this->feturedProductKey);
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductObserver
     public function deleted(Product $product)
     {
         $this->clearCache($this->key);
-        $this->clearCache($this->fetureProductKey);
+        $this->clearCache($this->feturedProductKey);
     }
 
     /**
@@ -62,7 +62,7 @@ class ProductObserver
     public function restored(Product $product)
     {
         $this->clearCache($this->key);
-        $this->clearCache($this->fetureProductKey);
+        $this->clearCache($this->feturedProductKey);
     }
 
     /**
@@ -74,6 +74,6 @@ class ProductObserver
     public function forceDeleted(Product $product)
     {
         $this->clearCache($this->key);
-        $this->clearCache($this->fetureProductKey);
+        $this->clearCache($this->feturedProductKey);
     }
 }

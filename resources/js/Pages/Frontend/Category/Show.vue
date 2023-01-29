@@ -11,8 +11,22 @@ defineProps({
     </Head>
     <MasterLayout>
         <div
-            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10"
         >
+            <div class="py-10">
+                <div
+                    class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
+                >
+                    <p
+                        class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl"
+                    >
+                        {{ category.title }}
+                    </p>
+                    <p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
+                        {{ category.description }}
+                    </p>
+                </div>
+            </div>
             <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
                 <h2 class="sr-only">Products</h2>
 

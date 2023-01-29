@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Cache\CacheServices;
@@ -19,18 +20,23 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $key = CacheServices::getFeatureProductCacheKey();
-        $catKey = CacheServices::getFeatureCategoryCacheKey();
+        $key = CacheServices::getFeaturedProductCacheKey();
+        $featuredCatKey = CacheServices::getFeaturedCategoryCacheKey();
+        $featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
 
         $products = Cache::remember($key, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
         });
 
-        $featuredCategory = Cache::remember($catKey, 10, function () {
+        $featuredCategory = Cache::remember($featuredCatKey, 10, function () {
             return Category::isActive()->isFeatured()->orderBy('id', 'desc')->limit(3)->get();
         });
 
-        return Inertia::render('Frontend/Home/Index')->with(['products' => $products, 'featuredCategory'=>$featuredCategory]);
+        $featuredBlog = Cache::remember($featuredBlogKey, 10, function () {
+            return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->limit(3)->get();
+        });
+
+        return Inertia::render('Frontend/Home/Index')->with(['products' => $products, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=>$featuredBlog]);
     }
 
     /**

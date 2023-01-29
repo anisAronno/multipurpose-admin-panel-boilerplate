@@ -9,7 +9,18 @@ defineProps({
         v-if="products.length > 0"
     >
         <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
-            <h2 class="sr-only">Products</h2>
+            <div class="text-center mb-5 md:mb-7">
+                <h1 class="text-2xl md:text-4xl mb-2">
+                    {{ __("Some Special Products") }}
+                </h1>
+                <p>
+                    {{
+                        __(
+                            `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
+                        )
+                    }}
+                </p>
+            </div>
 
             <div
                 class="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"

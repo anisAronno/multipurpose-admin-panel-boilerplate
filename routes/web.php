@@ -30,6 +30,9 @@ Route::get('/contact', function () {
 })->name('contact');
 
 
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/blog/{blog:slug}', [BlogController::class, 'show'])->name('blog.show');
+
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
 Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
 
