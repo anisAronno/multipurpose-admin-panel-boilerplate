@@ -15,7 +15,9 @@ import { Head } from "@inertiajs/inertia-vue3";
         <title>Home</title>
     </Head>
     <MasterLayout>
-        <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+        <div
+            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+        >
             <Banner></Banner>
             <Category></Category>
             <!-- Feature section with grid -->

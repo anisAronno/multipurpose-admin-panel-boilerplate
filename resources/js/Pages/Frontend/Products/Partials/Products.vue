@@ -92,7 +92,9 @@ const products = [
 ];
 </script>
 <template>
-    <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5">
+    <div
+        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
+    >
         <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
             <h2 class="sr-only">Products</h2>
 
@@ -115,7 +117,7 @@ const products = [
                     </div>
                     <div class="pt-10 pb-4 text-center">
                         <h3
-                            class="text-sm font-medium bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+                            class="text-sm font-medium bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
                         >
                             <a :href="product.href">
                                 <span

@@ -1,4 +1,4 @@
-const cacheName = "mpap-v2";
+const cacheName = "mpap-v3";
 const staticAssets = ["/", "/offline.html"];
 
 self.addEventListener("install", async (e) => {
