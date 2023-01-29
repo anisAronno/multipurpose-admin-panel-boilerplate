@@ -26,6 +26,14 @@ Route::get('/product', function () {
     return Inertia::render('Frontend/Products/Index');
 })->name('products');
 
+Route::get('/anis3139', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('storage:link');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+})->name('anis3139');
+
+
 Route::get('/contact', function () {
     return Inertia::render('Frontend/Contact/Index');
 })->name('contact');
