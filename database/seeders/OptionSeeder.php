@@ -65,5 +65,7 @@ class OptionSeeder extends Seeder
         $option::setOption('social_login_fields', json_encode(['google', 'github']));
         $option::setOption('pagination_limit', 10);
         $option::setOption('user_default_status', 'Active');
+        $option::setOption('map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14602.680845745981!2d90.39695083037563!3d23.79475530307877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c70514d09a15%3A0x5070158fbfaf01bd!2sBanani%20Graveyard!5e0!3m2!1sen!2sbd!4v1675110550083!5m2!1sen!2sbd
+');
     }
 }
