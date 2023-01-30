@@ -16,13 +16,15 @@ return new class () extends Migration {
             $table->id();
             $table->string('name')->index();
             $table->string('username')->unique();
-            $table->string('email')->unique()->index();
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('token')->unique();
             $table->string('avatar')->nullable();
             $table->string('gender', 50)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('ip', 50)->nullable();
+            $table->string('latitude', 255)->nullable();
+            $table->string('longitude', 255)->nullable();
             $table->string('time_zone', 50)->default('Asia/Dhaka');
             $table->string('language', 50)->default('bn');
             $table->string('status')->default('Pending');
