@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Banner from "@/Components/Banner.vue";
+import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import About from "@/Pages/Frontend/About/Partials/About.vue";
 import Goal from "@/Pages/Frontend/About/Partials/Goal.vue";
@@ -9,16 +9,16 @@ import { Head } from "@inertiajs/inertia-vue3";
 
 <template>
     <Head>
-        <title>About</title>
+        <title>{{ __("about.title", "About") }}</title>
     </Head>
     <MasterLayout>
         <div
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
-            <Banner></Banner>
+            <Hero>{{ __("hero.about", "About us") }}</Hero>
             <About></About>
             <Goal></Goal>
-            <Contact class="px-6"></Contact>
+            <Contact></Contact>
         </div>
     </MasterLayout>
 </template>

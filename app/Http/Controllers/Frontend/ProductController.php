@@ -66,7 +66,13 @@ class ProductController extends Controller
             abort(403);
         }
 
-        return Inertia::render('Frontend/Products/Show')->with(['product' => $product]);
+        $featuredProductKey = CacheServices::getFeaturedProductCacheKey();
+
+        $featuredProducts = Cache::remember($featuredProductKey, 10, function () {
+            return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
+        });
+
+        return Inertia::render('Frontend/Products/Show')->with(['product' => $product, 'featuredProducts'=> $featuredProducts]);
     }
 
     /**

@@ -8,36 +8,47 @@
         >
             <div class="p-5 sm:p-10">
                 <section class="mb-6">
-                    <h2 class="text-xl font-medium mb-2">Vision</h2>
+                    <h2 class="text-xl font-medium mb-2">
+                        {{ __("about.vision.title", "Vision") }}
+                    </h2>
                     <p class="text-lg text-gray-700 dark:text-gray-400">
-                        Our vision is to become the leading provider of
-                        innovative solutions in our industry.
+                        {{
+                            __(
+                                "about.vision.decription",
+                                `Our vision is to become the leading provider of
+                        innovative solutions in our industry.`
+                            )
+                        }}
                     </p>
                 </section>
                 <section class="mb-6">
-                    <h2 class="text-xl font-medium mb-2">Mission</h2>
+                    <h2 class="text-xl font-medium mb-2">
+                        {{ __("about.mission.title", "Mission") }}
+                    </h2>
                     <p class="text-lg text-gray-700 dark:text-gray-400">
-                        Our mission is to deliver exceptional products and
-                        services to our customers, while fostering a culture of
-                        innovation and excellence.
+                        {{
+                            __(
+                                "about.mission.decription",
+                                `Our vision is to become the leading provider of
+                        innovative solutions in our industry.`
+                            )
+                        }}
                     </p>
                 </section>
                 <section>
-                    <h2 class="text-xl font-medium mb-2">Goals</h2>
+                    <h2 class="text-xl font-medium mb-2">
+                        {{ __("about.goals.title", "Goals") }}
+                    </h2>
                     <ul
-                        class="text-lg list-disc text-gray-700 dark:text-gray-400 pl-[5%]"
+                        class="text-lg list-disc text-gray-700 dark:text-gray-400"
                     >
-                        <li>
-                            To increase market share by 20% in the next 3 years.
-                        </li>
-                        <li>
-                            To develop and launch at least 2 new products per
-                            year.
-                        </li>
-                        <li>
-                            To achieve a customer satisfaction rating of 95% or
-                            higher.
-                        </li>
+                        {{
+                            __(
+                                "about.mission.decription",
+                                `Our goal is to become the leading provider of
+                                innovative solutions in our industry.`
+                            )
+                        }}
                     </ul>
                 </section>
             </div>

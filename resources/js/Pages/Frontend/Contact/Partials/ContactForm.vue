@@ -1,14 +1,18 @@
 <script setup>
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
+import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
 </script>
 <template>
     <div class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
-        <div class="mx-auto max-w-7xl py-6 px-6 sm:py-10 lg:px-8 ">
-            <div class="relative bg-cyan-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 shadow-xl">
-                <h2 class="sr-only">Contact us</h2>
+        <div class="mx-auto max-w-7xl py-6 px-6 sm:py-10 lg:px-8">
+            <div
+                class="relative bg-cyan-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 shadow-xl"
+            >
+                <h2 class="sr-only">
+                    {{ __("contact.form.title", "Contact us") }}
+                </h2>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3">
-                    <!-- Contact information -->
                     <div
                         class="relative overflow-hidden bg-cyan-700 py-10 px-6 sm:px-10 xl:p-12"
                     >
@@ -124,23 +128,32 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
                             </svg>
                         </div>
                         <h3 class="text-lg font-medium text-white">
-                            Contact information
+                            {{
+                                __(
+                                    "contact.information.title",
+                                    "Contact information"
+                                )
+                            }}
                         </h3>
-                        <p class="mt-6 max-w-3xl text-base text-cyan-50">
-                            Nullam risus blandit ac aliquam justo ipsum. Quam
-                            mauris volutpat massa dictumst amet. Sapien tortor
-                            lacus arcu.
+                        <p
+                            class="mt-6 max-w-3xl text-base text-cyan-50 break-words"
+                        >
+                            {{ $page.props.global.options.address }}
                         </p>
                         <dl class="mt-8 space-y-6">
                             <dt>
-                                <span class="sr-only">Phone number</span>
+                                <span class="sr-only">{{
+                                    __("contact.phone", "Phone number")
+                                }}</span>
                             </dt>
                             <dd class="flex text-base text-cyan-50">
                                 <PhoneIcon
                                     class="h-6 w-6 flex-shrink-0 text-cyan-200"
                                     aria-hidden="true"
                                 />
-                                <span class="ml-3">+1 (555) 123-4567</span>
+                                <span class="ml-3">{{
+                                    $page.props.global.options.phone
+                                }}</span>
                             </dd>
                             <dt><span class="sr-only">Email</span></dt>
                             <dd class="flex text-base text-cyan-50">
@@ -148,7 +161,9 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
                                     class="h-6 w-6 flex-shrink-0 text-cyan-200"
                                     aria-hidden="true"
                                 />
-                                <span class="ml-3">support@workcation.com</span>
+                                <span class="ml-3">{{
+                                    $page.props.global.options.email
+                                }}</span>
                             </dd>
                         </dl>
                         <ul role="list" class="mt-8 flex space-x-12">
@@ -222,135 +237,7 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
                     </div>
 
                     <!-- Contact form -->
-                    <div class="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
-                        <h3 class="text-lg font-medium text-gray-900  dark:text-gray-50  ">
-                            Send us a message
-                        </h3>
-                        <form
-                            action="#"
-                            method="POST"
-                            class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
-                        >
-                            <div>
-                                <label
-                                    for="first-name"
-                                    class="block text-sm font-medium text-gray-900  dark:text-gray-50 "
-                                    >First name</label
-                                >
-                                <div class="mt-1">
-                                    <input
-                                        type="text"
-                                        name="first-name"
-                                        id="first-name"
-                                        autocomplete="given-name"
-                                        class="block w-full rounded-md border-gray-300 py-3 px-4 text-gray-900  shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label
-                                    for="last-name"
-                                    class="block text-sm font-medium text-gray-900 dark:text-gray-50  "
-                                    >Last name</label
-                                >
-                                <div class="mt-1">
-                                    <input
-                                        type="text"
-                                        name="last-name"
-                                        id="last-name"
-                                        autocomplete="family-name"
-                                        class="block w-full rounded-md border-gray-300 py-3 px-4 text-gray-900  shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <label
-                                    for="email"
-                                    class="block text-sm font-medium text-gray-900  dark:text-gray-50 "
-                                    >Email</label
-                                >
-                                <div class="mt-1">
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autocomplete="email"
-                                        class="block w-full rounded-md border-gray-300 py-3 px-4 text-gray-900  shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between">
-                                    <label
-                                        for="phone"
-                                        class="block text-sm font-medium text-gray-900  dark:text-gray-50 "
-                                        >Phone</label
-                                    >
-                                    <span
-                                        id="phone-optional"
-                                        class="text-sm text-gray-500  dark:text-gray-300 "
-                                        >Optional</span
-                                    >
-                                </div>
-                                <div class="mt-1">
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        id="phone"
-                                        autocomplete="tel"
-                                        class="block w-full rounded-md border-gray-300 py-3 px-4 text-gray-900  shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
-                                        aria-describedby="phone-optional"
-                                    />
-                                </div>
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label
-                                    for="subject"
-                                    class="block text-sm font-medium text-gray-900 dark:text-gray-50  "
-                                    >Subject</label
-                                >
-                                <div class="mt-1">
-                                    <input
-                                        type="text"
-                                        name="subject"
-                                        id="subject"
-                                        class="block w-full rounded-md border-gray-300 py-3 px-4 text-gray-900  shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
-                                    />
-                                </div>
-                            </div>
-                            <div class="sm:col-span-2">
-                                <div class="flex justify-between">
-                                    <label
-                                        for="message"
-                                        class="block text-sm font-medium text-gray-900  dark:text-gray-50 "
-                                        >Message</label
-                                    >
-                                    <span
-                                        id="message-max"
-                                        class="text-sm text-gray-500  dark:text-gray-300 "
-                                        >Max. 500 characters</span
-                                    >
-                                </div>
-                                <div class="mt-1">
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        rows="4"
-                                        class="block w-full rounded-md border-gray-300 py-3 px-4 text-gray-900  shadow-sm focus:border-cyan-500 focus:ring-cyan-500"
-                                        aria-describedby="message-max"
-                                    />
-                                </div>
-                            </div>
-                            <div class="sm:col-span-2 sm:flex sm:justify-end">
-                                <button
-                                    type="submit"
-                                    class="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 sm:w-auto"
-                                >
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                   <Form></Form>
                 </div>
             </div>
         </div>

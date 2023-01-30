@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Banner from "@/Components/Banner.vue";
+import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import Blog from "@/Pages/Frontend/Blog/Partials/Blog.vue";
 import { Head } from "@inertiajs/inertia-vue3";
@@ -11,13 +11,13 @@ defineProps({
 
 <template>
     <Head>
-        <title>Blog</title>
+        <title>{{ __("blog.title", "Blog") }}</title>
     </Head>
     <MasterLayout>
         <div
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
-            <Banner></Banner>
+            <Hero>{{ __("hero.blog", "Blog Page") }}</Hero>
 
             <Blog :blogs="blogs"></Blog>
         </div>

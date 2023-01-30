@@ -43,4 +43,10 @@ class CacheServices
      {
          return 'featured_category'.$token;
      }
+
+
+    public static function getContactCacheKey(int $token = null): string
+    {
+        return 'contact'.$token;
+    }
 }

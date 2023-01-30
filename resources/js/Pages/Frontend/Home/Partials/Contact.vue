@@ -13,18 +13,21 @@
                         <div>
                             <h2
                                 id="sale-heading"
-                                class="text-4xl font-bold tracking-tight md:text-5xl"
+                                class="text-2xl font-bold tracking-tight md:text-3xl break-all overflow-hidden"
                             >
-                                Final Stock.
-                                <br />
-                                Up to 50% off.
+                                {{
+                                    __(
+                                        "contact.section.title",
+                                        `Any Question?`
+                                    )
+                                }}
                             </h2>
                             <div class="inline-flex rounded-md shadow mt-5">
                                 <Link
                                     :href="route('contact')"
                                     class="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-gray-900 hover:bg-gray-50"
                                 >
-                                    Contact with us?
+                                    {{ __('contact.section.link.text', 'Contact with us?') }}
 
                                     <font-awesome-icon
                                         icon="fa-solid fa-arrow-up-right-from-square"

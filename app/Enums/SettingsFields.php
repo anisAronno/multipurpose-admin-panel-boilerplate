@@ -29,4 +29,5 @@ enum SettingsFields: string
     case PAGINATION_LIMIT = 'pagination_limit';
     case USER_DEFAULT_STATUS = 'user_default_status';
     case COLLECT_USER_LOCATION = 'collect_user_location';
+    case MAP = 'map';
 }

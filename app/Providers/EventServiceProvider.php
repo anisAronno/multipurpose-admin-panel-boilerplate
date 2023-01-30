@@ -7,10 +7,12 @@ use App\Listeners\LoginListener;
 use App\Listeners\UserRegistrationListener;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\Option;
 use App\Models\Product;
 use App\Models\User;
 use App\Observers\Blog\BlogObserver;
+use App\Observers\ContactObserver;
 use App\Observers\OptionObserver;
 use App\Observers\Product\CategoryObserver;
 use App\Observers\Product\ProductObserver;
@@ -51,6 +53,7 @@ class EventServiceProvider extends ServiceProvider
         Blog::observe(BlogObserver::class);
         Category::observe(CategoryObserver::class);
         Product::observe(ProductObserver::class);
+        Contact::observe(ContactObserver::class);
     }
 
     /**

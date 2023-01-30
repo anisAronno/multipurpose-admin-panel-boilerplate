@@ -1,17 +1,17 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
 
 const form = useForm({
-    password: '',
+    password: "",
 });
 
 const submit = () => {
-    form.post(route('password.confirm'), {
+    form.post(route("password.confirm"), {
         onFinish: () => form.reset(),
     });
 };
@@ -22,12 +22,20 @@ const submit = () => {
         <Head title="Confirm Password" />
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            This is a secure area of the application. Please confirm your password before continuing.
+            {{
+                __(
+                    "confirm_password.heading",
+                    `This is a secure area of the application. Please confirm your password before continuing.`
+                )
+            }}
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="password" value="Password" />
+                <InputLabel
+                    for="password"
+                    :value="__('confirm_password.password', 'Password')"
+                />
                 <TextInput
                     id="password"
                     type="password"
@@ -41,8 +49,12 @@ const submit = () => {
             </div>
 
             <div class="flex justify-end mt-4">
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Confirm
+                <PrimaryButton
+                    class="ml-4"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    {{ __("confirm_password.submit", "Confirm") }}
                 </PrimaryButton>
             </div>
         </form>

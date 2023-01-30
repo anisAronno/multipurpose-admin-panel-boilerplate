@@ -1,5 +1,7 @@
 <script setup>
+import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
+import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     category: Object,
@@ -7,12 +9,20 @@ defineProps({
 </script>
 <template>
     <Head>
-        <title>Category</title>
+        <title>{{ category.title }}</title>
     </Head>
     <MasterLayout>
         <div
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10"
         >
+            <Hero>
+                <span class="break-words break-all"
+                    >{{ __("category.show.title_1", "All product under the") }}
+                    <span class="text-blue-600">{{ category.title }}</span>
+                    &nbsp;
+                    {{ __("category.show.title_2", "category") }}</span
+                >
+            </Hero>
             <div class="py-10">
                 <div
                     class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
@@ -28,7 +38,9 @@ defineProps({
                 </div>
             </div>
             <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
-                <h2 class="sr-only">Products</h2>
+                <h2 class="sr-only">
+                    {{ __("category.title.product", "Products") }}
+                </h2>
 
                 <div
                     class="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4 gap-5"
@@ -64,5 +76,6 @@ defineProps({
                 </div>
             </div>
         </div>
+        <Contact></Contact>
     </MasterLayout>
 </template>

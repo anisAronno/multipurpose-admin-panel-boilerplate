@@ -24,7 +24,7 @@ class HomeController extends Controller
         $featuredCatKey = CacheServices::getFeaturedCategoryCacheKey();
         $featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
 
-        $products = Cache::remember($key, 10, function () {
+        $featuredProducts = Cache::remember($key, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
         });
 
@@ -36,7 +36,7 @@ class HomeController extends Controller
             return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->limit(3)->get();
         });
 
-        return Inertia::render('Frontend/Home/Index')->with(['products' => $products, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=>$featuredBlog]);
+        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => $featuredProducts, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=>$featuredBlog]);
     }
 
     /**

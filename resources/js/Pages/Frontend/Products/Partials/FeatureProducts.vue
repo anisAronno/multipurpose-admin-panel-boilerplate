@@ -1,21 +1,22 @@
 <script setup>
 defineProps({
-    products: Object,
+    featuredProducts: Object,
 });
 </script>
 <template>
     <div
         class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
-        v-if="products.length > 0"
+        v-if="featuredProducts.length > 0"
     >
         <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
             <div class="text-center mb-5 md:mb-7">
                 <h1 class="text-2xl md:text-4xl mb-2">
-                    {{ __("Some Special Products") }}
+                    {{ __("featured.product.title", "Some Special Products") }}
                 </h1>
                 <p>
                     {{
                         __(
+                            "featured.product.description",
                             `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
                         )
                     }}
@@ -26,9 +27,9 @@ defineProps({
                 class="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"
             >
                 <div
-                    v-for="product in products"
+                    v-for="product in featuredProducts"
                     :key="product.id"
-                    class="group border border-gray-200 p-4 sm:p-6"
+                    class="group border border-gray-200 p-4 sm:p-6 mr-[1px] sm:mr-0"
                 >
                     <div
                         class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 group-hover:opacity-75"

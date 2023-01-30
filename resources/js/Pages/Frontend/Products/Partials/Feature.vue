@@ -39,11 +39,12 @@ const perks = [
     >
         <div class="text-center mt-5">
             <h1 class="text-2xl md:text-4xl mb-2">
-                {{ __("Our Special Feature") }}
+                {{ __("special.feature.title", "Our Special Feature") }}
             </h1>
             <p>
                 {{
                     __(
+                        "special.feature.title",
                         `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
                     )
                 }}

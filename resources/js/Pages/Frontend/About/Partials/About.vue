@@ -17,10 +17,13 @@
                 <h1
                     class="text-4xl mb-5 underline underline-offset-8 decoration-slate-500"
                 >
-                    About us
+                    {{ __("about.us.title", "About us") }}
                 </h1>
                 <p class="text-md text-gray-700 dark:text-gray-400">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    {{
+                        __(
+                            "about.us.description",
+                            `Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consequuntur eveniet tempora quis aperiam. Ex nobis vero
                     voluptatem velit impedit delectus ad similique quibusdam,
                     repellat accusamus a suscipit doloribus nihil ab, fugit
@@ -32,7 +35,9 @@
                     similique error, animi, molestias nulla facilis nisi earum
                     hic fugiat porro voluptatem blanditiis architecto
                     perspiciatis neque ratione non eaque iure. Aperiam assumenda
-                    beatae at ipsam laborum, veniam velit optio eveniet quae
+                    beatae at ipsam laborum, veniam velit optio eveniet quae`
+                        )
+                    }}
                 </p>
             </div>
         </div>

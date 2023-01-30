@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import Banner from "@/Components/Banner.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
-import FeaturedCategory from "@/Pages/Frontend/Category/Partials/FeaturedCategory.vue";
 import FeaturedBlog from "@/Pages/Frontend/Blog/Partials/FeaturedBlog.vue";
+import FeaturedCategory from "@/Pages/Frontend/Category/Partials/FeaturedCategory.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
 import Feature from "@/Pages/Frontend/Products/Partials/Feature.vue";
 import FeatureProducts from "@/Pages/Frontend/Products/Partials/FeatureProducts.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    products: Object,
+    featuredProducts: Object,
     featuredCategory: Object,
     featuredBlog: Object,
 });
@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <Head>
-        <title>Home</title>
+        <title>{{ __("home.title", "Home") }}</title>
     </Head>
     <MasterLayout>
         <div
@@ -33,8 +33,7 @@ defineProps({
             <Feature></Feature>
             <!-- Product section -->
             <FeatureProducts
-                :products="products"
-                v-if="products.length > 0"
+                :featuredProducts="featuredProducts"
             ></FeatureProducts>
             <!-- Blog section -->
 

@@ -1,16 +1,11 @@
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Menu from "@/Components/Menu.vue";
+import { useMenu } from "@/composables/useMenu";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
-const navigation = [
-    { name: "Home", route: "home" },
-    { name: "About", route: "about" },
-    { name: "Products", route: "product" },
-    { name: "Category", route: "category" },
-    { name: "Blog", route: "blog" },
-    { name: "Contact", route: "contact" },
-];
+
+const { navigation } = useMenu();
 </script>
 <template>
     <Popover as="header" class="relative">
