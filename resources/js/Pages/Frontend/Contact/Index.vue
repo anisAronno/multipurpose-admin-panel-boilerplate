@@ -8,11 +8,11 @@ import { Head } from "@inertiajs/inertia-vue3";
 
 <template>
     <Head>
-        <title>{{ __("contact.title", "Contact") }}</title>
+        <title>{{ __("contact.title") }}</title>
     </Head>
     <MasterLayout>
         <div>
-            <Hero>{{ __("hero.contact", "Contact Page") }}</Hero>
+            <Hero>{{ __("hero.contact") }}</Hero>
             <ContactForm></ContactForm>
             <Map></Map>
         </div>

@@ -1,14 +1,7 @@
 export const translations = {
     methods: {
-        __(key, defaultText = "", replacements = {}) {
-            let translation;
-            if (window._translations[key]) {
-                translation = window._translations[key];
-            } else if (defaultText.length > 0) {
-                translation = defaultText;
-            } else {
-                translation = key;
-            }
+        __(key, replacements = {}) {
+            let translation = window._translations[key] || key;
 
             Object.keys(replacements).forEach((r) => {
                 translation = translation.replace(`:${r}`, replacements[r]);

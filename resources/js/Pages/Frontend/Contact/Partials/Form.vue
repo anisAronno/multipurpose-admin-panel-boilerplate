@@ -49,7 +49,7 @@ const storeContact = () => {
 <template>
     <div class="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-50">
-            {{ __("contact.form.title", "Send us a message") }}
+            {{ __("contact.form.title") }}
         </h3>
         <form
             @submit.prevent="storeContact"
@@ -60,7 +60,7 @@ const storeContact = () => {
                 <label
                     for="first-name"
                     class="block text-sm font-medium text-gray-900 dark:text-gray-50"
-                    >{{ __("contact.form.first.name", "First name") }}</label
+                    >{{ __("contact.form.first_name") }}</label
                 >
                 <div class="mt-1">
                     <input
@@ -83,14 +83,12 @@ const storeContact = () => {
                     <label
                         for="last-name"
                         class="block text-sm font-medium text-gray-900 dark:text-gray-50"
-                        >{{ __("contact.form.last.name", "Last name") }}</label
+                        >{{ __("contact.form.last_name") }}</label
                     >
                     <span
                         id="last-name-optional"
                         class="text-sm text-gray-500 dark:text-gray-300"
-                        >{{
-                            __("contact.form.last_name.optional", "Optional")
-                        }}</span
+                        >{{ __("contact.form.last_name_optional") }}</span
                     >
                 </div>
 
@@ -114,7 +112,7 @@ const storeContact = () => {
                 <label
                     for="email"
                     class="block text-sm font-medium text-gray-900 dark:text-gray-50"
-                    >{{ __("contact.form.email", "Email") }}</label
+                    >{{ __("contact.form.email") }}</label
                 >
                 <div class="mt-1">
                     <input
@@ -137,14 +135,12 @@ const storeContact = () => {
                     <label
                         for="phone"
                         class="block text-sm font-medium text-gray-900 dark:text-gray-50"
-                        >{{ __("contact.form.phone", "Phone") }}</label
+                        >{{ __("contact.form.phone") }}</label
                     >
                     <span
                         id="phone-optional"
                         class="text-sm text-gray-500 dark:text-gray-300"
-                        >{{
-                            __("contact.form.phone.optional", "Optional")
-                        }}</span
+                        >{{ __("contact.form.phone_optional") }}</span
                     >
                 </div>
                 <div class="mt-1">
@@ -168,7 +164,7 @@ const storeContact = () => {
                 <label
                     for="subject"
                     class="block text-sm font-medium text-gray-900 dark:text-gray-50"
-                    >{{ __("contact.form.subject", "Subject") }}</label
+                    >{{ __("contact.form.subject") }}</label
                 >
                 <div class="mt-1">
                     <input
@@ -190,17 +186,12 @@ const storeContact = () => {
                     <label
                         for="message"
                         class="block text-sm font-medium text-gray-900 dark:text-gray-50"
-                        >{{ __("contact.form.message", "Message") }}</label
+                        >{{ __("contact.form.message") }}</label
                     >
                     <span
                         id="message-max"
                         class="text-sm text-gray-500 dark:text-gray-300"
-                        >{{
-                            __(
-                                "contact.form.subject.taxt.max",
-                                "Max. 500 characters"
-                            )
-                        }}</span
+                        >{{ __("contact.form.subject_taxt_max") }}</span
                     >
                 </div>
                 <div class="mt-1">
@@ -224,7 +215,7 @@ const storeContact = () => {
                     type="submit"
                     class="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 sm:w-auto"
                 >
-                    {{ __("contact.form.submit", "Submit") }}
+                    {{ __("contact.form.submit") }}
                 </button>
             </div>
         </form>

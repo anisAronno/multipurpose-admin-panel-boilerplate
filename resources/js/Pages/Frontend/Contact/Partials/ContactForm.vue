@@ -1,6 +1,6 @@
 <script setup>
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
+import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 </script>
 <template>
     <div class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
@@ -9,7 +9,7 @@ import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
                 class="relative bg-cyan-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 shadow-xl"
             >
                 <h2 class="sr-only">
-                    {{ __("contact.form.title", "Contact us") }}
+                    {{ __("contact.form.mobile_title") }}
                 </h2>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3">
@@ -128,12 +128,7 @@ import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
                             </svg>
                         </div>
                         <h3 class="text-lg font-medium text-white">
-                            {{
-                                __(
-                                    "contact.information.title",
-                                    "Contact information"
-                                )
-                            }}
+                            {{ __("contact.information.title") }}
                         </h3>
                         <p
                             class="mt-6 max-w-3xl text-base text-cyan-50 break-words"
@@ -143,7 +138,7 @@ import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
                         <dl class="mt-8 space-y-6">
                             <dt>
                                 <span class="sr-only">{{
-                                    __("contact.phone", "Phone number")
+                                    __("contact.phone")
                                 }}</span>
                             </dt>
                             <dd class="flex text-base text-cyan-50">
@@ -237,7 +232,7 @@ import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
                     </div>
 
                     <!-- Contact form -->
-                   <Form></Form>
+                    <Form></Form>
                 </div>
             </div>
         </div>

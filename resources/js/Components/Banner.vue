@@ -14,10 +14,10 @@
                         >
                             <span
                                 class="rounded-full bg-gradient-to-r from-teal-500 to-cyan-600 px-3 py-0.5 text-sm font-semibold leading-5 text-white"
-                                >{{ __("banner.contact", "Contact us") }}</span
+                                >{{ __("banner.contact") }}</span
                             >
                             <span class="ml-4 text-sm">{{
-                                __("banner.to_contact", "Visit to contact page")
+                                __("banner.to_contact")
                             }}</span>
                             <font-awesome-icon
                                 icon="fa-solid fa-chevron-right "
@@ -28,26 +28,17 @@
                             class="mt-4 text-4xl font-bold tracking-tight dark:text-white text-gray-800 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"
                         >
                             <span class="block">{{
-                                __("banner.title_1", "A better way to")
+                                __("banner.title_1")
                             }}</span>
                             <span
                                 class="block bg-gradient-to-r from-teal-200 to-cyan-400 bg-clip-text pb-3 text-transparent sm:pb-5"
-                                >{{
-                                    __("banner.title_2", "ship web apps")
-                                }}</span
+                                >{{ __("banner.title_2") }}</span
                             >
                         </h1>
                         <p
                             class="text-base text-gray-500 dark:text-gray-300 sm:text-xl lg:text-lg xl:text-xl"
                         >
-                            {{
-                                __(
-                                    "banner.sub_title",
-                                    `Anim aute id magna aliqua ad ad non deserunt sunt.
-                            Qui irure qui Lorem cupidatat commodo. Elit sunt
-                            amet fugiat veniam occaecat fugiat.`
-                                )
-                            }}
+                            {{ __("banner.sub_title") }}
                         </p>
                     </div>
                 </div>
@@ -66,7 +57,3 @@
         </div>
     </div>
 </template>
-
-<script setup></script>
-
-<style></style>

@@ -14,18 +14,16 @@ defineProps({
                 class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
             >
                 <h2 class="text-lg font-semibold text-cyan-600">
-                    {{ __("Learn") }}
+                    {{ __("blog.heading") }}
                 </h2>
                 <p
                     class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl"
                 >
-                    {{ __("Helpful Resources") }}
+                    {{ __("blog.sub_heading") }}
                 </p>
                 <p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
                     {{
-                        __(` Phasellus lorem quam molestie id quisque diam aenean nulla
-                    in. Accumsan in quis quis nunc, ullamcorper malesuada.
-                    Eleifend condimentum id viverra nulla.`)
+                        __('blog.description')
                     }}
                 </p>
             </div>

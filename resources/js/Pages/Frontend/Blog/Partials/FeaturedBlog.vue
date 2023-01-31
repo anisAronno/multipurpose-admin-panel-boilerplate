@@ -9,23 +9,19 @@ defineProps({
         class="relative bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:py-12"
     >
         <div class="relative">
-           <div
+            <div
                 class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
             >
                 <h2 class="text-lg font-semibold text-cyan-600">
-                    {{ __("Learn") }}
+                    {{ __("blog.heading") }}
                 </h2>
                 <p
                     class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl"
                 >
-                    {{ __("Helpful Resources") }}
+                    {{ __("blog.sub_heading") }}
                 </p>
                 <p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
-                    {{
-                        __(` Phasellus lorem quam molestie id quisque diam aenean nulla
-                    in. Accumsan in quis quis nunc, ullamcorper malesuada.
-                    Eleifend condimentum id viverra nulla.`)
-                    }}
+                    {{ __("blog.description") }}
                 </p>
             </div>
             <div
@@ -49,7 +45,6 @@ defineProps({
                         class="flex flex-1 flex-col justify-between bg-white p-6"
                     >
                         <div class="flex-1">
-                     
                             <a :href="blog.href" class="mt-2 block">
                                 <Link
                                     :href="route('blog.show', blog.slug)"
@@ -77,7 +72,7 @@ defineProps({
                                 </a>
                             </div>
                             <div class="ml-3">
-                                <p class="text-sm font-medium text-gray-900 ">
+                                <p class="text-sm font-medium text-gray-900">
                                     <a
                                         :href="blog.user?.href"
                                         class="hover:underline"

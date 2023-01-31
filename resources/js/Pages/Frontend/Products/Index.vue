@@ -12,13 +12,13 @@ defineProps({
 
 <template>
     <Head>
-        <title>{{ __("product.title", "Products") }}</title>
+        <title>{{ __("product.title") }}</title>
     </Head>
     <MasterLayout>
         <div
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
-            <Hero>{{ __("hero.product", "Product Page") }}</Hero>
+            <Hero>{{ __("hero.product") }}</Hero>
 
             <div class="pt-10">
                 <div
@@ -27,17 +27,10 @@ defineProps({
                     <p
                         class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl"
                     >
-                        {{ __("product.heading", "All Products") }}
+                        {{ __("product.heading") }}
                     </p>
                     <p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
-                        {{
-                            __(
-                                "product.description",
-                                ` Phasellus lorem quam molestie id quisque diam aenean nulla
-                    in. Accumsan in quis quis nunc, ullamcorper malesuada.
-                    Eleifend condimentum id viverra nulla.`
-                            )
-                        }}
+                        {{ __("product.description") }}
                     </p>
                 </div>
                 <Products :products="products"></Products>

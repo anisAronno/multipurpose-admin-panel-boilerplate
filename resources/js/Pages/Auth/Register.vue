@@ -27,7 +27,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" :value="__('register.name', 'Name')" />
+                <InputLabel for="name" :value="__('register.form.name')" />
 
                 <TextInput
                     id="name"
@@ -43,10 +43,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel
-                    for="email"
-                    :value="__('register.email', 'Email')"
-                />
+                <InputLabel for="email" :value="__('register.form.email')" />
 
                 <TextInput
                     id="email"
@@ -63,7 +60,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password"
-                    :value="__('register.password', 'Password')"
+                    :value="__('register.form.password')"
                 />
 
                 <TextInput
@@ -81,7 +78,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    :value="__('register.confirm.password', 'Confirm Password')"
+                    :value="__('register.form.confirm_password')"
                 />
 
                 <TextInput
@@ -104,7 +101,7 @@ const submit = () => {
                     :href="route('login')"
                     class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                 >
-                    {{ __("register.login.link", " Already registered?") }}
+                    {{ __("register.login_link") }}
                 </Link>
 
                 <PrimaryButton
@@ -112,7 +109,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    {{ __("register.link", "Register") }}
+                    {{ __("register.submit") }}
                 </PrimaryButton>
             </div>
         </form>

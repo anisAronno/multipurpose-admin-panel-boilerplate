@@ -17,10 +17,10 @@ defineProps({
         >
             <Hero>
                 <span class="break-words break-all"
-                    >{{ __("category.show.title_1", "All product under the") }}
+                    >{{ __("category_show.title_1") }}
                     <span class="text-blue-600">{{ category.title }}</span>
                     &nbsp;
-                    {{ __("category.show.title_2", "category") }}</span
+                    {{ __("category_show.title_2") }}</span
                 >
             </Hero>
             <div class="py-10">
@@ -39,7 +39,7 @@ defineProps({
             </div>
             <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
                 <h2 class="sr-only">
-                    {{ __("category.title.product", "Products") }}
+                    {{ __("category.mobile_title") }}
                 </h2>
 
                 <div

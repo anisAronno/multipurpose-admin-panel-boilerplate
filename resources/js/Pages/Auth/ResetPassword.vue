@@ -31,10 +31,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel
-                    for="email"
-                    :value="__('reset.form.email', 'Email')"
-                />
+                <InputLabel for="email" :value="__('reset.form.email')" />
 
                 <TextInput
                     id="email"
@@ -50,10 +47,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel
-                    for="password"
-                    :value="__('reset.password', 'Password')"
-                />
+                <InputLabel for="password" :value="__('reset.form.password')" />
 
                 <TextInput
                     id="password"
@@ -70,7 +64,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    :value="__('reset.confirm.password', 'Confirm Password')"
+                    :value="__('reset.form.confirm_password')"
                 />
 
                 <TextInput
@@ -93,7 +87,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    {{ __("reset.password", "Reset Password") }}
+                    {{ __("reset.submit") }}
                 </PrimaryButton>
             </div>
         </form>

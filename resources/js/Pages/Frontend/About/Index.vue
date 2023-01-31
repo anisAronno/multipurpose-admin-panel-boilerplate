@@ -9,7 +9,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 
 <template>
     <Head>
-        <title>{{ __("about.title", "About") }}</title>
+        <title>{{ __("about.title") }}</title>
     </Head>
     <MasterLayout>
         <div

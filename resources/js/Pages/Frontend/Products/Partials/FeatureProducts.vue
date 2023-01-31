@@ -11,15 +11,10 @@ defineProps({
         <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
             <div class="text-center mb-5 md:mb-7">
                 <h1 class="text-2xl md:text-4xl mb-2">
-                    {{ __("featured.product.title", "Some Special Products") }}
+                    {{ __("featured.product.title") }}
                 </h1>
                 <p>
-                    {{
-                        __(
-                            "featured.product.description",
-                            `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
-                        )
-                    }}
+                    {{ __("featured.product.description") }}
                 </p>
             </div>
 

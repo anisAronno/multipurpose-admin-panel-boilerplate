@@ -13,14 +13,10 @@ defineProps({
         >
             <div class="text-center mb-5">
                 <h1 class="text-2xl md:text-4xl mb-2">
-                    {{ __("Feature Category") }}
+                    {{ __("featured.category.title") }}
                 </h1>
                 <p>
-                    {{
-                        __(
-                            `Lorem ipsum dolor sit amet consectetur adipisicing elit.`
-                        )
-                    }}
+                    {{ __("featured.category.description") }}
                 </p>
             </div>
 

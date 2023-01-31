@@ -11,13 +11,13 @@ defineProps({
 
 <template>
     <Head>
-        <title>{{ __("blog.title", "Blog") }}</title>
+        <title>{{ __("blog.title") }}</title>
     </Head>
     <MasterLayout>
         <div
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
-            <Hero>{{ __("hero.blog", "Blog Page") }}</Hero>
+            <Hero>{{ __("hero.blog") }}</Hero>
 
             <Blog :blogs="blogs"></Blog>
         </div>

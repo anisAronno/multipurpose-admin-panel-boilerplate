@@ -22,19 +22,14 @@ const submit = () => {
         <Head title="Confirm Password" />
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            {{
-                __(
-                    "confirm_password.heading",
-                    `This is a secure area of the application. Please confirm your password before continuing.`
-                )
-            }}
+            {{ __("confirm_password.heading") }}
         </div>
 
         <form @submit.prevent="submit">
             <div>
                 <InputLabel
                     for="password"
-                    :value="__('confirm_password.password', 'Password')"
+                    :value="__('confirm_password.password')"
                 />
                 <TextInput
                     id="password"
@@ -54,7 +49,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    {{ __("confirm_password.submit", "Confirm") }}
+                    {{ __("confirm_password.submit") }}
                 </PrimaryButton>
             </div>
         </form>

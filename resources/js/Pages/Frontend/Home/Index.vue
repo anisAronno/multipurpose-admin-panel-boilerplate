@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <Head>
-        <title>{{ __("home.title", "Home") }}</title>
+        <title>{{ __("home.title") }}</title>
     </Head>
     <MasterLayout>
         <div

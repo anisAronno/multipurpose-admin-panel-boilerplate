@@ -12,42 +12,26 @@
                         {{ __("about.vision.title", "Vision") }}
                     </h2>
                     <p class="text-lg text-gray-700 dark:text-gray-400">
-                        {{
-                            __(
-                                "about.vision.decription",
-                                `Our vision is to become the leading provider of
-                        innovative solutions in our industry.`
-                            )
-                        }}
+                        {{ __("about.vision.description") }}
                     </p>
                 </section>
                 <section class="mb-6">
                     <h2 class="text-xl font-medium mb-2">
-                        {{ __("about.mission.title", "Mission") }}
+                        {{ __("about.mission.title") }}
                     </h2>
                     <p class="text-lg text-gray-700 dark:text-gray-400">
-                        {{
-                            __(
-                                "about.mission.decription",
-                                `Our vision is to become the leading provider of
-                        innovative solutions in our industry.`
-                            )
-                        }}
+                        {{ __("about.mission.description") }}
                     </p>
                 </section>
                 <section>
                     <h2 class="text-xl font-medium mb-2">
-                        {{ __("about.goals.title", "Goals") }}
+                        {{ __("about.goal.title") }}
                     </h2>
                     <ul
                         class="text-lg list-disc text-gray-700 dark:text-gray-400"
                     >
                         {{
-                            __(
-                                "about.mission.decription",
-                                `Our goal is to become the leading provider of
-                                innovative solutions in our industry.`
-                            )
+                            __("about.goal.description")
                         }}
                     </ul>
                 </section>

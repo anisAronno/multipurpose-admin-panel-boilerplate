@@ -17,8 +17,7 @@
                             >
                                 {{
                                     __(
-                                        "contact.section.title",
-                                        `Any Question?`
+                                        "contact.section.title" 
                                     )
                                 }}
                             </h2>
@@ -27,7 +26,7 @@
                                     :href="route('contact')"
                                     class="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-gray-900 hover:bg-gray-50"
                                 >
-                                    {{ __('contact.section.link.text', 'Contact with us?') }}
+                                    {{ __('contact.section.link_text') }}
 
                                     <font-awesome-icon
                                         icon="fa-solid fa-arrow-up-right-from-square"

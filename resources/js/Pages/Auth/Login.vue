@@ -36,7 +36,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" :value="__('login.email', 'Email')" />
+                <InputLabel for="email" :value="__('login.form.email')" />
 
                 <TextInput
                     id="email"
@@ -54,7 +54,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password"
-                    :value="__('login.password', 'Password')"
+                    :value="__('login.form.password')"
                 />
 
                 <TextInput
@@ -74,7 +74,7 @@ const submit = () => {
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span
                         class="ml-2 text-sm text-gray-600 dark:text-gray-400"
-                        >{{ __("login.remember.me", "Remember me") }}</span
+                        >{{ __("login.remember_me") }}</span
                     >
                 </label>
             </div>
@@ -84,9 +84,7 @@ const submit = () => {
                     v-if="canRegister"
                     :href="route('register')"
                     class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 flex-1"
-                    >{{
-                        __("login.registration.link", "Create New Account?")
-                    }}</Link
+                    >{{ __("login.registration_link") }}</Link
                 >
 
                 <Link
@@ -94,7 +92,7 @@ const submit = () => {
                     :href="route('password.request')"
                     class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                 >
-                    {{ __("login.forget.link", "Forgot your password?") }}
+                    {{ __("login.forget_link") }}
                 </Link>
 
                 <PrimaryButton
@@ -102,7 +100,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    {{ __("login.link", "Log in") }}
+                    {{ __("login.submit", "Log in") }}
                 </PrimaryButton>
             </div>
         </form>

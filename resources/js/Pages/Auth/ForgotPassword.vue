@@ -25,14 +25,7 @@ const submit = () => {
         <Head title="Forgot Password" />
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            {{
-                __(
-                    "forget.heading",
-                    `Forgot your password? No problem. Just let us know your email
-            address and we will email you a password reset link that will allow
-            you to choose a new one.`
-                )
-            }}
+            {{ __("forget.heading") }}
         </div>
 
         <div
@@ -44,10 +37,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel
-                    for="email"
-                    :value="__('forget.form.email', 'Email')"
-                />
+                <InputLabel for="email" :value="__('forget.form.email')" />
 
                 <TextInput
                     id="email"
@@ -67,7 +57,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    {{ __("forget.link", "Email Password Reset Link") }}
+                    {{ __("forget.link") }}
                 </PrimaryButton>
             </div>
             <div class="flex items-center justify-between mt-5 space-x-2">
@@ -75,14 +65,14 @@ const submit = () => {
                     class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                     :href="route('login')"
                 >
-                    {{ __("forget.login.link", "Log in") }}
+                    {{ __("forget.login_link_text") }}
                 </Link>
                 <Link
                     v-if="canRegister"
                     :href="route('register')"
                     class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                 >
-                    {{ __("forget.register.link", "Create New Account?") }}
+                    {{ __("forget.registration_link") }}
                 </Link>
             </div>
         </form>
