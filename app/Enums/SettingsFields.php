@@ -9,7 +9,7 @@ enum SettingsFields: string
     use EnumToArray;
 
     case SITE_NAME = 'site_name';
-    case SITE_TITLE = 'site_title';
+    case SITE_TITLE = 'site_title'; 
     case ORGANIZATION_NAME = 'organization_name';
     case SITE_URL = 'site_url';
     case LOGO = 'logo';
@@ -19,8 +19,7 @@ enum SettingsFields: string
     case EMAIL = 'email';
     case PHONE = 'phone';
     case TIME_ZONE = 'time_zone';
-    case LANGUAGE = 'language';
-    case EXISTING_LANGUAGE_FILE = 'existing_language_file';
+    case LANGUAGE = 'language'; 
     case USER_DEFAULT_ROLE = 'user_default_role';
     case ANY_ONE_CAN_REGISTER = 'any_one_can_register';
     case ALLOW_SOCIAL_LOGIN = 'allow_social_login';

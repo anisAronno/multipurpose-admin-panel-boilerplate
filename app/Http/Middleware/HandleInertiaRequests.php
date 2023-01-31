@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user() ? $request->user()->load('unreadNotifications') : $request->user(),
             ],
             'global' => [
-                'options' => Option::getAllOptions(),
+                'options' => Option::getSettings(),
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),

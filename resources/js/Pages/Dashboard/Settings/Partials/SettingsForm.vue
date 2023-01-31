@@ -20,7 +20,7 @@ defineProps({
 
 const options = usePage().props.value.global.options;
 
-const languageArray = useLanguage(JSON.parse(options.existing_language_file));
+const languageArray = useLanguage(options.existing_language_file);
 
 const form = useForm({
     site_name: options.site_name,
