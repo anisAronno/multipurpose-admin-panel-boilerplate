@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Enums\SettingsFields;
+use App\Helpers\LanguageHelper;
 use App\Services\Cache\CacheServices;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -15,11 +16,11 @@ trait OptionTransform
 
         try {
             $options = Cache::remember($key, 10, function () {
-                $result = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return [$name->option_key => $name->option_value];
+                $response = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
+                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });
 
-                return $result;
+                return $response;
             });
 
             if ($options) {
@@ -79,11 +80,11 @@ trait OptionTransform
 
         try {
             $options = Cache::remember($key, 10, function () use ($settingFields) {
-                $result = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return [$name->option_key => $name->option_value];
+                $response = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
+                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });
 
-                return $result;
+                return $response;
             });
 
             if ($options) {
