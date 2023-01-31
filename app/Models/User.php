@@ -118,19 +118,6 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    /**
-     * Date
-     *
-     * @param [type] $uid
-     * @return void
-     */
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
-        }
-    }
-
     public static function getpermissionGroups()
     {
         $permission_groups = DB::table('permissions')
