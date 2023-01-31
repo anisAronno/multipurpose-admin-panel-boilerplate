@@ -2,7 +2,7 @@
     <div
         :class="modelValue==true ? 'bg-green-600' : 'bg-gray-300'"
         @click="toggle"
-        class="w-14 transition-all duration-500 h-8 flex items-center rounded-full p-1"
+        class="w-14 transition-all duration-500 h-8 flex items-center rounded-full p-1 cursor-pointer"
     >
         <div
             :class="{ 'translate-x-6': modelValue==true }"
