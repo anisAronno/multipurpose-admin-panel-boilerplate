@@ -54,7 +54,6 @@ class Option extends Model
     {
         $isFile = FileHelpers::isAllowFileType($value);
 
-
         if ($isFile) {
             $value = FileHelpers::getUrl($value); 
             return $value;
