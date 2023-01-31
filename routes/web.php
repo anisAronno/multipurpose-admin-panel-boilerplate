@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,11 @@ Route::get('/product', function () {
     return Inertia::render('Frontend/Products/Index');
 })->name('products');
 
-Route::get('/anis3139', function () {
+Route::get('/cache-clear', function () {
     Artisan::call('cache:clear');
-    Artisan::call('storage:link');
-    Artisan::call('config:clear');
-    Artisan::call('config:cache');
-})->name('anis3139');
+    Artisan::call('optimize:clear'); 
+    return Redirect::back()->with(['success' => true, 'message' => "Cache clear successfully"], 200);
+})->name('cache.clear');
 
 
 Route::get('/contact', function () {

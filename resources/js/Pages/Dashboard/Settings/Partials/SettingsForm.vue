@@ -6,6 +6,7 @@ import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
 import { useCountries, useLanguage } from "@/composables/useCountries";
+import defaultFile from "@/Stores/defaultFile";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 
@@ -20,7 +21,7 @@ defineProps({
 
 const options = usePage().props.value.global.options;
 
-const languageArray = useLanguage(JSON.parse(options.existing_language_file));
+const languageArray = useLanguage(options.existing_language_file);
 
 const form = useForm({
     site_name: options.site_name,
@@ -299,7 +300,7 @@ const form = useForm({
                 <InputLabel
                     class="text-xl block font-medium text-gray-700 mb-1"
                     for="time_zone"
-                    value="Select time zone :"
+                    value="Select Time Zone :"
                 />
                 <Multiselect
                     v-model="form.time_zone"
@@ -324,11 +325,19 @@ const form = useForm({
             </div>
 
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-xl"
-                    for="languages"
-                    value="Application Default Language:"
-                />
+                <div class="flex justify-between items-center">
+                    <InputLabel
+                        class="text-xl"
+                        for="languages"
+                        value="Application Default Language:"
+                    />
+                    <a
+                        target="_blank"
+                        :href="`${defaultFile.site_url}/languages`"
+                        class="text-blue-500 underline underline-offset-4 decoration-slate-500 animate-pulse"
+                        >Go For Translation
+                    </a>
+                </div>
 
                 <Multiselect
                     v-model="form.language"

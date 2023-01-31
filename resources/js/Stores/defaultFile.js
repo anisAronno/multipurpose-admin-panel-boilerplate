@@ -8,4 +8,5 @@ export default reactive({
     avatar: `${site_url}/storage/images/defaults/avatar.png`,
     banner: `${site_url}/storage/images/defaults/banner.png`,
     fav_icon: `${site_url}/storage/images/defaults/fav_icon.png`,
+    site_url: site_url,
 });
