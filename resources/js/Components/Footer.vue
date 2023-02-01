@@ -7,7 +7,7 @@ const { navigation, socialLink } = useMenu();
 <template>
     <footer class="bg-white">
         <div
-            class="mx-auto max-w-7xl overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+            class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <nav
                 class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"

@@ -1,6 +1,9 @@
+<script></script>
 <template>
     <div
-        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14"
+        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14 bg-cover bg-center pb-10"
+        :style="`background-image: url(${$page.props.global.options.banner}); `"
+        id="bg-banner"
     >
         <div class="mx-auto max-w-7xl lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -25,7 +28,7 @@
                             />
                         </Link>
                         <h1
-                            class="mt-4 text-4xl font-bold tracking-tight dark:text-white text-gray-800 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"
+                            class="mt-4 text-4xl font-bold tracking-tight lg:dark:text-white lg:text-gray-800 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl text-cyan-400 bg-[rgba(50,50,80,0.1)] bg-blend-saturation lg:bg-transparent p-2 lg:p-0"
                         >
                             <span class="block">{{
                                 __("banner.title_1")
@@ -36,13 +39,15 @@
                             >
                         </h1>
                         <p
-                            class="text-base text-gray-500 dark:text-gray-300 sm:text-xl lg:text-lg xl:text-xl"
+                            class="text-base lg:text-gray-500 lg:dark:text-gray-300 sm:text-xl lg:text-lg xl:text-xl text-cyan-300 bg-[rgba(255, 230, 180, 0.1)] bg-blend-saturation lg:bg-transparent p-2 lg:p-0"
                         >
                             {{ __("banner.sub_title") }}
                         </p>
                     </div>
                 </div>
-                <div class="mt-12 -mb-16 sm:-mb-48 lg:relative lg:m-0">
+                <div
+                    class="mt-12 -mb-16 sm:-mb-48 lg:relative lg:m-0 hidden lg:block"
+                >
                     <div
                         class="mx-auto max-w-md px-6 sm:max-w-2xl lg:max-w-none lg:px-0"
                     >
@@ -57,3 +62,10 @@
         </div>
     </div>
 </template>
+<style scoped>
+@media only screen and (min-width: 1024px) {
+    #bg-banner {
+        background-image: none !important;
+    }
+}
+</style>

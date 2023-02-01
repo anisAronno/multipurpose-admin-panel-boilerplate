@@ -26,7 +26,7 @@ defineProps({
             <Banner></Banner>
             <FeaturedCategory
                 :categories="featuredCategory"
-                v-if="featuredCategory.length > 0"
+                v-if="featuredCategory?.length > 0"
             ></FeaturedCategory>
             <!-- Feature section with grid -->
 

@@ -6,7 +6,7 @@ return [
     ],
 
     'banner' => [
-        'contact'    =>   "Visit to contact page",
+        'contact'    =>   "For Details?",
         'to_contact' =>  "Visit to contact page",
         'title_1' =>   "A better way to",
         'title_2' =>  "ship web apps",

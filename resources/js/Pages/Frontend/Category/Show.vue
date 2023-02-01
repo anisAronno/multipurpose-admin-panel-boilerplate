@@ -16,10 +16,9 @@ defineProps({
             class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10"
         >
             <Hero>
-                <span class="break-words break-all"
+                <span class="break-words leading-none font-normal md:font-semibold text-lg"
                     >{{ __("category_show.title_1") }}
-                    <span class="text-blue-600">{{ category.title }}</span>
-                    &nbsp;
+                    <span class="text-blue-600 dark:text-blue-400">{{ category.title }}</span>
                     {{ __("category_show.title_2") }}</span
                 >
             </Hero>
