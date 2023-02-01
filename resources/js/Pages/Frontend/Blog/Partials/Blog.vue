@@ -22,9 +22,7 @@ defineProps({
                     {{ __("blog.sub_heading") }}
                 </p>
                 <p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
-                    {{
-                        __('blog.description')
-                    }}
+                    {{ __("blog.description") }}
                 </p>
             </div>
             <div
@@ -62,7 +60,12 @@ defineProps({
                                 </p>
                             </Link>
                             <p class="mt-3 text-base text-gray-500">
-                                {{ blog.description }}
+                                {{
+                                    blog.description
+                                        .split(" ")
+                                        .slice(0, 15)
+                                        .join(" ") + " ..."
+                                }}
                             </p>
                         </div>
                         <div class="mt-6 flex items-center">

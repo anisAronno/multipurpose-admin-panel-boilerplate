@@ -11,6 +11,7 @@ import {
     CogIcon,
     HomeIcon,
     PlusCircleIcon,
+    ShoppingCartIcon,
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/outline";
@@ -46,6 +47,7 @@ const navigation = ref([
             },
         ],
     },
+
     {
         name: "Role",
         route: "role.index",
@@ -67,6 +69,30 @@ const navigation = ref([
                 route: "role.create",
                 icon: PlusCircleIcon,
                 current: route().current("role.create"),
+            },
+        ],
+    },
+    {
+        name: "Product",
+        route: "product.index",
+        icon: ShoppingCartIcon,
+        current:
+            route().current("product.index") ||
+            route().current("product.create") ||
+            route().current("product.edit") ||
+            route().current("product.show"),
+        children: [
+            {
+                name: "Product",
+                route: "product.index",
+                icon: ShoppingCartIcon,
+                current: route().current("product.index"),
+            },
+            {
+                name: "Create",
+                route: "product.create",
+                icon: PlusCircleIcon,
+                current: route().current("product.create"),
             },
         ],
     },

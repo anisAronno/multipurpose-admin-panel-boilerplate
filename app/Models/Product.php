@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\Status;
 use App\Enums\Featured;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -67,24 +68,29 @@ class Product extends Model
         'status' => Status::class,
         'is_featured' => Featured::class,
     ];
-
-    /**
-     * Summary of getImageAttribute
-     * @param mixed $value
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     */
-    public function getImageAttribute($value)
+    public function getCreatedAtAttribute($value)
     {
-        return  $this->attributes['image'] = FileHelpers::getUrl($value);
+        if ($value !== null) {
+            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
+        }
     }
+     /**
+    * Summary of getImageAttribute
+    * @param mixed $value
+    * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+    */
+     public function getImageAttribute($value)
+     {
+         return  $this->attributes['image'] = FileHelpers::getUrl($value);
+     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'category_product')->withTimestamps();
-    }
+     public function categories()
+     {
+         return $this->belongsToMany(Category::class, 'category_product')->withTimestamps();
+     }
 
-      public function user()
-      {
-          return $this->belongsTo(User::class, 'user_id', 'id');
-      }
+       public function user()
+       {
+           return $this->belongsTo(User::class, 'user_id', 'id');
+       }
 }

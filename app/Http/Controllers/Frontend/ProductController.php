@@ -24,7 +24,7 @@ class ProductController extends Controller
         $key = CacheServices::getProductCacheKey($currentPage);
 
         $products = Cache::remember($key, 10, function () {
-            return Product::isActive()->paginate(16);
+            return Product::isActive()->orderBy('id', 'desc')->paginate(16);
         });
 
         return Inertia::render('Frontend/Products/Index')->with(['products' => $products]);

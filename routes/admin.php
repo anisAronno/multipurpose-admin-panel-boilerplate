@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\Role\RolesController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\ProfileController;
@@ -44,6 +45,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('options', OptionController::class, ['except' => ['update']]);
     Route::post('/options/update/{option:option_key}', [OptionController::class, 'update'])->name('options.update');
     Route::patch('/options/update', [OptionController::class, 'bulkUpdate'])->name('options.bulk.update');
+
+    /**
+     * Product Route
+     */
+    Route::resource('product', ProductController::class, ['except' => ['update']]);
+    Route::post('/product/image/{product}', [ProductController::class, 'imageUpdate'])->name('product.image.update');
+    Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/image/{product}', [ProductController::class, 'imageDelete'])->name('product.image.destroy');
+
 
     /**
      * Image Route

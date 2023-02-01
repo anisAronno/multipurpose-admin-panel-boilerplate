@@ -3,10 +3,10 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
-import defaultFile from "@/Stores/defaultFile.js";
 
 const props = defineProps({
     roles: Object,
@@ -160,7 +160,7 @@ const storeUser = () => {
                                         :options="props.roles"
                                         :selected="form.roles"
                                         placeholder="Pick some..."
-                                          class="block w-full multiselect-green form-controll dark:text-gray-900"
+                                        class="block w-full multiselect-green form-controll dark:text-gray-900"
                                         mode="tags"
                                         :searchable="true"
                                         :close-on-select="false"
@@ -178,17 +178,18 @@ const storeUser = () => {
                                         value="Status :"
                                         class="block text-sm font-medium text-gray-700 mb-1"
                                     />
-                                    
+
                                     <Multiselect
                                         v-model="form.status"
                                         :options="statusArr"
                                         :selected="form.status"
                                         placeholder="Pick some..."
-                                        class="block w-full multiselect-green form-controll dark:text-black"  
+                                        class="block w-full multiselect-green form-controll dark:text-black"
                                         :searchable="true"
                                         :classes="{
-                                            search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
-                                            singleLabelText: 'bg-[#10B981] text-white  rounded py-0.5 px-3 text-sm  font-semibold', 
+                                            search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                            singleLabelText:
+                                                'bg-[#10B981] text-white  rounded py-0.5 px-3 text-sm  font-semibold',
                                         }"
                                     >
                                     </Multiselect>

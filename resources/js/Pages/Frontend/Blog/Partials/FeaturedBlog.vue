@@ -57,7 +57,12 @@ defineProps({
                                     </p>
                                 </Link>
                                 <p class="mt-3 text-base text-gray-500">
-                                    {{ blog.description }}
+                                    {{
+                                        blog.description
+                                            .split(" ")
+                                            .slice(0, 15)
+                                            .join(" ") + " ..."
+                                    }}
                                 </p>
                             </a>
                         </div>

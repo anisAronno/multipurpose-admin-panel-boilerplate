@@ -24,7 +24,7 @@ class BlogController extends Controller
         $key = CacheServices::getBlogCacheKey($currentPage);
 
         $blogs = Cache::remember($key, 10, function () {
-            return Blog::isActive()->isFeatured()->with('user')->paginate(9);
+            return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->paginate(9);
         });
 
         return Inertia::render('Frontend/Blog/Index')->with(['blogs' => $blogs]);
