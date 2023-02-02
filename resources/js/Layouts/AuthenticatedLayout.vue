@@ -11,6 +11,7 @@ import {
     BookOpenIcon,
     CogIcon,
     HomeIcon,
+    EnvelopeIcon,
     ListBulletIcon,
     PlusCircleIcon,
     ShoppingCartIcon,
@@ -80,7 +81,7 @@ const navigation = ref([
         icon: ListBulletIcon,
         current:
             route().current("admin.category.index") ||
-            route().current("admin.admin.category.create") ||
+            route().current("admin.category.create") ||
             route().current("admin.category.edit") ||
             route().current("admin.category.show"),
         children: [
@@ -92,9 +93,9 @@ const navigation = ref([
             },
             {
                 name: "Create",
-                route: "admin.admin.category.create",
+                route: "admin.category.create",
                 icon: PlusCircleIcon,
-                current: route().current("admin.admin.category.create"),
+                current: route().current("admin.category.create"),
             },
         ],
     },
@@ -143,6 +144,20 @@ const navigation = ref([
                 route: "admin.blog.create",
                 icon: PlusCircleIcon,
                 current: route().current("admin.blog.create"),
+            },
+        ],
+    },
+    {
+        name: "Message",
+        route: "admin.contact.index",
+        icon: EnvelopeIcon,
+        current: route().current("admin.contact.index"),
+        children: [
+            {
+                name: "Message",
+                route: "admin.contact.index",
+                icon: EnvelopeIcon,
+                current: route().current("admin.contact.index"),
             },
         ],
     },

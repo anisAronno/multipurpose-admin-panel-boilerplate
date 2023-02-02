@@ -87,7 +87,7 @@ class CategoryController extends InertiaApplicationController
        * @param Category $category
        * @return \Inertia\Response
        */
-      public function show(Request $request, Category $category)
+      public function show(Category $category)
       {
           return Inertia::render('Dashboard/Category/Show')->with(['category' => $category]);
       }

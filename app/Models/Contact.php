@@ -15,8 +15,7 @@ class Contact extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
         'email',
         'phone',
         'subject',
@@ -29,8 +28,8 @@ class Contact extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['first_name',
-                    'last_name',
+        ->logOnly([
+                    'name',
                     'email',
                     'phone',
                     'subject',

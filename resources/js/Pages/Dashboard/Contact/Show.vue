@@ -3,19 +3,19 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    category: Object,
+    contact: Object,
 });
 </script>
 
 <template>
-    <Head title="Category" />
+    <Head title="Contact" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Show Category
+                Show Contact
             </h2>
         </template>
 
@@ -29,41 +29,19 @@ defineProps({
                             <h1
                                 class="text-xl font-semibold text-gray-900 dark:text-white"
                             >
-                                View Category
+                                View Contact
                             </h1>
                             <p
                                 class="mt-2 text-sm text-gray-700 dark:text-white"
                             >
-                                View products with category.
+                                View products with contact.
                             </p>
                         </div>
                         <div
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
-                                :href="
-                                    route('admin.category.edit', category.id)
-                                "
-                                class="btn btn-primary"
-                            >
-                                <font-awesome-icon
-                                    icon="fa-solid fa-pen-to-square"
-                                    class="mr-1"
-                                />
-                                Edit
-                            </Link>
-                            <Link
-                                :href="route('admin.category.create')"
-                                class="btn btn-primary"
-                            >
-                                <font-awesome-icon
-                                    icon="fa-solid fa-circle-plus"
-                                    class="mr-1"
-                                />
-                                Create New
-                            </Link>
-                            <Link
-                                :href="route('admin.category.index')"
+                                :href="route('admin.contact.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -93,26 +71,32 @@ defineProps({
                                                     scope="col"
                                                     class="py-3.5 pr-3 pl-3 text-left text-base font-bold text-gray-900"
                                                 >
-                                                    Category Title
+                                                    Name
                                                 </th>
 
                                                 <th
                                                     scope="col"
                                                     class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                 >
-                                                    Description
+                                                    Email
                                                 </th>
                                                 <th
                                                     scope="col"
                                                     class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                 >
-                                                    Image
+                                                    Phone
                                                 </th>
                                                 <th
                                                     scope="col"
                                                     class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                 >
-                                                    Status
+                                                    Subject
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                >
+                                                    Message
                                                 </th>
                                             </tr>
                                         </thead>
@@ -121,28 +105,29 @@ defineProps({
                                         >
                                             <tr>
                                                 <td
-                                                    class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                    class="w-[15%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
-                                                    {{ category.title }}
+                                                    {{ contact.name }}
                                                 </td>
                                                 <td
-                                                    class="w-[20%] text-gray-900"
+                                                    class="w-[15%] text-left text-gray-900"
                                                 >
-                                                    {{ category.description }}
+                                                    {{ contact.email }}
                                                 </td>
                                                 <td
-                                                    class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                    class="w-[15%] text-left p-4 text-gray-900"
                                                 >
-                                                    <img
-                                                        :src="category.image"
-                                                        alt=""
-                                                        class="w-16 h-16"
-                                                    />
+                                                    {{ contact.phone }}
                                                 </td>
                                                 <td
-                                                    class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                    class="w-[15%] text-left p-4 text-gray-900"
                                                 >
-                                                    {{ category.status }}
+                                                    {{ contact.subject }}
+                                                </td>
+                                                <td
+                                                    class="w-[40%] text-gray-900"
+                                                >
+                                                    {{ contact.message }}
                                                 </td>
                                             </tr>
                                         </tbody>

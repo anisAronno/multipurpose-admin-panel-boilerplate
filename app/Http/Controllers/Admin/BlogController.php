@@ -88,7 +88,7 @@ class BlogController extends InertiaApplicationController
        * @param Blog $blog
        * @return \Inertia\Response
        */
-      public function show(Request $request, Blog $blog)
+      public function show( Blog $blog)
       {
           return Inertia::render('Dashboard/Blog/Show')->with(['blog' => $blog]);
       }

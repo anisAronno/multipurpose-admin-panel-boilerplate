@@ -39,7 +39,7 @@ class ContactController extends Controller
     public function store(StoreContactRequest $request)
     {
         $ip = UserSystemInfoHelper::get_ip();
-        $data = $request->only('first_name', 'last_name', 'email', 'phone', 'subject', 'message');
+        $data = $request->only('name', 'email', 'phone', 'subject', 'message');
 
         $user = Contact::create(array_merge($data, ['ip', $ip]));
 

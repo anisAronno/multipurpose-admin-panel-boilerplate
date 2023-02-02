@@ -95,7 +95,7 @@ class ProductController extends InertiaApplicationController
        * @param Product $product
        * @return \Inertia\Response
        */
-      public function show(Request $request, Product $product)
+      public function show( Product $product)
       {
           $product->load(['categories']);
 

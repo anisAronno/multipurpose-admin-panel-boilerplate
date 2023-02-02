@@ -56,7 +56,7 @@ defineProps({
                                 Back
                             </Link>
                             <Link
-                                :href="route('admin.admin.blog.create')"
+                                :href="route('admin.blog.create')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon

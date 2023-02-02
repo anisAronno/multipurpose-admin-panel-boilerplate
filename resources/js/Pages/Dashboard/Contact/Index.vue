@@ -5,19 +5,19 @@ import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
-    blogs: Object,
+    contacts: Object,
 });
 </script>
 
 <template>
-    <Head title="Blog" />
+    <Head title="Contacts" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Blog
+                Contacts
             </h2>
         </template>
 
@@ -32,29 +32,19 @@ defineProps({
                                 <h1
                                     class="text-xl font-semibold text-gray-900 dark:text-white"
                                 >
-                                    Blog
+                                    Contacts
                                 </h1>
                                 <p
                                     class="mt-2 text-sm text-gray-700 dark:text-white"
                                 >
-                                    A list of all the blogs.
+                                    A list of all the contacts.
                                 </p>
                             </div>
                             <div
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('admin.blog.create')"
-                                    class="btn btn-primary"
-                                >
-                                    <font-awesome-icon
-                                        icon="fa-solid fa-circle-plus"
-                                        class="mr-1"
-                                    />
-                                    Create New
-                                </Link>
-                                <Link
-                                    :href="route('admin.blog.index')"
+                                    :href="route('admin.contact.index')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -84,7 +74,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="blogs.data.length > 0"
+                                        v-if="contacts.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -96,32 +86,32 @@ defineProps({
                                                         scope="col"
                                                         class="py-3.5 pr-3 pl-3 text-left text-base font-bold text-gray-900"
                                                     >
-                                                        Title
+                                                        Name
                                                     </th>
 
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900 break-words"
                                                     >
-                                                        Description
+                                                        Email
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
-                                                        Image
+                                                        Phone
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
-                                                        Featured
+                                                        Subject
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
-                                                        Status
+                                                        Message
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -141,25 +131,41 @@ defineProps({
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="blog in blogs.data"
-                                                    :key="blog.id"
-                                                    :id="blog.id"
+                                                    v-for="contact in contacts.data"
+                                                    :key="contact.id"
+                                                    :id="contact.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%] whitespace-nowrap text-left p-2 lg:p-3  font-semibold text-gray-900 capitalize"
                                                     >
-                                                        {{ blog.title }}
+                                                        {{ contact.name }}
                                                     </td>
 
                                                     <td
-                                                        class="min-w-[10%] p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] text-left p-2 lg:p-3  font-md text-gray-900 "
+                                                    >
+                                                        {{ contact.email }}
+                                                    </td>
+
+                                                    <td
+                                                        class="min-w-[10%] text-left p-2 lg:p-3  text-md text-gray-500"
+                                                    >
+                                                        {{ contact.phone }}
+                                                    </td>
+                                                    <td
+                                                        class="min-w-[10%] text-left p-2 lg:p-3  text-md text-gray-500"
+                                                    >
+                                                        {{ contact.subject }}
+                                                    </td>
+                                                    <td
+                                                        class="min-w-[50%]  text-left p-2 lg:p-3  text-md text-gray-500"
                                                     >
                                                         <span
                                                             class="break-words w-10"
                                                         >
                                                             {{
-                                                                blog.description
-                                                                    ? blog.description
+                                                                contact.message
+                                                                    ? contact.message
                                                                           .split(
                                                                               " "
                                                                           )
@@ -175,38 +181,10 @@ defineProps({
                                                             }}
                                                         </span>
                                                     </td>
-
-                                                    <td
-                                                        class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
-                                                    >
-                                                        <img
-                                                            :src="
-                                                                blog.image
-                                                            "
-                                                            :alt="
-                                                                blog.image
-                                                            "
-                                                            class="w-16 h-16"
-                                                        />
-                                                    </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            blog.is_featured
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
-                                                    >
-                                                        {{ blog.status }}
-                                                    </td>
-                                                    <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
-                                                    >
-                                                        {{
-                                                            blog.created_at
-                                                        }}
+                                                        {{ contact.created_at }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -218,8 +196,8 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'admin.blog.show',
-                                                                            blog.id
+                                                                            'admin.contact.show',
+                                                                            contact.id
                                                                         )
                                                                     "
                                                                     class="btn btn-info"
@@ -231,27 +209,10 @@ defineProps({
                                                                 </Link>
                                                             </div>
 
-                                                            <div>
-                                                                <Link
-                                                                    :href="
-                                                                        route(
-                                                                            'admin.blog.edit',
-                                                                            blog.id
-                                                                        )
-                                                                    "
-                                                                    class="btn btn-primary"
-                                                                >
-                                                                    <font-awesome-icon
-                                                                        icon="fa-solid fa-pen-to-square"
-                                                                        class="mr-1"
-                                                                    />
-                                                                </Link>
-                                                            </div>
-
                                                             <DeleteForm
                                                                 :data="{
-                                                                    id: blog.id,
-                                                                    model: 'blog',
+                                                                    id: contact.id,
+                                                                    model: 'contact',
                                                                 }"
                                                             ></DeleteForm>
                                                         </div>
@@ -260,7 +221,7 @@ defineProps({
                                             </tbody>
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="blogs.last_page > 1"
+                                                v-if="contacts.last_page > 1"
                                             >
                                                 <tr>
                                                     <td
@@ -269,12 +230,12 @@ defineProps({
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                blogs.last_page >
+                                                                contacts.last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                blogs.links
+                                                                contacts.links
                                                             "
                                                         ></Pagination>
                                                     </td>

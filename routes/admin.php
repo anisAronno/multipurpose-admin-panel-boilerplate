@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\Role\RolesController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserController;
@@ -86,6 +87,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         /**
          * Image Route
          */
+        Route::resource('contact', ContactController::class, ['except' => ['update', 'store']]);
+
         Route::resource('image', ImageController::class, ['except' => ['update']]);
 
 
