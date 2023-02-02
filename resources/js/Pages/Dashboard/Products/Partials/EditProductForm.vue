@@ -125,6 +125,7 @@ const updateProduct = () => {
                                     route="product.image"
                                     :isDeleteable="true"
                                     v-model="product.image"
+                                    ref="imageInput"
                                     class="w-48 h-48 rounded-full overflow-clip bg-red-500"
                                 />
                             </div>
@@ -141,6 +142,7 @@ const updateProduct = () => {
                                 <Toggle
                                     id="is_featured"
                                     v-model="form.is_featured"
+                                    ref="isFeaturedInput"
                                 ></Toggle>
 
                                 <InputError
@@ -162,6 +164,7 @@ const updateProduct = () => {
                                     :options="props.categories"
                                     :selected="form.categories"
                                     placeholder="Pick some..."
+                                    ref="categoryInput"
                                     class="block w-full multiselect-green form-controll dark:text-gray-900"
                                     mode="tags"
                                     :searchable="true"
@@ -185,6 +188,7 @@ const updateProduct = () => {
                                     v-model="form.status"
                                     :options="statusArr"
                                     :selected="form.status"
+                                    ref="statusInput"
                                     placeholder="Pick some..."
                                     class="block w-full multiselect-green form-controll dark:text-black"
                                     :searchable="true"

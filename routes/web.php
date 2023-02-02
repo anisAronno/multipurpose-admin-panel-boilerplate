@@ -31,7 +31,7 @@ Route::get('/cache-clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('optimize:clear');
     Artisan::call('storage:link');
-    return Redirect::back()->with(['success' => true, 'message' => "Cache clear successfully"], 200);
+    return Redirect::back()->with(['success' => true, 'message' => "Cache cleared successfully"], 200);
 })->name('cache.clear');
 
 
