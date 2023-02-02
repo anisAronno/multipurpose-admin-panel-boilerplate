@@ -1,23 +1,24 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditCategoryForm from "@/Pages/Dashboard/Category/Partials/EditCategoryForm.vue";
+import EditBlogForm from "@/Pages/Dashboard/Blog/Partials/EditBlogForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    category: Object,
+    blog: Object,
     statusArr: Object,
+    featuredArr: Object,
 });
 </script>
 
 <template>
-    <Head title="Category" />
+    <Head title="Blog" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Edit Category
+                Edit Blog
             </h2>
         </template>
 
@@ -31,12 +32,12 @@ defineProps({
                             <h1
                                 class="text-xl font-semibold text-gray-900 dark:text-white"
                             >
-                                Edit Category
+                                Edit Blog
                             </h1>
                             <p
                                 class="mt-2 text-sm text-gray-700 dark:text-white"
                             >
-                                Edit a new users with category.
+                                Edit a new users with blog.
                             </p>
                         </div>
                         <div
@@ -44,7 +45,7 @@ defineProps({
                         >
                             <Link
                                 :href="
-                                    route('admin.category.show', category.id)
+                                    route('admin.blog.show', blog.id)
                                 "
                                 class="btn btn-primary"
                             >
@@ -55,7 +56,7 @@ defineProps({
                                 Back
                             </Link>
                             <Link
-                                :href="route('admin.admin.category.create')"
+                                :href="route('admin.admin.blog.create')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -65,7 +66,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
-                                :href="route('admin.category.index')"
+                                :href="route('admin.blog.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -76,10 +77,11 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <EditCategoryForm
-                        :category="category"
+                    <EditBlogForm
+                        :blog="blog"
                         :statusArr="statusArr"
-                    ></EditCategoryForm>
+                        :featuredArr="featuredArr"
+                    ></EditBlogForm>
                 </div>
             </div>
         </div>

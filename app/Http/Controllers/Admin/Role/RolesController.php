@@ -99,7 +99,7 @@ class RolesController extends InertiaApplicationController
             $role->syncPermissions($permissions);
         }
 
-        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Created']);
+        return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Created']);
     }
 
   /**
@@ -169,7 +169,7 @@ class RolesController extends InertiaApplicationController
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message' => 'successfully Updated']);
         }
 
-        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Updated']);
+        return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Updated']);
     }
 
     /**
@@ -190,6 +190,6 @@ class RolesController extends InertiaApplicationController
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message' => 'successfully Deleted']);
         }
 
-        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Deleted']);
+        return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Deleted']);
     }
 }

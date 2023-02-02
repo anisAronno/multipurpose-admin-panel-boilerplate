@@ -4,7 +4,6 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
-import Toggle from "@/Components/Toggle.vue";
 import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
@@ -12,6 +11,7 @@ import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
     statusArr: Object,
+    featuredArr: Object,
 });
 
 const titleInput = ref(null);
@@ -168,20 +168,27 @@ const storeCategory = () => {
                                 />
                             </div>
 
-                            <div
-                                class="col-span-6 sm:col-span-3 lg:col-span-3 flex justify-between items-center mt-3"
-                            >
+                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel
-                                    for="is_featured"
-                                    value="Is Featured :"
-                                    class="block text-sm font-medium text-gray-700"
+                                    for="status"
+                                    value="Is Featured ?"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
                                 />
 
-                                <Toggle
-                                    id="is_featured"
+                                <Multiselect
                                     v-model="form.is_featured"
-                                ></Toggle>
-
+                                    :options="featuredArr"
+                                    :selected="form.is_featured"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-black"
+                                    :searchable="true"
+                                    :classes="{
+                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                        singleLabelText:
+                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                    }"
+                                >
+                                </Multiselect>
                                 <InputError
                                     :message="form.errors.is_featured"
                                     class="mt-2 col-start-2 col-span-4"

@@ -7,6 +7,7 @@ defineProps({
     product: Object,
     categories: Object,
     statusArr: Object,
+    featuredArr: Object,
 });
 </script>
 
@@ -79,6 +80,7 @@ defineProps({
                         :product="product"
                         :categories="categories"
                         :statusArr="statusArr"
+                        :featuredArr="featuredArr"
                     ></EditProductForm>
                 </div>
             </div>

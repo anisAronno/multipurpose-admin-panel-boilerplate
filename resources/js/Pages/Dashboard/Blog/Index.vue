@@ -10,14 +10,14 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Blogs" />
+    <Head title="Blog" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Blogs
+                Blog
             </h2>
         </template>
 
@@ -32,7 +32,7 @@ defineProps({
                                 <h1
                                     class="text-xl font-semibold text-gray-900 dark:text-white"
                                 >
-                                    Blogs
+                                    Blog
                                 </h1>
                                 <p
                                     class="mt-2 text-sm text-gray-700 dark:text-white"
@@ -180,15 +180,21 @@ defineProps({
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
-                                                            :src="blog.image"
-                                                            :alt="blog.image"
+                                                            :src="
+                                                                blog.image
+                                                            "
+                                                            :alt="
+                                                                blog.image
+                                                            "
                                                             class="w-16 h-16"
                                                         />
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ blog.is_featured }}
+                                                        {{
+                                                            blog.is_featured
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -198,7 +204,9 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ blog.created_at }}
+                                                        {{
+                                                            blog.created_at
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -265,7 +273,9 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="blogs.links"
+                                                            :links="
+                                                                blogs.links
+                                                            "
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

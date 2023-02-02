@@ -3,19 +3,19 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    category: Object,
+    blog: Object,
 });
 </script>
 
 <template>
-    <Head title="Category" />
+    <Head title="Blog" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Show Category
+                Show Blog
             </h2>
         </template>
 
@@ -29,12 +29,12 @@ defineProps({
                             <h1
                                 class="text-xl font-semibold text-gray-900 dark:text-white"
                             >
-                                View Category
+                                View Blog
                             </h1>
                             <p
                                 class="mt-2 text-sm text-gray-700 dark:text-white"
                             >
-                                View products with category.
+                                View products with blog.
                             </p>
                         </div>
                         <div
@@ -42,7 +42,7 @@ defineProps({
                         >
                             <Link
                                 :href="
-                                    route('admin.category.edit', category.id)
+                                    route('admin.blog.edit', blog.id)
                                 "
                                 class="btn btn-primary"
                             >
@@ -53,7 +53,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
-                                :href="route('admin.admin.category.create')"
+                                :href="route('admin.admin.blog.create')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -63,7 +63,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
-                                :href="route('admin.category.index')"
+                                :href="route('admin.blog.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -93,7 +93,7 @@ defineProps({
                                                     scope="col"
                                                     class="py-3.5 pr-3 pl-3 text-left text-base font-bold text-gray-900"
                                                 >
-                                                    Category Title
+                                                    Blog Title
                                                 </th>
 
                                                 <th
@@ -123,18 +123,18 @@ defineProps({
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
-                                                    {{ category.title }}
+                                                    {{ blog.title }}
                                                 </td>
                                                 <td
                                                     class="w-[20%] text-gray-900"
                                                 >
-                                                    {{ category.description }}
+                                                    {{ blog.description }}
                                                 </td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
                                                     <img
-                                                        :src="category.image"
+                                                        :src="blog.image"
                                                         alt=""
                                                         class="w-16 h-16"
                                                     />
@@ -142,7 +142,7 @@ defineProps({
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
-                                                    {{ category.status }}
+                                                    {{ blog.status }}
                                                 </td>
                                             </tr>
                                         </tbody>

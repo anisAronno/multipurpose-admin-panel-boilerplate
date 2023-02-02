@@ -1,22 +1,23 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateCategoryForm from "@/Pages/Dashboard/Category/Partials/CreateCategoryForm.vue";
+import CreateBlogForm from "@/Pages/Dashboard/Blog/Partials/CreateBlogForm.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 defineProps({
     statusArr: Object,
+    featuredArr: Object,
 });
 </script>
 
 <template>
-    <Head title="Catgory" />
+    <Head title="Blog" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Create Catgory
+                Create Blog
             </h2>
         </template>
 
@@ -30,12 +31,12 @@ defineProps({
                             <h1
                                 class="text-xl font-semibold text-gray-900 dark:text-white"
                             >
-                                Create Catgory
+                                Create Blog
                             </h1>
                             <p
                                 class="mt-2 text-sm text-gray-700 dark:text-white"
                             >
-                                Create a new products.
+                                Create a new blog.
                             </p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -51,9 +52,10 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <CreateCategoryForm
+                    <CreateBlogForm
                         :statusArr="statusArr"
-                    ></CreateCategoryForm>
+                        :featuredArr="featuredArr"
+                    ></CreateBlogForm>
                 </div>
             </div>
         </div>

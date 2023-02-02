@@ -6,6 +6,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     categories: Object,
     statusArr: Object,
+    featuredArr: Object,
 });
 </script>
 
@@ -55,6 +56,7 @@ defineProps({
                     <CreateProductForm
                         :categories="categories"
                         :statusArr="statusArr"
+                        :featuredArr="featuredArr"
                     ></CreateProductForm>
                 </div>
             </div>

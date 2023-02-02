@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Enums\Status;
+use App\Enums\Featured;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -59,8 +60,9 @@ class ProductController extends InertiaApplicationController
     {
         $categories = Category::select('id as value', 'title as label')->get();
         $statusArr = Status::values();
+        $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Products/Create', ['categories' => $categories, 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/Products/Create', ['categories' => $categories, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
     }
 
     /**
@@ -112,11 +114,12 @@ class ProductController extends InertiaApplicationController
         });
 
         $statusArr = Status::values();
+        $featuredArr = Featured::values();
 
         $categories = Category::select('id as value', 'title as label')->get();
 
 
-        return Inertia::render('Dashboard/Products/Edit', ['product' => $product, 'statusArr' => $statusArr, 'categories' => $categories]);
+        return Inertia::render('Dashboard/Products/Edit', ['product' => $product, 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
     }
 
     /**
