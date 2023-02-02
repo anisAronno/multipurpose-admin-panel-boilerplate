@@ -17,6 +17,7 @@ import {
     ShoppingCartIcon,
     UserGroupIcon,
     UsersIcon,
+    LightBulbIcon
 } from "@heroicons/vue/24/outline";
 
 const navigation = ref([
@@ -144,6 +145,30 @@ const navigation = ref([
                 route: "admin.blog.create",
                 icon: PlusCircleIcon,
                 current: route().current("admin.blog.create"),
+            },
+        ],
+    },
+    {
+        name: "Special Features",
+        route: "admin.special-feature.index",
+        icon: LightBulbIcon,
+        current:
+            route().current("admin.special-feature.index") ||
+            route().current("admin.special-feature.create") ||
+            route().current("admin.special-feature.edit") ||
+            route().current("admin.special-feature.show"),
+        children: [
+            {
+                name: "Special Features List",
+                route: "admin.special-feature.index",
+                icon: LightBulbIcon,
+                current: route().current("admin.special-feature.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.special-feature.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.special-feature.create"),
             },
         ],
     },

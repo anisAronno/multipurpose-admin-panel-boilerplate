@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\Role\RolesController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\SpecialFeatureController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserController;
@@ -68,28 +69,36 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         /**
          * Category Route
          */
-        Route::resource('category', CategoryController::class, ['except' => ['update', 'create']]);
+        Route::resource('category', CategoryController::class, ['except' => ['update']]);
         Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
         Route::post('/category/image/{category}', [CategoryController::class, 'imageUpdate'])->name('category.image.update');
-        Route::delete('/category/image/{category}', [CategoryController::class, 'imageDelete'])->name('category.image.destroy');
-        Route::get('admin/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
+        Route::delete('/category/image/{category}', [CategoryController::class, 'imageDelete'])->name('category.image.destroy'); 
 
         /**
          * Blog Route
          */
-        Route::resource('blog', BlogController::class, ['except' => ['update', 'create']]);
+        Route::resource('blog', BlogController::class, ['except' => ['update']]);
         Route::post('/blog/update/{blog}', [BlogController::class, 'update'])->name('blog.update');
         Route::post('/blog/image/{blog}', [BlogController::class, 'imageUpdate'])->name('blog.image.update');
-        Route::delete('/blog/image/{blog}', [BlogController::class, 'imageDelete'])->name('blog.image.destroy');
-        Route::get('admin/blog/create', [BlogController::class, 'create'])->name('admin.blog.create');
+        Route::delete('/blog/image/{blog}', [BlogController::class, 'imageDelete'])->name('blog.image.destroy'); 
 
+        /**
+         * Contact Route
+         */
+        Route::resource('contact', ContactController::class, ['except' => ['update', 'store']]);
 
         /**
          * Image Route
          */
-        Route::resource('contact', ContactController::class, ['except' => ['update', 'store']]);
-
         Route::resource('image', ImageController::class, ['except' => ['update']]);
+
+        /**
+         * Special Feature Controller route
+         */
+        Route::resource('special-feature', SpecialFeatureController::class, ['except' => ['update']]);
+        Route::post('/special-feature/update/{specialFeature}', [SpecialFeatureController::class, 'update'])->name('special-feature.update');
+        Route::post('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageUpdate'])->name('special-feature.image.update');
+        Route::delete('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageDelete'])->name('special-feature.image.destroy'); 
 
 
 

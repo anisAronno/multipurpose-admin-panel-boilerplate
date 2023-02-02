@@ -1,5 +1,4 @@
 <script setup>
-import Image from "@/Components/Image/Image.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -11,24 +10,20 @@ import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
-    blog: Object,
     statusArr: Object,
-    featuredArr: Object,
 });
 
 const titleInput = ref(null);
 const descriptionInput = ref(null);
 const imageInput = ref(null);
 const statusInput = ref(null);
-const isFeaturedInput = ref(null);
 
 const form = useForm({
-    title: props.blog.title,
-    description: props.blog.description,
-    oldImage: props.blog.image,
-    imagePreview: props.blog.image || defaultFile.placeholder,
-    status: props.blog.status,
-    is_featured: props.blog.is_featured,
+    title: "",
+    description: "",
+    image: "",
+    imagePreview: defaultFile.placeholder,
+    status: "",
 });
 
 const previewImage = (e) => {
@@ -36,8 +31,8 @@ const previewImage = (e) => {
     form.imagePreview = URL.createObjectURL(file);
 };
 
-const updateBlog = () => {
-    form.post(route("admin.blog.update", props.blog.id), {
+const storeCategory = () => {
+    form.post(route("admin.special-feature.store"), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
@@ -50,10 +45,6 @@ const updateBlog = () => {
             if (form.errors.status) {
                 statusInput.value.focus();
             }
-            if (form.errors.is_featured) {
-                form.reset("is_featured");
-                isFeaturedInput.value.focus();
-            }
             if (form.errors.image) {
                 imageInput.value.focus();
             }
@@ -64,11 +55,11 @@ const updateBlog = () => {
 
 <template>
     <section class="dark:text-white">
-        <form @submit.prevent="updateBlog" class="mt-6 space-y-6 p-3">
+        <form @submit.prevent="storeCategory" class="mt-6 space-y-6 p-3">
             <div class="mt-10 sm:mt-0">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
-                        <div class="grid grid-cols-6 gap-6">
+                        <div class="grid grid-cols-6 gap-6 mb-10">
                             <div class="col-span-6 sm:col-span-3">
                                 <InputLabel
                                     for="title"
@@ -88,7 +79,32 @@ const updateBlog = () => {
                                     class="mt-2 col-start-2 col-span-4"
                                 />
                             </div>
+                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                                <InputLabel
+                                    for="status"
+                                    value="Status :"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                />
 
+                                <Multiselect
+                                    v-model="form.status"
+                                    :options="statusArr"
+                                    :selected="form.status"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-black"
+                                    :searchable="true"
+                                    :classes="{
+                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                        singleLabelText:
+                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                    }"
+                                >
+                                </Multiselect>
+                                <InputError
+                                    :message="form.errors.status"
+                                    class="mt-2 col-start-2 col-span-4"
+                                />
+                            </div>
                             <div class="col-span-6 sm:col-span-3">
                                 <InputLabel
                                     for="description"
@@ -109,73 +125,38 @@ const updateBlog = () => {
                                 />
                             </div>
 
-                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                                <InputLabel
-                                    for="status"
-                                    value="Status :"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-
-                                <Multiselect
-                                    v-model="form.status"
-                                    :options="statusArr"
-                                    :selected="form.status"
-                                    ref="statusInput"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-black"
-                                    :searchable="true"
-                                    :classes="{
-                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
-                                        singleLabelText:
-                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
-                                    }"
-                                >
-                                </Multiselect>
-                                <InputError
-                                    :message="form.errors.status"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
-                            </div>
-                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                                <InputLabel
-                                    for="status"
-                                    value="Is Featured ?"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-
-                                <Multiselect
-                                    v-model="form.is_featured"
-                                    :options="featuredArr"
-                                    :selected="form.is_featured"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-black"
-                                    :searchable="true"
-                                    :classes="{
-                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
-                                        singleLabelText:
-                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
-                                    }"
-                                >
-                                </Multiselect>
-                                <InputError
-                                    :message="form.errors.is_featured"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
-                            </div>
-
                             <div
-                                class="col-span-6 sm:col-span-3 flex items-center justify-center"
+                                class="col-span-6 sm:col-span-3 flex items-center justify-between"
                             >
-                                <Image
-                                    :id="blog.id"
-                                    :alt="blog.title"
-                                    field="image"
-                                    route="blog.image"
-                                    :isDeleteable="true"
-                                    v-model="form.oldImage"
-                                    ref="imageInput"
-                                    class="w-48 h-48 rounded-full overflow-clip bg-red-500"
-                                />
+                                <div>
+                                    <InputLabel
+                                        for="image"
+                                        value="Image :"
+                                        class="block text-sm font-medium text-gray-700"
+                                    />
+                                    <input
+                                        id="image"
+                                        type="file"
+                                        class="mt-1 block form-controll cursor-pointer"
+                                        @change="previewImage"
+                                        ref="imageInput"
+                                        @input="
+                                            form.image = $event.target.files[0]
+                                        "
+                                    />
+                                    <InputError
+                                        :message="form.errors.image"
+                                        class="mt-2 col-start-2 col-span-4"
+                                    />
+                                </div>
+                                <span
+                                    class="inline-block h-24 w-24 overflow-hidden rounded-full bg-gray-100"
+                                >
+                                    <img
+                                        :src="form.imagePreview"
+                                        class="w-full h-full object-contain"
+                                    />
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -184,7 +165,7 @@ const updateBlog = () => {
 
             <div class="flex items-center justify-end pr-5 py-5">
                 <PrimaryButton :disabled="form.processing"
-                    >Update</PrimaryButton
+                    >Submit</PrimaryButton
                 >
 
                 <Transition

@@ -12,6 +12,7 @@ defineProps({
     featuredProducts: Object,
     featuredCategory: Object,
     featuredBlog: Object,
+    specialFeatures: Object,
 });
 </script>
 
@@ -30,7 +31,7 @@ defineProps({
             ></FeaturedCategory>
             <!-- Feature section with grid -->
 
-            <Feature></Feature>
+            <Feature :specialFeatures="specialFeatures"></Feature>
             <!-- Product section -->
             <FeatureProducts
                 :featuredProducts="featuredProducts"

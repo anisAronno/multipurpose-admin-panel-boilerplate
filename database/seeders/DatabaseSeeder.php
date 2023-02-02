@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PageSeeder::class);
         $this->call(OptionSeeder::class);
         $this->call(ContactSeeder::class);
+        $this->call(SpecialFeatureSeeder::class);
     }
 }

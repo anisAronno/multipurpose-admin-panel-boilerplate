@@ -6,7 +6,7 @@ defineProps({
 
 <template>
     <div
-        class="relative bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:py-12"
+        class="relative bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:my-12"
     >
         <div class="relative">
             <div

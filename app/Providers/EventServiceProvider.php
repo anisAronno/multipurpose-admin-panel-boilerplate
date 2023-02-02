@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Option;
 use App\Models\Product;
+use App\Models\SpecialFeature;
 use App\Models\User;
 use App\Observers\Blog\BlogObserver;
 use App\Observers\ContactObserver;
@@ -17,6 +18,7 @@ use App\Observers\OptionObserver;
 use App\Observers\Product\CategoryObserver;
 use App\Observers\Product\ProductObserver;
 use App\Observers\RoleObserver;
+use App\Observers\SpecialFeatureObserver;
 use App\Observers\User\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -54,6 +56,7 @@ class EventServiceProvider extends ServiceProvider
         Category::observe(CategoryObserver::class);
         Product::observe(ProductObserver::class);
         Contact::observe(ContactObserver::class);
+        SpecialFeature::observe(SpecialFeatureObserver::class);
     }
 
     /**

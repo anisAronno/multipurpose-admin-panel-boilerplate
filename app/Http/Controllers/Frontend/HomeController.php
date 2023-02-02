@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SpecialFeature;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,6 +24,7 @@ class HomeController extends Controller
         $key = CacheServices::getFeaturedProductCacheKey();
         $featuredCatKey = CacheServices::getFeaturedCategoryCacheKey();
         $featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
+        $specialFeatureKey = CacheServices::getSpecialFeatureCacheKey();
 
         $featuredProducts = Cache::remember($key, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
@@ -36,7 +38,11 @@ class HomeController extends Controller
             return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->limit(3)->get();
         });
 
-        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => $featuredProducts, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=>$featuredBlog]);
+        $specialFeatures = Cache::remember($specialFeatureKey, 10, function () {
+            return SpecialFeature::isActive()->orderBy('id', 'desc')->limit(4)->get();
+        });
+
+        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => $featuredProducts, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=>$featuredBlog, 'specialFeatures' => $specialFeatures]);
     }
 
     /**

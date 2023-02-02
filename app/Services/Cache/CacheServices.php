@@ -49,4 +49,10 @@ class CacheServices
     {
         return 'contact'.$token;
     }
+
+
+    public static function getSpecialFeatureCacheKey(int $token = null): string
+    {
+        return 'category'.$token;
+    }
 }
