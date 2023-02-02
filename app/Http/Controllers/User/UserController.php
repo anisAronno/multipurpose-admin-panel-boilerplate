@@ -89,7 +89,7 @@ class UserController extends InertiaApplicationController
             $user->assignRole($request->get('roles'));
         }
 
-        return Redirect::route('user.index')->with(['success' => true, 'message', 'Created successfull']);
+        return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Created successfull']);
     }
 
     /**
@@ -156,7 +156,7 @@ class UserController extends InertiaApplicationController
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
         }
 
-        return Redirect::route('user.index')->with(['success' => true, 'message', 'Updated successfull']);
+        return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Updated successfull']);
     }
 
    /**

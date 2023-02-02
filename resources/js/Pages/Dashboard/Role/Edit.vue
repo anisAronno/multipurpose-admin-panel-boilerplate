@@ -44,9 +44,11 @@ defineProps({
                                 Create a new roles with permission.
                             </p>
                         </div>
-                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0">
+                        <div
+                            class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
+                        >
                             <Link
-                                :href="route('role.show', role.id)"
+                                :href="route('admin.role.show', role.id)"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -56,7 +58,7 @@ defineProps({
                                 back
                             </Link>
                             <Link
-                                :href="route('role.create')"
+                                :href="route('admin.role.create')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -66,7 +68,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
-                                :href="route('role.index')"
+                                :href="route('admin.role.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon

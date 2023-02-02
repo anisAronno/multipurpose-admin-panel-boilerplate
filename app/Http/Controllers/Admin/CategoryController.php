@@ -51,7 +51,6 @@ class CategoryController extends InertiaApplicationController
      */
     public function create()
     {
-        
         $statusArr = Status::values();
         return Inertia::render('Dashboard/Category/Create', ['statusArr' => $statusArr]);
     }
@@ -73,7 +72,7 @@ class CategoryController extends InertiaApplicationController
 
         try {
             Category::create($data);
-            return Redirect::route('category.index')->with(['success' => true, 'message', 'Created successfull']);
+            return Redirect::route('admin.category.index')->with(['success' => true, 'message', 'Created successfull']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
         }
@@ -109,7 +108,7 @@ class CategoryController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateCategoryRequest $request, Category $category)
-    { 
+    {
         try {
             $category->update($request->only('title', 'description', 'is_featured', 'status'));
 
@@ -117,7 +116,7 @@ class CategoryController extends InertiaApplicationController
                 return Redirect::to(session('last_visited_category_url'))->with(['success' => true, 'message', 'Updated successfull']);
             }
 
-            return Redirect::route('category.index')->with(['success' => true, 'message', 'Updated successfull']);
+            return Redirect::route('admin.category.index')->with(['success' => true, 'message', 'Updated successfull']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
         }

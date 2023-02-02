@@ -27,136 +27,136 @@ const navigation = ref([
     },
     {
         name: "User",
-        route: "user.index",
+        route: "admin.user.index",
         icon: UsersIcon,
         current:
-            route().current("user.index") ||
-            route().current("user.create") ||
-            route().current("user.edit") ||
-            route().current("user.show"),
+            route().current("admin.user.index") ||
+            route().current("admin.user.create") ||
+            route().current("admin.user.edit") ||
+            route().current("admin.user.show"),
         children: [
             {
                 name: "User List",
-                route: "user.index",
+                route: "admin.user.index",
                 icon: UsersIcon,
-                current: route().current("user.index"),
+                current: route().current("admin.user.index"),
             },
             {
                 name: "Create",
-                route: "user.create",
+                route: "admin.user.create",
                 icon: PlusCircleIcon,
-                current: route().current("user.create"),
+                current: route().current("admin.user.create"),
             },
         ],
     },
 
     {
         name: "Role",
-        route: "role.index",
+        route: "admin.role.index",
         icon: UserGroupIcon,
         current:
-            route().current("role.index") ||
-            route().current("role.create") ||
-            route().current("role.edit") ||
-            route().current("role.show"),
+            route().current("admin.role.index") ||
+            route().current("admin.role.create") ||
+            route().current("admin.role.edit") ||
+            route().current("admin.role.show"),
         children: [
             {
                 name: "Role List",
-                route: "role.index",
+                route: "admin.role.index",
                 icon: UserGroupIcon,
-                current: route().current("role.index"),
+                current: route().current("admin.role.index"),
             },
             {
                 name: "Create",
-                route: "role.create",
+                route: "admin.role.create",
                 icon: PlusCircleIcon,
-                current: route().current("role.create"),
+                current: route().current("admin.role.create"),
             },
         ],
     },
     {
         name: "Category",
-        route: "category.index",
+        route: "admin.category.index",
         icon: ListBulletIcon,
         current:
-            route().current("category.index") ||
-            route().current("admin.category.create") ||
-            route().current("category.edit") ||
-            route().current("category.show"),
+            route().current("admin.category.index") ||
+            route().current("admin.admin.category.create") ||
+            route().current("admin.category.edit") ||
+            route().current("admin.category.show"),
         children: [
             {
                 name: "Category List",
-                route: "category.index",
+                route: "admin.category.index",
                 icon: ListBulletIcon,
-                current: route().current("category.index"),
+                current: route().current("admin.category.index"),
             },
             {
                 name: "Create",
-                route: "admin.category.create",
+                route: "admin.admin.category.create",
                 icon: PlusCircleIcon,
-                current: route().current("admin.category.create"),
+                current: route().current("admin.admin.category.create"),
             },
         ],
     },
     {
         name: "Product",
-        route: "product.index",
+        route: "admin.product.index",
         icon: ShoppingCartIcon,
         current:
-            route().current("product.index") ||
-            route().current("product.create") ||
-            route().current("product.edit") ||
-            route().current("product.show"),
+            route().current("admin.product.index") ||
+            route().current("admin.product.create") ||
+            route().current("admin.product.edit") ||
+            route().current("admin.product.show"),
         children: [
             {
                 name: "Product List",
-                route: "product.index",
+                route: "admin.product.index",
                 icon: ShoppingCartIcon,
-                current: route().current("product.index"),
+                current: route().current("admin.product.index"),
             },
             {
                 name: "Create",
-                route: "product.create",
+                route: "admin.product.create",
                 icon: PlusCircleIcon,
-                current: route().current("product.create"),
+                current: route().current("admin.product.create"),
             },
         ],
     },
     {
         name: "Blog",
-        route: "blog.index",
+        route: "admin.blog.index",
         icon: BookOpenIcon,
         current:
-            route().current("blog.index") ||
-            route().current("blog.create") ||
-            route().current("blog.edit") ||
-            route().current("blog.show"),
+            route().current("admin.blog.index") ||
+            route().current("admin.blog.create") ||
+            route().current("admin.blog.edit") ||
+            route().current("admin.blog.show"),
         children: [
             {
                 name: "Blog List",
-                route: "blog.index",
+                route: "admin.blog.index",
                 icon: BookOpenIcon,
-                current: route().current("blog.index"),
+                current: route().current("admin.blog.index"),
             },
             {
                 name: "Create",
-                route: "blog.create",
+                route: "admin.blog.create",
                 icon: PlusCircleIcon,
-                current: route().current("blog.create"),
+                current: route().current("admin.blog.create"),
             },
         ],
     },
     {
         name: "Settings",
-        route: "options.index",
+        route: "admin.options.index",
         icon: CogIcon,
-        current: route().current("options.index"),
+        current: route().current("admin.options.index"),
         children: [
             {
                 name: "Settings",
-                route: "options.index",
+                route: "admin.options.index",
                 icon: CogIcon,
-                current: route().current("options.index"),
+                current: route().current("admin.options.index"),
             },
         ],
     },

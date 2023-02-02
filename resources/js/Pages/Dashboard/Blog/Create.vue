@@ -40,7 +40,7 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
-                                :href="route('user.index')"
+                                :href="route('admin.user.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon

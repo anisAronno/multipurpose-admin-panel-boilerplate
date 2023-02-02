@@ -112,7 +112,7 @@ const selectedGroup = (groupName) => {
 };
 
 const storeRole = () => {
-    form.post(route("role.store"), {
+    form.post(route("admin.role.store"), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {

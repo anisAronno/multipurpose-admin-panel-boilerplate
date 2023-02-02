@@ -44,7 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('user.create')"
+                                    :href="route('admin.user.create')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -54,7 +54,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
-                                    :href="route('user.index')"
+                                    :href="route('admin.user.index')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -189,7 +189,10 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ user.created_at }}
+                                                        {{
+                                                            user
+                                                                .created_at
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -201,7 +204,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'user.show',
+                                                                            'admin.user.show',
                                                                             user.id
                                                                         )
                                                                     "
@@ -218,7 +221,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'user.edit',
+                                                                            'admin.user.edit',
                                                                             user.id
                                                                         )
                                                                     "

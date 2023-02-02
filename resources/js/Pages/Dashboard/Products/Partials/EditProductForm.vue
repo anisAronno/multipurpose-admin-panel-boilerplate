@@ -40,7 +40,7 @@ const previewImage = (e) => {
 };
 
 const updateProduct = () => {
-    form.post(route("product.update", props.product.id), {
+    form.post(route("admin.product.update", props.product.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {

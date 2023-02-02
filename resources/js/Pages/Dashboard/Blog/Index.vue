@@ -44,7 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('admin.blog.create')"
+                                    :href="route('admin.admin.blog.create')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -54,7 +54,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
-                                    :href="route('blog.index')"
+                                    :href="route('admin.blog.index')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -180,21 +180,15 @@ defineProps({
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
-                                                            :src="
-                                                                blog.image
-                                                            "
-                                                            :alt="
-                                                                blog.image
-                                                            "
+                                                            :src="blog.image"
+                                                            :alt="blog.image"
                                                             class="w-16 h-16"
                                                         />
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            blog.is_featured
-                                                        }}
+                                                        {{ blog.is_featured }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -204,9 +198,7 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            blog.created_at
-                                                        }}
+                                                        {{ blog.created_at }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -218,7 +210,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'blog.show',
+                                                                            'admin.blog.show',
                                                                             blog.id
                                                                         )
                                                                     "
@@ -235,7 +227,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'blog.edit',
+                                                                            'admin.blog.edit',
                                                                             blog.id
                                                                         )
                                                                     "
@@ -273,9 +265,7 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
-                                                                blogs.links
-                                                            "
+                                                            :links="blogs.links"
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

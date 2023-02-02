@@ -41,7 +41,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-2"
                         >
                             <Link
-                                :href="route('role.edit', role.id)"
+                                :href="route('admin.role.edit', role.id)"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -51,7 +51,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
-                                :href="route('role.create')"
+                                :href="route('admin.role.create')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -61,7 +61,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
-                                :href="route('role.index')"
+                                :href="route('admin.role.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon

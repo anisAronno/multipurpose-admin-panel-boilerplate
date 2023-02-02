@@ -37,7 +37,7 @@ const previewImage = (e) => {
 };
 
 const storeUser = () => {
-    form.post(route("user.store"), {
+    form.post(route("admin.user.store"), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {

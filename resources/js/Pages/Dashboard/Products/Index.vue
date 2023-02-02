@@ -44,7 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('product.create')"
+                                    :href="route('admin.product.create')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -54,7 +54,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
-                                    :href="route('product.index')"
+                                    :href="route('admin.product.index')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -209,7 +209,9 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ product.is_featured }}
+                                                        {{
+                                                            product.is_featured
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -231,7 +233,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'product.show',
+                                                                            'admin.product.show',
                                                                             product.id
                                                                         )
                                                                     "
@@ -248,7 +250,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'product.edit',
+                                                                            'admin.product.edit',
                                                                             product.id
                                                                         )
                                                                     "

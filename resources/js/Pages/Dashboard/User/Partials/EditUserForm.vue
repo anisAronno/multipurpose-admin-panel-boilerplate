@@ -27,7 +27,7 @@ const form = useForm({
 });
 
 const storeUser = () => {
-    form.post(route("user.update", props.user.id), {
+    form.post(route("admin.user.update", props.user.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {

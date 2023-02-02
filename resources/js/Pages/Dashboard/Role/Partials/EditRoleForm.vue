@@ -133,7 +133,7 @@ const selectedGroup = (groupName) => {
 };
 
 const updateRole = () => {
-    form.post(route("role.update", form.id), {
+    form.post(route("admin.role.update", form.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {

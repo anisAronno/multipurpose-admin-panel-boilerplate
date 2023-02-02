@@ -56,7 +56,7 @@ const previewImage = (e) => {
     const file = e.target.files[0];
     form.imagePreview = URL.createObjectURL(file);
 
-    form.post(route(`${props.route}.update`, props.id), {
+    form.post(route(`admin.${props.route}.update`, props.id), {
         preserveScroll: true,
         onSuccess: () => successEvent(),
         onError: () => {

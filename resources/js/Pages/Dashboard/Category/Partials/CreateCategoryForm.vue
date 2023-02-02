@@ -35,7 +35,7 @@ const previewImage = (e) => {
 };
 
 const storeCategory = () => {
-    form.post(route("category.store"), {
+    form.post(route("admin.category.store"), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
@@ -140,7 +140,6 @@ const storeCategory = () => {
                                     />
                                 </span>
                             </div>
-
 
                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel

@@ -37,7 +37,7 @@ const previewImage = (e) => {
 };
 
 const updateCategory = () => {
-    form.post(route("category.update", props.category.id), {
+    form.post(route("admin.category.update", props.category.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {

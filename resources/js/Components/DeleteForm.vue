@@ -16,7 +16,7 @@ const confirmDeletion = () => {
 };
 
 const deleteRecord = (id) => {
-    form.delete(route(`${props.data.model}.destroy`, id), {
+    form.delete(route(`admin.${props.data.model}.destroy`, id), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),

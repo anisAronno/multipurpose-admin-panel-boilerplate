@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreBlogRequest;
-use App\Http\Requests\UpdateBlogRequest; 
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Enums\Status;
 use App\Services\Cache\CacheServices;
@@ -51,7 +51,6 @@ class BlogController extends InertiaApplicationController
      */
     public function create()
     {
-        
         $statusArr = Status::values();
         return Inertia::render('Dashboard/Blog/Create', ['statusArr' => $statusArr]);
     }
@@ -73,7 +72,7 @@ class BlogController extends InertiaApplicationController
 
         try {
             Blog::create($data);
-            return Redirect::route('category.index')->with(['success' => true, 'message', 'Created successfull']);
+            return Redirect::route('admin.category.index')->with(['success' => true, 'message', 'Created successfull']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
         }
@@ -109,7 +108,7 @@ class BlogController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateBlogRequest $request, Blog $category)
-    { 
+    {
         try {
             $category->update($request->only('title', 'description', 'is_featured', 'status'));
 
@@ -117,7 +116,7 @@ class BlogController extends InertiaApplicationController
                 return Redirect::to(session('last_visited_blog_url'))->with(['success' => true, 'message', 'Updated successfull']);
             }
 
-            return Redirect::route('category.index')->with(['success' => true, 'message', 'Updated successfull']);
+            return Redirect::route('admin.category.index')->with(['success' => true, 'message', 'Updated successfull']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
         }

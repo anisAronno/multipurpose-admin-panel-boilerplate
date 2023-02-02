@@ -25,7 +25,7 @@ const confirmDeletion = () => {
 };
 
 const processDelete = () => {
-    form.delete(route(`${props.route}.destroy`, props.id), {
+    form.delete(route(`admin.${props.route}.destroy`, props.id), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),

@@ -44,7 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('role.create')"
+                                    :href="route('admin.role.create')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -54,7 +54,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
-                                    :href="route('role.index')"
+                                    :href="route('admin.role.index')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -154,7 +154,9 @@ defineProps({
                                                     <td
                                                         class="w-[15%] text-left p-4 text-gray-900"
                                                     >
-                                                        {{ role.created_at }}
+                                                        {{
+                                                            role.created_at
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="w-[10%] whitespace-nowrap text-right text-sm font-medium"
@@ -166,7 +168,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'role.show',
+                                                                            'admin.role.show',
                                                                             role.id
                                                                         )
                                                                     "
@@ -187,7 +189,7 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'role.edit',
+                                                                            'admin.role.edit',
                                                                             role.id
                                                                         )
                                                                     "

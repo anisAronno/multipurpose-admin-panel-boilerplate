@@ -56,7 +56,7 @@ const form = useForm({
             </p>
         </header>
         <form
-            @submit.prevent="form.patch(route('options.bulk.update'))"
+            @submit.prevent="form.patch(route('admin.options.bulk.update'))"
             class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-between"
         >
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">

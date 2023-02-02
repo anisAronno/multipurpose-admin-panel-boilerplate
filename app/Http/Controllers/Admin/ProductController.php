@@ -84,7 +84,7 @@ class ProductController extends InertiaApplicationController
             $product->categories()->attach($request->get('categories'));
         }
 
-        return Redirect::route('product.index')->with(['success' => true, 'message', 'Created successfull']);
+        return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfull']);
     }
 
       /**
@@ -137,7 +137,7 @@ class ProductController extends InertiaApplicationController
             return Redirect::to(session('last_visited_product_url'))->with(['success' => true, 'message', 'Updated successfull']);
         }
 
-        return Redirect::route('product.index')->with(['success' => true, 'message', 'Updated successfull']);
+        return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Updated successfull']);
     }
 
     /**

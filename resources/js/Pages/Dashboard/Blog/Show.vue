@@ -41,7 +41,9 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
-                                :href="route('category.edit', category.id)"
+                                :href="
+                                    route('admin.category.edit', category.id)
+                                "
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -51,7 +53,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
-                                :href="route('admin.category.create')"
+                                :href="route('admin.admin.category.create')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -61,7 +63,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
-                                :href="route('category.index')"
+                                :href="route('admin.category.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
