@@ -8,6 +8,7 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
 
 import {
+    BookOpenIcon,
     CogIcon,
     HomeIcon,
     ListBulletIcon,
@@ -35,7 +36,7 @@ const navigation = ref([
             route().current("user.show"),
         children: [
             {
-                name: "All User",
+                name: "User List",
                 route: "user.index",
                 icon: UsersIcon,
                 current: route().current("user.index"),
@@ -60,7 +61,7 @@ const navigation = ref([
             route().current("role.show"),
         children: [
             {
-                name: "Role",
+                name: "Role List",
                 route: "role.index",
                 icon: UserGroupIcon,
                 current: route().current("role.index"),
@@ -84,7 +85,7 @@ const navigation = ref([
             route().current("category.show"),
         children: [
             {
-                name: "Category",
+                name: "Category List",
                 route: "category.index",
                 icon: ListBulletIcon,
                 current: route().current("category.index"),
@@ -108,7 +109,7 @@ const navigation = ref([
             route().current("product.show"),
         children: [
             {
-                name: "Product",
+                name: "Product List",
                 route: "product.index",
                 icon: ShoppingCartIcon,
                 current: route().current("product.index"),
@@ -118,6 +119,30 @@ const navigation = ref([
                 route: "product.create",
                 icon: PlusCircleIcon,
                 current: route().current("product.create"),
+            },
+        ],
+    },
+    {
+        name: "Blog",
+        route: "blog.index",
+        icon: BookOpenIcon,
+        current:
+            route().current("blog.index") ||
+            route().current("blog.create") ||
+            route().current("blog.edit") ||
+            route().current("blog.show"),
+        children: [
+            {
+                name: "Blog List",
+                route: "blog.index",
+                icon: BookOpenIcon,
+                current: route().current("blog.index"),
+            },
+            {
+                name: "Create",
+                route: "blog.create",
+                icon: PlusCircleIcon,
+                current: route().current("blog.create"),
             },
         ],
     },
