@@ -28,7 +28,7 @@ class RolePermissionSeeder extends Seeder
         DB::table('role_has_permissions')->truncate();
         Schema::enableForeignKeyConstraints();
 
-        $user = new User;
+        $user = new User();
         $user->name = 'Anichur Rahaman';
         $user->email = 'admin@gmail.com';
         $user->password = bcrypt('password');
@@ -89,7 +89,7 @@ class RolePermissionSeeder extends Seeder
                 'group_name' => 'category',
                 'permissions' => [
 
-                    'category.create',
+                    'admin.category.create',
                     'category.view',
                     'category.edit',
                     'category.delete',
@@ -208,7 +208,7 @@ class RolePermissionSeeder extends Seeder
             'blog.edit',
             'blog.status',
 
-            'category.create',
+            'admin.category.create',
             'category.view',
             'category.edit',
             'category.status',
@@ -264,7 +264,7 @@ class RolePermissionSeeder extends Seeder
             'blog.delete',
             'blog.status',
 
-            'category.create',
+            'admin.category.create',
             'category.view',
             'category.edit',
             'category.delete',
@@ -333,7 +333,7 @@ class RolePermissionSeeder extends Seeder
             'blog.delete',
             'blog.status',
 
-            'category.create',
+            'admin.category.create',
             'category.view',
 
             'tag.create',
@@ -355,7 +355,7 @@ class RolePermissionSeeder extends Seeder
             'blog.delete',
             'blog.status',
 
-            'category.create',
+            'admin.category.create',
             'category.view',
 
             'tag.create',

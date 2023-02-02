@@ -20,7 +20,7 @@ return new class () extends Migration {
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2)->nullable();
-            $table->tinyInteger('is_featured')->default(0);
+            $table->string('is_featured')->default('Featured');
             $table->string('status')->default('Draft');
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

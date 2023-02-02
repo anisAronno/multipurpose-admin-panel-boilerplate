@@ -38,8 +38,12 @@ class FileHelpers
      * @param  mixed  $file
      * @return bool
      */
-    public static function isAllowFileType($path=''): bool
+    public static function isAllowFileType($path): bool
     {
+        if (!$path) {
+            return false;
+        }
+
         $extension = pathinfo(
             parse_url($path, PHP_URL_PATH),
             PATHINFO_EXTENSION
@@ -62,8 +66,8 @@ class FileHelpers
     {
         if (! empty($value)) {
             $path = stristr($value, 'images');
-            
-            if ( ! empty($path) && Storage::disk('local')->exists('public/'.$path)) {
+
+            if (! empty($path) && Storage::disk('local')->exists('public/'.$path)) {
                 return Storage::url($path);
             }
 
@@ -136,7 +140,7 @@ class FileHelpers
         if (self::isDefaultFile($path)) {
             return false;
         }
-        
+
         try {
             if (Storage::disk('local')->exists('public/'.$path)) {
                 Storage::disk('local')->delete('public/'.$path);

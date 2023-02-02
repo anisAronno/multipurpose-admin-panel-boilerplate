@@ -5,19 +5,19 @@ import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
-    products: Object,
+    categories: Object,
 });
 </script>
 
 <template>
-    <Head title="Products" />
+    <Head title="Categories" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Products
+                Categories
             </h2>
         </template>
 
@@ -32,19 +32,19 @@ defineProps({
                                 <h1
                                     class="text-xl font-semibold text-gray-900 dark:text-white"
                                 >
-                                    Products
+                                    Categories
                                 </h1>
                                 <p
                                     class="mt-2 text-sm text-gray-700 dark:text-white"
                                 >
-                                    A list of all the products.
+                                    A list of all the categories.
                                 </p>
                             </div>
                             <div
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('product.create')"
+                                    :href="route('admin.category.create')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -54,7 +54,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
-                                    :href="route('product.index')"
+                                    :href="route('category.index')"
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -84,7 +84,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="products.data.length > 0"
+                                        v-if="categories.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -115,19 +115,13 @@ defineProps({
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
-                                                        Category
+                                                        Featured
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Status
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
-                                                    >
-                                                        Featured
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -147,14 +141,14 @@ defineProps({
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="product in products.data"
-                                                    :key="product.id"
-                                                    :id="product.id"
+                                                    v-for="category in categories.data"
+                                                    :key="category.id"
+                                                    :id="category.id"
                                                 >
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        {{ product.title }}
+                                                        {{ category.title }}
                                                     </td>
 
                                                     <td
@@ -164,8 +158,8 @@ defineProps({
                                                             class="break-words w-10"
                                                         >
                                                             {{
-                                                                product.description
-                                                                    ? product.description
+                                                                category.description
+                                                                    ? category.description
                                                                           .split(
                                                                               " "
                                                                           )
@@ -186,40 +180,33 @@ defineProps({
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
-                                                            :src="product.image"
-                                                            :alt="product.image"
+                                                            :src="
+                                                                category.image
+                                                            "
+                                                            :alt="
+                                                                category.image
+                                                            "
                                                             class="w-16 h-16"
                                                         />
                                                     </td>
                                                     <td
-                                                        class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        <div
-                                                            v-for="category in product.categories"
-                                                            :key="category.id"
-                                                            class="mr-2"
-                                                        >
-                                                            <font-awesome-icon
-                                                                icon="fa-solid fa-product-shield"
-                                                                class="text-blue-400"
-                                                            />
-                                                            {{ category.title }}
-                                                        </div>
+                                                        {{
+                                                            category.is_featured
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ product.is_featured }}
+                                                        {{ category.status }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ product.status }}
-                                                    </td>
-                                                    <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
-                                                    >
-                                                        {{ product.created_at }}
+                                                        {{
+                                                            category.created_at
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -231,8 +218,8 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'product.show',
-                                                                            product.id
+                                                                            'category.show',
+                                                                            category.id
                                                                         )
                                                                     "
                                                                     class="btn btn-info"
@@ -248,8 +235,8 @@ defineProps({
                                                                 <Link
                                                                     :href="
                                                                         route(
-                                                                            'product.edit',
-                                                                            product.id
+                                                                            'category.edit',
+                                                                            category.id
                                                                         )
                                                                     "
                                                                     class="btn btn-primary"
@@ -263,8 +250,8 @@ defineProps({
 
                                                             <DeleteForm
                                                                 :data="{
-                                                                    id: product.id,
-                                                                    model: 'product',
+                                                                    id: category.id,
+                                                                    model: 'category',
                                                                 }"
                                                             ></DeleteForm>
                                                         </div>
@@ -273,7 +260,7 @@ defineProps({
                                             </tbody>
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="products.last_page > 1"
+                                                v-if="categories.last_page > 1"
                                             >
                                                 <tr>
                                                     <td
@@ -282,12 +269,12 @@ defineProps({
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                products.last_page >
+                                                                categories.last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                products.links
+                                                                categories.links
                                                             "
                                                         ></Pagination>
                                                     </td>

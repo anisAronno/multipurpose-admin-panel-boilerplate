@@ -12,8 +12,7 @@ import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
-    product: Object,
-    categories: Object,
+    category: Object,
     statusArr: Object,
 });
 
@@ -21,17 +20,15 @@ const titleInput = ref(null);
 const descriptionInput = ref(null);
 const imageInput = ref(null);
 const statusInput = ref(null);
-const categoryInput = ref(null);
 const isFeaturedInput = ref(null);
 
 const form = useForm({
-    title: props.product.title,
-    description: props.product.description,
-    oldImage: props.product.image,
-    imagePreview: props.product.image || defaultFile.placeholder,
-    status: props.product.status,
-    is_featured: props.product.is_featured,
-    categories: props.product.categoryArr,
+    title: props.category.title,
+    description: props.category.description,
+    oldImage: props.category.image,
+    imagePreview: props.category.image || defaultFile.placeholder,
+    status: props.category.status,
+    is_featured: props.category.is_featured,
 });
 
 const previewImage = (e) => {
@@ -39,8 +36,8 @@ const previewImage = (e) => {
     form.imagePreview = URL.createObjectURL(file);
 };
 
-const updateProduct = () => {
-    form.post(route("product.update", props.product.id), {
+const updateCategory = () => {
+    form.post(route("category.update", props.category.id), {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
@@ -57,9 +54,6 @@ const updateProduct = () => {
                 form.reset("is_featured");
                 isFeaturedInput.value.focus();
             }
-            if (form.errors.categories) {
-                categoryInput.value.focus();
-            }
             if (form.errors.image) {
                 imageInput.value.focus();
             }
@@ -70,7 +64,7 @@ const updateProduct = () => {
 
 <template>
     <section class="dark:text-white">
-        <form @submit.prevent="updateProduct" class="mt-6 space-y-6 p-3">
+        <form @submit.prevent="updateCategory" class="mt-6 space-y-6 p-3">
             <div class="mt-10 sm:mt-0">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
@@ -115,32 +109,6 @@ const updateProduct = () => {
                                 />
                             </div>
 
-                            <div
-                                class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"
-                            >
-                                <InputLabel
-                                    for="categories"
-                                    value="Category :"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-                                <Multiselect
-                                    v-model="form.categories"
-                                    :options="props.categories"
-                                    :selected="form.categories"
-                                    placeholder="Pick some..."
-                                    ref="categoryInput"
-                                    class="block w-full multiselect-green form-controll dark:text-gray-900"
-                                    mode="tags"
-                                    :searchable="true"
-                                    :close-on-select="false"
-                                >
-                                </Multiselect>
-
-                                <InputError
-                                    :message="form.errors.categories"
-                                    class="mt-2 col-start-2 col-span-4 absolute z-5"
-                                />
-                            </div>
                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel
                                     for="status"
@@ -169,21 +137,6 @@ const updateProduct = () => {
                                 />
                             </div>
                             <div
-                                class="col-span-6 sm:col-span-3 flex items-center justify-between"
-                            >
-                                <Image
-                                    :id="product.id"
-                                    :alt="product.title"
-                                    field="image"
-                                    route="product.image"
-                                    :isDeleteable="true"
-                                    v-model="product.oldImage"
-                                    ref="imageInput"
-                                    class="w-48 h-48 rounded-full overflow-clip bg-red-500"
-                                />
-                            </div>
-
-                            <div
                                 class="col-span-6 sm:col-span-3 lg:col-span-3 flex justify-between items-center mt-3"
                             >
                                 <InputLabel
@@ -201,6 +154,21 @@ const updateProduct = () => {
                                 <InputError
                                     :message="form.errors.is_featured"
                                     class="mt-2 col-start-2 col-span-4"
+                                />
+                            </div>
+
+                            <div
+                                class="col-span-6 sm:col-span-3 flex items-center justify-between"
+                            >
+                                <Image
+                                    :id="category.id"
+                                    :alt="category.title"
+                                    field="image"
+                                    route="category.image"
+                                    :isDeleteable="true"
+                                    v-model="form.oldImage"
+                                    ref="imageInput"
+                                    class="w-48 h-48 rounded-full overflow-clip bg-red-500"
                                 />
                             </div>
                         </div>

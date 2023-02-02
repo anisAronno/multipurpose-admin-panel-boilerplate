@@ -114,6 +114,58 @@ const storeProduct = () => {
                             </div>
 
                             <div
+                                class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"
+                            >
+                                <InputLabel
+                                    for="categories"
+                                    value="Category :"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                />
+                                <Multiselect
+                                    v-model="form.categories"
+                                    :options="props.categories"
+                                    :selected="form.categories"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-gray-900"
+                                    mode="tags"
+                                    :searchable="true"
+                                    :close-on-select="false"
+                                >
+                                </Multiselect>
+
+                                <InputError
+                                    :message="form.errors.categories"
+                                    class="mt-2 col-start-2 col-span-4 absolute z-5"
+                                />
+                            </div>
+                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                                <InputLabel
+                                    for="status"
+                                    value="Status :"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                />
+
+                                <Multiselect
+                                    v-model="form.status"
+                                    :options="statusArr"
+                                    :selected="form.status"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-black"
+                                    :searchable="true"
+                                    :classes="{
+                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                        singleLabelText:
+                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                    }"
+                                >
+                                </Multiselect>
+                                <InputError
+                                    :message="form.errors.status"
+                                    class="mt-2 col-start-2 col-span-4"
+                                />
+                            </div>
+
+                            <div
                                 class="col-span-6 sm:col-span-3 flex items-center justify-between"
                             >
                                 <div>
@@ -163,58 +215,6 @@ const storeProduct = () => {
 
                                 <InputError
                                     :message="form.errors.is_featured"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
-                            </div>
-
-                            <div
-                                class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"
-                            >
-                                <InputLabel
-                                    for="categories"
-                                    value="Category :"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-                                <Multiselect
-                                    v-model="form.categories"
-                                    :options="props.categories"
-                                    :selected="form.categories"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-gray-900"
-                                    mode="tags"
-                                    :searchable="true"
-                                    :close-on-select="false"
-                                >
-                                </Multiselect>
-
-                                <InputError
-                                    :message="form.errors.categories"
-                                    class="mt-2 col-start-2 col-span-4 absolute z-5"
-                                />
-                            </div>
-                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                                <InputLabel
-                                    for="status"
-                                    value="Status :"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-
-                                <Multiselect
-                                    v-model="form.status"
-                                    :options="statusArr"
-                                    :selected="form.status"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-black"
-                                    :searchable="true"
-                                    :classes="{
-                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
-                                        singleLabelText:
-                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
-                                    }"
-                                >
-                                </Multiselect>
-                                <InputError
-                                    :message="form.errors.status"
                                     class="mt-2 col-start-2 col-span-4"
                                 />
                             </div>

@@ -8,6 +8,7 @@ use App\Traits\CheckStatusAndFeture;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
 use App\Enums\Status;
 use App\Enums\Featured;
@@ -78,6 +79,13 @@ class Category extends Model
     public function getImageAttribute($value)
     {
         return  $this->attributes['image'] = FileHelpers::getUrl($value);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if ($value !== null) {
+            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
+        }
     }
 
     public function products()

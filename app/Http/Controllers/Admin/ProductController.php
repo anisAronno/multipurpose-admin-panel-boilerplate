@@ -121,17 +121,16 @@ class ProductController extends InertiaApplicationController
 
     /**
      * Summary of update
-     * @param Request $request
+     * @param UpdateProductRequest $request
      * @param Product $product
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->only('title', 'description', 'is_featured', 'status'));
 
         if ($request->categories) {
             $product->categories()->sync($request->categories);
-            $product->assignRole($request->roles);
         }
 
         if (session('last_visited_product_url')) {
@@ -150,10 +149,6 @@ class ProductController extends InertiaApplicationController
     {
         if ($product->image) {
             FileHelpers::deleteFile($product->image);
-
-            $product->update([$product->image = null]);
-
-            return $this->successWithMessage('Deleted successfull');
         }
 
         $product->delete();

@@ -8,6 +8,6 @@ enum Featured: string
 {
     use EnumToArray;
 
-    case OK = '1';
-    case NOT = '0';
+    case OK = 'Featured';
+    case NOT = 'N/A';
 }

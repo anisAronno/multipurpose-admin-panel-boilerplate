@@ -10,6 +10,7 @@ import { onMounted, ref } from "vue";
 import {
     CogIcon,
     HomeIcon,
+    ListBulletIcon,
     PlusCircleIcon,
     ShoppingCartIcon,
     UserGroupIcon,
@@ -69,6 +70,30 @@ const navigation = ref([
                 route: "role.create",
                 icon: PlusCircleIcon,
                 current: route().current("role.create"),
+            },
+        ],
+    },
+    {
+        name: "Category",
+        route: "category.index",
+        icon: ListBulletIcon,
+        current:
+            route().current("category.index") ||
+            route().current("admin.category.create") ||
+            route().current("category.edit") ||
+            route().current("category.show"),
+        children: [
+            {
+                name: "Category",
+                route: "category.index",
+                icon: ListBulletIcon,
+                current: route().current("category.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.category.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.category.create"),
             },
         ],
     },

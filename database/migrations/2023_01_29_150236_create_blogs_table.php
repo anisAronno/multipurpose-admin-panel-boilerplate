@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->string('slug', 255)->unique();
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
-            $table->tinyInteger('is_featured')->default(0);
+            $table->string('is_featured')->default('Featured');
             $table->string('status')->default('Draft');
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

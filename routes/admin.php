@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OptionController;
@@ -50,9 +51,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
      * Product Route
      */
     Route::resource('product', ProductController::class, ['except' => ['update']]);
-    Route::post('/product/image/{product}', [ProductController::class, 'imageUpdate'])->name('product.image.update');
     Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::post('/product/image/{product}', [ProductController::class, 'imageUpdate'])->name('product.image.update');
     Route::delete('/product/image/{product}', [ProductController::class, 'imageDelete'])->name('product.image.destroy');
+
+
+    /**
+     * Category Route
+     */
+    Route::resource('category', CategoryController::class, ['except' => ['update', 'create']]);
+    Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::post('/category/image/{category}', [CategoryController::class, 'imageUpdate'])->name('category.image.update');
+    Route::delete('/category/image/{category}', [CategoryController::class, 'imageDelete'])->name('category.image.destroy');
+    Route::get('admin/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
 
 
     /**
