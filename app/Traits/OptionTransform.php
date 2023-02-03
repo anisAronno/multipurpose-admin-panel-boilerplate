@@ -39,11 +39,6 @@ trait OptionTransform
             $option = self::where('option_key', $key)->first();
             $option->option_value = $value;
 
-            if ($key=='language') {
-                Artisan::call('cache:clear');
-                Artisan::call('config:clear');
-            }
-
             return $option->save();
         } catch (\Throwable $th) {
             return false;

@@ -48,7 +48,7 @@ class OptionSeeder extends Seeder
         $option::setOption('user_default_role', 'user');
         $option::setOption('site_url', env('APP_URL', 'http://multipurpose-admin-panel-boilerplate.test'));
         $option::setOption('time_zone', 'Asia/Dhaka');
-        $option::setOption('language', env('APP_LANGUAGE', 'en')); 
+        $option::setOption('language', env('APP_LANGUAGE', 'en'));
         $option::setOption('address', 'Asia/Dhaka');
         $option::setOption('any_one_can_register', 'false');
         $option::setOption('allow_social_login', 'false');
@@ -56,7 +56,12 @@ class OptionSeeder extends Seeder
         $option::setOption('social_login_fields', json_encode(['google', 'github']));
         $option::setOption('pagination_limit', 10);
         $option::setOption('user_default_status', 'Active');
-        $option::setOption('map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14602.680845745981!2d90.39695083037563!3d23.79475530307877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c70514d09a15%3A0x5070158fbfaf01bd!2sBanani%20Graveyard!5e0!3m2!1sen!2sbd!4v1675110550083!5m2!1sen!2sbd
-');
+        $option::setOption('map', 'Dhaka');
+        $option::setOption('facebook_url', 'https://facebook.com');
+        $option::setOption('instagram_url', 'https://instagram.com');
+        $option::setOption('twitter_url', 'https://twitter.com');
+        $option::setOption('youtube_channel_url', 'https://youtube.com');
+        $option::setOption('linkedin_url', 'https://linkedin.com');
+        $option::setOption('github_URL', 'https://github.com');
     }
 }

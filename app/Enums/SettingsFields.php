@@ -27,4 +27,11 @@ enum SettingsFields: string
     case PAGINATION_LIMIT = 'pagination_limit';
     case USER_DEFAULT_STATUS = 'user_default_status';
     case COLLECT_USER_LOCATION = 'collect_user_location';
+    case MAP = 'map';
+    case FACEBOOK_URL = 'facebook_url';
+    case INSTAGRAM_URL = 'instagram_url';
+    case TWITTER_URL = 'twitter_url';
+    case YOUTUBE_CHANNEL_URL = 'youtube_channel_url';
+    case LINKEDIN_URL = 'linkedin_url';
+    case GITHUB_URL = 'github_URL';
 }

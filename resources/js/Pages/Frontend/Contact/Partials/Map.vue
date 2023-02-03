@@ -1,9 +1,9 @@
 <script setup></script>
 <template>
     <div class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
-        <div class="mx-auto max-w-7xl py-6 px-6 sm:py-10 lg:px-8">
+        <div class="mx-auto max-w-7xl py-6 px-6 sm:py-10 lg:px-8"> 
             <iframe
-                :src="$page.props.global.options.map"
+                :src="`https://maps.google.com/maps?q=${$page.props.global.options.address}&z=15&output=embed`"
                 width="100%"
                 height="400"
                 style="border: 0"
