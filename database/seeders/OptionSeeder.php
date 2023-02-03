@@ -62,6 +62,6 @@ class OptionSeeder extends Seeder
         $option::setOption('twitter_url', 'https://twitter.com');
         $option::setOption('youtube_channel_url', 'https://youtube.com');
         $option::setOption('linkedin_url', 'https://linkedin.com');
-        $option::setOption('github_URL', 'https://github.com');
+        $option::setOption('github_url', 'https://github.com');
     }
 }

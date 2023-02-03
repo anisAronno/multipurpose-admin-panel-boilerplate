@@ -1,7 +1,7 @@
 <script setup>
 import Loader from "@/Components/Loader.vue";
 import Toast from "@/Components/Toast.vue";
-import { useDashboardMenu } from "@/composables/useDashboardMenu";
+import { useDashboardMenu } from "@/Composables/useDashboardMenu";
 import DesktopMenu from "@/Layouts/Partials/DesktopMenu.vue";
 import Header from "@/Layouts/Partials/Header.vue";
 import MobileMenu from "@/Layouts/Partials/MobileMenu.vue";
@@ -14,10 +14,12 @@ function toggleCurrent(item) {
         return;
     }
 
-    if (item.route.split(".")[0] == route().current().split(".")[0]) {
+    if (
+        item.route.split(".").slice(0, 2).join(".") ==
+        route().current().split(".").slice(0, 2).join(".")
+    ) {
         return;
     }
-
     item.current = !item.current;
 }
 

@@ -1,7 +1,25 @@
 <script setup>
-import { useMenu } from "@/composables/useMenu";
+import { useMenu } from "@/Composables/useMenu";
+import { useSocial } from "@/Composables/useSocial";
+import { usePage } from "@inertiajs/inertia-vue3";
 
-const { navigation, socialLink } = useMenu();
+const { navigation } = useMenu();
+const { socialLink } = useSocial();
+const page = usePage();
+
+const socialUrls = {
+    facebook: page.props.value.global.options.facebook_url,
+    github: page.props.value.global.options.github_url,
+    instagram: page.props.value.global.options.instagram_url,
+    linkedin: page.props.value.global.options.linkedin_url,
+    twitter: page.props.value.global.options.twitter_url,
+    youtube: page.props.value.global.options.youtube_channel_url,
+};
+
+const updatedSocials = socialLink.map((social) => {
+    const url = socialUrls[social.name.toLowerCase()];
+    return url ? { ...social, href: url } : social;
+});
 </script>
 
 <template>
@@ -22,8 +40,9 @@ const { navigation, socialLink } = useMenu();
                 </div>
             </nav>
             <div class="mt-10 flex justify-center space-x-10">
-                <Link
-                    v-for="item in socialLink"
+                <a
+                    target="_blank"
+                    v-for="item in updatedSocials"
                     :key="item.name"
                     :href="item.href"
                     class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-200"
@@ -34,7 +53,7 @@ const { navigation, socialLink } = useMenu();
                         class="h-6 w-6"
                         aria-hidden="true"
                     />
-                </Link>
+                </a>
             </div>
             <p class="mt-10 text-center text-md leading-5 text-gray-500">
                 &copy; {{ currentYear }}

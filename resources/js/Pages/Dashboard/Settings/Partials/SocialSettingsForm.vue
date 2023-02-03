@@ -13,7 +13,7 @@ const form = useForm({
     twitter_url: options.twitter_url,
     youtube_channel_url: options.youtube_channel_url,
     linkedin_url: options.linkedin_url,
-    github_URL: options.github_URL,
+    github_url: options.github_url,
 });
 </script>
 
@@ -132,20 +132,20 @@ const form = useForm({
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel
                     class="text-md sm:text-lg lg:text-xl"
-                    for="github_URL"
+                    for="github_url"
                     value="Github Link: "
                 />
 
                 <TextInput
-                    id="github_URL"
+                    id="github_url"
                     type="text"
                     class="block w-full"
-                    v-model="form.github_URL"
+                    v-model="form.github_url"
                     required
-                    autocomplete="github_URL"
+                    autocomplete="github_url"
                 />
 
-                <InputError class="mt-2" :message="form.errors.github_URL" />
+                <InputError class="mt-2" :message="form.errors.github_url" />
             </div>
 
             <div

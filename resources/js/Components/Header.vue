@@ -1,7 +1,7 @@
 <script setup>
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Menu from "@/Components/Menu.vue";
-import { useMenu } from "@/composables/useMenu";
+import { useMenu } from "@/Composables/useMenu";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 

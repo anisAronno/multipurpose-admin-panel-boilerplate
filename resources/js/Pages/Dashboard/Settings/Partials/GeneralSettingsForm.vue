@@ -21,7 +21,7 @@ const form = useForm({
     twitter_url: options.twitter_url,
     youtube_channel_url: options.youtube_channel_url,
     linkedin_url: options.linkedin_url,
-    github_URL: options.github_URL,
+    github_url: options.github_url,
 });
 </script>
 
@@ -143,7 +143,7 @@ const form = useForm({
 
                 <InputError class="mt-2" :message="form.errors.address" />
             </div>
- 
+
             <div
                 class="flex items-center justify-center gap-4 py-5 sm:py-10 flex-auto col-span-full"
             >

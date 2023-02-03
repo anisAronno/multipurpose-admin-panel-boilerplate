@@ -9,7 +9,7 @@ enum SettingsFields: string
     use EnumToArray;
 
     case SITE_NAME = 'site_name';
-    case SITE_TITLE = 'site_title'; 
+    case SITE_TITLE = 'site_title';
     case ORGANIZATION_NAME = 'organization_name';
     case SITE_URL = 'site_url';
     case LOGO = 'logo';
@@ -19,7 +19,7 @@ enum SettingsFields: string
     case EMAIL = 'email';
     case PHONE = 'phone';
     case TIME_ZONE = 'time_zone';
-    case LANGUAGE = 'language'; 
+    case LANGUAGE = 'language';
     case USER_DEFAULT_ROLE = 'user_default_role';
     case ANY_ONE_CAN_REGISTER = 'any_one_can_register';
     case ALLOW_SOCIAL_LOGIN = 'allow_social_login';
@@ -33,5 +33,5 @@ enum SettingsFields: string
     case TWITTER_URL = 'twitter_url';
     case YOUTUBE_CHANNEL_URL = 'youtube_channel_url';
     case LINKEDIN_URL = 'linkedin_url';
-    case GITHUB_URL = 'github_URL';
+    case GITHUB_URL = 'github_url';
 }
