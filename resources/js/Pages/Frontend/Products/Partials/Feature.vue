@@ -31,7 +31,7 @@ defineProps({
                             <img
                                 :src="specialFeature.image"
                                 :alt="specialFeature.title"
-                                class="w-8 h-8 md:w-12 md:h-12 xl:w-16 xl:h-16"
+                                class="w-8 h-8 md:w-12 md:h-12 xl:w-16 xl:h-16 rounded-full"
                             />
                         </div>
                     </div>

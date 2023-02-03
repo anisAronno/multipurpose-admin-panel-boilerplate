@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
-
 
 use App\Enums\SocialLoginFields;
 use App\Enums\UserStatus;
@@ -28,11 +26,10 @@ class OptionController extends InertiaApplicationController
         $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit', 'update']]);
         $this->middleware('permission:options.delete', ['only' => ['destroy']]);
     }
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Summary of index
+     * @param Request $request
+     * @return \Inertia\Response
      */
     public function index(Request $request)
     {
@@ -43,6 +40,23 @@ class OptionController extends InertiaApplicationController
         return Inertia::render('Dashboard/Settings/Index')->with(['roleArr' => $roleArr, 'socialLoginFields' => $socialLoginFields, 'userDefaultStatus' => $userDefaultStatus]);
     }
 
+    /**
+     * Summary of socialSettings
+     * @return \Inertia\Response
+     */
+    public function generalSettings()
+    {
+        return Inertia::render('Dashboard/Settings/GeneraleSettings');
+    }
+
+    /**
+     * Summary of socialSettings
+     * @return \Inertia\Response
+     */
+    public function socialSettings()
+    {
+        return Inertia::render('Dashboard/Settings/SocialeSettings');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -63,6 +77,7 @@ class OptionController extends InertiaApplicationController
     {
        //
     }
+
 
     /**
      * Display the specified resource.
@@ -87,11 +102,10 @@ class OptionController extends InertiaApplicationController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateOptionRequest  $request
-     * @param  \App\Models\Option  $option
-     * @return \Illuminate\Http\Response
+     * Summary of update
+     * @param UpdateOptionRequest $request
+     * @param Option $option
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateOptionRequest $request, Option $option)
     {
@@ -119,11 +133,10 @@ class OptionController extends InertiaApplicationController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateOptionRequest  $request
-     * @param  \App\Models\Option  $option
-     * @return \Illuminate\Http\Response
+     * Summary of bulkUpdate
+     * @param UpdateOptionRequest $request
+     * @param Option $option
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function bulkUpdate(UpdateOptionRequest $request, Option $option)
     {
@@ -139,10 +152,9 @@ class OptionController extends InertiaApplicationController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Option  $option
-     * @return \Illuminate\Http\Response
+     * Summary of destroy
+     * @param Option $option
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Option $option)
     {

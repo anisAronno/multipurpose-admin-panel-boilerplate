@@ -16,17 +16,17 @@ const { navigation, socialLink } = useMenu();
                 <div v-for="item in navigation" :key="item.name" class="pb-6">
                     <Link
                         :href="item.route"
-                        class="text-sm leading-6 text-gray-600 hover:text-gray-900"
+                        class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50"
                         >{{ item.name }}</Link
                     >
                 </div>
             </nav>
             <div class="mt-10 flex justify-center space-x-10">
-                <a
+                <Link
                     v-for="item in socialLink"
                     :key="item.name"
                     :href="item.href"
-                    class="text-gray-400 hover:text-gray-500"
+                    class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-200"
                 >
                     <span class="sr-only">{{ item.name }}</span>
                     <component
@@ -34,7 +34,7 @@ const { navigation, socialLink } = useMenu();
                         class="h-6 w-6"
                         aria-hidden="true"
                     />
-                </a>
+                </Link>
             </div>
             <p class="mt-10 text-center text-md leading-5 text-gray-500">
                 &copy; {{ currentYear }}
@@ -44,7 +44,7 @@ const { navigation, socialLink } = useMenu();
             <p class="text-center text-sm mt-3 leading-5 text-gray-500">
                 {{ __("design.developed.by", "Design & Developed By") }}
                 <a
-                    class="text-lg text-blue-600"
+                    class="text-md text-blue-600"
                     target="_blank"
                     href="https://anichur.com"
                     >Anichur Rahaman</a

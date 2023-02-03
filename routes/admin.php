@@ -51,13 +51,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::delete('/user/image/{user}', [UserController::class, 'avatarDelete'])->name('user.image.destroy');
 
         /**
-         * Options Route
-         */
-        Route::resource('options', OptionController::class, ['except' => ['update']]);
-        Route::post('/options/update/{option:option_key}', [OptionController::class, 'update'])->name('options.update');
-        Route::patch('/options/update', [OptionController::class, 'bulkUpdate'])->name('options.bulk.update');
-
-        /**
          * Product Route
          */
         Route::resource('product', ProductController::class, ['except' => ['update']]);
@@ -72,7 +65,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('category', CategoryController::class, ['except' => ['update']]);
         Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
         Route::post('/category/image/{category}', [CategoryController::class, 'imageUpdate'])->name('category.image.update');
-        Route::delete('/category/image/{category}', [CategoryController::class, 'imageDelete'])->name('category.image.destroy'); 
+        Route::delete('/category/image/{category}', [CategoryController::class, 'imageDelete'])->name('category.image.destroy');
 
         /**
          * Blog Route
@@ -80,7 +73,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('blog', BlogController::class, ['except' => ['update']]);
         Route::post('/blog/update/{blog}', [BlogController::class, 'update'])->name('blog.update');
         Route::post('/blog/image/{blog}', [BlogController::class, 'imageUpdate'])->name('blog.image.update');
-        Route::delete('/blog/image/{blog}', [BlogController::class, 'imageDelete'])->name('blog.image.destroy'); 
+        Route::delete('/blog/image/{blog}', [BlogController::class, 'imageDelete'])->name('blog.image.destroy');
 
         /**
          * Contact Route
@@ -98,9 +91,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('special-feature', SpecialFeatureController::class, ['except' => ['update']]);
         Route::post('/special-feature/update/{specialFeature}', [SpecialFeatureController::class, 'update'])->name('special-feature.update');
         Route::post('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageUpdate'])->name('special-feature.image.update');
-        Route::delete('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageDelete'])->name('special-feature.image.destroy'); 
+        Route::delete('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageDelete'])->name('special-feature.image.destroy');
 
 
+        /**
+         * Options Route
+         */
+        Route::resource('settings', OptionController::class, ['except' => ['update']]);
+        Route::post('/settings/update/{option:option_key}', [OptionController::class, 'update'])->name('settings.update');
+        Route::patch('/settings/update', [OptionController::class, 'bulkUpdate'])->name('settings.bulk.update');
+
+
+        Route::get('/general/settings', [OptionController::class, 'generalSettings'])->name('settings.general');
+
+        Route::get('/social/settings', [OptionController::class, 'socialSettings'])->name('settings.social');
 
         Route::post('mark-read', [NotificationController::class, 'markNotification'])
         ->name('notification.mark.read');

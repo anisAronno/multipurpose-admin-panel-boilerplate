@@ -2,8 +2,6 @@
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Textarea from "@/Components/Textarea.vue";
-import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
 import { useCountries, useLanguage } from "@/composables/useCountries";
 import defaultFile from "@/Stores/defaultFile";
@@ -24,30 +22,17 @@ const options = usePage().props.value.global.options;
 const languageArray = useLanguage(options.existing_language_file);
 
 const form = useForm({
-    site_name: options.site_name,
-    site_title: options.site_title,
     site_url: options.site_url,
-    address: options.address,
-    email: options.email,
-    phone: options.phone,
     time_zone: options.time_zone,
     language: options.language,
     languageArray: languageArray,
     user_default_role: options.user_default_role,
     any_one_can_register: options.any_one_can_register,
     pagination_limit: options.pagination_limit,
-    organization_name: options.organization_name,
     user_default_status: options.user_default_status,
     collect_user_location: options.collect_user_location,
     allow_social_login: options.allow_social_login,
     social_login_fields: JSON.parse(options.social_login_fields || [""]),
-    map: options.map,
-    facebook_url: options.facebook_url,
-    instagram_url: options.instagram_url,
-    twitter_url: options.twitter_url,
-    youtube_channel_url: options.youtube_channel_url,
-    linkedin_url: options.linkedin_url,
-    github_URL: options.github_URL,
 });
 </script>
 
@@ -63,136 +48,9 @@ const form = useForm({
             </p>
         </header>
         <form
-            @submit.prevent="form.patch(route('admin.options.bulk.update'))"
-            class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-between "
+            @submit.prevent="form.patch(route('admin.settings.bulk.update'))"
+            class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-between"
         >
-            <div class="absolute right-0 top-0 hidden sm:block">
-                <div
-                class="flex items-center justify-center gap-4 md:py-5 sm:py-10 flex-auto col-span-full "
-            >
-                <PrimaryButton
-                    class="btn btn-primary w-32 h-12 sm:w-40 sm:h-12 sm:text-lg"
-                    :disabled="form.processing"
-                    >Update</PrimaryButton
-                >
-
-                <Transition
-                    enter-from-class="opacity-0"
-                    leave-to-class="opacity-0"
-                    class="transition ease-in-out"
-                >
-                    <p
-                        v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600 dark:text-gray-400"
-                    >
-                        Saved.
-                    </p>
-                </Transition>
-            </div>
-            </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-xl"
-                    for="site_name"
-                    value="Site Name:"
-                />
-
-                <TextInput
-                    id="site_name"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.site_name"
-                    required
-                    autofocus
-                    autocomplete="site_name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.site_name" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-xl"
-                    for="site_title"
-                    value="Site Title:"
-                />
-                <TextInput
-                    id="site_title"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.site_title"
-                    required
-                    autocomplete="site_title"
-                />
-
-                <InputError class="mt-2" :message="form.errors.site_title" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel class="text-xl" for="email" value="Email:" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="email"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel class="text-xl" for="phone" value="Phone:" />
-
-                <TextInput
-                    id="phone"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.phone"
-                    required
-                    autocomplete="phone"
-                />
-
-                <InputError class="mt-2" :message="form.errors.phone" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-xl"
-                    for="organization_name"
-                    value="Organization Name: "
-                />
-
-                <TextInput
-                    id="organization_name"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.organization_name"
-                    required
-                    autocomplete="organization_name"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.organization_name"
-                />
-            </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel class="text-xl" for="address" value="Address: " />
-
-                <Textarea
-                    id="address"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.address"
-                    required
-                    autocomplete="address"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
             <div
                 class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full flex justify-between items-center"
             >
@@ -387,141 +245,6 @@ const form = useForm({
                 >
                 </Multiselect>
                 <InputError class="mt-2" :message="form.errors.language" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="map"
-                    value="Organization Google Map Location: "
-                />
-
-                <TextInput
-                    id="map"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.map"
-                    required
-                    autocomplete="map"
-                />
-
-                <InputError class="mt-2" :message="form.errors.map" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="facebook_url"
-                    value="Facebook Link: "
-                />
-
-                <TextInput
-                    id="facebook_url"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.facebook_url"
-                    required
-                    autocomplete="facebook_url"
-                />
-
-                <InputError class="mt-2" :message="form.errors.facebook_url" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="instagram_url"
-                    value="Instagram Link: "
-                />
-
-                <TextInput
-                    id="instagram_url"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.instagram_url"
-                    required
-                    autocomplete="instagram_url"
-                />
-
-                <InputError class="mt-2" :message="form.errors.instagram_url" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="twitter_url"
-                    value="Twitter Link: "
-                />
-
-                <TextInput
-                    id="twitter_url"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.twitter_url"
-                    required
-                    autocomplete="twitter_url"
-                />
-
-                <InputError class="mt-2" :message="form.errors.twitter_url" />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="youtube_channel_url"
-                    value="Youtube Channel Link: "
-                />
-
-                <TextInput
-                    id="youtube_channel_url"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.youtube_channel_url"
-                    required
-                    autocomplete="youtube_channel_url"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.youtube_channel_url"
-                />
-            </div>
-
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="linkedin_url"
-                    value="Linkedin Link: "
-                />
-
-                <TextInput
-                    id="linkedin_url"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.linkedin_url"
-                    required
-                    autocomplete="linkedin_url"
-                />
-
-                <InputError class="mt-2" :message="form.errors.linkedin_url" />
-            </div>
-            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
-                <InputLabel
-                    class="text-md sm:text-lg lg:text-xl"
-                    for="github_URL"
-                    value="Github Link: "
-                />
-
-                <TextInput
-                    id="github_URL"
-                    type="text"
-                    class="block w-full"
-                    v-model="form.github_URL"
-                    required
-                    autocomplete="github_URL"
-                />
-
-                <InputError class="mt-2" :message="form.errors.github_URL" />
             </div>
 
             <div

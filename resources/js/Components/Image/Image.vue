@@ -21,7 +21,7 @@ const props = defineProps({
 
     route: {
         type: String,
-        default: "options",
+        default: "settings",
         require: false,
     },
 

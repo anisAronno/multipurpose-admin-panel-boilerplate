@@ -1,13 +1,8 @@
 <script setup>
 import Sync from "@/Components/Icon/Sync.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import SettingsForm from "@/Pages/Dashboard/Settings/Partials/SettingsForm.vue";
+import SocialSettingsForm from "@/Pages/Dashboard/Settings/Partials/SocialSettingsForm.vue";
 import { Head, usePage } from "@inertiajs/inertia-vue3";
-defineProps({
-    roleArr: Object,
-    socialLoginFields: Object,
-    userDefaultStatus: Object,
-});
 
 const options = usePage().props.value.global.options;
 </script>
@@ -21,7 +16,7 @@ const options = usePage().props.value.global.options;
                 <h2
                     class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
                 >
-                   Application Settings
+                   Socail Settings
                 </h2>
                 <Link
                     :href="route('cache.clear')"
@@ -38,11 +33,7 @@ const options = usePage().props.value.global.options;
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
                 >
-                    <SettingsForm
-                        :roleArr="roleArr"
-                        :socialLoginFields="socialLoginFields"
-                        :userDefaultStatus="userDefaultStatus"
-                    ></SettingsForm>
+                    <SocialSettingsForm></SocialSettingsForm>
                 </div>
             </div>
         </div>

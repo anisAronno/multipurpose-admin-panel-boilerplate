@@ -1,0 +1,226 @@
+import { ref } from "vue";
+
+import {
+    BookOpenIcon,
+    CogIcon, EnvelopeIcon, HomeIcon, LightBulbIcon, ListBulletIcon,
+    PlusCircleIcon,
+    ShoppingCartIcon,
+    UserGroupIcon,
+    UsersIcon
+} from "@heroicons/vue/24/outline";
+ 
+ 
+const sidebarOpen = ref(false);
+const isOpenSidebar = ref(true);
+const isLoaded = ref(false);
+
+const navigation = ref([
+    {
+        name: "Dashboard",
+        route: "dashboard",
+        icon: HomeIcon,
+        current: route().current("dashboard"),
+    },
+    {
+        name: "User",
+        route: "admin.user.index",
+        icon: UsersIcon,
+        current:
+            route().current("admin.user.index") ||
+            route().current("admin.user.create") ||
+            route().current("admin.user.edit") ||
+            route().current("admin.user.show"),
+        children: [
+            {
+                name: "User List",
+                route: "admin.user.index",
+                icon: UsersIcon,
+                current: route().current("admin.user.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.user.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.user.create"),
+            },
+        ],
+    },
+
+    {
+        name: "Role",
+        route: "admin.role.index",
+        icon: UserGroupIcon,
+        current:
+            route().current("admin.role.index") ||
+            route().current("admin.role.create") ||
+            route().current("admin.role.edit") ||
+            route().current("admin.role.show"),
+        children: [
+            {
+                name: "Role List",
+                route: "admin.role.index",
+                icon: UserGroupIcon,
+                current: route().current("admin.role.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.role.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.role.create"),
+            },
+        ],
+    },
+    {
+        name: "Category",
+        route: "admin.category.index",
+        icon: ListBulletIcon,
+        current:
+            route().current("admin.category.index") ||
+            route().current("admin.category.create") ||
+            route().current("admin.category.edit") ||
+            route().current("admin.category.show"),
+        children: [
+            {
+                name: "Category List",
+                route: "admin.category.index",
+                icon: ListBulletIcon,
+                current: route().current("admin.category.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.category.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.category.create"),
+            },
+        ],
+    },
+    {
+        name: "Product",
+        route: "admin.product.index",
+        icon: ShoppingCartIcon,
+        current:
+            route().current("admin.product.index") ||
+            route().current("admin.product.create") ||
+            route().current("admin.product.edit") ||
+            route().current("admin.product.show"),
+        children: [
+            {
+                name: "Product List",
+                route: "admin.product.index",
+                icon: ShoppingCartIcon,
+                current: route().current("admin.product.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.product.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.product.create"),
+            },
+        ],
+    },
+    {
+        name: "Blog",
+        route: "admin.blog.index",
+        icon: BookOpenIcon,
+        current:
+            route().current("admin.blog.index") ||
+            route().current("admin.blog.create") ||
+            route().current("admin.blog.edit") ||
+            route().current("admin.blog.show"),
+        children: [
+            {
+                name: "Blog List",
+                route: "admin.blog.index",
+                icon: BookOpenIcon,
+                current: route().current("admin.blog.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.blog.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.blog.create"),
+            },
+        ],
+    },
+    {
+        name: "Special Features",
+        route: "admin.special-feature.index",
+        icon: LightBulbIcon,
+        current:
+            route().current("admin.special-feature.index") ||
+            route().current("admin.special-feature.create") ||
+            route().current("admin.special-feature.edit") ||
+            route().current("admin.special-feature.show"),
+        children: [
+            {
+                name: "Special Features List",
+                route: "admin.special-feature.index",
+                icon: LightBulbIcon,
+                current: route().current("admin.special-feature.index"),
+            },
+            {
+                name: "Create",
+                route: "admin.special-feature.create",
+                icon: PlusCircleIcon,
+                current: route().current("admin.special-feature.create"),
+            },
+        ],
+    },
+    {
+        name: "Message",
+        route: "admin.contact.index",
+        icon: EnvelopeIcon,
+        current: route().current("admin.contact.index"),
+        children: [
+            {
+                name: "Message",
+                route: "admin.contact.index",
+                icon: EnvelopeIcon,
+                current: route().current("admin.contact.index"),
+            },
+        ],
+    },
+    {
+        name: "Settings",
+        route: "admin.settings.index",
+        icon: CogIcon,
+        current:
+            route().current("admin.settings.index") ||
+            route().current("admin.settings.general")||
+            route().current("admin.settings.general"),
+        children: [
+            {
+                name: "Application Settings",
+                route: "admin.settings.index",
+                icon: CogIcon,
+                current: route().current("admin.settings.index"),
+            },
+            {
+                name: "General Settings",
+                route: "admin.settings.general",
+                icon: CogIcon,
+                current: route().current("admin.settings.general"),
+            },
+            {
+                name: "Social Settings",
+                route: "admin.settings.social",
+                icon: CogIcon,
+                current: route().current("admin.settings.social"),
+            },
+        ],
+    },
+]);
+
+/**--------------------------------------
+ * @Export Data and
+ * Variable Data
+ * --------------------------------------*/
+
+export function useDashboardMenu() {
+    return {
+        navigation,
+        sidebarOpen,
+        isOpenSidebar,
+        isLoaded,
+    };
+}
