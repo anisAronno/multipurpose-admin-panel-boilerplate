@@ -207,6 +207,12 @@ const navigation = ref([
                 icon: CogIcon,
                 current: route().current("admin.settings.social"),
             },
+            {
+                name: "Model Feature",
+                route: "admin.settings.model",
+                icon: CogIcon,
+                current: route().current("admin.settings.model"),
+            },
         ],
     },
 ]);

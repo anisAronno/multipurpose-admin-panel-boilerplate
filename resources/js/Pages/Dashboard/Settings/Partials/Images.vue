@@ -41,7 +41,7 @@ const options = usePage().props.value.global.options;
                 field="banner"
                 :isDeleteable="true"
                 v-model="options.banner"
-                class="w-48 h-48 rounded-full overflow-clip bg-red-500"
+                class="w-48 h-48 rounded-sm overflow-clip bg-red-500"
             />
         </div>
     </div>

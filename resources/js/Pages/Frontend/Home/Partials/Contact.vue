@@ -48,7 +48,7 @@
                                     <div class="flex-shrink-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg"
+                                            :src="$page.props.global.options.model_one"
                                             alt=""
                                         />
                                     </div>
@@ -56,7 +56,7 @@
                                     <div class="mt-6 flex-shrink-0 sm:mt-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg"
+                                            :src="$page.props.global.options.model_two"
                                             alt=""
                                         />
                                     </div>
@@ -67,7 +67,7 @@
                                     <div class="flex-shrink-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-01.jpg"
+                                            :src="$page.props.global.options.model_three"
                                             alt=""
                                         />
                                     </div>
@@ -75,7 +75,7 @@
                                     <div class="mt-6 flex-shrink-0 sm:mt-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            src="https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-02.jpg"
+                                            :src="$page.props.global.options.model_four"
                                             alt=""
                                         />
                                     </div>

@@ -63,5 +63,10 @@ class OptionSeeder extends Seeder
         $option::setOption('youtube_channel_url', 'https://youtube.com');
         $option::setOption('linkedin_url', 'https://linkedin.com');
         $option::setOption('github_url', 'https://github.com');
+
+        $option::setOption('model_one', 'https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg');
+        $option::setOption('model_two', 'https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg');
+        $option::setOption('model_three', 'https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-01.jpg');
+        $option::setOption('model_four', 'https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-02.jpg');
     }
 }

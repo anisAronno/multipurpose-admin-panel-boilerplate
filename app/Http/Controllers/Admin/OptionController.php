@@ -57,48 +57,14 @@ class OptionController extends InertiaApplicationController
     {
         return Inertia::render('Dashboard/Settings/SocialeSettings');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreOptionRequest  $request
-     * @return \Illuminate\Http\Response
+     * Summary of socialSettings
+     * @return \Inertia\Response
      */
-    public function store(StoreOptionRequest $request)
-    {
-       //
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Option  $option
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Option $option)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Option  $option
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Option $option)
-    {
-        //
+    public function modelControll()
+    { 
+        return Inertia::render('Dashboard/Settings/ModelControll');
     }
 
     /**
@@ -156,16 +122,16 @@ class OptionController extends InertiaApplicationController
      * @param Option $option
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Option $option)
-    {
+    public function destroy(Option $settings)
+    { 
         try {
-            if ($option->option_value) {
-                FileHelpers::deleteFile($option->option_value);
+            if ($settings->option_value) {
+                FileHelpers::deleteFile($settings->option_value);
             }
 
-            $option::updateOption($option->option_key, null);
+            $settings::updateOption($settings->option_key, null);
 
-            return Redirect::back()->with(['success' => true, 'message' => 'Succefully Updated', 'data' => $option]);
+            return Redirect::back()->with(['success' => true, 'message' => 'Succefully Updated', 'data' => $settings]);
         } catch (\Throwable $th) {
             return $this->failedWithMessage('Delete failed!');
         }

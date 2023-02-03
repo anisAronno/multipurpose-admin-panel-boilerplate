@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\Role\RolesController;
 use App\Http\Controllers\Admin\BlogController;
@@ -105,6 +106,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/general/settings', [OptionController::class, 'generalSettings'])->name('settings.general');
 
         Route::get('/social/settings', [OptionController::class, 'socialSettings'])->name('settings.social');
+
+        Route::get('/model/settings', [OptionController::class, 'modelControll'])->name('settings.model');
+
+        Route::get('/page', [PageController::class, 'index'])->name('page.index');
 
         Route::post('mark-read', [NotificationController::class, 'markNotification'])
         ->name('notification.mark.read');

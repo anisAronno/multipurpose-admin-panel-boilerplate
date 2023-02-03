@@ -34,4 +34,8 @@ enum SettingsFields: string
     case YOUTUBE_CHANNEL_URL = 'youtube_channel_url';
     case LINKEDIN_URL = 'linkedin_url';
     case GITHUB_URL = 'github_url';
+    case MODEL_ONE = 'model_one';
+    case MODEL_TWO = 'model_two';
+    case MODEL_THREE = 'model_three';
+    case MODEL_FOUR = 'model_four';
 }
