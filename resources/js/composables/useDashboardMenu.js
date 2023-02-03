@@ -182,36 +182,36 @@ const navigation = ref([
     },
     {
         name: "Settings",
-        route: "admin.settings.index",
+        route: "admin.option.index",
         icon: CogIcon,
         current:
-            route().current("admin.settings.index") ||
-            route().current("admin.settings.general")||
-            route().current("admin.settings.general"),
+            route().current("admin.option.index") ||
+            route().current("admin.option.general")||
+            route().current("admin.option.general"),
         children: [
             {
                 name: "Application Settings",
-                route: "admin.settings.index",
+                route: "admin.option.index",
                 icon: CogIcon,
-                current: route().current("admin.settings.index"),
+                current: route().current("admin.option.index"),
             },
             {
                 name: "General Settings",
-                route: "admin.settings.general",
+                route: "admin.option.general",
                 icon: CogIcon,
-                current: route().current("admin.settings.general"),
+                current: route().current("admin.option.general"),
             },
             {
                 name: "Social Settings",
-                route: "admin.settings.social",
+                route: "admin.option.social",
                 icon: CogIcon,
-                current: route().current("admin.settings.social"),
+                current: route().current("admin.option.social"),
             },
             {
                 name: "Model Feature",
-                route: "admin.settings.model",
+                route: "admin.option.model",
                 icon: CogIcon,
-                current: route().current("admin.settings.model"),
+                current: route().current("admin.option.model"),
             },
         ],
     },

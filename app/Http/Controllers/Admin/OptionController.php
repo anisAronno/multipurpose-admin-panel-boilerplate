@@ -122,16 +122,16 @@ class OptionController extends InertiaApplicationController
      * @param Option $option
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Option $settings)
+    public function destroy(Option $option)
     { 
         try {
-            if ($settings->option_value) {
-                FileHelpers::deleteFile($settings->option_value);
+            if ($option->option_value) {
+                FileHelpers::deleteFile($option->option_value);
             }
 
-            $settings::updateOption($settings->option_key, null);
+            $option::updateOption($option->option_key, null);
 
-            return Redirect::back()->with(['success' => true, 'message' => 'Succefully Updated', 'data' => $settings]);
+            return Redirect::back()->with(['success' => true, 'message' => 'Succefully Updated', 'data' => $option]);
         } catch (\Throwable $th) {
             return $this->failedWithMessage('Delete failed!');
         }

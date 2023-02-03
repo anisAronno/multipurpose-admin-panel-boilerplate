@@ -56,10 +56,10 @@ const options = usePage().props.value.global.options;
                                 Second Model
                             </div>
                             <Image
-                                id="model_three"
-                                field="model_three"
+                                id="model_two"
+                                field="model_two"
                                 :isDeleteable="true"
-                                v-model="options.model_three"
+                                v-model="options.model_two"
                                 class="w-48 h-48 rounded-sm overflow-clip bg-red-500"
                             />
                         </div>
@@ -84,8 +84,8 @@ const options = usePage().props.value.global.options;
                                 Fourth Model
                             </div>
                             <Image
-                                id="model_three"
-                                field="model_three"
+                                id="model_four"
+                                field="model_four"
                                 :isDeleteable="true"
                                 v-model="options.model_four"
                                 class="w-48 h-48 rounded-sm overflow-clip bg-red-500"

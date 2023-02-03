@@ -98,16 +98,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         /**
          * Options Route
          */
-        Route::resource('settings', OptionController::class, ['except' => ['update']]);
-        Route::post('/settings/update/{option:option_key}', [OptionController::class, 'update'])->name('settings.update');
-        Route::patch('/settings/update', [OptionController::class, 'bulkUpdate'])->name('settings.bulk.update');
+        Route::resource('option', OptionController::class, ['except' => ['update', 'show', 'edit']]);
+        Route::post('/settings/update/{option:option_key}', [OptionController::class, 'update'])->name('option.update');
+        Route::patch('/settings/update', [OptionController::class, 'bulkUpdate'])->name('option.bulk.update');
 
 
-        Route::get('/general/settings', [OptionController::class, 'generalSettings'])->name('settings.general');
+        Route::get('/general/settings', [OptionController::class, 'generalSettings'])->name('option.general');
 
-        Route::get('/social/settings', [OptionController::class, 'socialSettings'])->name('settings.social');
+        Route::get('/social/settings', [OptionController::class, 'socialSettings'])->name('option.social');
 
-        Route::get('/model/settings', [OptionController::class, 'modelControll'])->name('settings.model');
+        Route::get('/model/settings', [OptionController::class, 'modelControll'])->name('option.model');
 
         Route::get('/page', [PageController::class, 'index'])->name('page.index');
 

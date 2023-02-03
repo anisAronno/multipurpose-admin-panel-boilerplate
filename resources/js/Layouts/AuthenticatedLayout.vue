@@ -18,9 +18,8 @@ function toggleCurrent(item) {
         item.route.split(".").slice(0, 2).join(".") ==
         route().current().split(".").slice(0, 2).join(".")
     ) {
-        item.current = true;
+        return;
     }
-    
     item.current = !item.current;
 }
 

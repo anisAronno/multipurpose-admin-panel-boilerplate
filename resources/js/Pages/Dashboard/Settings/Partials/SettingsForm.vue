@@ -48,7 +48,7 @@ const form = useForm({
             </p>
         </header>
         <form
-            @submit.prevent="form.patch(route('admin.settings.bulk.update'))"
+            @submit.prevent="form.patch(route('admin.option.bulk.update'))"
             class="mt-6 grid auto-cols-auto sm:grid-cols-2 gap-5 justify-between"
         >
             <div
