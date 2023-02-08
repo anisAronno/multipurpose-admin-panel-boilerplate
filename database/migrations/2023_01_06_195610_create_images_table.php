@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->morphs('imageable');
-            $table->string('key', 120);
-            $table->string('image');
-            $table->string('meta')->nullable();
+            $table->string('title', 255)->nullable();
+            $table->string('url');
+            $table->string('mimes')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

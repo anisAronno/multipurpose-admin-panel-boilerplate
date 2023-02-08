@@ -15,8 +15,10 @@ class Image extends Model
     protected $fillable = [
         'imageable_type',
         'imageable_id',
-        'key',
-        'image',
+        'title',
+        'url',
+        'mimes',
+        'type',
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
@@ -24,7 +26,7 @@ class Image extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['image', 'key'])
+        ->logOnly(['url', 'title'])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }

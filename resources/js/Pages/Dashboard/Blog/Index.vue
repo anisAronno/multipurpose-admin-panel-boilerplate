@@ -121,6 +121,12 @@ defineProps({
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
+                                                        Category
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                    >
                                                         Status
                                                     </th>
                                                     <th
@@ -180,21 +186,43 @@ defineProps({
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
-                                                            :src="
-                                                                blog.image
-                                                            "
-                                                            :alt="
-                                                                blog.image
-                                                            "
+                                                            :src="blog.image"
+                                                            :alt="blog.image"
                                                             class="w-16 h-16"
                                                         />
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            blog.is_featured
-                                                        }}
+                                                        {{ blog.is_featured }}
+                                                    </td>
+                                                    <td
+                                                        class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                    >
+                                                        <div
+                                                            v-for="(
+                                                                category, index
+                                                            ) in blog.categories"
+                                                            :key="category.id"
+                                                            class="mr-2"
+                                                        >
+                                                            {{
+                                                                index + 1 + "."
+                                                            }}
+                                                            <Link
+                                                                class="text-blue-500"
+                                                                :href="
+                                                                    route(
+                                                                        'admin.category.show',
+                                                                        category.id
+                                                                    )
+                                                                "
+                                                            >
+                                                                {{
+                                                                    category.title
+                                                                }}</Link
+                                                            >
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -204,9 +232,7 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            blog.created_at
-                                                        }}
+                                                        {{ blog.created_at }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -273,9 +299,7 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
-                                                                blogs.links
-                                                            "
+                                                            :links="blogs.links"
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

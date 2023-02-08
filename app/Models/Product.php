@@ -84,13 +84,14 @@ class Product extends Model
          return  $this->attributes['image'] = FileHelpers::getUrl($value);
      }
 
-     public function categories()
-     {
-         return $this->belongsToMany(Category::class, 'category_product')->withTimestamps();
-     }
 
-       public function user()
-       {
-           return $this->belongsTo(User::class, 'user_id', 'id');
-       }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categoryable');
+    }
 }

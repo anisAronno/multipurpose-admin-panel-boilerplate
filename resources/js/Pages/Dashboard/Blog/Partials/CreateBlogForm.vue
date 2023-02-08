@@ -12,6 +12,7 @@ import Multiselect from "@vueform/multiselect";
 const props = defineProps({
     statusArr: Object,
     featuredArr: Object,
+    categories: Object,
 });
 
 const titleInput = ref(null);
@@ -19,6 +20,7 @@ const descriptionInput = ref(null);
 const imageInput = ref(null);
 const statusInput = ref(null);
 const isFeaturedInput = ref(null);
+const categoryInput = ref(null);
 
 const form = useForm({
     title: "",
@@ -27,6 +29,7 @@ const form = useForm({
     imagePreview: defaultFile.placeholder,
     status: "",
     is_featured: false,
+    categories: [],
 });
 
 const previewImage = (e) => {
@@ -54,6 +57,9 @@ const storeBlog = () => {
             }
             if (form.errors.image) {
                 imageInput.value.focus();
+            }
+            if (form.errors.categories) {
+                categoryInput.value.focus();
             }
         },
     });
@@ -140,7 +146,32 @@ const storeBlog = () => {
                                     />
                                 </span>
                             </div>
+                            <div
+                                class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"
+                            >
+                                <InputLabel
+                                    for="categories"
+                                    value="Category :"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                />
+                                <Multiselect
+                                    v-model="form.categories"
+                                    :options="props.categories"
+                                    :selected="form.categories"
+                                    ref="categoryInput"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-gray-900"
+                                    mode="tags"
+                                    :searchable="true"
+                                    :close-on-select="false"
+                                >
+                                </Multiselect>
 
+                                <InputError
+                                    :message="form.errors.categories"
+                                    class="mt-2 col-start-2 col-span-4 absolute z-5"
+                                />
+                            </div>
                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel
                                     for="status"

@@ -14,7 +14,7 @@ return [
     ],
 
     'category_show' => [
-            'title_1' => "All product under the",
+            'title_1' => "All items under the",
             'title_2' => "category", 
     ],
     

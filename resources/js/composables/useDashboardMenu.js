@@ -1,3 +1,4 @@
+import { useWindowSize } from "@vueuse/core";
 import { ref } from "vue";
 
 import {
@@ -9,10 +10,15 @@ import {
     UsersIcon
 } from "@heroicons/vue/24/outline";
  
- 
+const { width } = useWindowSize();
+
 const sidebarOpen = ref(false);
-const isOpenSidebar = ref(true);
+const isOpenSidebar = ref(false);
 const isLoaded = ref(false);
+
+if(width.value > 1400){
+    isOpenSidebar.value = true;
+}
 
 const navigation = ref([
     {

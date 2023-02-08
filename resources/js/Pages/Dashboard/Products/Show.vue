@@ -152,15 +152,26 @@ defineProps({
                                                     class="whitespace-normal p-3 text-md text-gray-500"
                                                 >
                                                     <div
-                                                        v-for="category in product.categories"
+                                                        v-for="(
+                                                            category, index
+                                                        ) in product.categories"
                                                         :key="category.id"
                                                         class="mr-2"
                                                     >
-                                                        <font-awesome-icon
-                                                            icon="fa-solid fa-product-shield"
-                                                            class="text-blue-400"
-                                                        />
-                                                        {{ category.title }}
+                                                        {{ index + 1 + "." }}
+                                                        <Link
+                                                            class="text-blue-500"
+                                                            :href="
+                                                                route(
+                                                                    'admin.category.show',
+                                                                    category.id
+                                                                )
+                                                            "
+                                                        >
+                                                            {{
+                                                                category.title
+                                                            }}</Link
+                                                        >
                                                     </div>
                                                 </td>
                                             </tr>

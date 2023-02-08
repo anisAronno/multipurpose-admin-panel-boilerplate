@@ -9,7 +9,8 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import { onMounted } from "vue";
 
 const { navigation, sidebarOpen, isOpenSidebar, isLoaded } = useDashboardMenu();
-function toggleCurrent(item) {
+
+function mouseOver(item) {
     if (!isOpenSidebar) {
         return;
     }
@@ -20,7 +21,25 @@ function toggleCurrent(item) {
     ) {
         return;
     }
-    item.current = !item.current;
+    setTimeout(() => {
+        item.current = true;
+    }, 100);
+}
+function mouseOut(item) {
+    if (!isOpenSidebar) {
+        return;
+    }
+
+    if (
+        item.route.split(".").slice(0, 2).join(".") ==
+        route().current().split(".").slice(0, 2).join(".")
+    ) {
+        return;
+    }
+
+    setTimeout(() => {
+        item.current = false;
+    }, 100);
 }
 
 function loaded(data = true) {
@@ -54,7 +73,7 @@ onMounted(() => {
                 :sidebarOpen="sidebarOpen"
                 :navigation="navigation"
                 @toggleMobileMenu="sidebarOpen = !sidebarOpen"
-                @toggleCurrent="toggleCurrent"
+                @mouseOver="mouseOver"
             ></MobileMenu>
 
             <!-- Static sidebar for desktop -->
@@ -62,7 +81,8 @@ onMounted(() => {
             <DesktopMenu
                 :navigation="navigation"
                 :isOpenSidebar="isOpenSidebar"
-                @toggleCurrent="toggleCurrent"
+                @mouseOver="mouseOver"
+                @mouseOut="mouseOut"
             ></DesktopMenu>
 
             <div

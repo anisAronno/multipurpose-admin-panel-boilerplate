@@ -7,6 +7,7 @@ defineProps({
     blog: Object,
     statusArr: Object,
     featuredArr: Object,
+    categories: Object,
 });
 </script>
 
@@ -81,6 +82,7 @@ defineProps({
                         :blog="blog"
                         :statusArr="statusArr"
                         :featuredArr="featuredArr"
+                        :categories="categories"
                     ></EditBlogForm>
                 </div>
             </div>

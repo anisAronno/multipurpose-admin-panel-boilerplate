@@ -41,7 +41,7 @@ class ProductController extends InertiaApplicationController
 
 
         $products = Cache::remember($key, 10, function () {
-            return Product::with('categories')->orderBy('id', 'desc')->paginate(10);
+            return Product::with(['categories'])->orderBy('id', 'desc')->paginate(10);
         });
 
 
@@ -59,6 +59,7 @@ class ProductController extends InertiaApplicationController
     public function create()
     {
         $categories = Category::select('id as value', 'title as label')->get();
+
         $statusArr = Status::values();
         $featuredArr = Featured::values();
 
@@ -80,13 +81,16 @@ class ProductController extends InertiaApplicationController
             $data['image'] = FileHelpers::upload($request, 'image', 'products');
         }
 
-        $product = Product::create($data);
+        try {
+            $product = Product::create($data);
 
-        if ($product) {
-            $product->categories()->attach($request->get('categories'));
+            if ($product) {
+                $product->categories()->attach($request->get('categories'));
+            }
+            return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfull']);
+        } catch (\Throwable $th) {
+            return $this->failedWithMessage($th->getMessage());
         }
-
-        return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfull']);
     }
 
       /**
@@ -95,7 +99,7 @@ class ProductController extends InertiaApplicationController
        * @param Product $product
        * @return \Inertia\Response
        */
-      public function show( Product $product)
+      public function show(Product $product)
       {
           $product->load(['categories']);
 
@@ -116,8 +120,7 @@ class ProductController extends InertiaApplicationController
         $statusArr = Status::values();
         $featuredArr = Featured::values();
 
-        $categories = Category::select('id as value', 'title as label')->get();
-
+        $categories = Category::select('id as value', 'title as label') ->get();
 
         return Inertia::render('Dashboard/Products/Edit', ['product' => $product, 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
     }

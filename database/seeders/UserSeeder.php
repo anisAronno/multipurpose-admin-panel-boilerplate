@@ -21,11 +21,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::factory()->count(10)
-        ->has(Blog::factory()->count(3))
+        ->has(Blog::factory()->count(3)->has(Category::factory()->count(2), 'categories'))
         ->has(Address::factory()->count(3))
         ->has(SocialLogin::factory()->count(3))
-        ->has(Product::factory()->count(3)
-        ->has(Category::factory()->count(2), 'categories', 'category_product'))
+        ->has(Product::factory()->count(3)->has(Category::factory()->count(2), 'categories'))
         ->has(LoginHistory::factory()->count(3))->create()->each(function ($user) {
             $user->assignRole('user');
         });

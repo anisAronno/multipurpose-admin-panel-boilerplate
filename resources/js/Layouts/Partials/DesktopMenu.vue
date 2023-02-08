@@ -36,8 +36,8 @@ defineProps({
                                     ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
                                     : '',
                             ]"
-                            @mouseover="$emit('toggleCurrent', item)"
-                            @mouseout="$emit('toggleCurrent', item)"
+                            @mouseover="$emit('mouseOver', item)"
+                            @mouseout="$emit('mouseOut', item)"
                         >
                             <Link
                                 :href="route(item.route)"

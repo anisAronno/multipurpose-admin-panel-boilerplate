@@ -88,12 +88,17 @@ class Category extends Model
         }
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'category_product')->withTimestamps();
-    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function blogs()
+    {
+        return $this->morphedByMany(Blog::class, 'categoryable');
+    }
+    public function products()
+    {
+        return $this->morphedByMany(Product::class, 'categoryable');
+    } 
 }

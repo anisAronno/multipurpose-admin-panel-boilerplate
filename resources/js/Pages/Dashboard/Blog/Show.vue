@@ -41,9 +41,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
-                                :href="
-                                    route('admin.blog.edit', blog.id)
-                                "
+                                :href="route('admin.blog.edit', blog.id)"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -114,6 +112,12 @@ defineProps({
                                                 >
                                                     Status
                                                 </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                >
+                                                    Category
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody
@@ -143,6 +147,32 @@ defineProps({
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
                                                     {{ blog.status }}
+                                                </td>
+                                                <td
+                                                    class="whitespace-normal p-3 text-md text-gray-500"
+                                                >
+                                                    <div
+                                                        v-for="(
+                                                            category, index
+                                                        ) in blog.categories"
+                                                        :key="category.id"
+                                                        class="mr-2"
+                                                    >
+                                                        {{ index + 1 + "." }}
+                                                        <Link
+                                                            class="text-blue-500"
+                                                            :href="
+                                                                route(
+                                                                    'admin.category.show',
+                                                                    category.id
+                                                                )
+                                                            "
+                                                        >
+                                                            {{
+                                                                category.title
+                                                            }}</Link
+                                                        >
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>

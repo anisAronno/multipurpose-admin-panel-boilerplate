@@ -31,11 +31,13 @@ class HomeController extends Controller
         });
 
         $featuredCategory = Cache::remember($featuredCatKey, 10, function () {
-            return Category::isActive()->isFeatured()->orderBy('id', 'desc')->limit(3)->get();
+            return Category::whereHas('products', function ($query) {
+                $query->where('categoryable_type', Product::class);
+            })->isActive()->isFeatured()->orderBy('id', 'desc')->limit(3)->get();
         });
 
         $featuredBlog = Cache::remember($featuredBlogKey, 10, function () {
-            return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->limit(3)->get();
+            return Blog::isActive()->isFeatured()->with(['categories'])->orderBy('id', 'desc')->with('user')->limit(3)->get();
         });
 
         $specialFeatures = Cache::remember($specialFeatureKey, 10, function () {

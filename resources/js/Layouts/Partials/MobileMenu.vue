@@ -89,7 +89,7 @@ defineProps({
                                             ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
                                             : '',
                                     ]"
-                                    @click="$emit('toggleCurrent', item)"
+                                    @click="$emit('mouseOver', item)"
                                 >
                                     <div
                                         :class="[

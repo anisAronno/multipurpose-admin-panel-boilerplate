@@ -28,7 +28,7 @@ defineProps({
                             class="h-full w-full object-cover object-center"
                         />
                     </div>
-                    <h3 class="mt-4 text-base font-semibold text-gray-900">
+                    <h3 class="mt-4 text-base font-semibold text-gray-900 dark:text-white">
                         {{ category.title }}
                     </h3>
                     <p class="mt-2 text-sm text-gray-500">

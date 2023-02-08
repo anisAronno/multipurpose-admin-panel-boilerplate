@@ -45,6 +45,17 @@ defineProps({
                         class="flex flex-1 flex-col justify-between bg-white p-6"
                     >
                         <div class="flex-1">
+                            <p
+                                className="text-sm font-medium text-blue-500"
+                                v-for="cat in blog.categories.slice(0, 3)" :key="cat.id"
+                            >
+                                <Link
+                                    :href="route('category.show', cat.slug)"
+                                    className="hover:underline"
+                                >
+                                    {{ cat.title }}
+                                </Link>
+                            </p>
                             <a :href="blog.href" class="mt-2 block">
                                 <Link
                                     :href="route('blog.show', blog.slug)"

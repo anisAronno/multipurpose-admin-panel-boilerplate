@@ -24,7 +24,7 @@ class CategoryController extends Controller
         $key = CacheServices::getCategoryCacheKey($currentPage);
 
         $categories = Cache::remember($key, 10, function () {
-            return Category::isActive()->isFeatured()->paginate(9);
+            return Category::whereHas('blogs')->orWhereHas('products')->isActive()->isFeatured()->orderBy('id', 'desc')->paginate(9);
         });
 
         return Inertia::render('Frontend/Category/Index')->with(['categories' => $categories]);
@@ -60,7 +60,9 @@ class CategoryController extends Controller
     {
         if (! $category->isActive()) {
             abort(403);
-        } 
+        }
+
+        $category->load(['blogs', 'products']);
 
         return Inertia::render('Frontend/Category/Show')->with(['category' => $category->load('products')]);
     }

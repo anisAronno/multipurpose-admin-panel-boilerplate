@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Enums\Status;
 use App\Enums\Featured;
+use App\Models\Category;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,13 +32,13 @@ class BlogController extends InertiaApplicationController
 
         if (! empty($request->search)) {
             $q = $request->search;
-            $blogs = Blog::where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+            $blogs = Blog::with(['categories'])->where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
 
             return Inertia::render('Dashboard/Blog/Index', ['blogs' => $blogs]);
         }
 
         $blogs = Cache::remember($key, 10, function () {
-            return Blog::orderBy('id', 'desc')->paginate(10);
+            return Blog::with(['categories'])->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_blog_url', $request->fullUrl());
@@ -52,11 +53,11 @@ class BlogController extends InertiaApplicationController
      */
     public function create()
     {
+        $categories = Category::select('id as value', 'title as label')->get();
         $statusArr = Status::values();
-
         $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Blog/Create', ['statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Blog/Create', ['categories' => $categories, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
     }
 
     /**
@@ -75,7 +76,12 @@ class BlogController extends InertiaApplicationController
         }
 
         try {
-            Blog::create($data);
+            $blog = Blog::create($data);
+
+            if ($blog) {
+                $blog->categories()->attach($request->get('categories'));
+            }
+
             return Redirect::route('admin.blog.index')->with(['success' => true, 'message', 'Created successfull']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
@@ -88,10 +94,12 @@ class BlogController extends InertiaApplicationController
        * @param Blog $blog
        * @return \Inertia\Response
        */
-      public function show( Blog $blog)
-      {
-          return Inertia::render('Dashboard/Blog/Show')->with(['blog' => $blog]);
-      }
+    public function show(Blog $blog)
+    {
+        $blog->load(['categories']);
+
+        return Inertia::render('Dashboard/Blog/Show')->with(['blog' => $blog]);
+    }
 
     /**
      * Summary of edit
@@ -100,10 +108,16 @@ class BlogController extends InertiaApplicationController
      */
     public function edit(Blog $blog)
     {
+        $blog->categoryArr = $blog->categories->map(function ($item, $key) {
+            return $item->id;
+        });
+
         $statusArr = Status::values();
         $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Blog/Edit', ['blog' => $blog, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        $categories = Category::select('id as value', 'title as label')->get();
+
+        return Inertia::render('Dashboard/Blog/Edit', ['blog' => $blog, 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
     }
 
     /**
@@ -116,6 +130,10 @@ class BlogController extends InertiaApplicationController
     {
         try {
             $blog->update($request->only('title', 'description', 'is_featured', 'status'));
+
+            if ($request->categories) {
+                $blog->categories()->sync($request->categories);
+            }
 
             if (session('last_visited_blog_url')) {
                 return Redirect::to(session('last_visited_blog_url'))->with(['success' => true, 'message', 'Updated successfull']);

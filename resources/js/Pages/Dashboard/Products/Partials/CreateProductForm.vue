@@ -126,6 +126,7 @@ const storeProduct = () => {
                                     v-model="form.categories"
                                     :options="props.categories"
                                     :selected="form.categories"
+                                    ref="categoryInput"
                                     placeholder="Pick some..."
                                     class="block w-full multiselect-green form-controll dark:text-gray-900"
                                     mode="tags"
