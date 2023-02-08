@@ -41,7 +41,7 @@ Route::get('/blog/{blog:slug}', [BlogController::class, 'show'])->name('blog.sho
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
 Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
 
-Route::get('/products', [ProductController::class, 'index'])->name('product');
+Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');

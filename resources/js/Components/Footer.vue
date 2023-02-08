@@ -23,18 +23,18 @@ const updatedSocials = socialLink.map((social) => {
 </script>
 
 <template>
-    <footer class="bg-white">
+    <footer>
         <div
-            class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+            class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-300 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <nav
-                class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
+                class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12 "
                 aria-label="Footer"
             >
                 <div v-for="item in navigation" :key="item.name" class="pb-6">
                     <Link
                         :href="item.route"
-                        class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:hover:text-gray-50"
+                        class="text-sm leading-6 text-gray-800 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-50"
                         >{{ item.name }}</Link
                     >
                 </div>
@@ -45,7 +45,7 @@ const updatedSocials = socialLink.map((social) => {
                     v-for="item in updatedSocials"
                     :key="item.name"
                     :href="item.href"
-                    class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-200"
+                    class="text-gray-50 hover:text-gray-500 dark:hover:text-gray-200"
                 >
                     <span class="sr-only">{{ item.name }}</span>
                     <component
@@ -55,13 +55,13 @@ const updatedSocials = socialLink.map((social) => {
                     />
                 </a>
             </div>
-            <p class="mt-10 text-center text-md leading-5 text-gray-500">
+            <p class="mt-10 text-center text-md leading-5 text-gray-600 dark:text-gray-400">
                 &copy; {{ currentYear }}
                 {{ $page.props.global.options.organization_name }}.
-                {{ __("copyright.text", "All rights reserved.") }}
+                {{ __("footer.copyright.text") }}
             </p>
-            <p class="text-center text-sm mt-3 leading-5 text-gray-500">
-                {{ __("design.developed.by", "Design & Developed By") }}
+            <p class="text-center text-sm mt-3 leading-5 text-gray-500 ">
+                {{ __("footer.design.developed_by") }}
                 <a
                     class="text-md text-blue-600"
                     target="_blank"

@@ -64,7 +64,14 @@ class CategoryController extends Controller
 
         $category->load(['blogs', 'products']);
 
-        return Inertia::render('Frontend/Category/Show')->with(['category' => $category->load('products')]);
+        $category->load(['blogs' => function ($query) {
+            $query->isActive();
+        }, 'products' => function ($query) {
+            $query->isActive();
+        }])->isActive();
+
+
+        return Inertia::render('Frontend/Category/Show')->with(['category' => $category]);
     }
 
     /**

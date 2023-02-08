@@ -8,6 +8,8 @@ return [
         'description' => "Phasellus lorem quam molestie id quisque diam aenean nulla
                     in. Accumsan in quis quis nunc, ullamcorper malesuada.
                     Eleifend condimentum id viverra nulla.",
+        'product_title' => 'All Product under the',
+        'blog_title' => 'All Blog under the',
     ],
     "hero" =>[
         'category' => 'Category Page'
