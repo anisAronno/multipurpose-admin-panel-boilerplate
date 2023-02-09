@@ -10,7 +10,7 @@ defineProps({
         class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:py-12"
     >
         <div
-            class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
+            class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-full lg:px-8"
         >
             <h2 class="text-lg font-semibold text-cyan-600">
                 {{ __("blog.heading") }}
@@ -25,7 +25,7 @@ defineProps({
             </p>
         </div>
         <div
-            class="mx-auto mt-12 grid max-w-md gap-8 px-6 sm:max-w-lg lg:max-w-7xl lg:grid-cols-3 lg:px-8"
+            class="mx-auto mt-12 grid max-w-md gap-8 px-6 sm:max-w-lg lg:max-w-full lg:grid-cols-3 lg:px-8"
         >
             <div
                 v-for="blog in blogs.data"

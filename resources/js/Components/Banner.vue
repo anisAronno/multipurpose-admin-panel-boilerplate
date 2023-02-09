@@ -5,7 +5,7 @@
         :style="`background-image: url(${$page.props.global.options.banner}); `"
         id="bg-banner"
     >
-        <div class="mx-auto max-w-7xl lg:px-8">
+        <div class="mx-auto max-w-full lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8">
                 <div
                     class="mx-auto max-w-md px-6 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left"

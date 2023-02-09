@@ -22,7 +22,7 @@ defineProps({
         </template>
 
         <div class="py-12 dark:text-white">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
@@ -136,29 +136,29 @@ defineProps({
                                                     :id="contact.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap text-left p-2 lg:p-3  font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%] whitespace-nowrap text-left p-2 lg:p-3 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ contact.name }}
                                                     </td>
 
                                                     <td
-                                                        class="min-w-[10%] text-left p-2 lg:p-3  font-md text-gray-900 "
+                                                        class="min-w-[10%] text-left p-2 lg:p-3 font-md text-gray-900"
                                                     >
                                                         {{ contact.email }}
                                                     </td>
 
                                                     <td
-                                                        class="min-w-[10%] text-left p-2 lg:p-3  text-md text-gray-500"
+                                                        class="min-w-[10%] text-left p-2 lg:p-3 text-md text-gray-500"
                                                     >
                                                         {{ contact.phone }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] text-left p-2 lg:p-3  text-md text-gray-500"
+                                                        class="min-w-[10%] text-left p-2 lg:p-3 text-md text-gray-500"
                                                     >
                                                         {{ contact.subject }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[50%]  text-left p-2 lg:p-3  text-md text-gray-500"
+                                                        class="min-w-[50%] text-left p-2 lg:p-3 text-md text-gray-500"
                                                     >
                                                         <span
                                                             class="break-words w-10"

@@ -20,7 +20,7 @@ defineProps({
         </template>
 
         <div class="py-12 dark:text-white h-full min-h-screen">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
@@ -42,7 +42,10 @@ defineProps({
                         >
                             <Link
                                 :href="
-                                    route('admin.special-feature.edit', specialFeature.id)
+                                    route(
+                                        'admin.special-feature.edit',
+                                        specialFeature.id
+                                    )
                                 "
                                 class="btn btn-primary"
                             >
@@ -128,13 +131,17 @@ defineProps({
                                                 <td
                                                     class="w-[20%] text-gray-900"
                                                 >
-                                                    {{ specialFeature.description }}
+                                                    {{
+                                                        specialFeature.description
+                                                    }}
                                                 </td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
                                                     <img
-                                                        :src="specialFeature.image"
+                                                        :src="
+                                                            specialFeature.image
+                                                        "
                                                         alt=""
                                                         class="w-16 h-16"
                                                     />

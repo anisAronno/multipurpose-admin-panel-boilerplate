@@ -27,7 +27,7 @@ defineProps({
             </Hero>
             <div class="pt-5" v-if="category.description.length > 0">
                 <div
-                    class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8"
+                    class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-full lg:px-8"
                 >
                     <p
                         class="mx-auto mt-5 max-w-prose text-xl text-gray-500"
@@ -37,7 +37,9 @@ defineProps({
                     </p>
                 </div>
             </div>
-            <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8 sm:py-6 lg:py-8">
+            <div
+                class="mx-auto max-w-full overflow-hidden sm:px-6 lg:px-8 sm:py-6 lg:py-8"
+            >
                 <h2 class="sr-only">
                     {{ __("category.mobile_title") }}
                 </h2>

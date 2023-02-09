@@ -44,7 +44,9 @@ const supportLinks = [
                     aria-hidden="true"
                 />
             </div>
-            <div class="relative mx-auto max-w-7xl py-24 px-6 sm:py-32 lg:px-8">
+            <div
+                class="relative mx-auto max-w-full py-24 px-6 sm:py-32 lg:px-8"
+            >
                 <h1
                     class="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl"
                 >
@@ -60,7 +62,7 @@ const supportLinks = [
 
         <!-- Overlapping cards -->
         <section
-            class="relative z-10 mx-auto -mt-32 max-w-7xl px-6 pb-32 lg:px-8"
+            class="relative z-10 mx-auto -mt-32 max-w-full px-6 pb-32 lg:px-8"
             aria-labelledby="contact-heading"
         >
             <h2 class="sr-only" id="contact-heading">Contact us</h2>

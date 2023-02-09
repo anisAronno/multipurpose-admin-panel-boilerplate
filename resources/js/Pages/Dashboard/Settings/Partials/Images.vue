@@ -6,7 +6,7 @@ const options = usePage().props.value.global.options;
 </script>
 <template>
     <div
-        class="max-w-7xl mx-auto flex flex-wrap justify-around items-center bg-white dark:bg-gray-800 text-black dark:text-white sm:space-x-2 space-y-2 sm:space-y-0"
+        class="max-w-full mx-auto flex flex-wrap justify-around items-center bg-white dark:bg-gray-800 text-black dark:text-white sm:space-x-2 space-y-2 sm:space-y-0"
     >
         <div
             class="p-4 space-x-5 shadow flex-1 min-h-full grid place-items-center h-[300px]"

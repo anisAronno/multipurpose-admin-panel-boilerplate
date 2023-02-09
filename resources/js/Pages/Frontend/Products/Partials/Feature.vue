@@ -6,7 +6,7 @@ defineProps({
 <template>
     <section
         aria-labelledby="perks-heading"
-        class="border-t border-b border-gray-200  dark:border-gray-700  bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+        class="border-t border-b border-gray-200 dark:border-gray-700 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
     >
         <div class="text-center mt-5">
             <h1 class="text-2xl md:text-4xl mb-2">
@@ -17,7 +17,7 @@ defineProps({
             </p>
         </div>
 
-        <div class="mx-auto max-w-7xl py-8 px-4 sm:px-4 sm:py-12 lg:px-8">
+        <div class="mx-auto max-w-full py-8 px-4 sm:px-4 sm:py-12 lg:px-8">
             <div
                 class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0"
             >

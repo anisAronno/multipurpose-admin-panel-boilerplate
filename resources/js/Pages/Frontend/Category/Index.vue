@@ -19,7 +19,7 @@ defineProps({
         >
             <Hero>{{ __("hero.category") }}</Hero>
             <div
-                class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8 mt-5 md:mt-10"
+                class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-full lg:px-8 mt-5 md:mt-10"
             >
                 <p
                     class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200 sm:text-4xl"
@@ -27,9 +27,7 @@ defineProps({
                     {{ __("category.heading") }}
                 </p>
                 <p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
-                    {{
-                        __('category.description')
-                    }}
+                    {{ __("category.description") }}
                 </p>
             </div>
             <Category :categories="categories"></Category>

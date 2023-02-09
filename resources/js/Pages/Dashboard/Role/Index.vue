@@ -22,7 +22,7 @@ defineProps({
         </template>
 
         <div class="py-12 dark:text-white">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
@@ -154,9 +154,7 @@ defineProps({
                                                     <td
                                                         class="w-[15%] text-left p-4 text-gray-900"
                                                     >
-                                                        {{
-                                                            role.created_at
-                                                        }}
+                                                        {{ role.created_at }}
                                                     </td>
                                                     <td
                                                         class="w-[10%] whitespace-nowrap text-right text-sm font-medium"

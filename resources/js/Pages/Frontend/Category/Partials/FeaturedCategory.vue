@@ -9,7 +9,7 @@ defineProps({
         v-if="categories?.length > 0"
     >
         <div
-            class="mx-auto max-w-xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 py-2 sm:py-3 lg:py-5"
+            class="mx-auto max-w-xl px-4 sm:px-6 lg:max-w-full lg:px-8 py-2 sm:py-3 lg:py-5"
         >
             <div class="text-center mb-5">
                 <h1 class="text-2xl md:text-4xl mb-2">

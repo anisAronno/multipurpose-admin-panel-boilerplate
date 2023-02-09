@@ -8,7 +8,7 @@ defineProps({
         class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
         v-if="featuredProducts?.length > 0"
     >
-        <div class="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-full overflow-hidden sm:px-6 lg:px-8">
             <div class="text-center mb-5 md:mb-7">
                 <h1 class="text-2xl md:text-4xl mb-2">
                     {{ __("featured.product.title") }}

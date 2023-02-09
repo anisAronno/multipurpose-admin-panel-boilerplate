@@ -22,7 +22,7 @@ defineProps({
         </template>
 
         <div class="py-12 dark:text-white">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
@@ -189,10 +189,7 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            user
-                                                                .created_at
-                                                        }}
+                                                        {{ user.created_at }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"

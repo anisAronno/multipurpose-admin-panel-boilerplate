@@ -8,7 +8,7 @@ defineProps({
 </script>
 <template>
     <nav
-        class="relative mx-auto flex max-w-7xl items-center justify-between px-6"
+        class="relative mx-auto flex max-w-full items-center justify-between px-6"
         aria-label="Global"
     >
         <div class="flex flex-1 items-center">

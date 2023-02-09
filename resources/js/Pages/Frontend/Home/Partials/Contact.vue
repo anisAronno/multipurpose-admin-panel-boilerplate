@@ -1,32 +1,31 @@
 <script setup></script>
 
 <template>
-    <section aria-labelledby="sale-heading" class="border-b-2 border-cyan-400 dark:border-none">
+    <section
+        aria-labelledby="sale-heading"
+        class="border-b-2 border-cyan-400 dark:border-none"
+    >
         <div
             class="overflow-hidden pt-32 sm:pt-14 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <div
                 class="bg-cyan-300 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
             >
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
                     <div class="relative pt-48 pb-16 sm:pb-24">
                         <div>
                             <h2
                                 id="sale-heading"
                                 class="text-2xl font-bold tracking-tight md:text-3xl break-all overflow-hidden"
                             >
-                                {{
-                                    __(
-                                        "contact.section.title" 
-                                    )
-                                }}
+                                {{ __("contact.section.title") }}
                             </h2>
                             <div class="inline-flex rounded-md shadow mt-5">
                                 <Link
                                     :href="route('contact')"
                                     class="inline-flex items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-gray-900 hover:bg-gray-50"
                                 >
-                                    {{ __('contact.section.link_text') }}
+                                    {{ __("contact.section.link_text") }}
 
                                     <font-awesome-icon
                                         icon="fa-solid fa-arrow-up-right-from-square"
@@ -48,7 +47,10 @@
                                     <div class="flex-shrink-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            :src="$page.props.global.options.model_one"
+                                            :src="
+                                                $page.props.global.options
+                                                    .model_one
+                                            "
                                             alt=""
                                         />
                                     </div>
@@ -56,7 +58,10 @@
                                     <div class="mt-6 flex-shrink-0 sm:mt-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            :src="$page.props.global.options.model_two"
+                                            :src="
+                                                $page.props.global.options
+                                                    .model_two
+                                            "
                                             alt=""
                                         />
                                     </div>
@@ -67,7 +72,10 @@
                                     <div class="flex-shrink-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            :src="$page.props.global.options.model_three"
+                                            :src="
+                                                $page.props.global.options
+                                                    .model_three
+                                            "
                                             alt=""
                                         />
                                     </div>
@@ -75,7 +83,10 @@
                                     <div class="mt-6 flex-shrink-0 sm:mt-0">
                                         <img
                                             class="h-64 w-64 rounded-lg object-cover md:h-72 md:w-72"
-                                            :src="$page.props.global.options.model_four"
+                                            :src="
+                                                $page.props.global.options
+                                                    .model_four
+                                            "
                                             alt=""
                                         />
                                     </div>

@@ -22,7 +22,7 @@ defineProps({
         </template>
 
         <div class="py-12 dark:text-white">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
@@ -44,7 +44,9 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
-                                    :href="route('admin.special-feature.create')"
+                                    :href="
+                                        route('admin.special-feature.create')
+                                    "
                                     class="btn btn-primary"
                                 >
                                     <font-awesome-icon
@@ -142,7 +144,9 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        {{ specialFeature.title }}
+                                                        {{
+                                                            specialFeature.title
+                                                        }}
                                                     </td>
 
                                                     <td
@@ -182,11 +186,13 @@ defineProps({
                                                             "
                                                             class="w-16 h-16"
                                                         />
-                                                    </td> 
+                                                    </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ specialFeature.status }}
+                                                        {{
+                                                            specialFeature.status
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"

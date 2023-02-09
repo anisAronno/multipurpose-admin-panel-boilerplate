@@ -24,7 +24,7 @@ defineProps({
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 dark:text-white shadow sm:rounded-lg"
                 >
@@ -45,9 +45,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
-                                :href="
-                                    route('admin.blog.show', blog.id)
-                                "
+                                :href="route('admin.blog.show', blog.id)"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon

@@ -100,12 +100,12 @@ onMounted(() => {
                 <main>
                     <div class="py-6 bg-white dark:bg-gray-900 dark:text-white">
                         <div
-                            class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8"
+                            class="mx-auto max-w-full px-4 sm:px-6 md:px-8"
                             v-if="$slots.header"
                         >
                             <slot name="header"></slot>
                         </div>
-                        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+                        <div class="mx-auto max-w-full px-4 sm:px-6 md:px-8">
                             <div class="py-4">
                                 <div
                                     class="h-full rounded-lg border-4 border-dashed border-gray-200 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
