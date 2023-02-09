@@ -10,7 +10,7 @@ const { navigation } = useMenu();
 <template>
     <Popover as="header" class="relative">
         <div
-            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-6 pb-3"
+            class="bg-cyan-100 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-6 pb-3"
         >
             <Menu :navigation="navigation"></Menu>
         </div>

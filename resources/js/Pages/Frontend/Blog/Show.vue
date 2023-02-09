@@ -13,9 +13,7 @@ defineProps({
         <title>{{ blog.title }}</title>
     </Head>
     <MasterLayout>
-        <div
-            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
-        >
+        <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
             <Hero>{{ blog.title }}</Hero>
             <BlogShow :blog="blog"></BlogShow>
         </div>

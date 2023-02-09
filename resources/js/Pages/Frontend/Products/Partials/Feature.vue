@@ -6,7 +6,7 @@ defineProps({
 <template>
     <section
         aria-labelledby="perks-heading"
-        class="border-t border-b border-gray-200 dark:border-gray-700 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+        class="border-t border-b border-gray-200 dark:border-gray-700 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
     >
         <div class="text-center mt-5">
             <h1 class="text-2xl md:text-4xl mb-2">
@@ -24,7 +24,7 @@ defineProps({
                 <div
                     v-for="specialFeature in specialFeatures"
                     :key="specialFeature.id"
-                    class="py-24 px-4 sm:px-6 sm:py-24 lg:px-8 text-center md:flex md:items-start md:text-left lg:block lg:text-center bg-cyan-100 dark:bg-gray-800"
+                    class="py-24 px-4 sm:px-6 sm:py-24 lg:px-8 text-center md:flex md:items-start md:text-left lg:block lg:text-center bg-cyan-50 dark:bg-gray-800"
                 >
                     <div class="md:flex-shrink-0">
                         <div class="grid place-content-center">

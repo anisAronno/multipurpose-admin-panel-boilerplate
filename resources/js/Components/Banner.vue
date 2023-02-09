@@ -28,13 +28,13 @@
                             />
                         </Link>
                         <h1
-                            class="mt-4 text-4xl font-bold tracking-tight lg:dark:text-white lg:text-gray-800 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl text-cyan-400 bg-[rgba(50,50,80,0.1)] bg-blend-saturation lg:bg-transparent p-2 lg:p-0"
+                            class="mt-4 text-4xl font-bold tracking-tight lg:dark:text-white lg:text-gray-800 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl text-cyan-400 bg-blend-saturation lg:bg-transparent p-2 lg:p-0"
                         >
                             <span class="block">{{
                                 __("banner.title_1")
                             }}</span>
                             <span
-                                class="block bg-gradient-to-r from-teal-200 to-cyan-400 bg-clip-text pb-3 text-transparent sm:pb-5"
+                                class="block bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text pb-3 text-transparent sm:pb-5"
                                 >{{ __("banner.title_2") }}</span
                             >
                         </h1>

@@ -12,9 +12,7 @@ import { Head } from "@inertiajs/inertia-vue3";
         <title>{{ __("about.title") }}</title>
     </Head>
     <MasterLayout>
-        <div
-            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
-        >
+        <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
             <Hero>{{ __("hero.about", "About us") }}</Hero>
             <About></About>
             <Goal></Goal>

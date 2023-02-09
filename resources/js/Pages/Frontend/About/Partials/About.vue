@@ -1,10 +1,10 @@
 <script setup></script>
 <template>
     <div
-        class="container mx-auto p-6 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+        class="container mx-auto p-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
     >
         <div
-            class="grid grid-col sm:grid-cols-2 gap-5 bg-cyan-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
+            class="grid grid-col sm:grid-cols-2 gap-5 bg-cyan-50 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
         >
             <div class="p-5 sm:p-10">
                 <img

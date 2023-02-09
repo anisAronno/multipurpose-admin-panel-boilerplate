@@ -3,10 +3,10 @@ import Form from "@/Pages/Frontend/Contact/Partials/Form.vue";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 </script>
 <template>
-    <div class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+    <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
         <div class="mx-auto max-w-full py-6 px-6 sm:py-10 lg:px-8">
             <div
-                class="relative bg-cyan-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 shadow-xl"
+                class="relative bg-cyan-50 dark:bg-gray-800 text-gray-900 dark:text-gray-50 shadow-xl"
             >
                 <h2 class="sr-only">
                     {{ __("contact.form.mobile_title") }}

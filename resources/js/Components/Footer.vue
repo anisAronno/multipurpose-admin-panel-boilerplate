@@ -25,7 +25,7 @@ const updatedSocials = socialLink.map((social) => {
 <template>
     <footer>
         <div
-            class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-300 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+            class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-100 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <nav
                 class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12 "
@@ -45,7 +45,7 @@ const updatedSocials = socialLink.map((social) => {
                     v-for="item in updatedSocials"
                     :key="item.name"
                     :href="item.href"
-                    class="text-gray-50 hover:text-gray-500 dark:hover:text-gray-200"
+                    class="text-gray-500 hover:text-gray-400 dark:hover:text-gray-200"
                 >
                     <span class="sr-only">{{ item.name }}</span>
                     <component

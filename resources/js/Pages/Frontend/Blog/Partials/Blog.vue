@@ -7,7 +7,7 @@ defineProps({
 
 <template>
     <div
-        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:py-12"
+        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 py-6 sm:py-10 lg:py-12"
     >
         <div
             class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-full lg:px-8"

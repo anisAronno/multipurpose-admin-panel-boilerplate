@@ -13,7 +13,7 @@ defineProps({
     </Head>
     <MasterLayout>
         <div
-            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10"
+            class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <Hero>
                 <span
@@ -75,7 +75,7 @@ defineProps({
                             </div>
                             <div class="pt-10 pb-4 text-center">
                                 <h3
-                                    class="text-sm font-medium bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+                                    class="text-sm font-medium bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
                                 >
                                     <Link
                                         :href="
@@ -118,7 +118,7 @@ defineProps({
                             </div>
                             <div class="pt-10 pb-4 text-center">
                                 <h3
-                                    class="text-sm font-medium bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+                                    class="text-sm font-medium bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
                                 >
                                     <Link
                                         :href="route('product.show', blog.slug)"

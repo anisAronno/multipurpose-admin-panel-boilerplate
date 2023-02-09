@@ -5,7 +5,7 @@ defineProps({
 });
 </script>
 <template>
-    <div class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+    <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
         <div
             class="mx-auto max-w-xl px-4 sm:px-6 lg:max-w-full lg:px-8 py-6 sm:py-10 lg:py-12"
         >

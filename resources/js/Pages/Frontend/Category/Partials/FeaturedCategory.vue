@@ -5,7 +5,7 @@ defineProps({
 </script>
 <template>
     <div
-        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5 sm:my-5 md:lg-3"
+        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5 sm:my-5 md:lg-3"
         v-if="categories?.length > 0"
     >
         <div

@@ -5,7 +5,7 @@ defineProps({
 </script>
 <template>
     <div
-        class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
+        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
         v-if="featuredProducts?.length > 0"
     >
         <div class="mx-auto max-w-full overflow-hidden sm:px-6 lg:px-8">
@@ -39,7 +39,7 @@ defineProps({
                     </div>
                     <div class="pt-10 pb-4 text-center">
                         <h3
-                            class="text-sm font-medium bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+                            class="text-sm font-medium bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
                         >
                             <Link :href="route('product.show', product.slug)">
                                 {{ product.title }}
