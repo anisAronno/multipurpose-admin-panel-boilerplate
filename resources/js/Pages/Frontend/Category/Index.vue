@@ -15,7 +15,7 @@ defineProps({
     </Head>
     <MasterLayout>
         <div
-            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10"
+            class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <Hero>{{ __("hero.category") }}</Hero>
             <div

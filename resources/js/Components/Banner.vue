@@ -39,7 +39,7 @@
                             >
                         </h1>
                         <p
-                            class="text-base lg:text-gray-500 lg:dark:text-gray-300 sm:text-xl lg:text-lg xl:text-xl text-cyan-300 bg-[rgba(255, 230, 180, 0.1)] bg-blend-saturation lg:bg-transparent p-2 lg:p-0"
+                            class="text-base lg:text-gray-500 lg:dark:text-gray-300 sm:text-xl lg:text-lg xl:text-xl text-cyan-300 bg-[rgba(255, 230, 180, 0.1)] bg-blend-saturation lg:bg-transparent p-2 lg:p-0 hidden lg:block"
                         >
                             {{ __("banner.sub_title") }}
                         </p>

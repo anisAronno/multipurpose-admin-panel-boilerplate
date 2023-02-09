@@ -2,14 +2,13 @@
 
 <template>
     <section
-        aria-labelledby="sale-heading"
-        class="border-b-2 border-cyan-400 dark:border-none"
+        aria-labelledby="sale-heading" 
     >
         <div
             class="overflow-hidden pt-32 sm:pt-14 bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <div
-                class="bg-cyan-300 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
+                class="bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-50"
             >
                 <div class="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
                     <div class="relative pt-48 pb-16 sm:pb-24">
