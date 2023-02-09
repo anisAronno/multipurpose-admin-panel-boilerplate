@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ return new class () extends Migration {
     public function up()
     {
         Schema::create('categoryables', function (Blueprint $table) {
-            $table->unsignedBigInteger("category_id");
+            $table->foreignIdFor(Category::class)->constrained();
             $table->unsignedBigInteger('categoryable_id');
             $table->string('categoryable_type');
         });

@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('login_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('ip', 255)->nullable();
+            $table->string('ip', 255)->nullable()->index();
             $table->string('auth_source', 255)->default('own');
             $table->string('device_name', 255)->nullable()->index();
             $table->string('os_name', 255)->nullable()->index();
