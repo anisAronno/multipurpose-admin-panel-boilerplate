@@ -2,11 +2,13 @@
 import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
+import { formattedDate } from "@/Composables/useDate";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 defineProps({
     users: Object,
 });
+const page = usePage().props.value.global.options;
 </script>
 
 <template>
@@ -189,7 +191,11 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ user.created_at }}
+                                                        {{
+                                                            formattedDate(
+                                                                user.created_at
+                                                            )
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
