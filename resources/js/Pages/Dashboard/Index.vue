@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import media from "@/Components/Media.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 </script>
 
@@ -19,9 +20,7 @@ import { Head } from "@inertiajs/inertia-vue3";
                 <div
                     class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
                 >
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        You're logged in!
-                    </div>
+                     <media></media>
                 </div>
             </div>
         </div>

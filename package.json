@@ -32,6 +32,10 @@
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@vue-hero-icons/outline": "^1.7.2",
         "@vueform/multiselect": "^2.5.8",
-        "@vueuse/core": "^9.9.0"
+        "@vueuse/core": "^9.9.0",
+        "filepond": "^4.30.4",
+        "filepond-plugin-file-validate-type": "^1.2.8",
+        "filepond-plugin-image-preview": "^4.6.11",
+        "vue-filepond": "^7.0.3"
     }
 }

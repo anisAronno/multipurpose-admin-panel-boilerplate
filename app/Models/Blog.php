@@ -95,4 +95,9 @@ class Blog extends Model
     {
         return $this->morphToMany(Category::class, 'categoryable');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

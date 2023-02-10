@@ -19,6 +19,7 @@ class Image extends Model
         'url',
         'mimes',
         'type',
+        'size',
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
