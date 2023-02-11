@@ -14,12 +14,14 @@ use App\Models\SpecialFeature;
 use App\Models\User;
 use App\Observers\Blog\BlogObserver;
 use App\Observers\ContactObserver;
+use App\Observers\ImageObserver;
 use App\Observers\OptionObserver;
 use App\Observers\Product\CategoryObserver;
 use App\Observers\Product\ProductObserver;
 use App\Observers\RoleObserver;
 use App\Observers\SpecialFeatureObserver;
 use App\Observers\User\UserObserver;
+use App\Models\Image;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -57,6 +59,7 @@ class EventServiceProvider extends ServiceProvider
         Product::observe(ProductObserver::class);
         Contact::observe(ContactObserver::class);
         SpecialFeature::observe(SpecialFeatureObserver::class);
+        Image::observe(ImageObserver::class);
     }
 
     /**

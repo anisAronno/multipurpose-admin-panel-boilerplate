@@ -17,10 +17,10 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255)->nullable();
-            $table->string('url');
-            $table->string('mimes')->nullable();
-            $table->string('type')->nullable();
-            $table->string('size')->nullable(); 
+            $table->string('url', 255);
+            $table->string('mimes', 50)->nullable();
+            $table->string('type', 50)->nullable();
+            $table->string('size', 50)->nullable(); 
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });

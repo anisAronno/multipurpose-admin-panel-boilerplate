@@ -1,21 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
-
-const form = useForm({
-    images: [
-        {
-            id: 1,
-            title: "Mr. Jerel Bartoletti V",
-            url: "https://via.placeholder.com/640x480.png/0099ff?text=odio",
-            mimes: null,
-            type: null,
-            size: null, 
-            created_at: "2023-02-10T21:21:45.000000Z",
-            updated_at: "2023-02-10T21:21:45.000000Z",
-        },
-    ],
-});
+import { Head } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
@@ -34,7 +19,9 @@ const form = useForm({
                 <div
                     class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
                 >
-                     <media></media>
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        You're logged in!
+                    </div>
                 </div>
             </div>
         </div>

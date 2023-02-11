@@ -55,4 +55,9 @@ class CacheServices
     {
         return 'category'.$token;
     }
+
+    public static function getImageCacheKey(int $token = null): string
+    {
+        return 'image'.$token;
+    }
 }

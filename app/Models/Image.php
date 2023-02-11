@@ -18,6 +18,7 @@ class Image extends Model
         'mimes',
         'type',
         'size',
+        'user_id',
     ];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];

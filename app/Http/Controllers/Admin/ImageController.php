@@ -1,25 +1,29 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
-
+use App\Helpers\FileHelpers;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Models\Image;
-use App\Http\Controllers\Controller;
+use App\Services\Cache\CacheServices;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
-
-class ImageController extends Controller
+class ImageController extends InertiaApplicationController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+
+        $key = CacheServices::getImageCacheKey($currentPage);
+
+        $images = Cache::remember($key, 10, function () {
+            return Image::orderBy('id', 'desc')->paginate(12);
+        });
+
+        return response()->json($images);
     }
 
     /**
@@ -33,14 +37,27 @@ class ImageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreImageRequest  $request
-     * @return \Illuminate\Http\Response
+     * Image store
      */
     public function store(StoreImageRequest $request)
     {
-        //
+        $data = [];
+        $data = $request->only('title');
+        $data['user_id'] = auth()->user()->id ;
+
+        if ($request->image) {
+            $data['url'] = FileHelpers::upload($request, 'image', 'images');
+            $data['mimes'] = $request->image->extension();
+            $data['type'] = $request->image->getClientMimeType();
+            $data['size'] = number_format($request->image->getSize()/(1024*1024), 2, '.', '')."MB";
+        }
+
+        try {
+            Image::create($data);
+            return $this->successWithMessage('Created successfull');
+        } catch (\Throwable $th) {
+            return $this->failedWithMessage($th->getMessage());
+        }
     }
 
     /**
@@ -77,14 +94,33 @@ class ImageController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Image $image)
     {
-        //
+        try {
+            FileHelpers::deleteFile($image->url);
+
+            $image->delete();
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function groupDelete(Request $request)
+    {
+        try {
+            foreach ($request->data as  $image) {
+                isset($image['url']) ? FileHelpers::deleteFile($image['url']) : '';
+            }
+
+            $idArr = array_column($request->data, 'id');
+            $result = Image::whereIn('id', $idArr)->delete();
+            if ($result) {
+                return $this->successWithMessage('Deleted successfull');
+            }
+        } catch (\Throwable $th) {
+            return $this->failedWithMessage('Deleted failed');
+        }
     }
 }
