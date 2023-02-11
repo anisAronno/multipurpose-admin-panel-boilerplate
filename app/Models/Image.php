@@ -13,8 +13,6 @@ class Image extends Model
     use LogsActivity;
 
     protected $fillable = [
-        'imageable_type',
-        'imageable_id',
         'title',
         'url',
         'mimes',
@@ -32,8 +30,8 @@ class Image extends Model
         ->dontSubmitEmptyLogs();
     }
 
-    public function imageable()
+    public function user()
     {
-        return $this->morphTo();
-    }
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    } 
 }

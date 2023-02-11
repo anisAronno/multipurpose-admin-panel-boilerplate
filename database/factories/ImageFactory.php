@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Product;
 use App\Models\Blog;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
@@ -20,7 +21,8 @@ class ImageFactory extends Factory
     {
         return [
             'title' => $this->faker->name(),
-            'url' => $this->faker->imageUrl(), 
+            'url' => $this->faker->imageUrl(),
+            'user_id' => User::all(['id'])->random(),
         ];
     }
 }

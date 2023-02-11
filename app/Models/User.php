@@ -152,7 +152,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $hasPermission;
     }
 
-     protected $appends = ['isDeletable', 'isEditable'];
+    protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)
     {
@@ -163,39 +163,43 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-       public function getIsEditableAttribute($value)
-       {
-           if ($this->id == 1) {
-               return false;
-           } else {
-               return true;
-           }
-       }
+    public function getIsEditableAttribute($value)
+    {
+        if ($this->id == 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-     public function addresses()
-     {
-         return $this->hasMany(Address::class, 'user_id', 'id');
-     }
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
 
-     public function socialLogins()
-     {
-         return $this->hasMany(SocialLogin::class, 'user_id', 'id');
-     }
+    public function socialLogins()
+    {
+        return $this->hasMany(SocialLogin::class, 'user_id', 'id');
+    }
 
-     public function loginHistories()
-     {
-         return $this->hasMany(LoginHistory::class, 'user_id', 'id');
-     }
-     public function categories()
-     {
-         return $this->hasMany(Category::class, 'user_id', 'id');
-     }
+    public function loginHistories()
+    {
+        return $this->hasMany(LoginHistory::class, 'user_id', 'id');
+    }
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'user_id', 'id');
+    }
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'user_id', 'id');
+    }
      public function products()
      {
          return $this->hasMany(Product::class, 'user_id', 'id');
      }
-     public function blogs()
-     {
-         return $this->hasMany(Blog::class, 'user_id', 'id');
-     }
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class, 'user_id', 'id');
+    }
 }

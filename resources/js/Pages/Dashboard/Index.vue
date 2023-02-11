@@ -1,7 +1,21 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import media from "@/Components/Media.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
+
+const form = useForm({
+    images: [
+        {
+            id: 1,
+            title: "Mr. Jerel Bartoletti V",
+            url: "https://via.placeholder.com/640x480.png/0099ff?text=odio",
+            mimes: null,
+            type: null,
+            size: null, 
+            created_at: "2023-02-10T21:21:45.000000Z",
+            updated_at: "2023-02-10T21:21:45.000000Z",
+        },
+    ],
+});
 </script>
 
 <template>

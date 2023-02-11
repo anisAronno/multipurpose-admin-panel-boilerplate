@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\FileHelpers;
 use App\Helpers\UniqueSlug;
 use App\Traits\CheckStatusAndFeture;
+use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +21,7 @@ class Product extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
+    use Imageable;
 
 
     /**
@@ -92,11 +94,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->morphToMany(Category::class, 'categoryable');
+        return $this->morphToMany(Category::class, 'categoryable')->withTimestamps();
     }
-
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
+ 
 }

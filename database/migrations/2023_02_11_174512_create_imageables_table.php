@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Image;
 
 return new class () extends Migration {
     /**
@@ -13,10 +13,10 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('categoryables', function (Blueprint $table) {
-            $table->foreignIdFor(Category::class)->constrained();
-            $table->unsignedBigInteger('categoryable_id');
-            $table->string('categoryable_type');
+        Schema::create('imageables', function (Blueprint $table) {
+            $table->foreignIdFor(Image::class)->constrained();
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('categoryables');
+        Schema::dropIfExists('imageables');
     }
 };
