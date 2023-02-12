@@ -27,7 +27,7 @@ Route::get('/about', function () {
 })->name('about');
 
 
-Route::get('/cache-clear', function () {
+Route::get('/cache-clear-anis3139', function () {
     Artisan::call('cache:clear');
     Artisan::call('optimize:clear');
     Artisan::call('storage:link');

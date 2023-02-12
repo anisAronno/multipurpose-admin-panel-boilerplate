@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Enums\AllowedFileType;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileHelpers
 {
@@ -105,7 +106,8 @@ class FileHelpers
         try {
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
-                $filename = time().'.'.$file->extension();
+                $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $filename = substr(Str::slug($name), 0, 150).'-'.time().'.'.$file->extension();
                 $up_path = 'images/'.$upload_dir.'/'.date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
