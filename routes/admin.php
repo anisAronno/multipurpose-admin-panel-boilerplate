@@ -72,10 +72,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Blog Route
          */
         Route::resource('blog', BlogController::class, ['except' => ['update']]);
-        Route::post('/blog/update/{blog}', [BlogController::class, 'update'])->name('blog.update');
-        Route::post('/blog/image/{blog}', [BlogController::class, 'imageUpdate'])->name('blog.image.update');
-        Route::delete('/blog/image/{blog}', [BlogController::class, 'imageDelete'])->name('blog.image.destroy');
-
+        Route::post('/blog/update/{blog}', [BlogController::class, 'update'])->name('blog.update'); 
+        
         /**
          * Contact Route
          */
@@ -86,7 +84,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          */
         Route::resource('image', ImageController::class, ['except' => ['update']]);
         Route::post('/image/update/{image}', [ImageController::class, 'update'])->name('image.update');
-        Route::post('image/delete', [ImageController::class, 'groupDelete'])->name('image.delete');
+        Route::post('image/delete-all', [ImageController::class, 'groupDelete'])->name('image.destroy.all');
 
         /**
          * Special Feature Controller route

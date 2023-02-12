@@ -22,6 +22,11 @@ const props = defineProps({
         default: "Add Image",
         require: false,
     },
+    updateBtnLabel: {
+        type: String,
+        default: "Update Image",
+        require: false,
+    },
     modalBtnLabel: {
         type: String,
         default: "Add Image",
@@ -192,9 +197,10 @@ const updateImage = async (image) => {
 
 <template>
     <div>
-        <button @click="modalShow = true" class="btn btn-primary">
-            {{ addBtnLabel }}
-        </button>
+        <span @click="modalShow = true" class="btn btn-primary cursor-pointer">
+            <span v-if="selectedImages.length == 0">{{ addBtnLabel }}</span>
+            <span v-else>{{ updateBtnLabel }}</span>
+        </span>
 
         <div class="flex flex-wrap gap-2 mt-2" v-if="showPreview">
             <img
@@ -212,12 +218,12 @@ const updateImage = async (image) => {
             class="relative"
             maxWidth="full"
         >
-            <button
+            <span
                 class="absolute top-1 right-1 text-red-600 bg-red-100 font-semibold rounded-full w-6 h-6 text-md cursor-pointer text-center hover:scale-105 shadow-sm shadow-red-200 z-50"
                 @click="closeModal"
             >
                 X
-            </button>
+            </span>
             <div
                 class="isolate flex divide-x divide-gray-200 rounded-lg shadow"
                 aria-label="Tabs"
@@ -354,7 +360,7 @@ const updateImage = async (image) => {
                                     <img
                                         :src="editAbleImage.url"
                                         :alt="editAbleImage.title"
-                                        class="rounded-sm max-w-[100%] h-auto"
+                                        class="rounded-sm max-w-[100%] max-h-40 object-cover"
                                     />
                                     <div
                                         class="text-sm mt-5 flex flex-col gap-2"
@@ -441,12 +447,12 @@ const updateImage = async (image) => {
                 </div>
 
                 <div class="flex justify-end mt-5 md:mt-8">
-                    <button
-                        class="btn btn-primary text-right"
+                    <span
+                        class="btn btn-primary text-right cursor-pointer"
                         @click.prevent="ImageStore"
                     >
                         {{ modalBtnLabel }}
-                    </button>
+                    </span>
                 </div>
             </div>
         </Modal>

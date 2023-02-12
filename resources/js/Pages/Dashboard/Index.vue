@@ -1,23 +1,6 @@
 <script setup>
-import media from "@/Components/Media.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
-
-const form = useForm({
-    images: [
-        {
-            id: 116,
-            title: "Dr. Jevon Fisher PhD",
-            url: "https://via.placeholder.com/640x480.png/002266?text=facere",
-            mimes: null,
-            type: null,
-            size: null,
-            user_id: 6,
-            created_at: "2023-02-12T10:45:29.000000Z",
-            updated_at: "2023-02-12T10:45:29.000000Z",
-        },
-    ],
-});
+import { Head } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
@@ -37,13 +20,7 @@ const form = useForm({
                     class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
                 >
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <media
-                            v-model="form.images"
-                            imageWidth="20" 
-                            addBtnLabel="Add Images"
-                            allowMultiple="true"
-                            showPreview="true"
-                        ></media>
+                        You're logged in!
                     </div>
                 </div>
             </div>

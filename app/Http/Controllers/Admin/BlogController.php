@@ -32,13 +32,13 @@ class BlogController extends InertiaApplicationController
 
         if (! empty($request->search)) {
             $q = $request->search;
-            $blogs = Blog::with(['categories'])->where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+            $blogs = Blog::with(['categories', 'images'])->where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
 
             return Inertia::render('Dashboard/Blog/Index', ['blogs' => $blogs]);
         }
 
         $blogs = Cache::remember($key, 10, function () {
-            return Blog::with(['categories'])->orderBy('id', 'desc')->paginate(10);
+            return Blog::with(['categories', 'images'])->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_blog_url', $request->fullUrl());
@@ -71,15 +71,12 @@ class BlogController extends InertiaApplicationController
         $data = $request->only('title', 'description', 'is_featured', 'status');
         $data['user_id'] = auth()->user()->id ;
 
-        if ($request->image) {
-            $data['image'] = FileHelpers::upload($request, 'image', 'blogs');
-        }
-
         try {
             $blog = Blog::create($data);
 
             if ($blog) {
                 $blog->categories()->attach($request->get('categories'));
+                $blog->images()->attach(array_column($request->get('images'), 'id'));
             }
 
             return Redirect::route('admin.blog.index')->with(['success' => true, 'message', 'Created successfull']);
@@ -108,6 +105,8 @@ class BlogController extends InertiaApplicationController
      */
     public function edit(Blog $blog)
     {
+        $blog->load('images');
+
         $blog->categoryArr = $blog->categories->map(function ($item, $key) {
             return $item->id;
         });
@@ -133,6 +132,7 @@ class BlogController extends InertiaApplicationController
 
             if ($request->categories) {
                 $blog->categories()->sync($request->categories);
+                $blog->images()->sync(array_column($request->get('images'), 'id'));
             }
 
             if (session('last_visited_blog_url')) {
@@ -164,28 +164,5 @@ class BlogController extends InertiaApplicationController
 
         return $this->successWithMessage('Deleted successfull');
     }
-
-    public function imageUpdate(Request $request, Blog $blog)
-    {
-        if ($request->image) {
-            $path = FileHelpers::upload($request, 'image', 'blogs');
-            if (! $path) {
-                return $this->failedWithMessage('Update Failed');
-            } else {
-                FileHelpers::deleteFile($blog->image);
-                $blog->update(['image' => $path]);
-            }
-        }
-
-        return $this->successWithMessage('Successfully Updated');
-    }
-
-    public function imageDelete(Blog $blog)
-    {
-        FileHelpers::deleteFile($blog->image);
-
-        $blog->update([$blog->image = null]);
-
-        return $this->successWithMessage('Deleted successfull');
-    }
+ 
 }

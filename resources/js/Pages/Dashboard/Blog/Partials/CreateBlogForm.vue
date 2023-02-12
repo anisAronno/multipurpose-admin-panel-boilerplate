@@ -1,10 +1,10 @@
 <script setup>
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import media from "@/Components/Media.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
-import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
@@ -25,17 +25,11 @@ const categoryInput = ref(null);
 const form = useForm({
     title: "",
     description: "",
-    image: "",
-    imagePreview: defaultFile.placeholder,
+    images: [],
     status: "",
     is_featured: false,
     categories: [],
 });
-
-const previewImage = (e) => {
-    const file = e.target.files[0];
-    form.imagePreview = URL.createObjectURL(file);
-};
 
 const storeBlog = () => {
     form.post(route("admin.blog.store"), {
@@ -55,7 +49,7 @@ const storeBlog = () => {
                 form.reset("is_featured");
                 isFeaturedInput.value.focus();
             }
-            if (form.errors.image) {
+            if (form.errors.images) {
                 imageInput.value.focus();
             }
             if (form.errors.categories) {
@@ -116,35 +110,13 @@ const storeBlog = () => {
                             <div
                                 class="col-span-6 sm:col-span-3 flex items-center justify-between"
                             >
-                                <div>
-                                    <InputLabel
-                                        for="image"
-                                        value="Image :"
-                                        class="block text-sm font-medium text-gray-700"
-                                    />
-                                    <input
-                                        id="image"
-                                        type="file"
-                                        class="mt-1 block form-controll cursor-pointer"
-                                        @change="previewImage"
-                                        ref="imageInput"
-                                        @input="
-                                            form.image = $event.target.files[0]
-                                        "
-                                    />
-                                    <InputError
-                                        :message="form.errors.image"
-                                        class="mt-2 col-start-2 col-span-4"
-                                    />
-                                </div>
-                                <span
-                                    class="inline-block h-24 w-24 overflow-hidden rounded-full bg-gray-100"
-                                >
-                                    <img
-                                        :src="form.imagePreview"
-                                        class="w-full h-full object-contain"
-                                    />
-                                </span>
+                                <media
+                                    v-model="form.images"
+                                    imageWidth="20"
+                                    addBtnLabel="Add Images"
+                                    allowMultiple="true"
+                                    showPreview="true"
+                                ></media>
                             </div>
                             <div
                                 class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"

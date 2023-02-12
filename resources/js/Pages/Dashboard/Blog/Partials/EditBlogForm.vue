@@ -1,11 +1,10 @@
 <script setup>
-import Image from "@/Components/Image/Image.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import media from "@/Components/Media.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
-import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
@@ -27,17 +26,11 @@ const categoryInput = ref(null);
 const form = useForm({
     title: props.blog.title,
     description: props.blog.description,
-    oldImage: props.blog.image,
-    imagePreview: props.blog.image || defaultFile.placeholder,
+    images: props.blog.images,
     status: props.blog.status,
     is_featured: props.blog.is_featured,
     categories: props.blog.categoryArr,
 });
-
-const previewImage = (e) => {
-    const file = e.target.files[0];
-    form.imagePreview = URL.createObjectURL(file);
-};
 
 const updateBlog = () => {
     form.post(route("admin.blog.update", props.blog.id), {
@@ -115,7 +108,6 @@ const updateBlog = () => {
                                 />
                             </div>
 
-
                             <div
                                 class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"
                             >
@@ -142,7 +134,7 @@ const updateBlog = () => {
                                     class="mt-2 col-start-2 col-span-4 absolute z-5"
                                 />
                             </div>
-                            
+
                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel
                                     for="status"
@@ -200,16 +192,13 @@ const updateBlog = () => {
                             <div
                                 class="col-span-6 sm:col-span-3 flex items-center justify-center"
                             >
-                                <Image
-                                    :id="blog.id"
-                                    :alt="blog.title"
-                                    field="image"
-                                    route="blog.image"
-                                    :isDeleteable="true"
-                                    v-model="form.oldImage"
-                                    ref="imageInput"
-                                    class="w-48 h-48 rounded-full overflow-clip bg-red-500"
-                                />
+                                <media
+                                    v-model="form.images"
+                                    imageWidth="20"
+                                    addBtnLabel="Add Images"
+                                    allowMultiple="true"
+                                    showPreview="true"
+                                ></media>
                             </div>
                         </div>
                     </div>
