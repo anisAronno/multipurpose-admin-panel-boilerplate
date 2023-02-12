@@ -107,7 +107,7 @@ class FileHelpers
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
                 $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $filename = Str::slug($name).'-'.time().'.'.$file->extension();
+                $filename = substr(Str::slug($name), 0, 150).'-'.time().'.'.$file->extension();
                 $up_path = 'images/'.$upload_dir.'/'.date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
