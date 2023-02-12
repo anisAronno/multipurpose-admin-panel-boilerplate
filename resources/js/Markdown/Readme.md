@@ -8,7 +8,7 @@
 </div>
 <div class="sm:col-span-2">
 Full-stack web developer from Dhaka, Bangladesh. I have rich experience in laravel and vuejs based web application development, also I am good at WordPress. Using PHP as primary backend language since 2017. Have working experience in Python, PHP, Golang, JavaScript, TypeScript, Laravel, Lumen, Node JS, Express JS, VueJs, React Js, MySQL, MongoDB, Google Cloud, BigQuery, Datastore, Nginx, Docker and Git also.
-Currently, working as a **Software Engineer** in **[weDevs](https://wedevs.com/about/team)** ([Appsero](https://appsero.com) Project).
+	Currently, working as a Software Engineer in <a class="text-blue-500" target="_blank" href="https://wedevs.com/about/team"> weDevs </a> in <a href="https://appsero.com" class="text-blue-500" target="_blank">Appsero </a>  Project.
 <div class="flex my-5">
   <a align="bottom" class="text-blue-500" href="https://github.com/anis3139/anis3139/raw/main/anis3139.pdf" download>Download Resume </a>
   <img align="top" src="https://img.icons8.com/windows/32/000000/download--v1.png"/>
@@ -21,6 +21,7 @@ Currently, working as a **Software Engineer** in **[weDevs](https://wedevs.com/a
 </h1>
 
 <div class="flex flex-wrap gap-2 my-5 sm:my-10">
+
 
 <img alt="C" src="https://img.shields.io/badge/c%20-%2300599C.svg?&style=for-the-badge&logo=c&logoColor=white"/> 
 <img alt="PHP" src="https://img.shields.io/badge/PHP%20-%23FF9900.svg?&style=for-the-badge&logo=php&logoColor=white"/>
@@ -41,6 +42,7 @@ Currently, working as a **Software Engineer** in **[weDevs](https://wedevs.com/a
 <img alt="Big Data" src="https://img.shields.io/badge/Big Data%20-%ff0.svg?&style=for-the-badge&logo=Google Cloud&logoColor=white"/>
 <img alt="HTML5" src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/>
 <img alt="CSS3" src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
+<img alt="sass" src="https://img.shields.io/badge/sass%20-%231572B6.svg?&style=for-the-badge&logo=sass&logoColor=white"/>
 <img alt="jQuery" src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/>
 <img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap%20-%23563D7C.svg?&style=for-the-badge&logo=bootstrap&logoColor=white"/>
 
