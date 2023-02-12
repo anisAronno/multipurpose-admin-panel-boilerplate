@@ -13,7 +13,7 @@ class UpdateImageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateImageRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'nullable|string|max:250|min:3',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg,webp|max:2048',
         ];
     }
 }

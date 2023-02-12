@@ -22,6 +22,9 @@ class ImageFactory extends Factory
         return [
             'title' => $this->faker->name(),
             'url' => $this->faker->imageUrl(),
+            'mimes' => 'images/png',
+            'type' => 'images/png',
+            'size' => '3 MB',
             'user_id' => User::all(['id'])->random(),
         ];
     }

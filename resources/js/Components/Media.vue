@@ -1,6 +1,9 @@
 <script setup>
+import DeleteImage from "@/Components/Image/DeleteImage.vue";
 import Loader from "@/Components/Loader.vue";
 import Modal from "@/Components/Modal.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { formattedDate } from "@/Composables/useDate";
 import { usePage } from "@inertiajs/inertia-vue3";
 import { useInfiniteScroll } from "@vueuse/core";
 import axios from "axios";
@@ -21,7 +24,7 @@ const props = defineProps({
     },
     modalBtnLabel: {
         type: String,
-        default: "Submit",
+        default: "Add Image",
         require: false,
     },
     modelValue: {
@@ -50,25 +53,31 @@ const images = ref([]);
 const activeTab = ref("upload");
 let modalShow = ref(false);
 let isLoaded = ref(false);
+let isUpdated = ref(false);
+let isLoadMore = ref(false);
 let pond = ref(null);
 let page = usePage();
 let pageNumber = 1;
 let el = ref(null);
 
 const selectedImages = reactive(props.modelValue);
-
-const setActiveTab = (tab) => {
-    if (tab == "media") {
-        loadImages();
-    }
-    activeTab.value = tab;
-};
-
 const csrf_token = page.props.value.csrf_token;
+
 const FilePond = vueFilePond(
     FilePondPluginFileValidateType,
     FilePondPluginImagePreview
 );
+
+const handleFilePondInit = (pondInstance) => {
+    pond.value = pondInstance;
+};
+
+const editAbleImage = computed(() => {
+    let result = selectedImages.filter((object1) => {
+        return images.value.some((object2) => object2.id === object1.id);
+    });
+    return result ? result[result.length - 1] : {};
+});
 
 const options = {
     server: {
@@ -82,8 +91,11 @@ const options = {
     },
 };
 
-const handleFilePondInit = (pondInstance) => {
-    pond.value = pondInstance;
+const setActiveTab = (tab) => {
+    if (tab == "media") {
+        loadImages();
+    }
+    activeTab.value = tab;
 };
 
 const closeModal = () => {
@@ -94,13 +106,15 @@ useInfiniteScroll(
     el,
     () => {
         pageNumber = pageNumber + 1;
+        isLoadMore.value = true;
         axios
             .get(`${route("admin.image.index")}?page=${pageNumber}`)
             .then((response) => {
-                isLoaded.value = false;
+                isLoadMore.value = false;
                 images.value.push(...response.data.data);
             })
             .catch((error) => {
+                isLoadMore.value = false;
                 console.log(error.message);
             });
     },
@@ -117,26 +131,6 @@ const loadImages = async () => {
         })
         .catch((error) => {
             console.log(error.message);
-        });
-};
-
-const deleteImage = async (image) => {
-    isLoaded.value = true;
-    await axios
-        .delete(route("admin.image.destroy", image.id))
-        .then((response) => {
-            let index = images.value.findIndex((img) => img.id === image.id);
-            images.value.splice(index, 1);
-            imageSelect(image);
-        })
-        .catch((error) => {
-            console.log(error.message);
-        })
-        .finally(() => {
-            setTimeout(() => {
-                loadImages();
-                isLoaded.value = false;
-            }, 500);
         });
 };
 
@@ -166,6 +160,34 @@ const ImageStore = () => {
     emit("update:input", selectedImages);
     closeModal();
 };
+
+const updateImage = async (image) => {
+    isUpdated.value = true;
+    await axios
+        .post(route("admin.image.update", image.id), image)
+        .then((response) => {
+            const objectToUpdate = images.value.find(
+                (img) => img.id === image.id
+            );
+
+            const updatedObject = {
+                ...objectToUpdate,
+                title: image.title,
+            };
+
+            const updatedArray = images.value.map((img) =>
+                img.id === image.id ? updatedObject : img
+            );
+
+            images.value = updatedArray;
+
+            isUpdated.value = false;
+        })
+        .catch((error) => {
+            isUpdated.value = false;
+            console.log(error.message);
+        });
+};
 </script>
 
 <template>
@@ -188,7 +210,7 @@ const ImageStore = () => {
             :show="modalShow"
             @close="closeModal"
             class="relative"
-            maxWidth="2xl"
+            maxWidth="full"
         >
             <button
                 class="absolute top-1 right-1 text-red-600 bg-red-100 font-semibold rounded-full w-6 h-6 text-md cursor-pointer text-center hover:scale-105 shadow-sm shadow-red-200 z-50"
@@ -262,10 +284,7 @@ const ImageStore = () => {
                 </div>
             </div>
             <div class="p-10" v-if="activeTab == 'media'">
-                <div
-                    class="flex flex-wrap xl:grid-cols-4 gap-5 h-[300px] md:h-[400px] 2xl:h-[500px] overflow-scroll"
-                    ref="el"
-                >
+                <div class="flex-1 gap-5 h-[300px] md:h-[400px] 2xl:h-[500px]">
                     <div
                         class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 opacity-75 flex flex-col items-center justify-center"
                         v-if="isLoaded"
@@ -274,42 +293,150 @@ const ImageStore = () => {
                             <Loader></Loader>
                         </span>
                     </div>
-                    <div
-                        v-for="image in imageObj"
-                        :key="image.id"
-                        v-else
-                        @click.prevent.stop="imageSelect(image)"
-                        class="relative"
-                    >
-                        <label for="images" class="relative">
-                            <img
-                                :src="image.url"
-                                :alt="image.title"
-                                class="w-20 h-20 sm:w-32 sm:h-32 cursor-pointer rounded-sm"
-                                :class="[
-                                    image.checked
-                                        ? 'border-2 border-blue-900 '
-                                        : '',
-                                ]"
-                            />
-                            <span
-                                class="bg-gray-800 text-white w-4 h-4 p-2 grid place-content-center text-md font-semibold absolute top-0 left-0 rounded-sm"
-                                v-if="image.checked"
-                                >&#x2713;</span
-                            >
-                        </label>
-                        <input
-                            type="checkbox"
-                            name="images[]"
-                            id="images"
-                            class="hidden"
-                            v-model="selectedImages"
-                        />
-                        <span
-                            class="bg-gray-200 text-red-600 p-1 grid place-content-center text-md font-semibold rounded-sm mt-2 cursor-pointer"
-                            @click.prevent="deleteImage(image)"
-                            >Delete</span
+                    <div v-else class="flex">
+                        <div
+                            class="flex flex-wrap flex-1 gap-5 h-[300px] md:h-[400px] 2xl:h-[500px] overflow-scroll"
+                            ref="el"
+                            :class="[
+                                editAbleImage ? 'W-60% sm:w-80%' : 'w-full',
+                            ]"
                         >
+                            <div
+                                v-for="image in imageObj"
+                                :key="image.id"
+                                @click.prevent.stop="imageSelect(image)"
+                                class="relative"
+                            >
+                                <label for="images" class="relative">
+                                    <img
+                                        :src="image.url"
+                                        :alt="image.title"
+                                        class="w-[90%] h-auto sm:w-32 sm:h-32 cursor-pointer rounded-sm PX-1"
+                                        :class="[
+                                            image.checked
+                                                ? 'border-2 border-blue-900 '
+                                                : '',
+                                        ]"
+                                    />
+                                    <span
+                                        class="bg-gray-800 text-white w-4 h-4 p-2 grid place-content-center text-md font-semibold absolute top-0 left-0 rounded-sm"
+                                        v-if="image.checked"
+                                        >&#x2713;</span
+                                    >
+                                </label>
+                                <input
+                                    type="checkbox"
+                                    name="images[]"
+                                    id="images"
+                                    class="hidden"
+                                    v-model="selectedImages"
+                                />
+                            </div>
+                            <div
+                                class="flex justify-center items-center w-full"
+                                v-if="isLoadMore"
+                            >
+                                <span class="w-10 h-10">
+                                    <Loader></Loader>
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            v-if="editAbleImage"
+                            :class="[
+                                editAbleImage
+                                    ? 'w-[40%] sm:w-[20%] p-2'
+                                    : 'p-2',
+                            ]"
+                        >
+                            <div>
+                                <div class="w-full">
+                                    <img
+                                        :src="editAbleImage.url"
+                                        :alt="editAbleImage.title"
+                                        class="rounded-sm max-w-[100%] h-auto"
+                                    />
+                                    <div
+                                        class="text-sm mt-5 flex flex-col gap-2"
+                                    >
+                                        <span
+                                            v-if="editAbleImage.created_at"
+                                            class="text-xs"
+                                            >Date:
+                                            {{
+                                                formattedDate(
+                                                    editAbleImage.created_at
+                                                )
+                                            }}</span
+                                        >
+
+                                        <span
+                                            v-if="editAbleImage.size"
+                                            class="text-xs"
+                                            >Size:
+                                            {{ editAbleImage.size }}</span
+                                        >
+                                        <span
+                                            v-if="editAbleImage.type"
+                                            class="text-xs"
+                                            >Type:
+                                            {{ editAbleImage.type }}</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <form
+                                        @submit.prevent="
+                                            updateImage(editAbleImage)
+                                        "
+                                    >
+                                        <TextInput
+                                            id="title"
+                                            ref="titleInput"
+                                            v-model="editAbleImage.title"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            autocomplete="title"
+                                            maxlength="100"
+                                            placeholder="Image Title"
+                                            required
+                                        />
+                                        <button
+                                            class="grid grid-cols-6 place-content-center w-full text-sm font-semibold text-white mt-2 cursor-pointer hover:text-gray-50 hover:bg-blue-600 bg-blue-500 p-1 rounded-md"
+                                            type="subnit"
+                                            :class="[
+                                                isUpdated
+                                                    ? 'disabled opacity-50'
+                                                    : '',
+                                            ]"
+                                        >
+                                            <span class="col-span-5"
+                                                >Update Title</span
+                                            >
+                                            <span
+                                                class="w-5 h-5 col-span-1"
+                                                v-if="isUpdated"
+                                            >
+                                                <Loader></Loader>
+                                            </span>
+                                        </button>
+                                    </form>
+                                    <span
+                                        class="grid place-content-center text-sm font-semibold rounded-sm mt-2 cursor-pointer"
+                                    >
+                                        <DeleteImage
+                                            class="cursor-pointer"
+                                            :id="editAbleImage.id"
+                                            route="image"
+                                            :field="editAbleImage.id"
+                                            ><span class="text-sm"
+                                                >Delete image</span
+                                            ></DeleteImage
+                                        >
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

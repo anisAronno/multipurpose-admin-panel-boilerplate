@@ -41,7 +41,7 @@ class FileHelpers
      */
     public static function isAllowFileType($path): bool
     {
-        if (!$path) {
+        if (!$path || $path == 'null') {
             return false;
         }
 

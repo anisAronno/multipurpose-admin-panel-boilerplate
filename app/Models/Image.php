@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\FileHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -31,8 +32,14 @@ class Image extends Model
         ->dontSubmitEmptyLogs();
     }
 
+    public function getUrlAttribute($value)
+    {
+        return  $this->attributes['url'] = FileHelpers::getUrl($value);
+    }
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
-    } 
+    }
 }

@@ -85,6 +85,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Image Route
          */
         Route::resource('image', ImageController::class, ['except' => ['update']]);
+        Route::post('/image/update/{image}', [ImageController::class, 'update'])->name('image.update');
         Route::post('image/delete', [ImageController::class, 'groupDelete'])->name('image.delete');
 
         /**

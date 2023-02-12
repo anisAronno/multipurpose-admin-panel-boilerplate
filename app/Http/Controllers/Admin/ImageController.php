@@ -20,7 +20,7 @@ class ImageController extends InertiaApplicationController
         $key = CacheServices::getImageCacheKey($currentPage);
 
         $images = Cache::remember($key, 10, function () {
-            return Image::orderBy('id', 'desc')->paginate(12);
+            return Image::orderBy('id', 'desc')->paginate(20);
         });
 
         return response()->json($images);
@@ -82,16 +82,16 @@ class ImageController extends InertiaApplicationController
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateImageRequest  $request
-     * @param  \App\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(UpdateImageRequest $request, Image $image)
     {
-        //
+        try {
+            $image->title = $request->title;
+            $image->update($request->only('title'));
+            return $this->successWithMessage('Update successfull');
+        } catch (\Throwable $th) {
+            return $this->failedWithMessage($th->getMessage());
+        }
     }
 
     public function destroy(Image $image)
@@ -101,9 +101,9 @@ class ImageController extends InertiaApplicationController
 
             $image->delete();
 
-            return true;
+            return $this->successWithMessage('Deleted successfull');
         } catch (\Throwable $th) {
-            return false;
+            return $this->failedWithMessage('Deleted failed');
         }
     }
 

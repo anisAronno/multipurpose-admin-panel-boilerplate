@@ -42,7 +42,10 @@ const closeModal = () => {
 <template>
     <section>
         <DangerButton @click.prevent="confirmDeletion">
-            <font-awesome-icon icon="fa-solid fa-trash" class="mr-1" />
+            <font-awesome-icon icon="fa-solid fa-trash" class="mr-1.5" />
+            <span class="text-xs">
+                <slot></slot>
+            </span>
         </DangerButton>
 
         <Modal :show="modalShow" @close="closeModal">
