@@ -1,6 +1,10 @@
 import "../css/app.css";
 import "./bootstrap";
 
+import {
+    permissionDirective,
+    roleDirective,
+} from "@/Directives/permissions.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -9,11 +13,14 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
-library.add(fas);
 import { translations } from "./Mixins/translations";
 
+library.add(fas);
+
+let page = usePage().props;
+
 createInertiaApp({
-    title: (title) => `${title} - ${usePage().props.value?.global?.options?.site_name}`,
+    title: (title) => `${title} - ${page.value?.global?.options?.site_name}`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,
@@ -26,6 +33,8 @@ createInertiaApp({
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
             .mixin(translations)
+            .directive("can", permissionDirective)
+            .directive("is", roleDirective)
             .mount(el);
     },
 });
