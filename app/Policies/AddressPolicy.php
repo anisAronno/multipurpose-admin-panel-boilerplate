@@ -4,12 +4,14 @@ namespace App\Policies;
 
 use App\Models\Address;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class AddressPolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
 
     /**
      * Determine whether the user can view any models.
@@ -31,9 +33,7 @@ class AddressPolicy
      */
     public function view(User $user, Address $address)
     {
-        return $user->id === $address->user_id
-                ? Response::allow()
-                : Response::deny('You do not own this Address.');
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ class AddressPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -84,7 +84,9 @@ class AddressPolicy
      */
     public function restore(User $user, Address $address)
     {
-        return $user->id === $address->user_id;
+        return $user->id === $address->user_id
+                     ? Response::allow()
+                     : Response::deny('You do not own this Address.');
     }
 
     /**
@@ -98,6 +100,6 @@ class AddressPolicy
     {
         return $user->id === $address->user_id
                 ? Response::allow()
-                : Response::deny(['message', 'You do not own this Address.']);
+                : Response::deny('You do not own this Address.');
     }
 }

@@ -103,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
     }
 
-    
+
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
@@ -147,6 +147,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $hasPermission;
     }
 
+    public function isSuperAdmin()
+    {
+        return auth()->user()->hasRole(['superadmin']);
+    }
+
     protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)
@@ -160,7 +165,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getIsEditableAttribute($value)
     {
-        if ($this->id == 1) {
+        if ($this->id === 1) {
             return false;
         } else {
             return true;

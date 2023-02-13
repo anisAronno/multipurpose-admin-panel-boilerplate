@@ -11,7 +11,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -29,11 +31,6 @@ class UserController extends InertiaApplicationController
         $this->middleware('permission:user.delete', ['only' => ['destroy']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
@@ -56,11 +53,6 @@ class UserController extends InertiaApplicationController
         return Inertia::render('Dashboard/User/Index', ['users' => $users]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $role = Role::pluck('name');
@@ -69,15 +61,12 @@ class UserController extends InertiaApplicationController
         return Inertia::render('Dashboard/User/Create', ['roles' => $role, 'statusArr' => $statusArr]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UserStoreRequest $request)
     {
-        $data = $request->only('name', 'email', 'password', 'status', 'gender');
+        $data = $request->only('name', 'email', 'status', 'gender');
+
+        $data['password'] = Hash::make($request->password);
+        $data['email_verified_at'] = Carbon::now();
 
         if ($request->avatar) {
             $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
@@ -92,12 +81,6 @@ class UserController extends InertiaApplicationController
         return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Created successfull']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(User $user)
     {
         $user->load(['roles']);
@@ -105,12 +88,7 @@ class UserController extends InertiaApplicationController
         return Inertia::render('Dashboard/User/Show', ['user' => $user]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(User $user)
     {
         $user->load(['roles:name']);
@@ -126,13 +104,6 @@ class UserController extends InertiaApplicationController
         return Inertia::render('Dashboard/User/Edit', ['user' => $user, 'statusArr' => $statusArr, 'roleArr' => $roleArr]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->only('name', 'email', 'status', 'gender'));
@@ -159,12 +130,6 @@ class UserController extends InertiaApplicationController
         return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Updated successfull']);
     }
 
-   /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
    public function destroy(User $user)
    {
        if (! $user->isDeletable) {
@@ -180,12 +145,6 @@ class UserController extends InertiaApplicationController
        return $this->successWithMessage('Deleted successfull');
    }
 
-   /**
-    * Summary of avatarUpdate
-    *
-    * @param  User  $user
-    * @return \Illuminate\Http\RedirectResponse
-    */
    public function avatarUpdate(Request $request, User $user)
    {
        if ($request->image) {
@@ -201,12 +160,6 @@ class UserController extends InertiaApplicationController
        return $this->successWithMessage('Successfully Updated');
    }
 
-   /**
-    * Remove the specified user avatar.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
    public function avatarDelete(User $user)
    {
        FileHelpers::deleteFile($user->avatar);

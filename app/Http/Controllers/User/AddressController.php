@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\User;
-
 
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
@@ -14,11 +12,14 @@ use App\Http\Controllers\Controller;
 class AddressController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAddressRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Filter role and permission
+    */
+    public function __construct()
+    {
+        $this->authorizeResource(Address::class, 'address');
+    }
+  
+    
     public function store(StoreAddressRequest $request)
     {
         $result = $request->user()->addresses()->create($request->all());
@@ -30,16 +31,11 @@ class AddressController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAddressRequest  $request
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(UpdateAddressRequest $request, Address $address)
     {
         $result = $address->update($request->all());
+
         if ($result) {
             return Redirect::back()->with(['success' => true, 'message', 'Updated successfully.']);
         } else {
@@ -47,15 +43,11 @@ class AddressController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Address  $address
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy(Address $address)
     {
         $result = $address->delete();
+
         if ($result) {
             return Redirect::back()->with(['success' => true, 'message', 'Address Deleted']);
         } else {

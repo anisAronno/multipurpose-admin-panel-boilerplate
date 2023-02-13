@@ -11,13 +11,26 @@ use App\Models\Category;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache; 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class BlogController extends InertiaApplicationController
 {
+    /**
+    * Filter role and permission
+    */
+    public function __construct()
+    {
+        $this->middleware('permission:blog.view|blog.create|blog.edit|blog.delete|blog.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:blog.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:blog.edit|permission:blog.status|', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:blog.delete', ['only' => ['destroy']]); 
+
+        $this->authorizeResource(Blog::class, 'blog');
+    }
+
     /**
      * Summary of index
      * @param Request $request
@@ -150,7 +163,7 @@ class BlogController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Blog $blog)
-    { 
+    {
         $blog->delete();
 
         if (session('last_visited_blog_url')) {
@@ -159,5 +172,4 @@ class BlogController extends InertiaApplicationController
 
         return $this->successWithMessage('Deleted successfull');
     }
- 
 }

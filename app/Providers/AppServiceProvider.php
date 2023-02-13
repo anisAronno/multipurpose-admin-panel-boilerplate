@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -44,10 +43,9 @@ class AppServiceProvider extends ServiceProvider
         app()->setLocale(Option::getOption('language'));
 
         LogViewer::auth(function ($request) {
-            return $request->user()->hasRole(['superadmin', 'admin']);
+            return $request->user()->isSuperAdmin();
         });
 
         JsonResource::withoutWrapping();
-
     }
 }

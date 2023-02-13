@@ -4,21 +4,23 @@ namespace App\Policies;
 
 use App\Models\Blog;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class BlogPolicy
 {
     use HandlesAuthorization;
-
+    use SuperAdminPolicy;
     /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
+         * Determine whether the user can view any models.
+         *
+         * @param  \App\Models\User  $user
+         * @return \Illuminate\Auth\Access\Response|bool
+         */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +32,7 @@ class BlogPolicy
      */
     public function view(User $user, Blog $blog)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +43,7 @@ class BlogPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +55,9 @@ class BlogPolicy
      */
     public function update(User $user, Blog $blog)
     {
-        //
+        return optional($user)->id === $blog->user_id
+                  ? Response::allow()
+                  : Response::deny('You do not own this Post.');
     }
 
     /**
@@ -65,7 +69,9 @@ class BlogPolicy
      */
     public function delete(User $user, Blog $blog)
     {
-        //
+        return optional($user)->id === $blog->user_id
+                  ? Response::allow()
+                  : Response::deny('You do not own this Post.');
     }
 
     /**
@@ -77,7 +83,9 @@ class BlogPolicy
      */
     public function restore(User $user, Blog $blog)
     {
-        //
+        return optional($user)->id === $blog->user_id
+                  ? Response::allow()
+                  : Response::deny(['message', 'You do not own this Post.']);
     }
 
     /**
@@ -89,6 +97,8 @@ class BlogPolicy
      */
     public function forceDelete(User $user, Blog $blog)
     {
-        //
+        return optional($user)->id === $blog->user_id
+                  ? Response::allow()
+                  : Response::deny(['message', 'You do not own this Post.']);
     }
 }
