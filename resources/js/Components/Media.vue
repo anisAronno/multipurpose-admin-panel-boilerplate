@@ -219,7 +219,7 @@ const updateImage = async (image) => {
             maxWidth="full"
         >
             <span
-                class="absolute top-1 right-1 text-red-600 bg-red-100 font-semibold rounded-full w-6 h-6 text-md cursor-pointer text-center hover:scale-105 shadow-sm shadow-red-200 z-50"
+                class="absolute top-1 right-1 text-red-500 bg-gray-200 font-semibold rounded-full w-6 h-6 xl:w-8 xl:h-8 grid place-items-center text-md xl:text-xl cursor-pointer text-center hover:scale-105 shadow-sm shadow-red-300 z-50"
                 @click="closeModal"
             >
                 X
@@ -317,7 +317,7 @@ const updateImage = async (image) => {
                                     <img
                                         :src="image.url"
                                         :alt="image.title"
-                                        class="w-[90%] h-auto sm:w-32 sm:h-32 cursor-pointer rounded-sm PX-1"
+                                        class="w-[90%] h-auto sm:w-32 sm:h-32 xl:w-40 xl:h-40 2xl:w-48 2xl:h-48 cursor-pointer rounded-sm PX-1"
                                         :class="[
                                             image.checked
                                                 ? 'border-2 border-blue-900 '
@@ -388,6 +388,20 @@ const updateImage = async (image) => {
                                             >Type:
                                             {{ editAbleImage.type }}</span
                                         >
+                                        <span
+                                            class="grid place-content-center text-sm font-semibold rounded-sm my-3 cursor-pointer"
+                                        >
+                                            <DeleteImage
+                                                class="cursor-pointer"
+                                                :id="editAbleImage.id"
+                                                route="image"
+                                                :field="editAbleImage.id"
+                                            >
+                                                <span class="text-sm"
+                                                    >Delete image
+                                                </span>
+                                            </DeleteImage>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="mt-3">
@@ -408,15 +422,14 @@ const updateImage = async (image) => {
                                             required
                                         />
                                         <button
-                                            class="grid grid-cols-6 place-content-center w-full text-sm font-semibold text-white mt-2 cursor-pointer hover:text-gray-50 hover:bg-blue-600 bg-blue-500 p-1 rounded-md"
+                                            class="grid grid-cols-6 place-content-center w-full text-sm font-semibold text-white mt-2 xl:mt-3 hover:text-gray-50 hover:bg-blue-600 bg-blue-500 p-1 rounded-md"
                                             type="subnit"
                                             :class="[
-                                                isUpdated
-                                                    ? 'disabled opacity-50'
-                                                    : '',
+                                                isUpdated ? 'opacity-50' : '',
                                             ]"
+                                            :disabled="isUpdated"
                                         >
-                                            <span class="col-span-5"
+                                            <span class="col-span-5 sm:py-0.5 xl:py-1"
                                                 >Update Title</span
                                             >
                                             <span
@@ -427,19 +440,6 @@ const updateImage = async (image) => {
                                             </span>
                                         </button>
                                     </form>
-                                    <span
-                                        class="grid place-content-center text-sm font-semibold rounded-sm mt-2 cursor-pointer"
-                                    >
-                                        <DeleteImage
-                                            class="cursor-pointer"
-                                            :id="editAbleImage.id"
-                                            route="image"
-                                            :field="editAbleImage.id"
-                                            ><span class="text-sm"
-                                                >Delete image</span
-                                            ></DeleteImage
-                                        >
-                                    </span>
                                 </div>
                             </div>
                         </div>
