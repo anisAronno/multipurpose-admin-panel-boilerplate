@@ -19,9 +19,8 @@ class SpecialFeatureFactory extends Factory
     {
         return [
             'title' =>$this->faker->name(),
-            'description' =>$this->faker->sentence(2),
-            'image' =>$this->faker->imageUrl(),
-            'status' => Status::ACTIVE,
+            'description' =>$this->faker->sentence(2), 
+            'status' => Status::PUBLISHED,
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +13,10 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('special_features', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 255);
-            $table->text('description')->nullable(); 
-            $table->string('slug', 255)->nullable();
-            $table->string('status')->default('Draft');
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->foreignIdFor(Tag::class)->constrained();
+            $table->unsignedBigInteger('taggable_id');
+            $table->string('taggable_type');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('special_features');
+        Schema::dropIfExists('tagables');
     }
 };

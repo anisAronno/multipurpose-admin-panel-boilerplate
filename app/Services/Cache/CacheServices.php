@@ -39,6 +39,11 @@ class CacheServices
         return 'category'.$token;
     }
 
+    public static function getTagCacheKey(int $token = null): string
+    {
+        return 'tag'.$token;
+    }
+
      public static function getFeaturedCategoryCacheKey(int $token = null): string
      {
          return 'featured_category'.$token;

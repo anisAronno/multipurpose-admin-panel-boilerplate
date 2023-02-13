@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
-            $table->longText('body')->nullable();
+            $table->longText('description')->nullable();
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
             $table->softDeletes();

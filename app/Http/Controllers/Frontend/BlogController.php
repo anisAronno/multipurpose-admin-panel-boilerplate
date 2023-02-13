@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Http\Resources\BlogResources;
 use App\Models\Blog;
 use App\Http\Controllers\Controller;
 use App\Services\Cache\CacheServices;
@@ -27,7 +28,7 @@ class BlogController extends Controller
             return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->paginate(9);
         });
 
-        return Inertia::render('Frontend/Blog/Index')->with(['blogs' => $blogs]);
+        return Inertia::render('Frontend/Blog/Index')->with(['blogs' => BlogResources::collection($blogs)]);
     }
 
     /**
@@ -61,7 +62,7 @@ class BlogController extends Controller
         if (! $blog->isActive()) {
             abort(403);
         }
-        return Inertia::render('Frontend/Blog/Show')->with(['blog' => $blog->load('user')]);
+        return Inertia::render('Frontend/Blog/Show')->with(['blog' => new BlogResources($blog->load('user'))]);
     }
 
     /**

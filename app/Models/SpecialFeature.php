@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models; 
 
-use App\Helpers\FileHelpers;
-use App\Helpers\UniqueSlug;
-use App\Traits\CheckStatusAndFeture;
+use App\Helpers\UniqueSlug; 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Model; 
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Enums\Status;
@@ -17,8 +14,6 @@ class SpecialFeature extends Model
     use HasFactory;
     use LogsActivity;
 
-
-
     /**
     * The attributes that are mass assignable.
     *
@@ -26,8 +21,7 @@ class SpecialFeature extends Model
     */
     protected $fillable = [
         'title',
-        'description',
-        'image',
+        'description', 
         'status',
         'is_featured',
         'slug',
@@ -51,11 +45,10 @@ class SpecialFeature extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['title', 'description', 'image', 'status'])
+        ->logOnly(['title', 'description', 'status'])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
-
 
     /**
      * The attributes that should be cast.
@@ -66,25 +59,8 @@ class SpecialFeature extends Model
         'status' => Status::class,
     ];
 
-    /**
-     * Summary of getImageAttribute
-     * @param mixed $value
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     */
-    public function getImageAttribute($value)
-    {
-        return  $this->attributes['image'] = FileHelpers::getUrl($value);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
-        }
-    }
-
      public function scopeIsActive($query)
      {
-         return $query->where('status', '=', Status::ACTIVE);
+         return $query->where('status', '=', Status::PUBLISHED);
      }
 }

@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Models;
-
-use App\Helpers\FileHelpers;
+ 
 use App\Helpers\UniqueSlug;
 use App\Traits\CheckStatusAndFeture;
+use App\Traits\Imageable; 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes; 
 use Spatie\Activitylog\LogOptions;
 use App\Enums\Status;
 use App\Enums\Featured;
@@ -20,8 +19,7 @@ class Category extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
-
-
+    use Imageable; 
 
     /**
     * The attributes that are mass assignable.
@@ -30,8 +28,7 @@ class Category extends Model
     */
     protected $fillable = [
         'title',
-        'description',
-        'image',
+        'description', 
         'status',
         'is_featured',
         'slug',
@@ -55,7 +52,7 @@ class Category extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['title', 'description', 'image', 'status'])
+        ->logOnly(['title', 'description', 'status'])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
@@ -70,28 +67,6 @@ class Category extends Model
         'status' => Status::class,
         'is_featured' => Featured::class,
     ];
-
-    /**
-     * Summary of getImageAttribute
-     * @param mixed $value
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     */
-    public function getImageAttribute($value)
-    {
-        return  $this->attributes['image'] = FileHelpers::getUrl($value);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
-        }
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
 
     public function blogs()
     {

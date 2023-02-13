@@ -103,12 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
     }
 
-    /**
-     * Picture
-     *
-     * @param [type] $uid
-     * @return void
-     */
+    
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
@@ -193,6 +188,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function categories()
     {
         return $this->hasMany(Category::class, 'user_id', 'id');
+    }
+    public function tags()
+    {
+        return $this->hasMany(Tag::class, 'user_id', 'id');
     }
      public function products()
      {

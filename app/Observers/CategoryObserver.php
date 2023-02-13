@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers\Product;
+namespace App\Observers;
 
 use App\Models\Category;
 use App\Services\Cache\CacheServices;

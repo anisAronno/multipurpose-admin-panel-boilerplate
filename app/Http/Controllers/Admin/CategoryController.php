@@ -10,8 +10,7 @@ use App\Enums\Featured;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
+use Illuminate\Support\Facades\Cache; 
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -42,7 +41,7 @@ class CategoryController extends InertiaApplicationController
 
         Session::put('last_visited_category_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Category/Index')->with(['categories' => $categories]);
+        return Inertia::render('Dashboard/Category/Index')->with(['categories' => $categories->load(['images'])]);
     }
 
     /**
@@ -69,10 +68,6 @@ class CategoryController extends InertiaApplicationController
         $data = $request->only('title', 'description', 'is_featured', 'status');
         $data['user_id'] = auth()->user()->id ;
 
-        if ($request->image) {
-            $data['image'] = FileHelpers::upload($request, 'image', 'categories');
-        }
-
         try {
             Category::create($data);
             return Redirect::route('admin.category.index')->with(['success' => true, 'message', 'Created successfull']);
@@ -89,7 +84,7 @@ class CategoryController extends InertiaApplicationController
        */
       public function show(Category $category)
       {
-          return Inertia::render('Dashboard/Category/Show')->with(['category' => $category]);
+          return Inertia::render('Dashboard/Category/Show')->with(['category' => $category->load(['images'])]);
       }
 
     /**
@@ -102,7 +97,7 @@ class CategoryController extends InertiaApplicationController
         $statusArr = Status::values();
         $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Category/Edit', ['category' => $category, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Category/Edit', ['category' => $category->load(['images']), 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
     }
 
     /**
@@ -132,11 +127,7 @@ class CategoryController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
-    {
-        if ($category->image) {
-            FileHelpers::deleteFile($category->image);
-        }
-
+    { 
         $category->delete();
 
         if (session('last_visited_category_url')) {
@@ -145,28 +136,5 @@ class CategoryController extends InertiaApplicationController
 
         return $this->successWithMessage('Deleted successfull');
     }
-
-    public function imageUpdate(Request $request, Category $category)
-    {
-        if ($request->image) {
-            $path = FileHelpers::upload($request, 'image', 'categories');
-            if (! $path) {
-                return $this->failedWithMessage('Update Failed');
-            } else {
-                FileHelpers::deleteFile($category->image);
-                $category->update(['image' => $path]);
-            }
-        }
-
-        return $this->successWithMessage('Successfully Updated');
-    }
-
-    public function imageDelete(Category $category)
-    {
-        FileHelpers::deleteFile($category->image);
-
-        $category->update([$category->image = null]);
-
-        return $this->successWithMessage('Deleted successfull');
-    }
+ 
 }

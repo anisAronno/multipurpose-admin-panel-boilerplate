@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\FileHelpers;
+use App\Traits\HasAuthor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -12,6 +13,7 @@ class Image extends Model
 {
     use HasFactory;
     use LogsActivity;
+    use HasAuthor;
 
     protected $fillable = [
         'title',
@@ -37,9 +39,12 @@ class Image extends Model
         return  $this->attributes['url'] = FileHelpers::getUrl($value);
     }
 
-
-    public function user()
+    public function blogs()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->morphedByMany(Blog::class, 'categoryable');
+    }
+    public function products()
+    {
+        return $this->morphedByMany(Product::class, 'categoryable');
     }
 }

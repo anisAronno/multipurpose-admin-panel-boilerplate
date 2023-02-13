@@ -11,15 +11,17 @@ use App\Models\Contact;
 use App\Models\Option;
 use App\Models\Product;
 use App\Models\SpecialFeature;
+use App\Models\Tag;
 use App\Models\User;
 use App\Observers\Blog\BlogObserver;
+use App\Observers\CategoryObserver;
 use App\Observers\ContactObserver;
 use App\Observers\ImageObserver;
 use App\Observers\OptionObserver;
-use App\Observers\Product\CategoryObserver;
 use App\Observers\Product\ProductObserver;
 use App\Observers\RoleObserver;
 use App\Observers\SpecialFeatureObserver;
+use App\Observers\TagObserver;
 use App\Observers\User\UserObserver;
 use App\Models\Image;
 use Illuminate\Auth\Events\Registered;
@@ -60,6 +62,7 @@ class EventServiceProvider extends ServiceProvider
         Contact::observe(ContactObserver::class);
         SpecialFeature::observe(SpecialFeatureObserver::class);
         Image::observe(ImageObserver::class);
+        Tag::observe(TagObserver::class);
     }
 
     /**

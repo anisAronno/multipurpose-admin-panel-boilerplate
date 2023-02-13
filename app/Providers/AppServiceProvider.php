@@ -6,6 +6,8 @@ use App\Models\Option;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
+use Illuminate\Http\Resources\Json\JsonResource;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,5 +46,8 @@ class AppServiceProvider extends ServiceProvider
         LogViewer::auth(function ($request) {
             return $request->user()->hasRole(['superadmin', 'admin']);
         });
+
+        JsonResource::withoutWrapping();
+
     }
 }

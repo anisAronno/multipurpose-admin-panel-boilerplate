@@ -11,8 +11,7 @@ use App\Models\Category;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
+use Illuminate\Support\Facades\Cache; 
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -93,7 +92,7 @@ class BlogController extends InertiaApplicationController
        */
     public function show(Blog $blog)
     {
-        $blog->load(['categories']);
+        $blog->load(['categories', 'images']);
 
         return Inertia::render('Dashboard/Blog/Show')->with(['blog' => $blog]);
     }
@@ -105,7 +104,7 @@ class BlogController extends InertiaApplicationController
      */
     public function edit(Blog $blog)
     {
-        $blog->load('images');
+        $blog->load(['images', 'categories']);
 
         $blog->categoryArr = $blog->categories->map(function ($item, $key) {
             return $item->id;
@@ -151,11 +150,7 @@ class BlogController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Blog $blog)
-    {
-        if ($blog->image) {
-            FileHelpers::deleteFile($blog->image);
-        }
-
+    { 
         $blog->delete();
 
         if (session('last_visited_blog_url')) {

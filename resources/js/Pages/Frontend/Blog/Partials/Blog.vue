@@ -36,7 +36,7 @@ defineProps({
                     <Link :href="route('blog.show', blog.slug)">
                         <img
                             class="h-48 w-full object-cover"
-                            :src="blog.image"
+                            :src="blog.images[0].url"
                             alt=""
                         />
                     </Link>

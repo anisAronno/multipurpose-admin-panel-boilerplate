@@ -22,7 +22,7 @@ class PageFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'body' => $this->faker->paragraph(3),
+            'description' => $this->faker->paragraph(3),
             'user_id' => User::all(['id'])->random(),
         ];
     }

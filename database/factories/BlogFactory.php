@@ -18,13 +18,12 @@ class BlogFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition()
-    { 
+    {
         return [
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->paragraph(3),
-            'image' => $this->faker->imageUrl(),
             'is_featured' => $this->faker->randomElement(Featured::values()),
-            'status' => Status::ACTIVE,
+            'status' => Status::PUBLISHED,
             'user_id' => User::all(['id'])->random(),
         ];
     }

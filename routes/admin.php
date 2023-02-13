@@ -55,18 +55,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Product Route
          */
         Route::resource('product', ProductController::class, ['except' => ['update']]);
-        Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
-        Route::post('/product/image/{product}', [ProductController::class, 'imageUpdate'])->name('product.image.update');
-        Route::delete('/product/image/{product}', [ProductController::class, 'imageDelete'])->name('product.image.destroy');
-
+        Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update'); 
 
         /**
          * Category Route
          */
         Route::resource('category', CategoryController::class, ['except' => ['update']]);
-        Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
-        Route::post('/category/image/{category}', [CategoryController::class, 'imageUpdate'])->name('category.image.update');
-        Route::delete('/category/image/{category}', [CategoryController::class, 'imageDelete'])->name('category.image.destroy');
+        Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update'); 
 
         /**
          * Blog Route
@@ -90,10 +85,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Special Feature Controller route
          */
         Route::resource('special-feature', SpecialFeatureController::class, ['except' => ['update']]);
-        Route::post('/special-feature/update/{specialFeature}', [SpecialFeatureController::class, 'update'])->name('special-feature.update');
-        Route::post('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageUpdate'])->name('special-feature.image.update');
-        Route::delete('/special-feature/image/{specialFeature}', [SpecialFeatureController::class, 'imageDelete'])->name('special-feature.image.destroy');
-
+        Route::post('/special-feature/update/{specialFeature}', [SpecialFeatureController::class, 'update'])->name('special-feature.update'); 
 
         /**
          * Options Route

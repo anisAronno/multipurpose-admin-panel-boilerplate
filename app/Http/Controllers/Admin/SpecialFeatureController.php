@@ -10,7 +10,6 @@ use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -41,7 +40,7 @@ class SpecialFeatureController extends InertiaApplicationController
 
         Session::put('last_visited_special_feature_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/SpecialFeature/Index')->with(['specialFeatures' => $specialFeatures]);
+        return Inertia::render('Dashboard/SpecialFeature/Index')->with(['specialFeatures' => $specialFeatures->load('images')]);
     }
 
     /**
@@ -51,7 +50,7 @@ class SpecialFeatureController extends InertiaApplicationController
      */
     public function create()
     {
-        $statusArr = Status::values(); 
+        $statusArr = Status::values();
 
         return Inertia::render('Dashboard/SpecialFeature/Create', ['statusArr' => $statusArr]);
     }
@@ -64,14 +63,15 @@ class SpecialFeatureController extends InertiaApplicationController
      */
     public function store(StoreSpecialFeatureRequest $request)
     {
-        $data = $request->only('title', 'description', 'status'); 
-
-        if ($request->image) {
-            $data['image'] = FileHelpers::upload($request, 'image', 'specialFeatures');
-        }
+        $data = $request->only('title', 'description', 'status');
 
         try {
-            SpecialFeature::create($data);
+            $specialFeature = SpecialFeature::create($data);
+
+            if ($specialFeature) {
+                $specialFeature->images()->attach(array_column($request->get('images'), 'id'));
+            }
+
             return Redirect::route('admin.special-feature.index')->with(['success' => true, 'message', 'Created successfull']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
@@ -86,7 +86,7 @@ class SpecialFeatureController extends InertiaApplicationController
        */
       public function show(SpecialFeature $specialFeature)
       {
-          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => $specialFeature]);
+          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => $specialFeature->load('images')]);
       }
 
     /**
@@ -98,7 +98,7 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $statusArr = Status::values();
 
-        return Inertia::render('Dashboard/SpecialFeature/Edit', ['specialFeature' => $specialFeature, 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/SpecialFeature/Edit', ['specialFeature' => $specialFeature->load('images'), 'statusArr' => $statusArr]);
     }
 
     /**
@@ -111,6 +111,8 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         try {
             $specialFeature->update($request->only('title', 'description', 'status'));
+
+            $specialFeature->images()->sync(array_column($request->get('images'), 'id'));
 
             if (session('last_visited_special_feature_url')) {
                 return Redirect::to(session('last_visited_special_feature_url'))->with(['success' => true, 'message', 'Updated successfull']);
@@ -129,39 +131,11 @@ class SpecialFeatureController extends InertiaApplicationController
      */
     public function destroy(SpecialFeature $specialFeature)
     {
-        if ($specialFeature->image) {
-            FileHelpers::deleteFile($specialFeature->image);
-        }
-
         $specialFeature->delete();
 
         if (session('last_visited_special_feature_url')) {
             return Redirect::to(session('last_visited_special_feature_url'))->with(['success' => true, 'message', 'Deleted successfull']);
         }
-
-        return $this->successWithMessage('Deleted successfull');
-    }
-
-    public function imageUpdate(Request $request, SpecialFeature $specialFeature)
-    {
-        if ($request->image) {
-            $path = FileHelpers::upload($request, 'image', 'specialFeatures');
-            if (! $path) {
-                return $this->failedWithMessage('Update Failed');
-            } else {
-                FileHelpers::deleteFile($specialFeature->image);
-                $specialFeature->update(['image' => $path]);
-            }
-        }
-
-        return $this->successWithMessage('Successfully Updated');
-    }
-
-    public function imageDelete(SpecialFeature $specialFeature)
-    {
-        FileHelpers::deleteFile($specialFeature->image);
-
-        $specialFeature->update([$specialFeature->image = null]);
 
         return $this->successWithMessage('Deleted successfull');
     }

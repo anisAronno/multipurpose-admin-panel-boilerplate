@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BlogResources;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
@@ -44,7 +45,7 @@ class HomeController extends Controller
             return SpecialFeature::isActive()->orderBy('id', 'desc')->limit(4)->get();
         });
 
-        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => $featuredProducts, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=>$featuredBlog, 'specialFeatures' => $specialFeatures]);
+        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => $featuredProducts, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=> BlogResources::collection($featuredBlog), 'specialFeatures' => $specialFeatures]);
     }
 
     /**

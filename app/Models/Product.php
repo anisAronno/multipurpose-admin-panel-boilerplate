@@ -1,17 +1,18 @@
 <?php
 
 namespace App\Models;
-
-use App\Helpers\FileHelpers;
+ 
 use App\Helpers\UniqueSlug;
+use App\Traits\Categoryable;
 use App\Traits\CheckStatusAndFeture;
+use App\Traits\HasAuthor;
 use App\Traits\Imageable;
+use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\Status;
-use App\Enums\Featured;
-use Illuminate\Support\Carbon;
+use App\Enums\Featured; 
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -22,6 +23,10 @@ class Product extends Model
     use LogsActivity;
     use CheckStatusAndFeture;
     use Imageable;
+    use Categoryable;
+    use HasAuthor;
+    use Taggable;
+
 
 
     /**
@@ -31,9 +36,7 @@ class Product extends Model
      */
     protected $fillable = [
         'title',
-        'description',
-        'image',
-        'price',
+        'description', 
         'status',
         'is_featured',
         'slug',
@@ -55,7 +58,7 @@ class Product extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['title', 'description', 'image', 'price', 'status'])
+        ->logOnly(['title', 'description',   'status'])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
@@ -70,31 +73,4 @@ class Product extends Model
         'status' => Status::class,
         'is_featured' => Featured::class,
     ];
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
-        }
-    }
-     /**
-    * Summary of getImageAttribute
-    * @param mixed $value
-    * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-    */
-     public function getImageAttribute($value)
-     {
-         return  $this->attributes['image'] = FileHelpers::getUrl($value);
-     }
-
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function categories()
-    {
-        return $this->morphToMany(Category::class, 'categoryable')->withTimestamps();
-    }
- 
 }

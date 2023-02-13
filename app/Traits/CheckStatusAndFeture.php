@@ -14,7 +14,7 @@ trait CheckStatusAndFeture
      */
     public function scopeIsActive($query)
     {
-        return $query->where('status', '=', Status::ACTIVE);
+        return $query->where('status', '=', Status::PUBLISHED);
     }
     /**
      * Summary of scopeIsFeatured
@@ -25,5 +25,4 @@ trait CheckStatusAndFeture
     {
         return $query->where('is_featured', '=', Featured::OK);
     }
-    
 }

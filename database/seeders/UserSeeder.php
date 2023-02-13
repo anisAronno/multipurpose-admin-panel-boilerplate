@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\LoginHistory;
 use App\Models\Product;
 use App\Models\SocialLogin;
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Image;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             Blog::factory()->count(3)
             ->has(Category::factory()->count(2), 'categories')
             ->has(Image::factory()->count(2), 'images')
+            ->has(Tag::factory()->count(2), 'tags')
         )
         ->has(Address::factory()->count(3))
         ->has(SocialLogin::factory()->count(3))
@@ -33,6 +35,7 @@ class UserSeeder extends Seeder
             Product::factory()->count(3)
             ->has(Category::factory()->count(2), 'categories')
             ->has(Image::factory()->count(2), 'images')
+            ->has(Tag::factory()->count(2), 'tags')
         )
         ->has(LoginHistory::factory()->count(3))->create()->each(function ($user) {
             $user->assignRole('user');

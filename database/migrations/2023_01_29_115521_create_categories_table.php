@@ -17,8 +17,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255)->unique();
-            $table->text('description')->nullable();
-            $table->string('image')->nullable();
+            $table->text('description')->nullable(); 
             $table->string('is_featured')->default('N/A');
             $table->string('status')->default('Draft');
             $table->foreignIdFor(User::class)->constrained();

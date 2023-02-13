@@ -8,7 +8,7 @@ enum Status: string
 {
     use EnumToArray;
 
-    case ACTIVE = 'Active';
+    case PUBLISHED = 'Published';
     case PENDING = 'Pending';
     case DRAFT =  'Draft';
     case REJECTED = 'Rejected';

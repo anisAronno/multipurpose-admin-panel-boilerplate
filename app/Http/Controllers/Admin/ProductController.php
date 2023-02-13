@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
+ 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
@@ -12,8 +11,7 @@ use App\Enums\Featured;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
+use Illuminate\Support\Facades\Cache; 
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -44,11 +42,9 @@ class ProductController extends InertiaApplicationController
             return Product::with(['categories'])->orderBy('id', 'desc')->paginate(10);
         });
 
-
         Session::put('last_visited_product_url', $request->fullUrl());
 
-
-        return Inertia::render('Dashboard/Products/Index')->with(['products' => $products]);
+        return Inertia::render('Dashboard/Products/Index')->with(['products' => $products->load(['images'])]);
     }
 
     /**
@@ -77,15 +73,12 @@ class ProductController extends InertiaApplicationController
         $data = $request->only('title', 'description', 'is_featured', 'status');
         $data['user_id'] = auth()->user()->id ;
 
-        if ($request->image) {
-            $data['image'] = FileHelpers::upload($request, 'image', 'products');
-        }
-
         try {
             $product = Product::create($data);
 
             if ($product) {
                 $product->categories()->attach($request->get('categories'));
+                $product->images()->attach(array_column($request->get('images'), 'id'));
             }
             return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfull']);
         } catch (\Throwable $th) {
@@ -101,7 +94,7 @@ class ProductController extends InertiaApplicationController
        */
       public function show(Product $product)
       {
-          $product->load(['categories']);
+          $product->load(['categories', 'images']);
 
           return Inertia::render('Dashboard/Products/Show')->with(['product' => $product]);
       }
@@ -122,7 +115,7 @@ class ProductController extends InertiaApplicationController
 
         $categories = Category::select('id as value', 'title as label') ->get();
 
-        return Inertia::render('Dashboard/Products/Edit', ['product' => $product, 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['images']), 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
     }
 
     /**
@@ -137,6 +130,7 @@ class ProductController extends InertiaApplicationController
 
         if ($request->categories) {
             $product->categories()->sync($request->categories);
+            $product->images()->sync(array_column($request->get('images'), 'id'));
         }
 
         if (session('last_visited_product_url')) {
@@ -153,10 +147,6 @@ class ProductController extends InertiaApplicationController
      */
     public function destroy(Product $product)
     {
-        if ($product->image) {
-            FileHelpers::deleteFile($product->image);
-        }
-
         $product->delete();
 
         if (session('last_visited_product_url')) {
@@ -165,28 +155,4 @@ class ProductController extends InertiaApplicationController
 
         return $this->successWithMessage('Deleted successfull');
     }
-
-       public function imageUpdate(Request $request, Product $product)
-       {
-           if ($request->image) {
-               $path = FileHelpers::upload($request, 'image', 'products');
-               if (! $path) {
-                   return $this->failedWithMessage('Update Failed');
-               } else {
-                   FileHelpers::deleteFile($product->image);
-                   $product->update(['image' => $path]);
-               }
-           }
-
-           return $this->successWithMessage('Successfully Updated');
-       }
-
-         public function imageDelete(Product $product)
-         {
-             FileHelpers::deleteFile($product->image);
-
-             $product->update([$product->image = null]);
-
-             return $this->successWithMessage('Deleted successfull');
-         }
 }

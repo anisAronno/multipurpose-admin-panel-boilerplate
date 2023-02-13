@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasAuthor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +14,7 @@ class Address extends Model
     use HasFactory;
     use LogsActivity;
     use SoftDeletes;
+    use HasAuthor;
 
     protected $fillable = [
         'title',
@@ -34,9 +36,5 @@ class Address extends Model
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
+ 
 }

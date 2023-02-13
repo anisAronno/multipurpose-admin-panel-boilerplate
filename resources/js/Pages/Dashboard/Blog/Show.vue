@@ -137,11 +137,17 @@ defineProps({
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
-                                                    <img
-                                                        :src="blog.image"
-                                                        alt=""
-                                                        class="w-16 h-16"
-                                                    />
+                                                    <div
+                                                        v-for="image in blog.images"
+                                                        :key="image.id"
+                                                        class="m-1"
+                                                    >
+                                                        <img
+                                                            :src="image.url"
+                                                            :alt="image.title"
+                                                            class="w-16 h-16"
+                                                        />
+                                                    </div>
                                                 </td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
