@@ -5,7 +5,7 @@ import { useDashboardMenu } from "@/Composables/useDashboardMenu";
 import DesktopMenu from "@/Layouts/Partials/DesktopMenu.vue";
 import Header from "@/Layouts/Partials/Header.vue";
 import MobileMenu from "@/Layouts/Partials/MobileMenu.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
 
 const { navigation, sidebarOpen, isOpenSidebar, isLoaded } = useDashboardMenu();
@@ -55,7 +55,7 @@ onMounted(() => {
         <link
             rel="icon"
             type="image/svg+xml"
-            :href="$page.props.global.options.fav_icon"
+            :href="$page?.props?.global?.options?.fav_icon"
         />
     </Head>
     <div>

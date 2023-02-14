@@ -3,7 +3,7 @@ import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import ContactForm from "@/Pages/Frontend/Contact/Partials/ContactForm.vue";
 import Map from "@/Pages/Frontend/Contact/Partials/Map.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 </script>
 
 <template>

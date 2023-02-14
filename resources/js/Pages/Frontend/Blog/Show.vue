@@ -2,7 +2,7 @@
 import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import BlogShow from "@/Pages/Frontend/Blog/Partials/BlogShow.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     blog: Object,
 });

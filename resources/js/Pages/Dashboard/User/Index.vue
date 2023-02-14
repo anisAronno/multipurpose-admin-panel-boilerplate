@@ -4,11 +4,11 @@ import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
 import { formattedDate } from "@/Composables/useDate";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 defineProps({
     users: Object,
 });
-const page = usePage().props.value.global.options;
+const page = usePage()?.props?.global?.options;
 </script>
 
 <template>
@@ -86,7 +86,7 @@ const page = usePage().props.value.global.options;
                                         </div>
                                     </div>
                                     <div
-                                        v-if="users.data.length > 0"
+                                        v-if="users.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -143,7 +143,7 @@ const page = usePage().props.value.global.options;
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="user in users.data"
+                                                    v-for="user in users"
                                                     :key="user.id"
                                                     :id="user.id"
                                                 >

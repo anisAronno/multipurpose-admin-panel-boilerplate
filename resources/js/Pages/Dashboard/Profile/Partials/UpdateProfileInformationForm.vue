@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { Link, useForm, usePage } from "@inertiajs/inertia-vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 const props = defineProps({
     mustVerifyEmail: Boolean,
@@ -11,7 +11,7 @@ const props = defineProps({
     genderArr: Object,
 });
 
-const user = usePage().props.value.auth.user;
+const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,

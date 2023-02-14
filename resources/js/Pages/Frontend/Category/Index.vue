@@ -3,7 +3,7 @@ import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import Category from "@/Pages/Frontend/Category/Partials/Category.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     categories: Object,
 });

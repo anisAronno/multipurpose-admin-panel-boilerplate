@@ -2,7 +2,7 @@
 import Hero from "@/Components/Hero.vue";
 import MasterLayout from "@/Layouts/MasterLayout.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     category: Object,
 });
@@ -12,9 +12,7 @@ defineProps({
         <title>{{ category.title }}</title>
     </Head>
     <MasterLayout>
-        <div
-            class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50"
-        >
+        <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
             <Hero>
                 <span
                     class="break-words leading-none font-normal md:font-semibold text-lg"

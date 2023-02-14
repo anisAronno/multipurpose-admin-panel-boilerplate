@@ -1,11 +1,11 @@
  
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 let page = usePage().props;
 export default {
     data() {
         return {
-            permissions: page.value?.auth?.user?.permissions,
-            roles: page.value?.auth?.user?.roles,
+            permissions: page?.auth?.user?.permissions,
+            roles: page?.auth?.user?.roles,
         };
     },
     methods: {

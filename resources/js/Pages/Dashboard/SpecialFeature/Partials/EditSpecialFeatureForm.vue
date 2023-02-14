@@ -6,26 +6,26 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import defaultFile from "@/Stores/defaultFile.js";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
     specialFeature: Object,
-    statusArr: Object, 
+    statusArr: Object,
 });
 
 const titleInput = ref(null);
 const descriptionInput = ref(null);
 const imageInput = ref(null);
-const statusInput = ref(null); 
+const statusInput = ref(null);
 
 const form = useForm({
     title: props.specialFeature.title,
     description: props.specialFeature.description,
     oldImage: props.specialFeature.image,
     imagePreview: props.specialFeature.image || defaultFile.placeholder,
-    status: props.specialFeature.status, 
+    status: props.specialFeature.status,
 });
 
 const previewImage = (e) => {
@@ -46,7 +46,7 @@ const updateSpecialFeature = () => {
             }
             if (form.errors.status) {
                 statusInput.value.focus();
-            } 
+            }
             if (form.errors.image) {
                 imageInput.value.focus();
             }
@@ -82,7 +82,6 @@ const updateSpecialFeature = () => {
                                 />
                             </div>
 
-
                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel
                                     for="status"
@@ -110,7 +109,7 @@ const updateSpecialFeature = () => {
                                     class="mt-2 col-start-2 col-span-4"
                                 />
                             </div>
-                            
+
                             <div class="col-span-6 sm:col-span-3">
                                 <InputLabel
                                     for="description"

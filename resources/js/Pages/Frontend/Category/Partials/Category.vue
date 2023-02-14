@@ -13,7 +13,7 @@ defineProps({
                 class="mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0 gap-10"
             >
                 <Link
-                    v-for="category in categories.data"
+                    v-for="category in categories"
                     :key="category.title"
                     :href="route('category.show', category.slug)"
                     class="group block mb-5"

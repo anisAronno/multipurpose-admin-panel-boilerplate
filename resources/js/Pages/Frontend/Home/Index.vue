@@ -6,7 +6,7 @@ import FeaturedCategory from "@/Pages/Frontend/Category/Partials/FeaturedCategor
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
 import Feature from "@/Pages/Frontend/Products/Partials/Feature.vue";
 import FeatureProducts from "@/Pages/Frontend/Products/Partials/FeatureProducts.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 
 defineProps({
     featuredProducts: Object,

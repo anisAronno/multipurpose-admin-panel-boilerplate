@@ -4,7 +4,7 @@ import Loader from "@/Components/Loader.vue";
 import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { formattedDate } from "@/Composables/useDate";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 import { useInfiniteScroll } from "@vueuse/core";
 import axios from "axios";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
@@ -66,7 +66,7 @@ let pageNumber = 1;
 let el = ref(null);
 
 const selectedImages = reactive(props.modelValue);
-const csrf_token = page.props.value.csrf_token;
+const csrf_token = page.props.csrf_token;
 
 const FilePond = vueFilePond(
     FilePondPluginFileValidateType,
@@ -429,7 +429,8 @@ const updateImage = async (image) => {
                                             ]"
                                             :disabled="isUpdated"
                                         >
-                                            <span class="col-span-5 sm:py-0.5 xl:py-1"
+                                            <span
+                                                class="col-span-5 sm:py-0.5 xl:py-1"
                                                 >Update Title</span
                                             >
                                             <span

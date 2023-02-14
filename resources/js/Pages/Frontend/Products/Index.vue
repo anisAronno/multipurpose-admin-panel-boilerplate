@@ -4,7 +4,7 @@ import MasterLayout from "@/Layouts/MasterLayout.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
 import Feature from "@/Pages/Frontend/Products/Partials/Feature.vue";
 import Products from "@/Pages/Frontend/Products/Partials/Products.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     products: Object,
 });

@@ -3,9 +3,9 @@ import Sync from "@/Components/Icon/Sync.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import GeneralSettingsForm from "@/Pages/Dashboard/Settings/Partials/GeneralSettingsForm.vue";
 import Images from "@/Pages/Dashboard/Settings/Partials/Images.vue";
-import { Head, usePage } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 </script>
 
 <template>

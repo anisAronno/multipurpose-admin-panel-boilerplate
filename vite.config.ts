@@ -1,6 +1,6 @@
-import vue from '@vitejs/plugin-vue';
-import laravel from 'laravel-vite-plugin'; 
-import { defineConfig } from 'vite';
+import vue from "@vitejs/plugin-vue";
+import laravel from "laravel-vite-plugin";
+import { defineConfig } from "vite";
 
 export default defineConfig({
     plugins: [
@@ -15,10 +15,10 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
-            }
-        })
+            },
+        }),
     ],
     ssr: {
-        noExternal: ["@inertiajs/server"],
+        noExternal: ["@inertiajs/vue3/server"],
     },
 });

@@ -2,14 +2,14 @@
 import Sync from "@/Components/Icon/Sync.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SettingsForm from "@/Pages/Dashboard/Settings/Partials/SettingsForm.vue";
-import { Head, usePage } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 defineProps({
     roleArr: Object,
     socialLoginFields: Object,
     userDefaultStatus: Object,
 });
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 </script>
 
 <template>
