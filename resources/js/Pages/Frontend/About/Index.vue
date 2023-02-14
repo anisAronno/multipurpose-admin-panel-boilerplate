@@ -4,7 +4,7 @@ import MasterLayout from "@/Layouts/MasterLayout.vue";
 import About from "@/Pages/Frontend/About/Partials/About.vue";
 import Goal from "@/Pages/Frontend/About/Partials/Goal.vue";
 import Contact from "@/Pages/Frontend/Home/Partials/Contact.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 </script>
 
 <template>

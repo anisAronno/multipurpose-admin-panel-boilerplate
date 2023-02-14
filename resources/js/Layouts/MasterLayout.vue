@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import Footer from "@/Components/Footer.vue";
+import Header from "@/Components/Header.vue";
 import Loader from "@/Components/Loader.vue";
 import Toast from "@/Components/Toast.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import Header from "@/Components/Header.vue";
-import Footer from "@/Components/Footer.vue";
+import { Head, Link } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 
 const isLoaded = ref(false);

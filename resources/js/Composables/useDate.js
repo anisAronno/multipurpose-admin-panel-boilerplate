@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 export function formattedDate(dateTime) {
     const date = new Date(dateTime);
     const options = {
@@ -10,7 +10,7 @@ export function formattedDate(dateTime) {
         hour12: true,
     };
     return date.toLocaleDateString(
-        usePage().props.value.global.options.language,
+        usePage().props.global.options.language,
         options
     );
 }

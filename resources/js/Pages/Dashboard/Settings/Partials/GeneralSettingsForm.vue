@@ -4,9 +4,9 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 
 const form = useForm({
     site_name: options.site_name,

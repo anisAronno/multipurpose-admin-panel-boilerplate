@@ -3,7 +3,7 @@ import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     contacts: Object,
 });
@@ -74,7 +74,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="contacts.data.length > 0"
+                                        v-if="contacts.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -131,7 +131,7 @@ defineProps({
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="contact in contacts.data"
+                                                    v-for="contact in contacts"
                                                     :key="contact.id"
                                                     :id="contact.id"
                                                 >

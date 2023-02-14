@@ -1,19 +1,19 @@
 <script setup>
 import { useMenu } from "@/Composables/useMenu";
 import { useSocial } from "@/Composables/useSocial";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 
 const { navigation } = useMenu();
 const { socialLink } = useSocial();
 const page = usePage();
 
 const socialUrls = {
-    facebook: page.props.value.global.options.facebook_url,
-    github: page.props.value.global.options.github_url,
-    instagram: page.props.value.global.options.instagram_url,
-    linkedin: page.props.value.global.options.linkedin_url,
-    twitter: page.props.value.global.options.twitter_url,
-    youtube: page.props.value.global.options.youtube_channel_url,
+    facebook: page.props.global.options.facebook_url,
+    github: page.props.global.options.github_url,
+    instagram: page.props.global.options.instagram_url,
+    linkedin: page.props.global.options.linkedin_url,
+    twitter: page.props.global.options.twitter_url,
+    youtube: page.props.global.options.youtube_channel_url,
 };
 
 const updatedSocials = socialLink.map((social) => {
@@ -28,7 +28,7 @@ const updatedSocials = socialLink.map((social) => {
             class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-100 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <nav
-                class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12 "
+                class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
                 aria-label="Footer"
             >
                 <div v-for="item in navigation" :key="item.name" class="pb-6">
@@ -55,12 +55,14 @@ const updatedSocials = socialLink.map((social) => {
                     />
                 </a>
             </div>
-            <p class="mt-10 text-center text-md leading-5 text-gray-600 dark:text-gray-400">
+            <p
+                class="mt-10 text-center text-md leading-5 text-gray-600 dark:text-gray-400"
+            >
                 &copy; {{ currentYear }}
                 {{ $page.props.global.options.organization_name }}.
                 {{ __("footer.copyright.text") }}
             </p>
-            <p class="text-center text-sm mt-3 leading-5 text-gray-500 ">
+            <p class="text-center text-sm mt-3 leading-5 text-gray-500">
                 {{ __("footer.design.developed_by") }}
                 <a
                     class="text-md text-blue-600"

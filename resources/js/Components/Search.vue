@@ -1,19 +1,18 @@
 <script setup>
-import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 const form = useForm({
     search: "",
 });
 
 let searchQuery = ref("");
-const queryString = usePage().url;
+const queryString = usePage()?.url; 
+const route = queryString.split("?")[0];
 
-const route = queryString.value.split("?")[0];
-
-if (queryString.value.indexOf("?") != -1) {
-    let query = queryString.value.split("?")[1];
+if (queryString.indexOf("?") != -1) {
+    let query = queryString.split("?")[1];
     if (query.indexOf("search") != -1) {
-        searchQuery.value = queryString.value.split("?")[1]?.split("=")[1];
+        searchQuery.value = queryString.split("?")[1]?.split("=")[1];
     }
 }
 

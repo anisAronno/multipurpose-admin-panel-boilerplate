@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import EditSpecialFeatureForm from "@/Pages/Dashboard/SpecialFeature/Partials/EditSpecialFeatureForm.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 
 defineProps({
     specialFeature: Object,

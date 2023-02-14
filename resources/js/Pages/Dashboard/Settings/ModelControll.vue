@@ -2,9 +2,9 @@
 import Sync from "@/Components/Icon/Sync.vue";
 import Image from "@/Components/Image/Image.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 </script>
 
 <template>

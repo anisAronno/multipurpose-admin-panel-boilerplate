@@ -3,7 +3,7 @@ import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     blogs: Object,
 });
@@ -186,7 +186,7 @@ defineProps({
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <div
-                                                            v-for="image in blog.images "
+                                                            v-for="image in blog.images"
                                                             :key="image.id"
                                                             class="flex gap-2"
                                                         >

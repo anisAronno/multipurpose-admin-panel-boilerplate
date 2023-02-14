@@ -5,7 +5,7 @@ import DeleteUserForm from "@/Pages/Dashboard/Profile/Partials/DeleteUserForm.vu
 import ProfilePicture from "@/Pages/Dashboard/Profile/Partials/ProfilePicture.vue";
 import UpdatePasswordForm from "@/Pages/Dashboard/Profile/Partials/UpdatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/Pages/Dashboard/Profile/Partials/UpdateProfileInformationForm.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 
 defineProps({
     mustVerifyEmail: Boolean,

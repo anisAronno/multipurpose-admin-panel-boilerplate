@@ -4,9 +4,8 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
-import Toggle from "@/Components/Toggle.vue";
 import defaultFile from "@/Stores/defaultFile.js";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
 
@@ -201,7 +200,7 @@ const storeProduct = () => {
                                 </span>
                             </div>
 
-                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                                 <InputLabel
                                     for="status"
                                     value="Is Featured ?"

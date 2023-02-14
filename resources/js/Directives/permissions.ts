@@ -1,11 +1,11 @@
+import { usePage } from "@inertiajs/vue3";
 import { DirectiveOptions } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
 
 const usePermissionAndRole = () => {
     let page = usePage().props;
     return {
-        permissions: page.value?.auth?.user?.permissions,
-        roles: page.value?.auth?.user?.roles,
+        permissions: page?.auth?.user?.permissions,
+        roles: page?.auth?.user?.roles,
     };
 };
 
@@ -52,7 +52,7 @@ const role = (value: string) => {
     if (!Array.isArray(roles)) {
         _return = false;
     }
-    
+
     if (value.includes("|")) {
         value.split("|").forEach(function (item) {
             if (roles.includes(item.trim())) {
