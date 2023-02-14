@@ -3,8 +3,8 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import media from "@/Components/Media.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
@@ -21,6 +21,7 @@ const imageInput = ref(null);
 const statusInput = ref(null);
 const isFeaturedInput = ref(null);
 const categoryInput = ref(null);
+const editor = ClassicEditor;
 
 const form = useForm({
     title: "",
@@ -93,14 +94,19 @@ const storeBlog = () => {
                                     value="Description :"
                                     class="block text-sm font-medium text-gray-700"
                                 />
-                                <Textarea
+                                <!-- <Textarea
                                     id="description"
                                     ref="descriptionInput"
                                     v-model="form.description"
                                     type="text"
                                     class="mt-1 block w-full"
                                     autocomplete="description"
-                                />
+                                /> -->
+                                <ckeditor
+                                    :editor="editor"
+                                    v-model="form.description"
+                                ></ckeditor>
+
                                 <InputError
                                     :message="form.errors.description"
                                     class="mt-2 col-start-2 col-span-4"

@@ -84,7 +84,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="blogs.data.length > 0"
+                                        v-if="blogs.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -147,7 +147,7 @@ defineProps({
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="blog in blogs.data"
+                                                    v-for="blog in blogs"
                                                     :key="blog.id"
                                                     :id="blog.id"
                                                 >

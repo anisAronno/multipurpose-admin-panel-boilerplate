@@ -13,6 +13,8 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { translations } from "./Mixins/translations";
+import CKEditor from "@ckeditor/ckeditor5-vue";
+
 
 library.add(fas);
 
@@ -31,6 +33,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(CKEditor)
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
             .mixin(translations)
