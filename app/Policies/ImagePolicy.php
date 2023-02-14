@@ -4,11 +4,16 @@ namespace App\Policies;
 
 use App\Models\Image;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
+
 
 class ImagePolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.
@@ -18,7 +23,7 @@ class ImagePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +35,7 @@ class ImagePolicy
      */
     public function view(User $user, Image $image)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +46,7 @@ class ImagePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +58,9 @@ class ImagePolicy
      */
     public function update(User $user, Image $image)
     {
-        //
+          return optional($user)->id === $image->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Image.');
     }
 
     /**
@@ -65,7 +72,9 @@ class ImagePolicy
      */
     public function delete(User $user, Image $image)
     {
-        //
+          return optional($user)->id === $image->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Image.');
     }
 
     /**
@@ -77,7 +86,9 @@ class ImagePolicy
      */
     public function restore(User $user, Image $image)
     {
-        //
+          return optional($user)->id === $image->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Image.');
     }
 
     /**
@@ -89,6 +100,8 @@ class ImagePolicy
      */
     public function forceDelete(User $user, Image $image)
     {
-        //
+          return optional($user)->id === $image->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Image.');
     }
 }

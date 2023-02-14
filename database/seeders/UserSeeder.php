@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\LoginHistory;
 use App\Models\Product;
 use App\Models\SocialLogin;
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             ->has(Category::factory()->count(2), 'categories')
             ->has(Image::factory()->count(2), 'images')
             ->has(Tag::factory()->count(2), 'tags')
+            ->has(Comment::factory()->count(2), 'comments')
         )
         ->has(Address::factory()->count(3))
         ->has(SocialLogin::factory()->count(3))
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
             ->has(Category::factory()->count(2), 'categories')
             ->has(Image::factory()->count(2), 'images')
             ->has(Tag::factory()->count(2), 'tags')
+            ->has(Comment::factory()->count(2), 'comments')
         )
         ->has(LoginHistory::factory()->count(3))->create()->each(function ($user) {
             $user->assignRole('user');

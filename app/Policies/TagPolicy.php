@@ -4,11 +4,15 @@ namespace App\Policies;
 
 use App\Models\Tag;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class TagPolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.
@@ -18,7 +22,7 @@ class TagPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +34,7 @@ class TagPolicy
      */
     public function view(User $user, Tag $tag)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +45,7 @@ class TagPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +57,9 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag)
     {
-        //
+        return optional($user)->id === $tag->user_id
+                                ? Response::allow()
+                                : Response::deny('You do not own this tag.');
     }
 
     /**
@@ -65,7 +71,9 @@ class TagPolicy
      */
     public function delete(User $user, Tag $tag)
     {
-        //
+        return optional($user)->id === $tag->user_id
+                                ? Response::allow()
+                                : Response::deny('You do not own this tag.');
     }
 
     /**
@@ -77,7 +85,9 @@ class TagPolicy
      */
     public function restore(User $user, Tag $tag)
     {
-        //
+        return optional($user)->id === $tag->user_id
+                                ? Response::allow()
+                                : Response::deny('You do not own this tag.');
     }
 
     /**
@@ -89,6 +99,8 @@ class TagPolicy
      */
     public function forceDelete(User $user, Tag $tag)
     {
-        //
+        return optional($user)->id === $tag->user_id
+                                ? Response::allow()
+                                : Response::deny('You do not own this tag.');
     }
 }

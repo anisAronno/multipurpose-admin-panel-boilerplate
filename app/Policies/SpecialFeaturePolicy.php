@@ -4,11 +4,14 @@ namespace App\Policies;
 
 use App\Models\SpecialFeature;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SpecialFeaturePolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.
@@ -18,7 +21,7 @@ class SpecialFeaturePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +33,7 @@ class SpecialFeaturePolicy
      */
     public function view(User $user, SpecialFeature $specialFeature)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +44,7 @@ class SpecialFeaturePolicy
      */
     public function create(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +56,7 @@ class SpecialFeaturePolicy
      */
     public function update(User $user, SpecialFeature $specialFeature)
     {
-        //
+        return false;
     }
 
     /**
@@ -65,7 +68,7 @@ class SpecialFeaturePolicy
      */
     public function delete(User $user, SpecialFeature $specialFeature)
     {
-        //
+        return false;
     }
 
     /**
@@ -77,7 +80,7 @@ class SpecialFeaturePolicy
      */
     public function restore(User $user, SpecialFeature $specialFeature)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +92,6 @@ class SpecialFeaturePolicy
      */
     public function forceDelete(User $user, SpecialFeature $specialFeature)
     {
-        //
+        return false;
     }
 }

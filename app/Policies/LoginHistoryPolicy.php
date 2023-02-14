@@ -4,11 +4,14 @@ namespace App\Policies;
 
 use App\Models\LoginHistory;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LoginHistoryPolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.
@@ -18,7 +21,7 @@ class LoginHistoryPolicy
      */
     public function viewAny(User $user)
     {
-        //
+      return false;
     }
 
     /**
@@ -30,7 +33,7 @@ class LoginHistoryPolicy
      */
     public function view(User $user, LoginHistory $loginHistory)
     {
-        //
+      return false;
     }
 
     /**
@@ -41,7 +44,7 @@ class LoginHistoryPolicy
      */
     public function create(User $user)
     {
-        //
+      return false;
     }
 
     /**
@@ -53,7 +56,7 @@ class LoginHistoryPolicy
      */
     public function update(User $user, LoginHistory $loginHistory)
     {
-        //
+      return false;
     }
 
     /**
@@ -65,7 +68,7 @@ class LoginHistoryPolicy
      */
     public function delete(User $user, LoginHistory $loginHistory)
     {
-        //
+      return false;
     }
 
     /**
@@ -77,7 +80,7 @@ class LoginHistoryPolicy
      */
     public function restore(User $user, LoginHistory $loginHistory)
     {
-        //
+      return false;
     }
 
     /**
@@ -89,6 +92,6 @@ class LoginHistoryPolicy
      */
     public function forceDelete(User $user, LoginHistory $loginHistory)
     {
-        //
+      return false;
     }
 }

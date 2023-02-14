@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 use App\Enums\Status;
@@ -12,6 +13,8 @@ use App\Enums\Featured;
  */
 class CategoryFactory extends Factory
 {
+    protected $model = Category::class;
+
     /**
      * Define the model's default state.
      *
@@ -21,10 +24,12 @@ class CategoryFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(3),
-            'description' => $this->faker->paragraph(2), 
+            'description' => $this->faker->paragraph(2),
             'is_featured' => $this->faker->randomElement(Featured::values()),
             'status' => Status::PUBLISHED,
-            'user_id' => User::all(['id'])->random(),
+            'user_id' => User::all(['id'])->random(),            
+            'parent_id' => $this->faker->randomElement(Category::pluck('id')->toArray()),
+
         ];
     }
 }

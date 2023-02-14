@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use App\Helpers\UniqueSlug;
-use App\Traits\CheckStatusAndFeture;
-use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CheckStatusAndFeture;
+use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use App\Enums\Status;
-use App\Enums\Featured;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Category extends Model
+class Comment extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -30,23 +28,9 @@ class Category extends Model
         'title',
         'description',
         'status',
-        'is_featured',
-        'slug',
         'parent_id',
         'user_id',
     ];
-
-    /**
-     * Override the default boot method to register some extra stuff for every child model.
-     */
-    protected static function boot()
-    {
-        static::creating(function ($model) {
-            $model->slug = UniqueSlug::generate($model, 'slug', $model->title);
-        });
-
-        parent::boot();
-    }
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
 
@@ -66,41 +50,39 @@ class Category extends Model
      */
     protected $casts = [
         'status' => Status::class,
-        'is_featured' => Featured::class,
     ];
 
     /**
-     * Mapping For Sub and sub-sub category
+     * Mapping For Sub and sub-sub comment
      */
     public static function tree()
     {
-        $allCategories = Category::get();
+        $allComments = Comment::get();
 
-        $rootCategories = $allCategories->whereNull('parent_id');
+        $rootComments = $allComments->whereNull('parent_id');
 
-        self::formatTree($rootCategories, $allCategories);
+        self::formatTree($rootComments, $allComments);
 
-        return $rootCategories;
+        return $rootComments;
     }
 
-    private static function formatTree($categories, $allCategories)
+    private static function formatTree($comments, $allComments)
     {
-        foreach ($categories as $category) {
-            $category->children = $allCategories->where('parent_id', $category->id)->values();
+        foreach ($comments as $comment) {
+            $comment->children = $allComments->where('parent_id', $comment->id)->values();
 
-            if ($category->children->isNotEmpty()) {
-                self::formatTree($category->children, $allCategories);
+            if ($comment->children->isNotEmpty()) {
+                self::formatTree($comment->children, $allComments);
             }
         }
     }
 
-
     public function blogs()
     {
-        return $this->morphedByMany(Blog::class, 'categoryable');
+        return $this->morphedByMany(Blog::class, 'commnetable');
     }
     public function products()
     {
-        return $this->morphedByMany(Product::class, 'categoryable');
+        return $this->morphedByMany(Product::class, 'commnetable');
     }
 }

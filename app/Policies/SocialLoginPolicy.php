@@ -4,11 +4,14 @@ namespace App\Policies;
 
 use App\Models\SocialLogin;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SocialLoginPolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.

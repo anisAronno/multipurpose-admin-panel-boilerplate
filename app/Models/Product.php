@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\UniqueSlug;
 use App\Traits\Categoryable;
 use App\Traits\CheckStatusAndFeture;
+use App\Traits\Commentable;
 use App\Traits\HasAuthor;
 use App\Traits\Imageable;
 use App\Traits\Taggable;
@@ -26,6 +27,7 @@ class Product extends Model
     use Categoryable;
     use HasAuthor;
     use Taggable;
+    use Commentable;
 
 
 

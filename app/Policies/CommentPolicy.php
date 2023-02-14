@@ -2,16 +2,17 @@
 
 namespace App\Policies;
 
-use App\Models\Address;
+use App\Models\Comment;
 use App\Models\User;
 use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class AddressPolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
     use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.
@@ -28,10 +29,10 @@ class AddressPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Address  $address
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Address $address)
+    public function view(User $user, Comment $comment)
     {
         return true;
     }
@@ -51,55 +52,55 @@ class AddressPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Address  $address
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Address $address)
+    public function update(User $user, Comment $comment)
     {
-        return $user->id === $address->user_id
-                ? Response::allow()
-                : Response::deny('You do not own this Address.');
+        return optional($user)->id === $comment->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Post.');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Address  $address
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Address $address)
+    public function delete(User $user, Comment $comment)
     {
-        return $user->id === $address->user_id
-                ? Response::allow()
-                : Response::deny('You do not own this Address.');
+        return optional($user)->id === $comment->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Post.');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Address  $address
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Address $address)
+    public function restore(User $user, Comment $comment)
     {
-        return $user->id === $address->user_id
-                     ? Response::allow()
-                     : Response::deny('You do not own this Address.');
+        return optional($user)->id === $comment->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Post.');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Address  $address
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Address $address)
+    public function forceDelete(User $user, Comment $comment)
     {
-        return $user->id === $address->user_id
-                ? Response::allow()
-                : Response::deny('You do not own this Address.');
+        return optional($user)->id === $comment->user_id
+                                  ? Response::allow()
+                                  : Response::deny('You do not own this Post.');
     }
 }

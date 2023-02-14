@@ -4,11 +4,15 @@ namespace App\Policies;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Traits\SuperAdminPolicy;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
     use HandlesAuthorization;
+    use SuperAdminPolicy;
+
 
     /**
      * Determine whether the user can view any models.
@@ -18,7 +22,7 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +34,7 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +45,7 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +57,9 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        //
+        return optional($user)->id === $product->user_id
+                          ? Response::allow()
+                          : Response::deny('You do not own this Product.');
     }
 
     /**
@@ -65,7 +71,9 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        //
+        return optional($user)->id === $product->user_id
+                               ? Response::allow()
+                               : Response::deny('You do not own this Product.');
     }
 
     /**
@@ -77,7 +85,9 @@ class ProductPolicy
      */
     public function restore(User $user, Product $product)
     {
-        //
+        return optional($user)->id === $product->user_id
+                               ? Response::allow()
+                               : Response::deny('You do not own this Product.');
     }
 
     /**
@@ -89,6 +99,8 @@ class ProductPolicy
      */
     public function forceDelete(User $user, Product $product)
     {
-        //
+        return optional($user)->id === $product->user_id
+                               ? Response::allow()
+                               : Response::deny('You do not own this Product.');
     }
 }
