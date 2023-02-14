@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
- 
+
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Enums\Status;
@@ -11,7 +12,7 @@ use App\Enums\Featured;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache; 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -25,26 +26,49 @@ class ProductController extends InertiaApplicationController
      */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
+        $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
+        $isFeatured     = in_array($request->get('is_featured'), Featured::values()) ? $request->is_featured : '';
 
-        $key = CacheServices::getProductCacheKey($currentPage);
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $productCachKey = CacheServices::getProductCacheKey($page);
 
+        $key =  $productCachKey.':'.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $products = Product::with(['categories'])->where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+        $products = Cache::remember($key, now()->addDay(), function () use ($orderBy, $order, $status, $isFeatured, $search, $startDate, $endDate) {
+            $products = Product::with(['categories', 'images', 'user']);
 
-            return Inertia::render('Dashboard/Products/Index', ['products' => $products]);
-        }
+            if (! empty($status)) {
+                $products->where('status', $status);
+            }
 
+            if (! empty($isFeatured)) {
+                $products->where('is_featured', $isFeatured);
+            }
 
-        $products = Cache::remember($key, 10, function () {
-            return Product::with(['categories'])->orderBy('id', 'desc')->paginate(10);
+            if (! empty($search)) {
+                $products->where('title', 'LIKE', '%'.$search.'%')->orWhere('description', 'LIKE', '%'.$search.'%');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $products->where('created_at', '>=', new \DateTime($startDate));
+                $products->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $products->orderBy($orderBy, $order);
+            }
+
+            return $products->simplePaginate(10);
         });
 
         Session::put('last_visited_product_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Products/Index')->with(['products' => $products->load(['images'])]);
+        return Inertia::render('Dashboard/Products/Index')->with(['products' => ProductResource::collection($products)]);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 
-class UserResources extends JsonResource
+class UserWithPermissionsResources extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -30,6 +30,12 @@ class UserResources extends JsonResource
             'language' => $this->language,
             'status' => $this->status,
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(), 
+            'isDeletable' => $this->isDeletable,
+            'isEditable' => $this->isEditable,
+            'roles' => RoleResource::collection($this->roles)->pluck('name'),
+            'permissions' => PermissionResource::collection($this->getAllPermissions())->pluck('name'),
+            'unreadNotifications' => $this->unreadNotifications,
+            'addresses' => AddressResource::collection($this->addresses),
         ];
     }
 }

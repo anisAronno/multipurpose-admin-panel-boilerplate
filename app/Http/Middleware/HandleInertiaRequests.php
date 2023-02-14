@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Resources\UserResources;
+use App\Http\Resources\UserWithPermissionsResources;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user() ? new UserResources($request->user()) : $request->user(),
+                'user' => $request->user() ? new UserWithPermissionsResources($request->user()) : $request->user(),
             ],
             'global' => [
                 'options' => Option::getSettings(),

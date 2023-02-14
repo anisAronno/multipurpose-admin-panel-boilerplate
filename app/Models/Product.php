@@ -23,9 +23,9 @@ class Product extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
+    use HasAuthor;
     use Imageable;
     use Categoryable;
-    use HasAuthor;
     use Taggable;
     use Commentable;
 
