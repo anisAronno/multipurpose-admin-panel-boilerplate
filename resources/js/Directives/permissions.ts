@@ -41,7 +41,7 @@ const can = (value: string) => {
     return _return;
 };
 
-const is = (value: string) => {
+const role = (value: string) => {
     let _return = false;
     let roles = usePermissionAndRole().roles;
 
@@ -83,7 +83,7 @@ const permissionDirective: DirectiveOptions = {
 
 const roleDirective: DirectiveOptions = {
     beforeMount(el, { value }) {
-        if (!is(value)) {
+        if (!role(value)) {
             el.style.display = "none";
         }
     },

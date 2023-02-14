@@ -34,7 +34,7 @@ createInertiaApp({
             .component("Link", Link)
             .mixin(translations)
             .directive("can", permissionDirective)
-            .directive("is", roleDirective)
+            .directive("role", roleDirective)
             .mount(el);
     },
 });
