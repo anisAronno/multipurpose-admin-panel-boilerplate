@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -29,8 +29,8 @@ class Translations extends Component
     public function render()
     {
         $locale = App::getLocale();
- 
-        $key = CacheServices::getOptionsCacheKey();
+
+        $key = CacheHelper::getOptionsCacheKey();
 
         $translations = Cache::rememberForever($key, function () use ($locale) {
             $phpTranslations = [];

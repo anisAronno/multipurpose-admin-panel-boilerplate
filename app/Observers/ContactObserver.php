@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Contact;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class ContactObserver
@@ -14,7 +14,7 @@ class ContactObserver
 
     public function __construct()
     {
-        $this->contactCacheKey = CacheServices::getContactCacheKey();
+        $this->contactCacheKey = CacheHelper::getContactCacheKey();
     }
     /**
      * Handle the Contact "created" event.

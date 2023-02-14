@@ -1,68 +1,68 @@
 <?php
 
-namespace App\Services\Cache;
+namespace App\Helpers;
 
 class CacheHelper
 {
     public static function getRoleCacheKey(int $token = null): string
     {
-        return 'role'.$token;
+        return 'role'.$token."_cache_";
     }
 
     public static function getUserCacheKey(int $token = null): string
     {
-        return 'user'.$token;
+        return 'user'.$token."_cache_";
     }
 
     public static function getOptionsCacheKey(int $token = null): string
     {
-        return 'option'.$token;
+        return 'option'.$token."_cache_";
     }
     public static function getProductCacheKey(int $token = null): string
     {
-        return 'product'.$token;
+        return 'product'.$token."_cache_";
     }
     public static function getFeaturedProductCacheKey(int $token = null): string
     {
-        return 'featured_product'.$token;
+        return 'featured_product'.$token."_cache_";
     }
     public static function getBlogCacheKey(int $token = null): string
     {
-        return 'blog'.$token;
+        return 'blog'.$token."_cache_";
     }
     public static function getFeaturedBlogCacheKey(int $token = null): string
     {
-        return 'featured_blog'.$token;
+        return 'featured_blog'.$token."_cache_";
     }
     public static function getCategoryCacheKey(int $token = null): string
     {
-        return 'category'.$token;
+        return 'category'.$token."_cache_";
     }
 
     public static function getTagCacheKey(int $token = null): string
     {
-        return 'tag'.$token;
+        return 'tag'.$token."_cache_";
     }
 
      public static function getFeaturedCategoryCacheKey(int $token = null): string
      {
-         return 'featured_category'.$token;
+         return 'featured_category'.$token."_cache_";
      }
 
 
     public static function getContactCacheKey(int $token = null): string
     {
-        return 'contact'.$token;
+        return 'contact'.$token."_cache_";
     }
 
 
     public static function getSpecialFeatureCacheKey(int $token = null): string
     {
-        return 'category'.$token;
+        return 'category'.$token."_cache_";
     }
 
     public static function getImageCacheKey(int $token = null): string
     {
-        return 'image'.$token;
+        return 'image'.$token."_cache_";
     }
 }

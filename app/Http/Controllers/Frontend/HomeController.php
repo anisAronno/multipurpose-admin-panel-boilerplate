@@ -8,7 +8,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\SpecialFeature;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -22,10 +22,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $key = CacheServices::getFeaturedProductCacheKey();
-        $featuredCatKey = CacheServices::getFeaturedCategoryCacheKey();
-        $featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
-        $specialFeatureKey = CacheServices::getSpecialFeatureCacheKey();
+        $key = CacheHelper::getFeaturedProductCacheKey();
+        $featuredCatKey = CacheHelper::getFeaturedCategoryCacheKey();
+        $featuredBlogKey = CacheHelper::getFeaturedBlogCacheKey();
+        $specialFeatureKey = CacheHelper::getSpecialFeatureCacheKey();
 
         $featuredProducts = Cache::remember($key, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();

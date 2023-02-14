@@ -3,7 +3,7 @@
 namespace App\Observers\Product;
 
 use App\Models\Product;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class ProductObserver
@@ -14,8 +14,8 @@ class ProductObserver
     protected $feturedProductKey = '';
     public function __construct()
     {
-        $this->key = CacheServices::getProductCacheKey();
-        $this->feturedProductKey = CacheServices::getFeaturedProductCacheKey();
+        $this->key = CacheHelper::getProductCacheKey();
+        $this->feturedProductKey = CacheHelper::getFeaturedProductCacheKey();
     }
     /**
      * Handle the Product "created" event.

@@ -6,7 +6,7 @@ use App\Http\Requests\StoreSpecialFeatureRequest;
 use App\Http\Requests\UpdateSpecialFeatureRequest;
 use App\Models\SpecialFeature;
 use App\Enums\Status;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -25,7 +25,7 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getSpecialFeatureCacheKey($currentPage);
+        $key = CacheHelper::getSpecialFeatureCacheKey($currentPage);
 
         if (! empty($request->search)) {
             $q = $request->search;

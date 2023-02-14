@@ -7,7 +7,7 @@ use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Models\Role;
 use App\Models\User;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
@@ -41,7 +41,7 @@ class RolesController extends InertiaApplicationController
             return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
         }
 
-        $key = CacheServices::getRoleCacheKey($currentPage);
+        $key = CacheHelper::getRoleCacheKey($currentPage);
 
         $roles = Cache::remember($key, 10, function () {
             return Role::with(['permissions' => function ($query) {

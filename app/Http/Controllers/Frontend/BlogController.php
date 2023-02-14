@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateBlogRequest;
 use App\Http\Resources\BlogResources;
 use App\Models\Blog;
 use App\Http\Controllers\Controller;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +22,7 @@ class BlogController extends Controller
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getBlogCacheKey($currentPage);
+        $key = CacheHelper::getBlogCacheKey($currentPage);
 
         $blogs = Cache::remember($key, 10, function () {
             return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->paginate(9);

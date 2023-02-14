@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getProductCacheKey($currentPage);
+        $key = CacheHelper::getProductCacheKey($currentPage);
 
         $products = Cache::remember($key, 10, function () {
             return Product::isActive()->orderBy('id', 'desc')->paginate(16);
@@ -66,7 +66,7 @@ class ProductController extends Controller
             abort(403);
         }
 
-        $featuredProductKey = CacheServices::getFeaturedProductCacheKey();
+        $featuredProductKey = CacheHelper::getFeaturedProductCacheKey();
 
         $featuredProducts = Cache::remember($featuredProductKey, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();

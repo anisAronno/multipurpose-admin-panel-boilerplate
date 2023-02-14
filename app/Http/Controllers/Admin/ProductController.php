@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Enums\Status;
 use App\Enums\Featured;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -35,9 +35,9 @@ class ProductController extends InertiaApplicationController
         $startDate = $request->get('startDate', '');
         $endDate   = $request->get('endDate', '');
         $page       = $request->get('page', 1);
-        $productCachKey = CacheServices::getProductCacheKey($page);
+        $productCachKey = CacheHelper::getProductCacheKey($page);
 
-        $key =  $productCachKey.':'.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
+        $key =  $productCachKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
 
         $products = Cache::remember($key, now()->addDay(), function () use ($orderBy, $order, $status, $isFeatured, $search, $startDate, $endDate) {
             $products = Product::with(['categories', 'images', 'user']);

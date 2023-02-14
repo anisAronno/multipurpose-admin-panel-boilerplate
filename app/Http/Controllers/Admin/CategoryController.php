@@ -7,10 +7,10 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Enums\Status;
 use App\Enums\Featured;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache; 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -26,7 +26,7 @@ class CategoryController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getCategoryCacheKey($currentPage);
+        $key = CacheHelper::getCategoryCacheKey($currentPage);
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -127,7 +127,7 @@ class CategoryController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
-    { 
+    {
         $category->delete();
 
         if (session('last_visited_category_url')) {
@@ -136,5 +136,4 @@ class CategoryController extends InertiaApplicationController
 
         return $this->successWithMessage('Deleted successfull');
     }
- 
 }

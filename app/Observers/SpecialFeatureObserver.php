@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\SpecialFeature;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class SpecialFeatureObserver
@@ -13,7 +13,7 @@ class SpecialFeatureObserver
     protected $key = '';
     public function __construct()
     {
-        $this->key = CacheServices::getSpecialFeatureCacheKey();
+        $this->key = CacheHelper::getSpecialFeatureCacheKey();
     }
     /**
      * Handle the SpecialFeature "created" event.
@@ -23,7 +23,7 @@ class SpecialFeatureObserver
      */
     public function created(SpecialFeature $specialFeature)
     {
-       $this->clearCache($this->key);
+        $this->clearCache($this->key);
     }
 
     /**
@@ -34,7 +34,7 @@ class SpecialFeatureObserver
      */
     public function updated(SpecialFeature $specialFeature)
     {
-       $this->clearCache($this->key);
+        $this->clearCache($this->key);
     }
 
     /**
@@ -45,7 +45,7 @@ class SpecialFeatureObserver
      */
     public function deleted(SpecialFeature $specialFeature)
     {
-       $this->clearCache($this->key);
+        $this->clearCache($this->key);
     }
 
     /**
@@ -56,7 +56,7 @@ class SpecialFeatureObserver
      */
     public function restored(SpecialFeature $specialFeature)
     {
-       $this->clearCache($this->key);
+        $this->clearCache($this->key);
     }
 
     /**
@@ -67,6 +67,6 @@ class SpecialFeatureObserver
      */
     public function forceDeleted(SpecialFeature $specialFeature)
     {
-       $this->clearCache($this->key);
+        $this->clearCache($this->key);
     }
 }

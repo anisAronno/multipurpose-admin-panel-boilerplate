@@ -1,0 +1,5 @@
+Script started on Wed Feb 15 01:51:49 2023
+command: artisan package:discover --ansi handling the post-autoload-dump event
+Script: artisan: No such file or directory
+
+Script done on Wed Feb 15 01:51:49 2023

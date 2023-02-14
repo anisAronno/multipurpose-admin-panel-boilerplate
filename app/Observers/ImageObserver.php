@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Image;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class ImageObserver
@@ -14,7 +14,7 @@ class ImageObserver
 
     public function __construct()
     {
-        $this->imageCacheKey = CacheServices::getImageCacheKey();
+        $this->imageCacheKey = CacheHelper::getImageCacheKey();
     }
 
     /**

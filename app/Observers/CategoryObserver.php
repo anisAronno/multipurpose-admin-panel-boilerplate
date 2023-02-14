@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Category;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class CategoryObserver
@@ -14,8 +14,8 @@ class CategoryObserver
     protected $featuredCategory = '';
     public function __construct()
     {
-        $this->key = CacheServices::getCategoryCacheKey();
-        $this->featuredCategory = CacheServices::getFeaturedCategoryCacheKey();
+        $this->key = CacheHelper::getCategoryCacheKey();
+        $this->featuredCategory = CacheHelper::getFeaturedCategoryCacheKey();
     }
     /**
      * Handle the Category "created" event.

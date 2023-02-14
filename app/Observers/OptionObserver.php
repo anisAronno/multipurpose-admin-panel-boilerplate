@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Option;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class OptionObserver
@@ -14,7 +14,7 @@ class OptionObserver
 
     public function __construct()
     {
-        $this->optionsCacheKey = CacheServices::getOptionsCacheKey();
+        $this->optionsCacheKey = CacheHelper::getOptionsCacheKey();
     }
 
     /**
@@ -70,6 +70,5 @@ class OptionObserver
     public function forceDeleted(Option $option)
     {
         $this->clearCache($this->optionsCacheKey);
-
     }
 }

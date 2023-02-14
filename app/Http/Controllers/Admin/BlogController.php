@@ -8,7 +8,7 @@ use App\Models\Blog;
 use App\Enums\Status;
 use App\Enums\Featured;
 use App\Models\Category;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -26,7 +26,7 @@ class BlogController extends InertiaApplicationController
         $this->middleware('permission:blog.view|blog.create|blog.edit|blog.delete|blog.status', ['only' => ['index', 'store']]);
         $this->middleware('permission:blog.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:blog.edit|permission:blog.status|', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:blog.delete', ['only' => ['destroy']]); 
+        $this->middleware('permission:blog.delete', ['only' => ['destroy']]);
 
         $this->authorizeResource(Blog::class, 'blog');
     }
@@ -40,7 +40,7 @@ class BlogController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getBlogCacheKey($currentPage);
+        $key = CacheHelper::getBlogCacheKey($currentPage);
 
         if (! empty($request->search)) {
             $q = $request->search;

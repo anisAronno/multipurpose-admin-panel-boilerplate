@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Contact;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +22,7 @@ class ContactController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getContactCacheKey($currentPage);
+        $key = CacheHelper::getContactCacheKey($currentPage);
 
         if (! empty($request->search)) {
             $q = $request->search;

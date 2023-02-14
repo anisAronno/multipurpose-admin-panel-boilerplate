@@ -3,7 +3,7 @@
 namespace App\Observers\Blog;
 
 use App\Models\Blog;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class BlogObserver
@@ -14,8 +14,8 @@ class BlogObserver
     protected $featuredBlogKey = '';
     public function __construct()
     {
-        $this->key = CacheServices::getBlogCacheKey();
-        $this->featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
+        $this->key = CacheHelper::getBlogCacheKey();
+        $this->featuredBlogKey = CacheHelper::getFeaturedBlogCacheKey();
     }
     /**
      * Handle the Blog "created" event.

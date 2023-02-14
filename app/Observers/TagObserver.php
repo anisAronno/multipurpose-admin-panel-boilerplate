@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Tag;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class TagObserver
@@ -13,7 +13,7 @@ class TagObserver
     protected $tagCacheKey = '';
     public function __construct()
     {
-        $this->tagCacheKey = CacheServices::getTagCacheKey();
+        $this->tagCacheKey = CacheHelper::getTagCacheKey();
     }
     /**
      * Handle the Tag "created" event.

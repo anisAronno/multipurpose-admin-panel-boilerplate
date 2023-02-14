@@ -4,7 +4,7 @@ namespace App\Observers\User;
 
 use App\Helpers\FileHelpers;
 use App\Models\User;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 
 class UserObserver
@@ -15,7 +15,7 @@ class UserObserver
 
     public function __construct()
     {
-        $this->key = CacheServices::getUserCacheKey();
+        $this->key = CacheHelper::getUserCacheKey();
     }
 
     /**

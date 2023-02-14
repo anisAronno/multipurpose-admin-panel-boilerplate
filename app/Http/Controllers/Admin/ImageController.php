@@ -7,7 +7,7 @@ use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Models\Image;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +17,7 @@ class ImageController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getImageCacheKey($currentPage);
+        $key = CacheHelper::getImageCacheKey($currentPage);
 
         $images = Cache::remember($key, 10, function () {
             return Image::orderBy('id', 'desc')->paginate(20);

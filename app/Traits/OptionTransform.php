@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Enums\SettingsFields;
 use App\Helpers\LanguageHelper;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,7 +12,7 @@ trait OptionTransform
 {
     public static function getAllOptions()
     {
-        $key = CacheServices::getOptionsCacheKey(1);
+        $key = CacheHelper::getOptionsCacheKey(1);
 
         try {
             $options = Cache::remember($key, 10, function () {
@@ -71,7 +71,7 @@ trait OptionTransform
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheServices::getOptionsCacheKey(2);
+        $key = CacheHelper::getOptionsCacheKey(2);
 
         try {
             $options = Cache::remember($key, 10, function () use ($settingFields) {
@@ -100,7 +100,7 @@ trait OptionTransform
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheServices::getOptionsCacheKey(3);
+        $key = CacheHelper::getOptionsCacheKey(3);
 
         try {
             $options = Cache::remember($key, 10, function () use ($settingFields) {

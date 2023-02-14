@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use App\Traits\ClearCache;
 use Spatie\Permission\Contracts\Role;
 
@@ -16,8 +16,8 @@ class RoleObserver
 
     public function __construct()
     {
-        $this->roleCacheKey = CacheServices::getUserCacheKey();
-        $this->userCacheKey = CacheServices::getRoleCacheKey();
+        $this->roleCacheKey = CacheHelper::getUserCacheKey();
+        $this->userCacheKey = CacheHelper::getRoleCacheKey();
     }
 
     /**
