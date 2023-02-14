@@ -12,9 +12,11 @@ use App\Models\User;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
+use Illuminate\Support\Carbon;
 
 class UserController extends InertiaApplicationController
 {
@@ -78,6 +80,10 @@ class UserController extends InertiaApplicationController
     public function store(UserStoreRequest $request)
     {
         $data = $request->only('name', 'email', 'password', 'status', 'gender');
+
+
+        $data['password'] = Hash::make($request->password);
+        $data['email_verified_at'] = Carbon::now();
 
         if ($request->avatar) {
             $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
