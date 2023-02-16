@@ -93,15 +93,7 @@ const storeBlog = () => {
                                     for="description"
                                     value="Description :"
                                     class="block text-sm font-medium text-gray-700"
-                                />
-                                <!-- <Textarea
-                                    id="description"
-                                    ref="descriptionInput"
-                                    v-model="form.description"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    autocomplete="description"
-                                /> -->
+                                /> 
                                 <ckeditor
                                     :editor="editor"
                                     v-model="form.description"

@@ -10,7 +10,7 @@ const emit = defineEmits(["success"]);
 const props = defineProps({
     data: Object,
 });
-const form = useForm();
+const form = useForm({});
 const confirmDeletion = () => {
     modalShow.value = true;
 };

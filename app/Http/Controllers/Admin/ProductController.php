@@ -35,11 +35,11 @@ class ProductController extends InertiaApplicationController
         $startDate = $request->get('startDate', '');
         $endDate   = $request->get('endDate', '');
         $page       = $request->get('page', 1);
-        $productCachKey = CacheHelper::getProductCacheKey($page);
+        $productCacheKey = CacheHelper::getProductCacheKey($page);
 
-        $key =  $productCachKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
+        $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
 
-        $products = Cache::remember($key, now()->addDay(), function () use ($orderBy, $order, $status, $isFeatured, $search, $startDate, $endDate) {
+        $products = Cache::tags([$productCacheKey])->remember($key, now()->addDay(), function () use ($orderBy, $order, $status, $isFeatured, $search, $startDate, $endDate) {
             $products = Product::with(['categories', 'images', 'user']);
 
             if (! empty($status)) {
@@ -66,7 +66,7 @@ class ProductController extends InertiaApplicationController
             return $products->simplePaginate(10);
         });
 
-        Session::put('last_visited_product_url', $request->fullUrl());
+        Session::put('last_visited_url', $request->fullUrl());
 
         return Inertia::render('Dashboard/Products/Index')->with(['products' => ProductResource::collection($products)]);
     }
@@ -104,7 +104,7 @@ class ProductController extends InertiaApplicationController
                 $product->categories()->attach($request->get('categories'));
                 $product->images()->attach(array_column($request->get('images'), 'id'));
             }
-            return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfull']);
+            return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfully']);
         } catch (\Throwable $th) {
             return $this->failedWithMessage($th->getMessage());
         }
@@ -120,7 +120,7 @@ class ProductController extends InertiaApplicationController
       {
           $product->load(['categories', 'images']);
 
-          return Inertia::render('Dashboard/Products/Show')->with(['product' => $product]);
+          return Inertia::render('Dashboard/Products/Show')->with(['product' => new ProductResource($product)]);
       }
 
     /**
@@ -157,8 +157,8 @@ class ProductController extends InertiaApplicationController
             $product->images()->sync(array_column($request->get('images'), 'id'));
         }
 
-        if (session('last_visited_product_url')) {
-            return Redirect::to(session('last_visited_product_url'))->with(['success' => true, 'message', 'Updated successfull']);
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
         }
 
         return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Updated successfull']);
@@ -173,8 +173,8 @@ class ProductController extends InertiaApplicationController
     {
         $product->delete();
 
-        if (session('last_visited_product_url')) {
-            return Redirect::to(session('last_visited_product_url'))->with(['success' => true, 'message', 'Deleted successfull']);
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
         }
 
         return $this->successWithMessage('Deleted successfull');

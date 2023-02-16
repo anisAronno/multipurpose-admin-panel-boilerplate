@@ -1,10 +1,11 @@
 <script setup>
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import media from "@/Components/Media.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import defaultFile from "@/Stores/defaultFile.js";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
@@ -17,15 +18,17 @@ const props = defineProps({
 
 const titleInput = ref(null);
 const descriptionInput = ref(null);
-const imageInput = ref(null);
 const statusInput = ref(null);
 const categoryInput = ref(null);
 const isFeaturedInput = ref(null);
 
+const editor = ClassicEditor;
+const editorConfig = {};
+
 const form = useForm({
     title: "",
     description: "",
-    image: "",
+    images: "",
     imagePreview: defaultFile.placeholder,
     status: "",
     is_featured: false,
@@ -58,9 +61,6 @@ const storeProduct = () => {
             if (form.errors.categories) {
                 categoryInput.value.focus();
             }
-            if (form.errors.image) {
-                imageInput.value.focus();
-            }
         },
     });
 };
@@ -72,159 +72,142 @@ const storeProduct = () => {
             <div class="mt-10 sm:mt-0">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 sm:col-span-3">
-                                <InputLabel
-                                    for="title"
-                                    value="Title :"
-                                    class="block text-sm font-medium text-gray-700"
-                                />
-                                <TextInput
-                                    id="title"
-                                    ref="titleInput"
-                                    v-model="form.title"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    autocomplete="title"
-                                />
-                                <InputError
-                                    :message="form.errors.title"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-3">
-                                <InputLabel
-                                    for="description"
-                                    value="Description :"
-                                    class="block text-sm font-medium text-gray-700"
-                                />
-                                <Textarea
-                                    id="description"
-                                    ref="descriptionInput"
-                                    v-model="form.description"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    autocomplete="description"
-                                />
-                                <InputError
-                                    :message="form.errors.description"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
-                            </div>
-
+                        <div class="grid grid-cols-12 gap-10">
                             <div
-                                class="col-span-6 sm:col-span-3 lg:col-span-3 mb-20"
-                            >
-                                <InputLabel
-                                    for="categories"
-                                    value="Category :"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-                                <Multiselect
-                                    v-model="form.categories"
-                                    :options="props.categories"
-                                    :selected="form.categories"
-                                    ref="categoryInput"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-gray-900"
-                                    mode="tags"
-                                    :searchable="true"
-                                    :close-on-select="false"
-                                >
-                                </Multiselect>
-
-                                <InputError
-                                    :message="form.errors.categories"
-                                    class="mt-2 col-start-2 col-span-4 absolute z-5"
-                                />
-                            </div>
-                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                                <InputLabel
-                                    for="status"
-                                    value="Status :"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
-
-                                <Multiselect
-                                    v-model="form.status"
-                                    :options="statusArr"
-                                    :selected="form.status"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-black"
-                                    :searchable="true"
-                                    :classes="{
-                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
-                                        singleLabelText:
-                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
-                                    }"
-                                >
-                                </Multiselect>
-                                <InputError
-                                    :message="form.errors.status"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
-                            </div>
-
-                            <div
-                                class="col-span-6 sm:col-span-3 flex items-center justify-between"
+                                class="col-span-12 lg:col-span-8 flex flex-col gap-5"
                             >
                                 <div>
                                     <InputLabel
-                                        for="image"
-                                        value="Image :"
+                                        for="title"
+                                        value="Title :"
                                         class="block text-sm font-medium text-gray-700"
                                     />
-                                    <input
-                                        id="image"
-                                        type="file"
-                                        class="mt-1 block form-controll cursor-pointer"
-                                        @change="previewImage"
-                                        ref="imageInput"
-                                        @input="
-                                            form.image = $event.target.files[0]
-                                        "
+                                    <TextInput
+                                        id="title"
+                                        ref="titleInput"
+                                        v-model="form.title"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        autocomplete="title"
                                     />
                                     <InputError
-                                        :message="form.errors.image"
+                                        :message="form.errors.title"
                                         class="mt-2 col-start-2 col-span-4"
                                     />
                                 </div>
-                                <span
-                                    class="inline-block h-24 w-24 overflow-hidden rounded-full bg-gray-100"
-                                >
-                                    <img
-                                        :src="form.imagePreview"
-                                        class="w-full h-full object-contain"
+
+                                <div>
+                                    <InputLabel
+                                        for="description"
+                                        value="Description :"
+                                        class="block text-sm font-medium text-gray-700 mb-2"
                                     />
-                                </span>
+                                    <ckeditor
+                                        :editor="editor"
+                                        v-model="form.description"
+                                        :config="editorConfig"
+                                    ></ckeditor>
+                                    <InputError
+                                        :message="form.errors.description"
+                                        class="mt-2 col-start-2 col-span-4"
+                                    />
+                                </div>
                             </div>
+                            <div
+                                class="col-span-12 lg:col-span-4 flex flex-col gap-5"
+                            >
+                                <div>
+                                    <InputLabel
+                                        for="categories"
+                                        value="Category :"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
+                                    />
+                                    <Multiselect
+                                        v-model="form.categories"
+                                        :options="props.categories"
+                                        :selected="form.categories"
+                                        ref="categoryInput"
+                                        :close-on-select="false"
+                                        mode="tags"
+                                        :searchable="true"
+                                        placeholder="Pick some..."
+                                        class="block w-full multiselect-green form-controll dark:text-black"
+                                        :classes="{
+                                            search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                            singleLabelText:
+                                                '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                        }"
+                                    >
+                                    </Multiselect>
 
-                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                                <InputLabel
-                                    for="status"
-                                    value="Is Featured ?"
-                                    class="block text-sm font-medium text-gray-700 mb-1"
-                                />
+                                    <InputError
+                                        :message="form.errors.categories"
+                                        class="mt-2 col-start-2 col-span-4 absolute z-5"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel
+                                        for="status"
+                                        value="Status :"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
+                                    />
 
-                                <Multiselect
-                                    v-model="form.is_featured"
-                                    :options="featuredArr"
-                                    :selected="form.is_featured"
-                                    placeholder="Pick some..."
-                                    class="block w-full multiselect-green form-controll dark:text-black"
-                                    :searchable="true"
-                                    :classes="{
-                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
-                                        singleLabelText:
-                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
-                                    }"
-                                >
-                                </Multiselect>
-                                <InputError
-                                    :message="form.errors.is_featured"
-                                    class="mt-2 col-start-2 col-span-4"
-                                />
+                                    <Multiselect
+                                        v-model="form.status"
+                                        :options="statusArr"
+                                        :selected="form.status"
+                                        placeholder="Pick some..."
+                                        class="block w-full multiselect-green form-controll dark:text-black"
+                                        :searchable="true"
+                                        :classes="{
+                                            search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                            singleLabelText:
+                                                '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                        }"
+                                    >
+                                    </Multiselect>
+                                    <InputError
+                                        :message="form.errors.status"
+                                        class="mt-2 col-start-2 col-span-4"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="status"
+                                        value="Is Featured ?"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
+                                    />
+
+                                    <Multiselect
+                                        v-model="form.is_featured"
+                                        :options="featuredArr"
+                                        :selected="form.is_featured"
+                                        placeholder="Pick some..."
+                                        class="block w-full multiselect-green form-controll dark:text-black"
+                                        :searchable="true"
+                                        :classes="{
+                                            search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                            singleLabelText:
+                                                '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                        }"
+                                    >
+                                    </Multiselect>
+                                    <InputError
+                                        :message="form.errors.is_featured"
+                                        class="mt-2 col-start-2 col-span-4"
+                                    />
+                                </div>
+
+                                <div class="my-5 text-right">
+                                    <media
+                                        v-model="form.images"
+                                        imageWidth="20"
+                                        addBtnLabel="Add Images"
+                                        allowMultiple="true"
+                                        showPreview="true"
+                                    ></media>
+                                </div>
                             </div>
                         </div>
                     </div>
