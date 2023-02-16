@@ -3,14 +3,14 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import media from "@/Components/Media.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextEditor from "@/Components/TextEditor.vue";
 import TextInput from "@/Components/TextInput.vue";
-import defaultFile from "@/Stores/defaultFile.js";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
+    product: Object,
     categories: Object,
     statusArr: Object,
     featuredArr: Object,
@@ -18,21 +18,18 @@ const props = defineProps({
 
 const titleInput = ref(null);
 const descriptionInput = ref(null);
+const imageInput = ref(null);
 const statusInput = ref(null);
 const categoryInput = ref(null);
 const isFeaturedInput = ref(null);
 
-const editor = ClassicEditor;
-const editorConfig = {};
-
 const form = useForm({
-    title: "",
-    description: "",
-    images: "",
-    imagePreview: defaultFile.placeholder,
-    status: "",
-    is_featured: false,
-    categories: [],
+    title: props.product?.title ?? "",
+    description: props.product?.description ?? "",
+    images: props.product?.images ?? [],
+    status: props.product?.status ?? "",
+    is_featured: props.product?.is_featured ?? "",
+    categories: props.product?.categoryArr ?? [],
 });
 
 const previewImage = (e) => {
@@ -40,8 +37,15 @@ const previewImage = (e) => {
     form.imagePreview = URL.createObjectURL(file);
 };
 
-const storeProduct = () => {
-    form.post(route("admin.product.store"), {
+const productHandle = () => {
+    let url = "";
+    if (props.product?.id) {
+        url = route("admin.product.update", props.product.id);
+    } else {
+        url = route("admin.product.store");
+    }
+
+    form.post(url, {
         preserveScroll: true,
         onSuccess: () => form.reset(),
         onError: () => {
@@ -61,6 +65,9 @@ const storeProduct = () => {
             if (form.errors.categories) {
                 categoryInput.value.focus();
             }
+            if (form.errors.image) {
+                imageInput.value.focus();
+            }
         },
     });
 };
@@ -68,13 +75,13 @@ const storeProduct = () => {
 
 <template>
     <section class="dark:text-white">
-        <form @submit.prevent="storeProduct" class="mt-6 space-y-6 p-3">
+        <form @submit.prevent="productHandle" class="mt-6 space-y-6 p-3">
             <div class="mt-10 sm:mt-0">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-12 gap-10">
                             <div
-                                class="col-span-12 lg:col-span-8 flex flex-col gap-5"
+                                class="col-span-12 lg:col-span-8 flex flex-col gap-10"
                             >
                                 <div>
                                     <InputLabel
@@ -100,13 +107,11 @@ const storeProduct = () => {
                                     <InputLabel
                                         for="description"
                                         value="Description :"
-                                        class="block text-sm font-medium text-gray-700 mb-2"
+                                        class="block text-sm font-medium text-gray-700 mb-1"
                                     />
-                                    <ckeditor
-                                        :editor="editor"
+                                    <TextEditor
                                         v-model="form.description"
-                                        :config="editorConfig"
-                                    ></ckeditor>
+                                    ></TextEditor>
                                     <InputError
                                         :message="form.errors.description"
                                         class="mt-2 col-start-2 col-span-4"
@@ -114,7 +119,7 @@ const storeProduct = () => {
                                 </div>
                             </div>
                             <div
-                                class="col-span-12 lg:col-span-4 flex flex-col gap-5"
+                                class="col-span-12 lg:col-span-4 flex flex-col gap-10"
                             >
                                 <div>
                                     <InputLabel
@@ -215,9 +220,9 @@ const storeProduct = () => {
             </div>
 
             <div class="flex items-center justify-end pr-5 py-5">
-                <PrimaryButton :disabled="form.processing"
-                    >Submit</PrimaryButton
-                >
+                <PrimaryButton :disabled="form.processing">
+                    {{ product?.id ? "Update" : "Submit" }}
+                </PrimaryButton>
 
                 <Transition
                     enter-from-class="opacity-0"

@@ -55,20 +55,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Product Route
          */
         Route::resource('product', ProductController::class, ['except' => ['update']]);
-        Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update'); 
+        Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
 
         /**
          * Category Route
          */
         Route::resource('category', CategoryController::class, ['except' => ['update']]);
-        Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update'); 
+        Route::post('/category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
 
         /**
          * Blog Route
          */
         Route::resource('blog', BlogController::class, ['except' => ['update']]);
-        Route::post('/blog/update/{blog}', [BlogController::class, 'update'])->name('blog.update'); 
-        
+        Route::post('/blog/update/{blog}', [BlogController::class, 'update'])->name('blog.update');
+
         /**
          * Contact Route
          */
@@ -80,12 +80,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('image', ImageController::class, ['except' => ['update']]);
         Route::post('/image/update/{image}', [ImageController::class, 'update'])->name('image.update');
         Route::post('image/delete-all', [ImageController::class, 'groupDelete'])->name('image.destroy.all');
+        Route::post('image/editor', [ImageController::class, 'textEditorImageUpload'])->name('image.editor');
 
         /**
          * Special Feature Controller route
          */
         Route::resource('special-feature', SpecialFeatureController::class, ['except' => ['update']]);
-        Route::post('/special-feature/update/{specialFeature}', [SpecialFeatureController::class, 'update'])->name('special-feature.update'); 
+        Route::post('/special-feature/update/{specialFeature}', [SpecialFeatureController::class, 'update'])->name('special-feature.update');
 
         /**
          * Options Route

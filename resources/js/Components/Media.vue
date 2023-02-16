@@ -3,7 +3,6 @@ import DeleteImage from "@/Components/Image/DeleteImage.vue";
 import Loader from "@/Components/Loader.vue";
 import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { formattedDate } from "@/Composables/useDate";
 import { usePage } from "@inertiajs/vue3";
 import { useInfiniteScroll } from "@vueuse/core";
 import axios from "axios";
@@ -35,7 +34,7 @@ const props = defineProps({
     modelValue: {
         type: Array,
         default: [],
-        require: false,
+        require: true,
     },
     imageWidth: {
         type: String || Number,
@@ -369,11 +368,7 @@ const updateImage = async (image) => {
                                             v-if="editAbleImage.created_at"
                                             class="text-xs"
                                             >Date:
-                                            {{
-                                                formattedDate(
-                                                    editAbleImage.created_at
-                                                )
-                                            }}</span
+                                            {{ editAbleImage.created_at }}</span
                                         >
 
                                         <span

@@ -131,8 +131,8 @@ defineProps({
                                                 </td>
                                                 <td
                                                     class="w-[20%] text-gray-900"
-                                                >
-                                                    {{ product.description }}
+                                                    v-html="product.description"
+                                                > 
                                                 </td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"

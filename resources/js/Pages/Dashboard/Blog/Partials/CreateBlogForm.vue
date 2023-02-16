@@ -3,8 +3,8 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import media from "@/Components/Media.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import TextInput from "@/Components/TextInput.vue"; 
+import TextEditor from "@/Components/TextEditor.vue"; 
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
@@ -20,8 +20,7 @@ const descriptionInput = ref(null);
 const imageInput = ref(null);
 const statusInput = ref(null);
 const isFeaturedInput = ref(null);
-const categoryInput = ref(null);
-const editor = ClassicEditor;
+const categoryInput = ref(null); 
 
 const form = useForm({
     title: "",
@@ -93,12 +92,9 @@ const storeBlog = () => {
                                     for="description"
                                     value="Description :"
                                     class="block text-sm font-medium text-gray-700"
-                                /> 
-                                <ckeditor
-                                    :editor="editor"
-                                    v-model="form.description"
-                                ></ckeditor>
-
+                                />  
+                                <TextEditor 
+                                    v-model="form.description"></TextEditor>
                                 <InputError
                                     :message="form.errors.description"
                                     class="mt-2 col-start-2 col-span-4"

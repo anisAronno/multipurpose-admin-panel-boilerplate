@@ -24,7 +24,7 @@ class ProductResource extends JsonResource
             'status' => $this->status,
             'user' => new UserResources($this->user),
             'categories' => $this->whenLoaded('categories'),
-            'images' => $this->whenLoaded('images'),
+            'images' => $this->images,
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

@@ -162,30 +162,33 @@ defineProps({
                                                     >
                                                         <span
                                                             class="break-words w-10"
-                                                        >
-                                                            {{
+                                                            v-html="
                                                                 product.description
                                                                     ? product.description
                                                                           .split(
-                                                                              " "
+                                                                              ' '
                                                                           )
                                                                           .slice(
                                                                               0,
                                                                               10
                                                                           )
                                                                           .join(
-                                                                              " "
+                                                                              ' '
                                                                           ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
+                                                                      '...'
+                                                                    : ''
+                                                            "
+                                                        >
                                                         </span>
                                                     </td>
 
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
-                                                        <div v-for="image in product.images" :key="image.id">
+                                                        <div
+                                                            v-for="image in product.images"
+                                                            :key="image.id"
+                                                        >
                                                             <img
                                                                 :src="image.url"
                                                                 :alt="
@@ -289,7 +292,7 @@ defineProps({
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody> 
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
                                                 v-if="products.last_page > 1"

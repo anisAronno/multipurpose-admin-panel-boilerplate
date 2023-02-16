@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateProductForm from "@/Pages/Dashboard/Products/Partials/CreateProductForm.vue";
+import Form from "@/Pages/Dashboard/Products/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
@@ -42,7 +42,7 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
-                                :href="route('admin.user.index')"
+                                :href="route('admin.product.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -53,11 +53,11 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <CreateProductForm
+                    <Form
                         :categories="categories"
                         :statusArr="statusArr"
                         :featuredArr="featuredArr"
-                    ></CreateProductForm>
+                    ></Form>
                 </div>
             </div>
         </div>

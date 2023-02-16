@@ -35,7 +35,7 @@ class ProductController extends InertiaApplicationController
         $startDate = $request->get('startDate', '');
         $endDate   = $request->get('endDate', '');
         $page       = $request->get('page', 1);
-        $productCacheKey = CacheHelper::getProductCacheKey($page);
+        $productCacheKey = CacheHelper::getProductCacheKey();
 
         $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
 
@@ -63,7 +63,7 @@ class ProductController extends InertiaApplicationController
                 $products->orderBy($orderBy, $order);
             }
 
-            return $products->simplePaginate(10);
+            return $products->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
@@ -100,7 +100,11 @@ class ProductController extends InertiaApplicationController
         try {
             $product = Product::create($data);
 
-            if ($product) {
+            if ($request->has('categories')) {
+                $product->categories()->attach($request->get('categories'));
+            }
+
+            if ($request->has('images')) {
                 $product->categories()->attach($request->get('categories'));
                 $product->images()->attach(array_column($request->get('images'), 'id'));
             }

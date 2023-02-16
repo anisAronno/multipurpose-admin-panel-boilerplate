@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditProductForm from "@/Pages/Dashboard/Products/Partials/EditProductForm.vue";
+import Form from "@/Pages/Dashboard/Products/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
@@ -76,12 +76,12 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <EditProductForm
+                    <Form
                         :product="product"
                         :categories="categories"
                         :statusArr="statusArr"
                         :featuredArr="featuredArr"
-                    ></EditProductForm>
+                    ></Form>
                 </div>
             </div>
         </div>

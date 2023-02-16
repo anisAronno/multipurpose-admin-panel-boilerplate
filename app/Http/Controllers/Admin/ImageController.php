@@ -61,6 +61,30 @@ class ImageController extends InertiaApplicationController
     }
 
     /**
+     * Image store
+     */
+    public function textEditorImageUpload(StoreImageRequest $request)
+    {
+        $data = [];
+        $data = $request->only('title');
+        $data['user_id'] = auth()->user()->id ;
+
+        if ($request->image) {
+            $data['url'] = FileHelpers::upload($request, 'image', 'images');
+            $data['mimes'] = $request->image->extension();
+            $data['type'] = $request->image->getClientMimeType();
+            $data['size'] = number_format($request->image->getSize()/(1024*1024), 2, '.', '')."MB";
+        }
+
+        try {
+            $image = Image::create($data);
+            return response()->json($image);
+        } catch (\Throwable $th) {
+            return $this->failedWithMessage($th->getMessage());
+        }
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Image  $image
