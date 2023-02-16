@@ -1,31 +1,40 @@
 ## Modern monolithic pwa Admin Panel boilerplate with ssr
 
-Application with laravel, vue js, vite, inertia js, tailwind css, typescript
+Application with laravel 10, vue 3, vite 4, inertia 1.0, tailwind 3, typescript
 
 # Getting started
 
 ## Installation
 
 
-Clone the repository
+Install project with composer command
 
-    git clone https://github.com/anis3139/multipurpose-admin-panel-boilerplate.git
+```
+composer create-project anisaronno/multipurpose-admin-panel-boilerplate admin-panel
+```
 
 Switch to the repo folder
 
-    cd multipurpose-admin-panel-boilerplate
+    cd admin-panel
 
-Install all the dependencies using composer
+Run command for install node modules 
 
-    composer install
+```
+npm run dev
+```
 
-Copy the example env file and make the required configuration changes in the .env file
+for frontend build
 
-    cp .env.example .env
+```
+npm run build
+```
 
-Generate a new application key
+for ssr
 
-    php artisan key:generate
+```
+node bootstrap/ssr/ssr.mjs
+```
+
 
 Run the database migrations (**Set the database connection in .env before migrating**)
 
@@ -47,26 +56,6 @@ Or
 ```
 php artisan schedule:run
 ```
-
-
-Run command for development
-
-```
-npm run dev
-```
-
-for frontend build
-
-```
-npm run build
-```
-
-for ssr
-
-```
-node bootstrap/ssr/ssr.mjs
-```
-
 
 Start the local development server
 
