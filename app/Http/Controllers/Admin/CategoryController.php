@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Enums\Status;
-use App\Enums\Featured;
+use App\Enums\Status; 
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -52,9 +51,8 @@ class CategoryController extends InertiaApplicationController
     public function create()
     {
         $statusArr = Status::values();
-        $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Category/Create', ['statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Category/Create', ['statusArr' => $statusArr]);
     }
 
     /**
@@ -95,9 +93,8 @@ class CategoryController extends InertiaApplicationController
     public function edit(Category $category)
     {
         $statusArr = Status::values();
-        $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Category/Edit', ['category' => $category->load(['images']), 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Category/Edit', ['category' => $category->load(['images']), 'statusArr' => $statusArr]);
     }
 
     /**

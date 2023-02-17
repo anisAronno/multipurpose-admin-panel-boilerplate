@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\CheckStatusAndFeture;
 use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
@@ -16,7 +15,6 @@ class Comment extends Model
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-    use CheckStatusAndFeture;
     use Imageable;
 
     /**
@@ -25,19 +23,20 @@ class Comment extends Model
     * @var array<int, string>
     */
     protected $fillable = [
-        'title',
         'description',
-        'status',
+        'commentable_id',
+        'commentable_type',
         'parent_id',
+        'status',
         'user_id',
     ];
 
-    protected static $recordEvents = ['deleted', 'created', 'updated'];
+    protected static $recordEvents = ['deleted', 'updated'];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['title', 'description', 'status'])
+        ->logOnly(['status'])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
@@ -77,12 +76,12 @@ class Comment extends Model
         }
     }
 
-    public function blogs()
+    public function scopeIsActive($query)
     {
-        return $this->morphedByMany(Blog::class, 'commnetable');
+        return $query->where('status', '=', Status::PUBLISHED);
     }
-    public function products()
+    public function commentable()
     {
-        return $this->morphedByMany(Product::class, 'commnetable');
+        return $this->morphTo();
     }
 }

@@ -7,8 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
-use App\Enums\Status;
-use App\Enums\Featured;
+use App\Enums\Status; 
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -29,7 +28,7 @@ class ProductController extends InertiaApplicationController
         $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
         $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
         $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
-        $isFeatured     = in_array($request->get('is_featured'), Featured::values()) ? $request->is_featured : '';
+        $isFeatured = $request->get('is_featured') ? $request->is_featured : '';
 
         $search     = $request->get('search', '');
         $startDate = $request->get('startDate', '');
@@ -81,9 +80,8 @@ class ProductController extends InertiaApplicationController
         $categories = Category::select('id as value', 'title as label')->get();
 
         $statusArr = Status::values();
-        $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Products/Create', ['categories' => $categories, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Products/Create', ['categories' => $categories, 'statusArr' => $statusArr]);
     }
 
     /**
@@ -139,11 +137,10 @@ class ProductController extends InertiaApplicationController
         });
 
         $statusArr = Status::values();
-        $featuredArr = Featured::values();
 
         $categories = Category::select('id as value', 'title as label') ->get();
 
-        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['images']), 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['images']), 'statusArr' => $statusArr, 'categories' => $categories]);
     }
 
     /**

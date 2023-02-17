@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 255);
             $table->longText('description')->nullable();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

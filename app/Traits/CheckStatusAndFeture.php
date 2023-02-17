@@ -2,8 +2,7 @@
 
 namespace App\Traits;
 
-use App\Enums\Status;
-use App\Enums\Featured;
+use App\Enums\Status; 
 
 trait CheckStatusAndFeture
 {
@@ -23,6 +22,6 @@ trait CheckStatusAndFeture
      */
     public function scopeIsFeatured($query)
     {
-        return $query->where('is_featured', '=', Featured::OK);
+        return $query->where('is_featured', '=', 1);
     }
 }

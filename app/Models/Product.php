@@ -1,19 +1,25 @@
 <?php
 
 namespace App\Models;
- 
+
+use App\Enums\Type;
 use App\Helpers\UniqueSlug;
 use App\Traits\Categoryable;
 use App\Traits\CheckStatusAndFeture;
 use App\Traits\Commentable;
+use App\Traits\Favourable;
 use App\Traits\HasAuthor;
 use App\Traits\Imageable;
+use App\Traits\Ratingable;
+use App\Traits\Reactable; 
+use App\Traits\Searchable;
+use App\Traits\Shareable;
 use App\Traits\Taggable;
+use App\Traits\Visitorable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\Status;
-use App\Enums\Featured; 
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -28,8 +34,12 @@ class Product extends Model
     use Categoryable;
     use Taggable;
     use Commentable;
-
-
+    use Favourable;
+    use Ratingable;
+    use Reactable; 
+    use Visitorable;
+    use Shareable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -38,10 +48,17 @@ class Product extends Model
      */
     protected $fillable = [
         'title',
-        'description', 
-        'status',
-        'is_featured',
+        'description',
+        'short_description',
         'slug',
+        'status',
+        'type',
+        'is_featured',
+        'is_commentable',
+        'is_reactable',
+        'is_shareable',
+        'show_ratings',
+        'show_views',
         'user_id',
     ];
     /**
@@ -73,6 +90,6 @@ class Product extends Model
      */
     protected $casts = [
         'status' => Status::class,
-        'is_featured' => Featured::class,
+        'type' => Type::class,
     ];
 }

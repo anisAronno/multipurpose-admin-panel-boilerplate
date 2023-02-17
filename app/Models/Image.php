@@ -38,13 +38,5 @@ class Image extends Model
     {
         return  $this->attributes['url'] = FileHelpers::getUrl($value);
     }
-
-    public function blogs()
-    {
-        return $this->morphedByMany(Blog::class, 'categoryable');
-    }
-    public function products()
-    {
-        return $this->morphedByMany(Product::class, 'categoryable');
-    }
+ 
 }

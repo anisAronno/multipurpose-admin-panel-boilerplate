@@ -21,11 +21,10 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-        return [
-             'title' => $this->faker->sentence(3),
-             'description' => $this->faker->paragraph(2),
-             'status' => Status::PUBLISHED,
-             'user_id' => User::all(['id'])->random(),
+        return [ 
+            'description' => $this->faker->paragraph(2),
+            'status' => Status::PUBLISHED,
+            'user_id' => User::all(['id'])->random(),
             'parent_id' => $this->faker->randomElement(Comment::pluck('id')->toArray()),
         ];
     }

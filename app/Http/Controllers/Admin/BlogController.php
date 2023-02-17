@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
-use App\Enums\Status;
-use App\Enums\Featured;
+use App\Enums\Status; 
 use App\Models\Category;
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
@@ -40,7 +39,7 @@ class BlogController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheHelper::getBlogCacheKey($currentPage);
+        $key = CacheHelper::getBlogCacheKey();
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -67,9 +66,8 @@ class BlogController extends InertiaApplicationController
     {
         $categories = Category::select('id as value', 'title as label')->get();
         $statusArr = Status::values();
-        $featuredArr = Featured::values();
 
-        return Inertia::render('Dashboard/Blog/Create', ['categories' => $categories, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Blog/Create', ['categories' => $categories, 'statusArr' => $statusArr]);
     }
 
     /**
@@ -123,12 +121,11 @@ class BlogController extends InertiaApplicationController
             return $item->id;
         });
 
-        $statusArr = Status::values();
-        $featuredArr = Featured::values();
+        $statusArr = Status::values(); 
 
         $categories = Category::select('id as value', 'title as label')->get();
 
-        return Inertia::render('Dashboard/Blog/Edit', ['blog' => $blog, 'statusArr' => $statusArr, 'categories' => $categories, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Blog/Edit', ['blog' => $blog, 'statusArr' => $statusArr, 'categories' => $categories]);
     }
 
     /**

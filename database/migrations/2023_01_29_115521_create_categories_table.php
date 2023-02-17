@@ -18,10 +18,10 @@ return new class () extends Migration {
             $table->string('title', 255);
             $table->string('slug', 255)->unique();
             $table->text('description')->nullable(); 
-            $table->string('is_featured')->default('N/A');
+            $table->tinyInteger('is_featured')->default(0);
             $table->string('status')->default('Draft');
-            $table->unsignedInteger('parent_id')->nullable();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->unsignedInteger('parent_id')->nullable()->nullOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

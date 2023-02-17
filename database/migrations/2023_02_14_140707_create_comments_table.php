@@ -14,12 +14,13 @@ return new class () extends Migration {
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 255)->nullable(); 
-            $table->text('description')->nullable(); 
+            $table->id(); 
+            $table->text('description')->nullable();
+            $table->text('commentable_id')->nullable();
+            $table->text('commentable_type')->nullable();
             $table->string('status')->default('Pending');
-            $table->unsignedInteger('parent_id')->nullable();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->unsignedInteger('parent_id')->nullable()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

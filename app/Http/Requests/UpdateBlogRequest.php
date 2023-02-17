@@ -25,9 +25,12 @@ class UpdateBlogRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:250|min:3',
-            'description' => 'nullable|string|max:2000|min:3', 
+            'description' => 'nullable|string|max:2000|min:3',
             'status' => 'required|string',
-            'is_featured' => 'required',
+            'is_featured' => 'required|boolean',
+            'is_commentable' => 'required|boolean',
+            'is_reactable' => 'required|boolean',
+            'is_ratingable' => 'required|boolean',
         ];
     }
 }

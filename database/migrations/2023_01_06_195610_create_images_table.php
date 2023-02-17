@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('mimes', 50)->nullable();
             $table->string('type', 50)->nullable();
             $table->string('size', 50)->nullable(); 
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

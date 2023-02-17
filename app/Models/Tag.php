@@ -37,10 +37,10 @@ class Tag extends Model
 
     public function blogs()
     {
-        return $this->morphedByMany(Blog::class, 'categoryable');
+        return $this->morphedByMany(Blog::class, 'taggable');
     }
     public function products()
     {
-        return $this->morphedByMany(Product::class, 'categoryable');
+        return $this->morphedByMany(Product::class, 'taggable');
     }
 }

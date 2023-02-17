@@ -27,6 +27,7 @@ return new class () extends Migration {
             $table->string('longitude', 255)->nullable();
             $table->string('time_zone', 50)->default('Asia/Dhaka');
             $table->string('language', 50)->default('bn');
+            $table->tinyInteger('is_premium')->default(0);
             $table->string('status')->default('Pending');
             $table->rememberToken();
             $table->timestamps();

@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
-use App\Enums\Status;
-use App\Enums\Featured;
+use App\Enums\Status; 
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Category extends Model
@@ -65,8 +64,7 @@ class Category extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'status' => Status::class,
-        'is_featured' => Featured::class,
+        'status' => Status::class, 
     ];
 
     /**

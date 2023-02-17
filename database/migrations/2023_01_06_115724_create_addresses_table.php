@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('district')->nullable()->index();
             $table->string('zip_code')->nullable();
             $table->string('country')->nullable()->index();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

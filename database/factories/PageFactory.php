@@ -21,7 +21,7 @@ class PageFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence(),
+            'title' => $this->faker->randomElement(['Home', 'Blog', "categories", 'About us', 'Contact']),
             'description' => $this->faker->paragraph(3),
             'user_id' => User::all(['id'])->random(),
         ];
