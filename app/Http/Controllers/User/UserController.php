@@ -151,7 +151,7 @@ class UserController extends InertiaApplicationController
     {
         $user->update($request->only('name', 'email', 'status', 'gender'));
 
-        if (! $user->isEditable) {
+        if (! $user->is_editable) {
             $user->roles()->detach();
 
             $roles = $request->roles;
@@ -175,7 +175,7 @@ class UserController extends InertiaApplicationController
 
    public function destroy(User $user)
    {
-       if (! $user->isDeletable) {
+       if (! $user->is_deletable) {
            return $this->failedWithMessage('User is not delatable');
        }
 

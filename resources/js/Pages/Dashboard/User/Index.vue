@@ -248,7 +248,7 @@ const page = usePage()?.props?.global?.options;
                                                                     'user.delete'
                                                                 "
                                                                 v-if="
-                                                                    user.isDeletable
+                                                                    user.is_deletable
                                                                 "
                                                                 :data="{
                                                                     id: user.id,

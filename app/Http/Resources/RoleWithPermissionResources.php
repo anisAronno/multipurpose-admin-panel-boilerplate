@@ -19,8 +19,8 @@ class RoleWithPermissionResources extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
-            'isEditable' => $this->isEditable,
-            'isDeletable' => $this->isDeletable,
+            'is_editable' => $this->is_editable,
+            'is_deletable' => $this->is_deletable,
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

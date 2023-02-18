@@ -27,7 +27,7 @@ class Option extends Model
 
     protected $keyType = 'string';
 
-    protected $appends = ['isDeletable'];
+    protected $appends = ['is_deletable'];
 
     protected static $recordEvents = ['deleted', 'created', 'updated'];
 
@@ -55,7 +55,7 @@ class Option extends Model
         $isFile = FileHelpers::isAllowFileType($value);
 
         if ($isFile) {
-            $value = FileHelpers::getUrl($value); 
+            $value = FileHelpers::getUrl($value);
             return $value;
         }
 

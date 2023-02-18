@@ -151,13 +151,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return auth()->user()->hasRole(['superadmin']);
     }
-    
+
     public function haveAdministrativeRole()
     {
         return auth()->user()->hasRole(['superadmin', 'admin']);
     }
 
-    protected $appends = ['isDeletable', 'isEditable'];
+    protected $appends = ['is_deletable', 'is_editable'];
 
     public function getIsDeletableAttribute($value)
     {

@@ -24,7 +24,7 @@ class Role extends ModelsRole
         ->dontSubmitEmptyLogs();
     }
 
-    protected $appends = ['isDeletable', 'isEditable'];
+    protected $appends = ['is_deletable', 'is_editable'];
 
     public function getIsDeletableAttribute($value)
     {

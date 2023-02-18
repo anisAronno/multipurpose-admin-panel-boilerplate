@@ -149,7 +149,7 @@ class RolesController extends InertiaApplicationController
     {
         $permissions = $request->input('permissions');
 
-        if (empty($permissions) || ! $role->isEditable) {
+        if (empty($permissions) || ! $role->is_editable) {
             return Redirect::back()->with(['success' => false, 'message' => 'Role is not Updateable']);
         } else {
             $role->name = $request->name;

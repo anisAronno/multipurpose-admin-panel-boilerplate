@@ -186,7 +186,7 @@ defineProps({
 
                                                             <div
                                                                 v-if="
-                                                                    role.isEditable
+                                                                    role.is_editable
                                                                 "
                                                             >
                                                                 <Link
@@ -213,7 +213,7 @@ defineProps({
                                                                     'role.delete'
                                                                 "
                                                                 v-if="
-                                                                    role.isDeletable
+                                                                    role.is_deletable
                                                                 "
                                                                 :data="{
                                                                     id: role.id,
