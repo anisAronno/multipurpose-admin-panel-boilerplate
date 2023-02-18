@@ -13,8 +13,8 @@ defineProps({
             <div class="p-5 sm:p-10">
                 <img
                     class="w-full h-96 rounded-md"
-                    :src="product.image"
-                    :alt="product.title"
+                    :src="product.image?.url"
+                    :alt="product.title?.title"
                 />
             </div>
             <div class="p-5 sm:p-10">

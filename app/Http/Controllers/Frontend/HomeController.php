@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BlogResources;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\SpecialFeatureResources;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
@@ -22,30 +24,44 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $key = CacheHelper::getFeaturedProductCacheKey();
+        $featuredProductKey = CacheHelper::getFeaturedProductCacheKey();
         $featuredCatKey = CacheHelper::getFeaturedCategoryCacheKey();
         $featuredBlogKey = CacheHelper::getFeaturedBlogCacheKey();
         $specialFeatureKey = CacheHelper::getSpecialFeatureCacheKey();
 
-        $featuredProducts = Cache::remember($key, 10, function () {
-            return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
+        $featuredProducts = Cache::tags([$featuredProductKey])->remember($featuredProductKey, 10, function () {
+            return Product::isActive()->isFeatured()
+            ->with(['image'])
+            ->orderBy('id', 'desc')
+            ->limit(8)
+            ->get();
         });
 
-        $featuredCategory = Cache::remember($featuredCatKey, 10, function () {
+        $featuredCategory = Cache::tags([$featuredCatKey])->remember($featuredCatKey, 10, function () {
             return Category::whereHas('products', function ($query) {
                 $query->where('categoryable_type', Product::class);
-            })->isActive()->isFeatured()->orderBy('id', 'desc')->limit(3)->get();
+            })->isActive()->isFeatured()
+            ->with(['image'])
+            ->orderBy('id', 'desc')
+            ->limit(3)
+            ->get();
         });
 
-        $featuredBlog = Cache::remember($featuredBlogKey, 10, function () {
-            return Blog::isActive()->isFeatured()->with(['categories'])->orderBy('id', 'desc')->with('user')->limit(3)->get();
+        $featuredBlog = Cache::tags([$featuredBlogKey])->remember($featuredBlogKey, 10, function () {
+            return Blog::isActive()->isFeatured()
+            ->with(['categories', 'image', 'user'])
+            ->orderBy('id', 'desc')->limit(3)->get();
         });
 
-        $specialFeatures = Cache::remember($specialFeatureKey, 10, function () {
-            return SpecialFeature::isActive()->orderBy('id', 'desc')->limit(4)->get();
+        $specialFeatures = Cache::tags([$specialFeatureKey])->remember($specialFeatureKey, 10, function () {
+            return SpecialFeature::isActive()
+            ->with(['image'])
+            ->orderBy('id', 'desc')
+            ->limit(4)
+            ->get();
         });
 
-        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => $featuredProducts, 'featuredCategory'=>$featuredCategory, 'featuredBlog'=> BlogResources::collection($featuredBlog), 'specialFeatures' => $specialFeatures]);
+        return Inertia::render('Frontend/Home/Index')->with(['featuredProducts' => ProductResource::collection($featuredProducts), 'featuredCategory'=> ProductResource::collection($featuredCategory), 'featuredBlog'=> BlogResources::collection($featuredBlog), 'specialFeatures' => SpecialFeatureResources::collection($specialFeatures)]);
     }
 
     /**

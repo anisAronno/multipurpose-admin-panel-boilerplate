@@ -31,8 +31,12 @@ class UserSeeder extends Seeder
     {
         User::factory()->count(10)
         ->has(
-            Category::factory()->count(20)
+            Category::factory()->count(3)
             ->has(Image::factory()->count(2), 'images')
+            ->afterCreating(function ($category) {
+                $category->images->first()->pivot->is_featured = 1;
+                $category->images->first()->pivot->save();
+            })
         )
         ->has(
             Blog::factory()->count(2)
@@ -46,6 +50,10 @@ class UserSeeder extends Seeder
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
             ->has(SearchHistory::factory()->count(2), 'searches')
+            ->afterCreating(function ($blog) {
+                $blog->images->first()->pivot->is_featured = 1;
+                $blog->images->first()->pivot->save();
+            })
         )
         ->has(Address::factory()->count(2))
         ->has(SocialLogin::factory()->count(2))
@@ -61,8 +69,13 @@ class UserSeeder extends Seeder
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
             ->has(SearchHistory::factory()->count(2), 'searches')
+            ->afterCreating(function ($product) {
+                $product->images->first()->pivot->is_featured = 1;
+                $product->images->first()->pivot->save();
+            })
         )
-        ->has(LoginHistory::factory()->count(2))->create()->each(function ($user) {
+        ->has(LoginHistory::factory()->count(2))
+        ->create()->each(function ($user) {
             $user->assignRole('user');
         });
     }

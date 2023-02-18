@@ -11,17 +11,11 @@ defineProps({
             class="grid grid-col sm:grid-cols-2 gap-5 bg-cyan-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50"
         >
             <div class="p-5 sm:p-10">
-                <div
-                    class="m-1"
-                    v-for="image in blog.images.slice(0, 1)"
-                    :key="image.id"
-                >
-                    <img
-                        class="w-full h-96 rounded-md"
-                        :src="image.url"
-                        :alt="image.title"
-                    />
-                </div>
+                <img
+                    class="w-full h-96 rounded-md"
+                    :src="blog.image?.url"
+                    :alt="blog.image?.title"
+                />
             </div>
             <div class="p-5 sm:p-10">
                 <div aria-level="blog-content">

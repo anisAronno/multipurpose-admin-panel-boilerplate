@@ -34,8 +34,8 @@ defineProps({
                         class="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg group-hover:opacity-75 lg:aspect-w-5 lg:aspect-h-6"
                     >
                         <img
-                            :src="category.image"
-                            :alt="category.title"
+                            :src="category.image?.url"
+                            :alt="category.title.title"
                             class="h-full w-full object-cover object-center"
                         />
                     </div>

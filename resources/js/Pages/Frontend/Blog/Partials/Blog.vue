@@ -36,8 +36,8 @@ defineProps({
                     <Link :href="route('blog.show', blog.slug)">
                         <img
                             class="h-48 w-full object-cover"
-                            :src="blog.images[0].url"
-                            alt=""
+                            :src="blog.image?.url"
+                            :alt="blog.image?.title"
                         />
                     </Link>
                 </div>
@@ -57,11 +57,8 @@ defineProps({
                             </p>
                         </Link>
                         <p class="mt-3 text-base text-gray-500">
-                            {{
-                                blog.description
-                                    .split(" ")
-                                    .slice(0, 15)
-                                    .join(" ") + " ..."
+                            {{ 
+                                excerpt(blog.description, 10)
                             }}
                         </p>
                     </div>

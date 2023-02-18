@@ -29,8 +29,8 @@ defineProps({
                     <div class="md:flex-shrink-0">
                         <div class="grid place-content-center">
                             <img
-                                :src="specialFeature.image"
-                                :alt="specialFeature.title"
+                                :src="specialFeature.image?.url"
+                                :alt="specialFeature.image?.title"
                                 class="w-12 h-12 md:w-16 md:h-16 rounded-full"
                             />
                         </div>

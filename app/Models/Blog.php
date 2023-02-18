@@ -11,7 +11,7 @@ use App\Traits\Favourable;
 use App\Traits\HasAuthor;
 use App\Traits\Imageable;
 use App\Traits\Ratingable;
-use App\Traits\Reactable; 
+use App\Traits\Reactable;
 use App\Traits\Searchable;
 use App\Traits\Shareable;
 use App\Traits\Taggable;
@@ -36,7 +36,7 @@ class Blog extends Model
     use Commentable;
     use Favourable;
     use Ratingable;
-    use Reactable; 
+    use Reactable;
     use Visitorable;
     use Shareable;
     use Searchable;
@@ -92,4 +92,5 @@ class Blog extends Model
         'status' => Status::class,
         'format' => Format::class,
     ];
+
 }

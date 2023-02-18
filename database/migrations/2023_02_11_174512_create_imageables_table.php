@@ -13,10 +13,11 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('imageables', function (Blueprint $table) {
+        Schema::create('imageables', function (Blueprint $table) { 
             $table->foreignIdFor(Image::class)->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('imageable_id');
             $table->string('imageable_type');
+            $table->tinyInteger('is_featured')->default(0);
             $table->timestamps();
         });
     }

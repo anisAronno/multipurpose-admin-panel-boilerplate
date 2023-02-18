@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\FileHelpers;
+use App\Models\Image;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 
@@ -15,6 +17,13 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $image = $this->whenLoaded('image', function () {
+            if ($this->image->isNotEmpty()) {
+                return new ImageResources($this->image->first());
+            }
+            return new ImageResources(new Image(['url' => FileHelpers::getDefaultImage()]));
+        });
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -31,6 +40,7 @@ class ProductResource extends JsonResource
             'show_views' => $this->show_views,
             'user' => new UserResources($this->whenLoaded('user')),
             'categories' => $this->whenLoaded('categories'),
+            'image' => $image,
             'images' => ImageResources::collection($this->whenLoaded('images')),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];

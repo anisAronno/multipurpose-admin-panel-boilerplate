@@ -23,7 +23,7 @@ defineProps({
                     {{ __("category_show.title_2") }}</span
                 >
             </Hero>
-            <div class="pt-5" v-if="category.description.length > 0">
+            <div class="pt-5" v-if="category.description?.length > 0">
                 <div
                     class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-full lg:px-8"
                 >
@@ -42,7 +42,7 @@ defineProps({
                     {{ __("category.mobile_title") }}
                 </h2>
 
-                <div v-if="category.products">
+                <div v-if="category.products?.length > 0">
                     <h2
                         class="text-2xl my-5 lg:mb-8 text-center underline underline-offset-8 decoration-gray-500"
                     >
@@ -65,8 +65,8 @@ defineProps({
                                     :href="route('product.show', product.slug)"
                                 >
                                     <img
-                                        :src="product.image"
-                                        :alt="product.image"
+                                        :src="product.image?.url"
+                                        :alt="product.image?.title"
                                         class="h-full w-full object-cover object-center"
                                     />
                                 </Link>
@@ -87,7 +87,7 @@ defineProps({
                         </div>
                     </div>
                 </div>
-                <div v-if="category.blogs.length > 0">
+                <div v-if="category.blogs?.length > 0">
                     <h2
                         class="text-2xl my-5 lg:my-8 text-center underline underline-offset-8 decoration-gray-500"
                     >
@@ -102,14 +102,14 @@ defineProps({
                             v-for="blog in category.blogs"
                             :key="blog.id"
                             class="group border border-gray-200 p-4 sm:p-6"
-                        >
+                        > 
                             <div
                                 class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 group-hover:opacity-75"
                             >
                                 <Link :href="route('blog.show', blog.slug)">
                                     <img
-                                        :src="blog.image"
-                                        :alt="blog.image"
+                                        :src="blog.image?.url"
+                                        :alt="blog.image?.title"
                                         class="h-full w-full object-cover object-center"
                                     />
                                 </Link>

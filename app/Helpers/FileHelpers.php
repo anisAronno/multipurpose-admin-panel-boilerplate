@@ -74,7 +74,7 @@ class FileHelpers
 
             return $value;
         } else {
-            return Storage::url('images/defaults/placeholder.png');
+            return self::getDefaultImage();
         }
     }
 
@@ -153,5 +153,10 @@ class FileHelpers
         } catch (\Throwable $th) {
             return false;
         }
+    }
+
+    public static function getDefaultImage(): string
+    {
+        return Storage::url('images/defaults/placeholder.png');
     }
 }

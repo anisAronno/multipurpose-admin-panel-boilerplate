@@ -31,8 +31,8 @@ defineProps({
                     >
                         <Link :href="route('product.show', product.slug)">
                             <img
-                                :src="product.image"
-                                :alt="product.image"
+                                :src="product.image?.url"
+                                :alt="product.image?.title"
                                 class="h-full w-full object-cover object-center"
                             />
                         </Link>

@@ -22,8 +22,8 @@ defineProps({
                     >
                         <Link :href="route('product.show', product.slug)">
                             <img
-                                :src="product.image"
-                                :alt="product.image"
+                                :src="product.image?.url"
+                                :alt="product.image?.title"
                                 class="h-full w-full object-cover object-center"
                             />
                         </Link>
@@ -40,9 +40,9 @@ defineProps({
                 </div>
             </div>
             <Pagination
-                v-if="products.last_page > 1"
+                v-if="products.meta.last_page > 1"
                 class="mt-6 dark:text-white flex justify-end p-3"
-                :links="products.links"
+                :links="products.meta.links"
             ></Pagination>
         </div>
     </div>
