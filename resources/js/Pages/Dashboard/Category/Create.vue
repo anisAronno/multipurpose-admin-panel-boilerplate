@@ -1,11 +1,10 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateCategoryForm from "@/Pages/Dashboard/Category/Partials/CreateCategoryForm.vue";
+import Form from "@/Pages/Dashboard/Category/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
     statusArr: Object,
-    featuredArr: Object,
 });
 </script>
 
@@ -41,6 +40,7 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
+                            v-can="'category.view'"
                                 :href="route('admin.user.index')"
                                 class="btn btn-primary"
                             >
@@ -52,10 +52,9 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <CreateCategoryForm
+                    <Form
                         :statusArr="statusArr"
-                        :featuredArr="featuredArr"
-                    ></CreateCategoryForm>
+                    ></Form>
                 </div>
             </div>
         </div>

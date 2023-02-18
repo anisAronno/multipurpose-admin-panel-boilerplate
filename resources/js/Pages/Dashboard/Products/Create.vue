@@ -6,7 +6,7 @@ import { Head } from "@inertiajs/vue3";
 defineProps({
     categories: Object,
     statusArr: Object,
-    featuredArr: Object,
+    typeArr: Object,
 });
 </script>
 
@@ -42,6 +42,7 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
+                                v-can="'product.view'"
                                 :href="route('admin.product.index')"
                                 class="btn btn-primary"
                             >
@@ -56,7 +57,7 @@ defineProps({
                     <Form
                         :categories="categories"
                         :statusArr="statusArr"
-                        :featuredArr="featuredArr"
+                        :typeArr="typeArr"
                     ></Form>
                 </div>
             </div>

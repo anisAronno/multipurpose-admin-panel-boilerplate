@@ -41,6 +41,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
+                                v-can="'options.edit'"
                                 :href="
                                     route(
                                         'admin.special-feature.edit',
@@ -56,6 +57,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
+                                v-can="'options.create'"
                                 :href="route('admin.special-feature.create')"
                                 class="btn btn-primary"
                             >
@@ -66,6 +68,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'options.view'"
                                 :href="route('admin.special-feature.index')"
                                 class="btn btn-primary"
                             >
@@ -138,13 +141,17 @@ defineProps({
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
-                                                    <img
-                                                        :src="
-                                                            specialFeature.image
-                                                        "
-                                                        alt=""
-                                                        class="w-16 h-16"
-                                                    />
+                                                    <div
+                                                        v-for="image in specialFeature.images"
+                                                        :key="image.id"
+                                                        class="m-1"
+                                                    >
+                                                        <img
+                                                            :src="image.url"
+                                                            :alt="image.title"
+                                                            class="w-16 h-16"
+                                                        />
+                                                    </div>
                                                 </td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"

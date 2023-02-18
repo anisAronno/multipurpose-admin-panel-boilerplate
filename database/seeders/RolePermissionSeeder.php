@@ -54,6 +54,16 @@ class RolePermissionSeeder extends Seeder
                 ],
             ],
             [
+                'group_name' => 'product',
+                'permissions' => [
+                    'product.create',
+                    'product.view',
+                    'product.edit',
+                    'product.delete',
+                    'product.status',
+                ],
+            ],
+            [
                 'group_name' => 'blog',
                 'permissions' => [
                     'blog.create',
@@ -89,7 +99,7 @@ class RolePermissionSeeder extends Seeder
                 'group_name' => 'category',
                 'permissions' => [
 
-                    'admin.category.create',
+                    'category.create',
                     'category.view',
                     'category.edit',
                     'category.delete',
@@ -152,6 +162,7 @@ class RolePermissionSeeder extends Seeder
                     'options.status',
                 ],
             ],
+            
             [
                 'group_name' => 'pages',
                 'permissions' => [
@@ -208,10 +219,15 @@ class RolePermissionSeeder extends Seeder
             'blog.edit',
             'blog.status',
 
-            'admin.category.create',
+            'category.create',
             'category.view',
             'category.edit',
             'category.status',
+
+            'product.create',
+            'product.view',
+            'product.edit', 
+            'product.status',
 
             'tag.create',
             'tag.view',
@@ -264,11 +280,17 @@ class RolePermissionSeeder extends Seeder
             'blog.delete',
             'blog.status',
 
-            'admin.category.create',
+            'category.create',
             'category.view',
             'category.edit',
             'category.delete',
             'category.status',
+
+            'product.create',
+            'product.view',
+            'product.edit',
+            'product.delete',
+            'product.status',
 
             'about.create',
             'about.view',
@@ -333,11 +355,14 @@ class RolePermissionSeeder extends Seeder
             'blog.delete',
             'blog.status',
 
-            'admin.category.create',
+            'category.create',
             'category.view',
 
             'tag.create',
             'tag.view',
+            'tag.edit',
+            'tag.status',
+            'tag.delete',
 
         ];
 
@@ -355,11 +380,14 @@ class RolePermissionSeeder extends Seeder
             'blog.delete',
             'blog.status',
 
-            'admin.category.create',
+            'category.create',
             'category.view',
 
             'tag.create',
             'tag.view',
+            'tag.edit',
+            'tag.status',
+            'tag.delete',
 
         ];
 

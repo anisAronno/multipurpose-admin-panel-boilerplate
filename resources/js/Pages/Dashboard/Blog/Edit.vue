@@ -1,12 +1,12 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditBlogForm from "@/Pages/Dashboard/Blog/Partials/EditBlogForm.vue";
+import Form from "@/Pages/Dashboard/Blog/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
     blog: Object,
     statusArr: Object,
-    featuredArr: Object,
+    formatArr: Object,
     categories: Object,
 });
 </script>
@@ -45,6 +45,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
+                                v-can="'blog.view'"
                                 :href="route('admin.blog.show', blog.id)"
                                 class="btn btn-primary"
                             >
@@ -55,6 +56,7 @@ defineProps({
                                 Back
                             </Link>
                             <Link
+                                v-can="'blog.create'"
                                 :href="route('admin.blog.create')"
                                 class="btn btn-primary"
                             >
@@ -65,6 +67,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'blog.view'"
                                 :href="route('admin.blog.index')"
                                 class="btn btn-primary"
                             >
@@ -76,12 +79,12 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <EditBlogForm
+                    <Form
                         :blog="blog"
                         :statusArr="statusArr"
-                        :featuredArr="featuredArr"
+                        :formatArr="formatArr"
                         :categories="categories"
-                    ></EditBlogForm>
+                    ></Form>
                 </div>
             </div>
         </div>

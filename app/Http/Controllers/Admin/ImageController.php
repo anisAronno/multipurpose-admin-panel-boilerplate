@@ -6,6 +6,7 @@ use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use App\Http\Resources\ImageResources;
 use App\Models\Image;
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
@@ -15,15 +16,49 @@ class ImageController extends InertiaApplicationController
 {
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
 
-        $key = CacheHelper::getImageCacheKey($currentPage);
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $specialFeatureCacheKey = CacheHelper::getSpecialFeatureCacheKey();
 
-        $images = Cache::remember($key, 10, function () {
-            return Image::orderBy('id', 'desc')->paginate(20);
+        $user  = auth()->user();
+        $key =  $specialFeatureCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
+
+        $images = Cache::tags([$specialFeatureCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+        ) {
+            $images = new Image();
+
+            if (! $user->haveAdministrativeRole()) {
+                $images->where('user_id', $user->id);
+            }
+
+            if (! empty($search)) {
+                $images->where('title', 'LIKE', '%'.$search.'%');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $images->where('created_at', '>=', new \DateTime($startDate));
+                $images->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $images->orderBy($orderBy, $order);
+            }
+
+            return $images->paginate(10);
         });
 
-        return response()->json($images);
+        return response()->json(ImageResources::collection($images));
     }
 
     /**

@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'contact.view'"
                                     :href="route('admin.contact.index')"
                                     class="btn btn-primary"
                                 >
@@ -74,7 +75,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="contacts.length > 0"
+                                        v-if="contacts.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -109,7 +110,7 @@ defineProps({
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
+                                                        class="min-w-[50%] px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Message
                                                     </th>
@@ -131,7 +132,7 @@ defineProps({
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="contact in contacts"
+                                                    v-for="contact in contacts.data"
                                                     :key="contact.id"
                                                     :id="contact.id"
                                                 >
@@ -164,20 +165,10 @@ defineProps({
                                                             class="break-words w-10"
                                                         >
                                                             {{
-                                                                contact.message
-                                                                    ? contact.message
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
+                                                                excerpt(
+                                                                    contact.message,
+                                                                    5
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -210,6 +201,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'contact.delete'
+                                                                "
                                                                 :data="{
                                                                     id: contact.id,
                                                                     model: 'contact',
@@ -221,21 +215,35 @@ defineProps({
                                             </tbody>
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="contacts.last_page > 1"
+                                                v-if="
+                                                    contacts.meta.last_page > 1
+                                                "
                                             >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{ contacts.meta.from }}
+                                                        to
+                                                        {{ contacts.meta.to }}
+                                                        from ({{
+                                                            contacts.meta.total
+                                                        }}
+                                                        items)
+                                                    </td>
                                                     <td
                                                         colspan="7"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                contacts.last_page >
+                                                                contacts.meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                contacts.links
+                                                                contacts.meta
+                                                                    .links
                                                             "
                                                         ></Pagination>
                                                     </td>

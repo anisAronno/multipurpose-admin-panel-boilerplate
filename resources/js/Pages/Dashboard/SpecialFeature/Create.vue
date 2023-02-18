@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateSpecialFeatureForm from "@/Pages/Dashboard/SpecialFeature/Partials/CreateSpecialFeatureForm.vue";
+import Form from "@/Pages/Dashboard/SpecialFeature/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
@@ -40,6 +40,7 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
+                                v-can="'options.view'"
                                 :href="route('admin.user.index')"
                                 class="btn btn-primary"
                             >
@@ -51,9 +52,9 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <CreateSpecialFeatureForm
+                    <Form
                         :statusArr="statusArr"
-                    ></CreateSpecialFeatureForm>
+                    ></Form>
                 </div>
             </div>
         </div>

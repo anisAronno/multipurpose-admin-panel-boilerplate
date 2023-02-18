@@ -44,6 +44,7 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
+                                v-can="'role.create'"
                                 :href="route('admin.role.index')"
                                 class="btn btn-primary"
                             >

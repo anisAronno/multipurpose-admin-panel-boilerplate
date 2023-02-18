@@ -24,13 +24,6 @@ class Role extends ModelsRole
         ->dontSubmitEmptyLogs();
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
-        }
-    }
-
     protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)

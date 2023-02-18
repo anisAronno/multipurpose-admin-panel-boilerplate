@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Resources\ContactResources;
 use App\Models\Contact;
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
@@ -20,29 +21,56 @@ class ContactController extends InertiaApplicationController
      */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
 
-        $key = CacheHelper::getContactCacheKey($currentPage);
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $contactCacheKey = CacheHelper::getContactCacheKey();
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $contacts = Contact::where('name', 'LIKE', '%'.$q.'%')
-            ->orWhere('email', 'LIKE', '%'.$q.'%')
-            ->orWhere('phone', 'LIKE', '%'.$q.'%')
-            ->orWhere('subject', 'LIKE', '%'.$q.'%')
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        $user  = auth()->user();
+        $key =  $contactCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
 
-            return Inertia::render('Dashboard/Contact/Index', ['contacts' => $contacts]);
-        }
+        $contacts = Cache::tags([$contactCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+        ) {
+            $contacts = new Contact();
 
-        $contacts = Cache::remember($key, 10, function () {
-            return Contact::orderBy('id', 'desc')->paginate(10);
+            if (! $user->haveAdministrativeRole()) {
+                $contacts->where('user_id', $user->id);
+            }
+
+            if (! empty($search)) {
+                $contacts->where('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
+                ->orWhere('phone', 'LIKE', '%'.$search.'%')
+                ->orWhere('subject', 'LIKE', '%'.$search.'%')
+                ->orderBy('id', 'desc');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $contacts->where('created_at', '>=', new \DateTime($startDate));
+                $contacts->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $contacts->orderBy($orderBy, $order);
+            }
+
+            return $contacts->paginate(10);
         });
 
-        Session::put('last_visited_contact_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Contact/Index')->with(['contacts' => $contacts]);
+        Session::put('last_visited_url', $request->fullUrl());
+
+        return Inertia::render('Dashboard/Contact/Index')->with(['contacts' => ContactResources::collection($contacts)]);
     }
 
       /**
@@ -65,8 +93,8 @@ class ContactController extends InertiaApplicationController
     {
         $contact->delete();
 
-        if (session('last_visited_contact_url')) {
-            return Redirect::to(session('last_visited_contact_url'))->with(['success' => true, 'message', 'Deleted successfull']);
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
         }
 
         return $this->successWithMessage('Deleted successfull');

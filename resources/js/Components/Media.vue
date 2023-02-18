@@ -115,7 +115,7 @@ useInfiniteScroll(
             .get(`${route("admin.image.index")}?page=${pageNumber}`)
             .then((response) => {
                 isLoadMore.value = false;
-                images.value.push(...response.data.data);
+                images.value.push(...response.data);
             })
             .catch((error) => {
                 isLoadMore.value = false;
@@ -131,7 +131,7 @@ const loadImages = async () => {
         .get(route("admin.image.index"))
         .then((response) => {
             isLoaded.value = false;
-            images.value = response.data.data;
+            images.value = response.data;
         })
         .catch((error) => {
             console.log(error.message);

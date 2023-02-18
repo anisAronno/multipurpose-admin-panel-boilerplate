@@ -2,9 +2,9 @@
 import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
-import { formattedDate } from "@/Composables/useDate";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, usePage } from "@inertiajs/vue3";
+
 defineProps({
     users: Object,
 });
@@ -46,6 +46,7 @@ const page = usePage()?.props?.global?.options;
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'user.create'"
                                     :href="route('admin.user.create')"
                                     class="btn btn-primary"
                                 >
@@ -56,6 +57,7 @@ const page = usePage()?.props?.global?.options;
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'user.view'"
                                     :href="route('admin.user.index')"
                                     class="btn btn-primary"
                                 >
@@ -86,7 +88,7 @@ const page = usePage()?.props?.global?.options;
                                         </div>
                                     </div>
                                     <div
-                                        v-if="users.length > 0"
+                                        v-if="users.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -143,7 +145,7 @@ const page = usePage()?.props?.global?.options;
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="user in users"
+                                                    v-for="user in users.data"
                                                     :key="user.id"
                                                     :id="user.id"
                                                 >
@@ -172,15 +174,17 @@ const page = usePage()?.props?.global?.options;
                                                         class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
                                                         <div
-                                                            v-for="role in user.roles"
-                                                            :key="role.id"
+                                                            v-for="(
+                                                                role, index
+                                                            ) in user.roles"
+                                                            :key="index"
                                                             class="mr-2"
                                                         >
                                                             <font-awesome-icon
                                                                 icon="fa-solid fa-user-shield"
                                                                 class="text-blue-400"
                                                             />
-                                                            {{ role.name }}
+                                                            {{ role }}
                                                         </div>
                                                     </td>
                                                     <td
@@ -191,11 +195,7 @@ const page = usePage()?.props?.global?.options;
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            formattedDate(
-                                                                user.created_at
-                                                            )
-                                                        }}
+                                                        {{ user.created_at }}
                                                     </td>
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
@@ -205,6 +205,9 @@ const page = usePage()?.props?.global?.options;
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'user.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.user.show',
@@ -222,6 +225,9 @@ const page = usePage()?.props?.global?.options;
 
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'user.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.user.edit',
@@ -238,6 +244,9 @@ const page = usePage()?.props?.global?.options;
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'user.delete'
+                                                                "
                                                                 v-if="
                                                                     user.isDeletable
                                                                 "
@@ -252,20 +261,31 @@ const page = usePage()?.props?.global?.options;
                                             </tbody>
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="users.last_page > 1"
+                                                v-if="users.meta.last_page > 1"
                                             >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{ users.meta.from }}
+                                                        to
+                                                        {{ users.meta.to }} from
+                                                        ({{ users.meta.total }}
+                                                        items)
+                                                    </td>
                                                     <td
-                                                        colspan="7"
+                                                        colspan="6"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                users.last_page >
+                                                                users.meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="users.links"
+                                                            :links="
+                                                                users.meta.links
+                                                            "
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

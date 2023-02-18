@@ -15,7 +15,7 @@ trait SuperAdminPolicy
     */
     public function before(User $user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->haveAdministrativeRole()) {
             return true;
         }
     }

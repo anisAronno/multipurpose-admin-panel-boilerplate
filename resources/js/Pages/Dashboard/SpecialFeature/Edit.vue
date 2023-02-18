@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditSpecialFeatureForm from "@/Pages/Dashboard/SpecialFeature/Partials/EditSpecialFeatureForm.vue";
+import Form from "@/Pages/Dashboard/SpecialFeature/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
@@ -43,6 +43,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
+                                v-can="'options.view'"
                                 :href="
                                     route(
                                         'admin.special-feature.show',
@@ -58,6 +59,7 @@ defineProps({
                                 Back
                             </Link>
                             <Link
+                                v-can="'options.create'"
                                 :href="route('admin.special-feature.create')"
                                 class="btn btn-primary"
                             >
@@ -68,6 +70,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'options.view'"
                                 :href="route('admin.special-feature.index')"
                                 class="btn btn-primary"
                             >
@@ -79,10 +82,10 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <EditSpecialFeatureForm
+                    <Form
                         :specialFeature="specialFeature"
                         :statusArr="statusArr"
-                    ></EditSpecialFeatureForm>
+                    ></Form>
                 </div>
             </div>
         </div>

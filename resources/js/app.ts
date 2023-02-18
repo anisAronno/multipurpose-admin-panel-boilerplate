@@ -13,7 +13,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { translations } from "./Mixins/translations"; 
-
+import excerpt from "./Helper/excerpt";
 
 library.add(fas);
 
@@ -35,6 +35,7 @@ createInertiaApp({
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
             .mixin(translations)
+            .mixin(excerpt)
             .directive("can", permissionDirective)
             .directive("role", roleDirective)
             .mount(el);

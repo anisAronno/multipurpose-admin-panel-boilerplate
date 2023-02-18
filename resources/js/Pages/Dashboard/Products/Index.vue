@@ -4,6 +4,7 @@ import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+
 defineProps({
     products: Object,
 });
@@ -44,6 +45,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'product.create'"
                                     :href="route('admin.product.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +56,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'product.view'"
                                     :href="route('admin.product.index')"
                                     class="btn btn-primary"
                                 >
@@ -136,6 +139,9 @@ defineProps({
                                                         Date Time
                                                     </th>
                                                     <th
+                                                        v-can="
+                                                            'product.view|product.edit|product.delete'
+                                                        "
                                                         scope="col"
                                                         class="px-3 w-[20%] py-3.5 text-center text-base font-bold text-gray-900"
                                                     >
@@ -163,20 +169,10 @@ defineProps({
                                                         <span
                                                             class="break-words w-10"
                                                             v-html="
-                                                                product.description
-                                                                    ? product.description
-                                                                          .split(
-                                                                              ' '
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              ' '
-                                                                          ) +
-                                                                      '...'
-                                                                    : ''
+                                                                excerpt(
+                                                                    product.description,
+                                                                    10
+                                                                )
                                                             "
                                                         >
                                                         </span>
@@ -229,14 +225,15 @@ defineProps({
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{
-                                                            product.is_featured
-                                                        }}
+                                                        {{ product.status }}
                                                     </td>
+
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
                                                     >
-                                                        {{ product.status }}
+                                                        {{
+                                                            product.is_featured
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -249,7 +246,11 @@ defineProps({
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
                                                         >
-                                                            <div>
+                                                            <div
+                                                                v-can="
+                                                                    'product.view'
+                                                                "
+                                                            >
                                                                 <Link
                                                                     :href="
                                                                         route(
@@ -266,7 +267,11 @@ defineProps({
                                                                 </Link>
                                                             </div>
 
-                                                            <div>
+                                                            <div
+                                                                v-can="
+                                                                    'product.edit'
+                                                                "
+                                                            >
                                                                 <Link
                                                                     :href="
                                                                         route(
@@ -284,6 +289,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'product.delete'
+                                                                "
                                                                 :data="{
                                                                     id: product.id,
                                                                     model: 'product',
@@ -292,24 +300,38 @@ defineProps({
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            </tbody> 
+                                            </tbody>
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="products.last_page > 1"
+                                                v-if="
+                                                    products.meta.last_page > 1
+                                                "
                                             >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{ products.meta.from }}
+                                                        to
+                                                        {{ products.meta.to }}
+                                                        from ({{
+                                                            products.meta.total
+                                                        }}
+                                                        items)
+                                                    </td>
                                                     <td
-                                                        colspan="7"
+                                                        colspan="10"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                products.last_page >
+                                                                products.meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                products.links
+                                                                products.meta
+                                                                    .links
                                                             "
                                                         ></Pagination>
                                                     </td>
@@ -321,7 +343,7 @@ defineProps({
                                         v-else
                                         class="h-32 grid place-items-center text-2xl"
                                     >
-                                        <p>Result not found</p>
+                                        <p>Product not found</p>
                                     </div>
                                 </div>
                             </div>

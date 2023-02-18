@@ -1,12 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import EditCategoryForm from "@/Pages/Dashboard/Category/Partials/EditCategoryForm.vue";
+import Form from "@/Pages/Dashboard/Category/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
     category: Object,
     statusArr: Object,
-    featuredArr: Object,
 });
 </script>
 
@@ -44,6 +43,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
+                                v-can="'category.view'"
                                 :href="
                                     route('admin.category.show', category.id)
                                 "
@@ -56,6 +56,7 @@ defineProps({
                                 Back
                             </Link>
                             <Link
+                                v-can="'category.create'"
                                 :href="route('admin.category.create')"
                                 class="btn btn-primary"
                             >
@@ -66,6 +67,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'category.view'"
                                 :href="route('admin.category.index')"
                                 class="btn btn-primary"
                             >
@@ -77,11 +79,7 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <EditCategoryForm
-                        :category="category"
-                        :statusArr="statusArr"
-                        :featuredArr="featuredArr"
-                    ></EditCategoryForm>
+                    <Form :category="category" :statusArr="statusArr"></Form>
                 </div>
             </div>
         </div>

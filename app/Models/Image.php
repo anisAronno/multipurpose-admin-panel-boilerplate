@@ -33,10 +33,4 @@ class Image extends Model
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }
-
-    public function getUrlAttribute($value)
-    {
-        return  $this->attributes['url'] = FileHelpers::getUrl($value);
-    }
- 
 }

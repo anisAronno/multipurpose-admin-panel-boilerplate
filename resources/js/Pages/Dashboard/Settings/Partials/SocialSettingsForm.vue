@@ -149,6 +149,7 @@ const form = useForm({
             </div>
 
             <div
+                v-can="'options.create'"
                 class="flex items-center justify-center gap-4 py-5 sm:py-10 flex-auto col-span-full"
             >
                 <PrimaryButton

@@ -156,38 +156,31 @@ defineProps({
                                                     >
                                                         <span
                                                             class="break-words w-10"
-                                                        >
-                                                            {{
-                                                                category.description
-                                                                    ? category.description
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
-                                                        </span>
+                                                            v-html="
+                                                                excerpt(
+                                                                    category.description,
+                                                                    10
+                                                                )
+                                                            "
+                                                        ></span>
                                                     </td>
 
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
-                                                        <img
-                                                            :src="
-                                                                category.image
-                                                            "
-                                                            :alt="
-                                                                category.image
-                                                            "
-                                                            class="w-16 h-16"
-                                                        />
+                                                        <div
+                                                            v-for="image in category.images"
+                                                            :key="image.id"
+                                                            class="flex gap-2"
+                                                        >
+                                                            <img
+                                                                :src="image.url"
+                                                                :alt="
+                                                                    image.title
+                                                                "
+                                                                class="w-16 h-16 my-1"
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -258,23 +251,32 @@ defineProps({
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot
+                                           <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="categories.last_page > 1"
+                                                v-if="categories.meta.last_page > 1"
                                             >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{ categories.meta.from }}
+                                                        to
+                                                        {{ categories.meta.to }} from
+                                                        ({{ categories.meta.total }}
+                                                        items)
+                                                    </td>
                                                     <td
-                                                        colspan="7"
+                                                        colspan="6"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                categories.last_page >
+                                                                categories.meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                categories.links
+                                                                categories.meta.links
                                                             "
                                                         ></Pagination>
                                                     </td>
@@ -286,7 +288,7 @@ defineProps({
                                         v-else
                                         class="h-32 grid place-items-center text-2xl"
                                     >
-                                        <p>Result not found</p>
+                                        <p>Category not found</p>
                                     </div>
                                 </div>
                             </div>

@@ -10,7 +10,7 @@ use App\Models\Favourite;
 use App\Models\LoginHistory;
 use App\Models\Product;
 use App\Models\Rating;
-use App\Models\React; 
+use App\Models\React;
 use App\Models\SearchHistory;
 use App\Models\ShareHistory;
 use App\Models\SocialLogin;
@@ -31,34 +31,38 @@ class UserSeeder extends Seeder
     {
         User::factory()->count(10)
         ->has(
-            Blog::factory()->count(3)
-            ->has(Category::factory()->count(2), 'categories')
+            Category::factory()->count(20)
             ->has(Image::factory()->count(2), 'images')
-            ->has(Tag::factory()->count(2), 'tags')
-            ->has(Comment::factory()->count(2), 'comments')
-            ->has(Favourite::factory()->count(2), 'favourites')
-            ->has(Rating::factory()->count(2), 'ratings')
-            ->has(React::factory()->count(2), 'reacts') 
-            ->has(Visitor::factory()->count(2), 'visitors')
-            ->has(ShareHistory::factory()->count(2), 'shares')
-            ->has(SearchHistory::factory()->count(2), 'searches')
         )
-        ->has(Address::factory()->count(3))
-        ->has(SocialLogin::factory()->count(3))
         ->has(
-            Product::factory()->count(3)
+            Blog::factory()->count(2)
             ->has(Category::factory()->count(2), 'categories')
             ->has(Image::factory()->count(2), 'images')
             ->has(Tag::factory()->count(2), 'tags')
             ->has(Comment::factory()->count(2), 'comments')
             ->has(Favourite::factory()->count(2), 'favourites')
             ->has(Rating::factory()->count(2), 'ratings')
-            ->has(React::factory()->count(2), 'reacts') 
+            ->has(React::factory()->count(2), 'reacts')
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
             ->has(SearchHistory::factory()->count(2), 'searches')
         )
-        ->has(LoginHistory::factory()->count(3))->create()->each(function ($user) {
+        ->has(Address::factory()->count(2))
+        ->has(SocialLogin::factory()->count(2))
+        ->has(
+            Product::factory()->count(2)
+            ->has(Category::factory()->count(2), 'categories')
+            ->has(Image::factory()->count(2), 'images')
+            ->has(Tag::factory()->count(2), 'tags')
+            ->has(Comment::factory()->count(2), 'comments')
+            ->has(Favourite::factory()->count(2), 'favourites')
+            ->has(Rating::factory()->count(2), 'ratings')
+            ->has(React::factory()->count(2), 'reacts')
+            ->has(Visitor::factory()->count(2), 'visitors')
+            ->has(ShareHistory::factory()->count(2), 'shares')
+            ->has(SearchHistory::factory()->count(2), 'searches')
+        )
+        ->has(LoginHistory::factory()->count(2))->create()->each(function ($user) {
             $user->assignRole('user');
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Role;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
+use App\Http\Resources\RoleWithPermissionResources;
 use App\Models\Role;
 use App\Models\User;
 use App\Helpers\CacheHelper;
@@ -30,28 +31,51 @@ class RolesController extends InertiaApplicationController
 
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $roles = Role::with(['permissions' => function ($query) {
-                $query->select('id', 'name');
-            }])->where('name', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $roleCacheKey = CacheHelper::getRoleCacheKey();
 
-            return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
-        }
+        $user  = auth()->user();
+        $key =  $roleCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
 
-        $key = CacheHelper::getRoleCacheKey($currentPage);
+        $roles = Cache::tags([$roleCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+        ) {
+            $roles = Role::with([ 'permissions']);
 
-        $roles = Cache::remember($key, 10, function () {
-            return Role::with(['permissions' => function ($query) {
-                $query->select('id', 'name');
-            }])->orderBy('id', 'desc')->paginate(10);
+            if (! $user->haveAdministrativeRole()) {
+                $roles->where('user_id', $user->id);
+            }
+
+            if (! empty($search)) {
+                $roles->where('title', 'LIKE', '%'.$search.'%')->orWhere('description', 'LIKE', '%'.$search.'%');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $roles->where('created_at', '>=', new \DateTime($startDate));
+                $roles->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $roles->orderBy($orderBy, $order);
+            }
+
+            return $roles->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
+        return Inertia::render('Dashboard/Role/Index')->with(['roles' => RoleWithPermissionResources::collection($roles)]);
     }
 
 
@@ -92,7 +116,7 @@ class RolesController extends InertiaApplicationController
     {
         $role->load('permissions');
 
-        return Inertia::render('Dashboard/Role/Show', compact('role'));
+        return Inertia::render('Dashboard/Role/Show', ['role' => new RoleWithPermissionResources($role) ]);
     }
 
 

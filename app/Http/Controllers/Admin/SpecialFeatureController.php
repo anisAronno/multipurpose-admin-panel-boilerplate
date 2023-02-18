@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreSpecialFeatureRequest;
 use App\Http\Requests\UpdateSpecialFeatureRequest;
+use App\Http\Resources\SpecialFeatureResources;
 use App\Models\SpecialFeature;
 use App\Enums\Status;
 use App\Helpers\CacheHelper;
@@ -17,30 +18,73 @@ use Illuminate\Support\Facades\Session;
 class SpecialFeatureController extends InertiaApplicationController
 {
     /**
+    * Filter role and permission
+    */
+    public function __construct()
+    {
+        $this->middleware('permission:options.view|options.create|options.edit|options.delete|options.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:options.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:options.edit|permission:options.status|', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:options.delete', ['only' => ['destroy']]);
+    }
+    /**
      * Summary of index
      * @param Request $request
      * @return \Inertia\Response
      */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
+        $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
 
-        $key = CacheHelper::getSpecialFeatureCacheKey($currentPage);
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $specialFeatureCacheKey = CacheHelper::getSpecialFeatureCacheKey();
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $specialFeatures = SpecialFeature::where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+        $user  = auth()->user();
+        $key =  $specialFeatureCacheKey.md5(serialize([$orderBy, $order, $status, $page, $search, $startDate, $endDate,  ]));
 
-            return Inertia::render('Dashboard/SpecialFeature/Index', ['specialFeatures' => $specialFeatures]);
-        }
+        $specialFeatures = Cache::tags([$specialFeatureCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $status,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+        ) {
+            $specialFeatures = SpecialFeature::with(['images']);
 
-        $specialFeatures = Cache::remember($key, 10, function () {
-            return SpecialFeature::orderBy('id', 'desc')->paginate(10);
+            if (! $user->haveAdministrativeRole()) {
+                $specialFeatures->where('user_id', $user->id);
+            }
+
+            if (! empty($status)) {
+                $specialFeatures->where('status', $status);
+            }
+
+            if (! empty($search)) {
+                $specialFeatures->where('title', 'LIKE', '%'.$search.'%')->orWhere('description', 'LIKE', '%'.$search.'%');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $specialFeatures->where('created_at', '>=', new \DateTime($startDate));
+                $specialFeatures->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $specialFeatures->orderBy($orderBy, $order);
+            }
+
+            return $specialFeatures->paginate(10);
         });
 
-        Session::put('last_visited_special_feature_url', $request->fullUrl());
+        Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/SpecialFeature/Index')->with(['specialFeatures' => $specialFeatures->load('images')]);
+        return Inertia::render('Dashboard/SpecialFeature/Index')->with(['specialFeatures' => SpecialFeatureResources::collection($specialFeatures)]);
     }
 
     /**
@@ -68,6 +112,8 @@ class SpecialFeatureController extends InertiaApplicationController
         try {
             $specialFeature = SpecialFeature::create($data);
 
+            $specialFeature->images()->sync(array_column($request->get('images'), 'id'));
+
             if ($specialFeature) {
                 $specialFeature->images()->attach(array_column($request->get('images'), 'id'));
             }
@@ -86,7 +132,7 @@ class SpecialFeatureController extends InertiaApplicationController
        */
       public function show(SpecialFeature $specialFeature)
       {
-          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => $specialFeature->load('images')]);
+          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => new SpecialFeatureResources($specialFeature->load('images'))]);
       }
 
     /**
@@ -114,8 +160,8 @@ class SpecialFeatureController extends InertiaApplicationController
 
             $specialFeature->images()->sync(array_column($request->get('images'), 'id'));
 
-            if (session('last_visited_special_feature_url')) {
-                return Redirect::to(session('last_visited_special_feature_url'))->with(['success' => true, 'message', 'Updated successfull']);
+            if (session('last_visited_url')) {
+                return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
             }
 
             return Redirect::route('admin.special-feature.index')->with(['success' => true, 'message', 'Updated successfull']);
@@ -133,8 +179,10 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $specialFeature->delete();
 
-        if (session('last_visited_special_feature_url')) {
-            return Redirect::to(session('last_visited_special_feature_url'))->with(['success' => true, 'message', 'Deleted successfull']);
+        $specialFeature->images()->detach();
+
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
         }
 
         return $this->successWithMessage('Deleted successfull');

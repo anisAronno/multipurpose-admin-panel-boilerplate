@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Format;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Http\Resources\BlogResources;
 use App\Models\Blog;
-use App\Enums\Status; 
+use App\Enums\Status;
 use App\Models\Category;
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
@@ -37,24 +39,99 @@ class BlogController extends InertiaApplicationController
      */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
+        $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
+        $format     = in_array($request->get('format'), Format::values()) ? $request->format : '';
+        $isFeatured = $request->get('is_featured') ? $request->is_featured : '';
+        $is_commentable = $request->get('is_commentable') ? $request->is_commentable : '';
+        $is_reactable = $request->get('is_reactable') ? $request->is_reactable : '';
+        $is_shareable = $request->get('is_shareable') ? $request->is_shareable : '';
+        $show_ratings = $request->get('show_ratings') ? $request->show_ratings : '';
+        $show_views = $request->get('show_views') ? $request->show_views : '';
 
-        $key = CacheHelper::getBlogCacheKey();
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $blogCacheKey = CacheHelper::getBlogCacheKey();
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $blogs = Blog::with(['categories', 'images'])->where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+        $user  = auth()->user();
+        $key =  $blogCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $format]));
 
-            return Inertia::render('Dashboard/Blog/Index', ['blogs' => $blogs]);
-        }
+        $blogs = Cache::tags([$blogCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $status,
+            $isFeatured,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+            $is_commentable,
+            $is_reactable,
+            $is_shareable,
+            $show_ratings,
+            $show_views,
+            $format,
+        ) {
+            $blogs = Blog::with(['categories', 'images', 'user']);
 
-        $blogs = Cache::remember($key, 10, function () {
-            return Blog::with(['categories', 'images'])->orderBy('id', 'desc')->paginate(10);
+            if (! $user->haveAdministrativeRole()) {
+                $blogs->where('user_id', $user->id);
+            }
+
+            if (! empty($status)) {
+                $blogs->where('status', $status);
+            }
+
+            if (! empty($isFeatured)) {
+                $blogs->where('is_featured', $isFeatured);
+            }
+
+            if (! empty($format)) {
+                $blogs->where('format', $format);
+            }
+
+            if (! empty($is_commentable)) {
+                $blogs->where('is_commentable', $is_commentable);
+            }
+
+            if (! empty($is_reactable)) {
+                $blogs->where('is_reactable', $is_reactable);
+            }
+
+            if (! empty($is_shareable)) {
+                $blogs->where('is_shareable', $is_shareable);
+            }
+
+            if (! empty($show_ratings)) {
+                $blogs->where('show_ratings', $show_ratings);
+            }
+
+            if (! empty($show_views)) {
+                $blogs->where('show_views', $show_views);
+            }
+
+            if (! empty($search)) {
+                $blogs->where('title', 'LIKE', '%'.$search.'%')->orWhere('description', 'LIKE', '%'.$search.'%');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $blogs->where('created_at', '>=', new \DateTime($startDate));
+                $blogs->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $blogs->orderBy($orderBy, $order);
+            }
+
+            return $blogs->paginate(10);
         });
 
-        Session::put('last_visited_blog_url', $request->fullUrl());
+        Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Blog/Index')->with(['blogs' => $blogs]);
+        return Inertia::render('Dashboard/Blog/Index')->with(['blogs' => BlogResources::collection($blogs)]);
     }
 
     /**
@@ -66,14 +143,15 @@ class BlogController extends InertiaApplicationController
     {
         $categories = Category::select('id as value', 'title as label')->get();
         $statusArr = Status::values();
+        $formateArr = Format::values();
 
-        return Inertia::render('Dashboard/Blog/Create', ['categories' => $categories, 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/Blog/Create', ['categories' => $categories, 'statusArr' => $statusArr,'formateArr' => $formateArr,]);
     }
 
     /**
      * Summary of store
      * @param Request $request
-     * @param StoreBlogRequest $storeProductRequest
+     * @param StoreBlogRequest $StoreBlogRequest
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBlogRequest $request)
@@ -121,11 +199,13 @@ class BlogController extends InertiaApplicationController
             return $item->id;
         });
 
-        $statusArr = Status::values(); 
+        $statusArr = Status::values();
+
+        $formateArr = Format::values();
 
         $categories = Category::select('id as value', 'title as label')->get();
 
-        return Inertia::render('Dashboard/Blog/Edit', ['blog' => $blog, 'statusArr' => $statusArr, 'categories' => $categories]);
+        return Inertia::render('Dashboard/Blog/Edit', ['blog' => $blog, 'statusArr' => $statusArr,  'formateArr' => $formateArr, 'categories' => $categories]);
     }
 
     /**
@@ -144,8 +224,8 @@ class BlogController extends InertiaApplicationController
                 $blog->images()->sync(array_column($request->get('images'), 'id'));
             }
 
-            if (session('last_visited_blog_url')) {
-                return Redirect::to(session('last_visited_blog_url'))->with(['success' => true, 'message', 'Updated successfull']);
+            if (session('last_visited_url')) {
+                return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
             }
 
             return Redirect::route('admin.blog.index')->with(['success' => true, 'message', 'Updated successfull']);
@@ -163,8 +243,11 @@ class BlogController extends InertiaApplicationController
     {
         $blog->delete();
 
-        if (session('last_visited_blog_url')) {
-            return Redirect::to(session('last_visited_blog_url'))->with(['success' => true, 'message', 'Deleted successfull']);
+        $blog->images()->detach();
+        $blog->categories()->detach();
+
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
         }
 
         return $this->successWithMessage('Deleted successfull');

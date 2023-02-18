@@ -11,10 +11,10 @@ import { ref } from "@vue/reactivity";
 import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
-    product: Object,
+    blog: Object,
     categories: Object,
     statusArr: Object,
-    featuredArr: Object,
+    formateArr: Object,
 });
 
 const titleInput = ref(null);
@@ -25,25 +25,21 @@ const categoryInput = ref(null);
 const isFeaturedInput = ref(null);
 
 const form = useForm({
-    title: props.product?.title ?? "",
-    description: props.product?.description ?? "",
-    images: props.product?.images ?? [],
-    status: props.product?.status ?? "",
-    is_featured: props.product?.is_featured ?? 0,
-    categories: props.product?.categoryArr ?? [],
+    title: props.blog?.title ?? "",
+    description: props.blog?.description ?? "",
+    images: props.blog?.images ?? [],
+    status: props.blog?.status ?? "",
+    is_featured: props.blog?.is_featured ?? 0,
+    categories: props.blog?.categoryArr ?? [],
 });
+ 
 
-const previewImage = (e) => {
-    const file = e.target.files[0];
-    form.imagePreview = URL.createObjectURL(file);
-};
-
-const productHandle = () => {
+const blogHandle = () => {
     let url = "";
-    if (props.product?.id) {
-        url = route("admin.product.update", props.product.id);
+    if (props.blog?.id) {
+        url = route("admin.blog.update", props.blog.id);
     } else {
-        url = route("admin.product.store");
+        url = route("admin.blog.store");
     }
 
     form.post(url, {
@@ -76,7 +72,7 @@ const productHandle = () => {
 
 <template>
     <section class="dark:text-white">
-        <form @submit.prevent="productHandle" class="mt-6 space-y-6 p-3">
+        <form @submit.prevent="blogHandle" class="mt-6 space-y-6 p-3">
             <div class="mt-10 sm:mt-0">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
@@ -213,7 +209,7 @@ const productHandle = () => {
 
             <div class="flex items-center justify-end pr-5 py-5">
                 <PrimaryButton :disabled="form.processing">
-                    {{ product?.id ? "Update" : "Submit" }}
+                    {{ blog?.id ? "Update" : "Submit" }}
                 </PrimaryButton>
 
                 <Transition

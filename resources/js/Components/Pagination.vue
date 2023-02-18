@@ -9,9 +9,9 @@
                 />
                 <Link
                     v-else
-                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-indigo-500 focus:text-indigo-500 dark:text-white dark:bg-gray-700 hover:dark:bg-gray-800"
+                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded  focus:border-indigo-500 focus:text-indigo-500 dark:text-white dark:bg-gray-700 hover:dark:bg-gray-800 hover:bg-gray-700 hover:text-gray-100"
                     :class="{
-                        'bg-blue-700 text-white dark:text-white dark:bg-blue-700':
+                        'text-white bg-blue-700 dark:text-white dark:bg-blue-700':
                             link.active,
                     }"
                     :href="link.url"

@@ -2,35 +2,29 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 
-class BlogResources extends JsonResource
+class CategoryResources extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
-            'short_description' => $this->short_description,
             'description' => $this->description,
             'status' => $this->status,
-            'format' => $this->format,
             'is_featured' => $this->is_featured == 1 ? "Featured" : "N/A",
-            'is_commentable' => $this->is_commentable,
-            'is_reactable' => $this->is_reactable,
-            'is_shareable' => $this->is_shareable,
-            'show_ratings' => $this->show_ratings,
-            'show_views' => $this->show_views,
-            'user' => new UserResources($this->whenLoaded('user')),
+            'user' => new UserResources($this->user),
             'categories' => $this->whenLoaded('categories'),
+
             'images' => ImageResources::collection($this->whenLoaded('images')),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];

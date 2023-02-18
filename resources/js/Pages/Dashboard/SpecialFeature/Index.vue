@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'options.create'"
                                     :href="
                                         route('admin.special-feature.create')
                                     "
@@ -56,6 +57,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'options.view'"
                                     :href="route('admin.special-feature.index')"
                                     class="btn btn-primary"
                                 >
@@ -156,36 +158,29 @@ defineProps({
                                                             class="break-words w-10"
                                                         >
                                                             {{
-                                                                specialFeature.description
-                                                                    ? specialFeature.description
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
-                                                        </span>
+                                                                excerpt(
+                                                                    specialFeature.description
+                                                                )
+                                                            }}</span
+                                                        >
                                                     </td>
 
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
-                                                        <img
-                                                            :src="
-                                                                specialFeature.image
-                                                            "
-                                                            :alt="
-                                                                specialFeature.image
-                                                            "
-                                                            class="w-16 h-16"
-                                                        />
+                                                        <div
+                                                            v-for="image in specialFeature.images"
+                                                            :key="image.id"
+                                                            class="flex gap-2"
+                                                        >
+                                                            <img
+                                                                :src="image.url"
+                                                                :alt="
+                                                                    image.title
+                                                                "
+                                                                class="w-16 h-16 my-1"
+                                                            />
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -209,6 +204,9 @@ defineProps({
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'options.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.special-feature.show',
@@ -226,6 +224,9 @@ defineProps({
 
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'options.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.special-feature.edit',
@@ -242,6 +243,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'options.delete'
+                                                                "
                                                                 :data="{
                                                                     id: specialFeature.id,
                                                                     model: 'special-feature',
@@ -254,23 +258,43 @@ defineProps({
                                             <tfoot
                                                 class="bg-gray-50 min-w-full"
                                                 v-if="
-                                                    specialFeatures.last_page >
-                                                    1
+                                                    specialFeatures.meta
+                                                        .last_page > 1
                                                 "
                                             >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{
+                                                            specialFeatures.meta
+                                                                .from
+                                                        }}
+                                                        to
+                                                        {{
+                                                            specialFeatures.meta
+                                                                .to
+                                                        }}
+                                                        from ({{
+                                                            specialFeatures.meta
+                                                                .total
+                                                        }}
+                                                        items)
+                                                    </td>
                                                     <td
-                                                        colspan="7"
+                                                        colspan="10"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                specialFeatures.last_page >
+                                                                specialFeatures
+                                                                    .meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                specialFeatures.links
+                                                                specialFeatures
+                                                                    .meta.links
                                                             "
                                                         ></Pagination>
                                                     </td>

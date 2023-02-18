@@ -1,11 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import CreateBlogForm from "@/Pages/Dashboard/Blog/Partials/CreateBlogForm.vue";
+import Form from "@/Pages/Dashboard/Blog/Partials/Form.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
     statusArr: Object,
-    featuredArr: Object,
+    formatArr: Object,
     categories: Object,
 });
 </script>
@@ -42,7 +42,8 @@ defineProps({
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
-                                :href="route('admin.user.index')"
+                                v-can="'blog.view'"
+                                :href="route('admin.blog.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon
@@ -53,11 +54,11 @@ defineProps({
                             </Link>
                         </div>
                     </div>
-                    <CreateBlogForm
+                    <Form
                         :statusArr="statusArr"
-                        :featuredArr="featuredArr"
+                        :formatArr="formatArr"
                         :categories="categories"
-                    ></CreateBlogForm>
+                    ></Form>
                 </div>
             </div>
         </div>

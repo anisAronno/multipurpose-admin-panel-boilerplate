@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'blog.create'"
                                     :href="route('admin.blog.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'blog.view'"
                                     :href="route('admin.blog.index')"
                                     class="btn btn-primary"
                                 >
@@ -84,7 +86,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="blogs.length > 0"
+                                        v-if="blogs.data.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table
@@ -147,7 +149,7 @@ defineProps({
                                                 class="divide-y divide-gray-200 bg-white w-full"
                                             >
                                                 <tr
-                                                    v-for="blog in blogs"
+                                                    v-for="blog in blogs.data"
                                                     :key="blog.id"
                                                     :id="blog.id"
                                                 >
@@ -162,24 +164,13 @@ defineProps({
                                                     >
                                                         <span
                                                             class="break-words w-10"
-                                                        >
-                                                            {{
-                                                                blog.description
-                                                                    ? blog.description
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
-                                                        </span>
+                                                            v-html="
+                                                                excerpt(
+                                                                    blog.description,
+                                                                    10
+                                                                )
+                                                            "
+                                                        ></span>
                                                     </td>
 
                                                     <td
@@ -250,6 +241,9 @@ defineProps({
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'blog.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.blog.show',
@@ -267,6 +261,9 @@ defineProps({
 
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'blog.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.blog.edit',
@@ -283,6 +280,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'blog.delete'
+                                                                "
                                                                 :data="{
                                                                     id: blog.id,
                                                                     model: 'blog',
@@ -292,22 +292,33 @@ defineProps({
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot
+                                           <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="blogs.last_page > 1"
+                                                v-if="blogs.meta.last_page > 1"
                                             >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{ blogs.meta.from }}
+                                                        to
+                                                        {{ blogs.meta.to }} from
+                                                        ({{ blogs.meta.total }}
+                                                        items)
+                                                    </td>
                                                     <td
                                                         colspan="7"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                blogs.last_page >
+                                                                blogs.meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="blogs.links"
+                                                            :links="
+                                                                blogs.meta.links
+                                                            "
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

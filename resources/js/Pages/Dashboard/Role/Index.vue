@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'role.create'"
                                     :href="route('admin.role.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'role.view'"
                                     :href="route('admin.role.index')"
                                     class="btn btn-primary"
                                 >
@@ -164,6 +166,9 @@ defineProps({
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'role.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.role.show',
@@ -185,6 +190,9 @@ defineProps({
                                                                 "
                                                             >
                                                                 <Link
+                                                                    v-can="
+                                                                        'role.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.role.edit',
@@ -201,6 +209,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'role.delete'
+                                                                "
                                                                 v-if="
                                                                     role.isDeletable
                                                                 "
@@ -213,19 +224,35 @@ defineProps({
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot class="bg-gray-50">
+                                            <tfoot
+                                                class="bg-gray-50 min-w-full"
+                                                v-if="roles.meta.last_page > 1"
+                                            >
                                                 <tr>
+                                                    <td class="w-[100%] pl-2">
+                                                        Show
+                                                        {{ roles.meta.from }}
+                                                        to
+                                                        {{ roles.meta.to }}
+                                                        from ({{
+                                                            roles.meta.total
+                                                        }}
+                                                        items)
+                                                    </td>
                                                     <td
-                                                        colspan="4"
+                                                        colspan="10"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
                                                             v-if="
-                                                                roles.last_page >
+                                                                roles.meta
+                                                                    .last_page >
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="roles.links"
+                                                            :links="
+                                                                roles.meta.links
+                                                            "
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

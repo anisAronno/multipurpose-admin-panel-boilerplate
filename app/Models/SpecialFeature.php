@@ -3,6 +3,7 @@
 namespace App\Models; 
 
 use App\Helpers\UniqueSlug; 
+use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model; 
 use Spatie\Activitylog\LogOptions;
@@ -13,6 +14,7 @@ class SpecialFeature extends Model
 {
     use HasFactory;
     use LogsActivity;
+    use Imageable;
 
     /**
     * The attributes that are mass assignable.

@@ -29,7 +29,9 @@ class UserResources extends JsonResource
             'time_zone' => $this->time_zone,
             'language' => $this->language,
             'status' => $this->status,
-            'created_at' => Carbon::parse($this->created_at)->diffForHumans(), 
+            'roles' => RoleResource::collection($this->roles)->pluck('name'),
+            'is_premium' => $this->is_premium ==1 ? 'premium' : 'free',
+            'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }
 }

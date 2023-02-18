@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\Status;
 use App\Enums\UserStatus;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Http\Resources\UserResources;
 use App\Models\Role;
 use App\Models\User;
 use App\Helpers\CacheHelper;
@@ -33,24 +35,65 @@ class UserController extends InertiaApplicationController
 
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
+        $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
 
-        $key = CacheHelper::getUserCacheKey($currentPage);
+        $is_premium = $request->get('is_premium') ? $request->is_premium : '';
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $users = User::with(['roles'])->where('name', 'LIKE', '%'.$q.'%')->orWhere('email', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
+        $search     = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $page       = $request->get('page', 1);
+        $userCacheKey = CacheHelper::getUserCacheKey();
 
-            return Inertia::render('Dashboard/User/Index', ['users' => $users]);
-        }
+        $user  = auth()->user();
+        $key =  $userCacheKey.md5(serialize([$orderBy, $order, $status, $is_premium, $page, $search, $startDate, $endDate,  ]));
 
-        $users = Cache::remember($key, 10, function () {
-            return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
+        $users = Cache::tags([$userCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $status,
+            $is_premium,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+        ) {
+            $users = User::with(['roles']);
+
+            if (! $user->haveAdministrativeRole()) {
+                $users->where('user_id', $user->id);
+            }
+
+            if (! empty($status)) {
+                $users->where('status', $status);
+            }
+
+            if (! empty($is_premium)) {
+                $users->where('is_premium', $is_premium);
+            }
+
+
+            if (! empty($search)) {
+                $users->where('name', 'LIKE', '%'.$search.'%')->orWhere('email', 'LIKE', '%'.$search.'%')->orWhere('phone', 'LIKE', '%'.$search.'%');
+            }
+
+            if (! empty($startDate) && ! empty($endDate)) {
+                $users->where('created_at', '>=', new \DateTime($startDate));
+                $users->where('created_at', '<=', new \DateTime($endDate));
+            }
+
+            if (! empty($orderBy)) {
+                $users->orderBy($orderBy, $order);
+            }
+
+            return $users->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/User/Index', ['users' => $users]);
+        return Inertia::render('Dashboard/User/Index')->with(['users' => UserResources::collection($users)]);
     }
 
     public function create()

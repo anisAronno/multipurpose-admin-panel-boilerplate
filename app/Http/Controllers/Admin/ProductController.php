@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Type;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
-use App\Enums\Status; 
+use App\Enums\Status;
 use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,6 +20,18 @@ use Illuminate\Support\Facades\Session;
 class ProductController extends InertiaApplicationController
 {
     /**
+    * Filter role and permission
+    */
+    public function __construct()
+    {
+        $this->middleware('permission:product.view|product.create|product.edit|product.delete|product.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:product.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product.edit|permission:product.status|', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product.delete', ['only' => ['destroy']]);
+
+        $this->authorizeResource(Product::class, 'product');
+    }
+    /**
      * Summary of index
      * @param Request $request
      * @return \Inertia\Response
@@ -28,7 +41,14 @@ class ProductController extends InertiaApplicationController
         $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
         $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
         $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
+        $type     = in_array($request->get('type'), Type::values()) ? $request->type : '';
+
         $isFeatured = $request->get('is_featured') ? $request->is_featured : '';
+        $is_commentable = $request->get('is_commentable') ? $request->is_commentable : '';
+        $is_reactable = $request->get('is_reactable') ? $request->is_reactable : '';
+        $is_shareable = $request->get('is_shareable') ? $request->is_shareable : '';
+        $show_ratings = $request->get('show_ratings') ? $request->show_ratings : '';
+        $show_views = $request->get('show_views') ? $request->show_views : '';
 
         $search     = $request->get('search', '');
         $startDate = $request->get('startDate', '');
@@ -36,10 +56,30 @@ class ProductController extends InertiaApplicationController
         $page       = $request->get('page', 1);
         $productCacheKey = CacheHelper::getProductCacheKey();
 
-        $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate]));
+        $user  = auth()->user();
+        $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $type]));
 
-        $products = Cache::tags([$productCacheKey])->remember($key, now()->addDay(), function () use ($orderBy, $order, $status, $isFeatured, $search, $startDate, $endDate) {
+        $products = Cache::tags([$productCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $status,
+            $isFeatured,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+            $is_commentable,
+            $is_reactable,
+            $is_shareable,
+            $show_ratings,
+            $show_views,
+            $type,
+        ) {
             $products = Product::with(['categories', 'images', 'user']);
+
+            if (! $user->haveAdministrativeRole()) {
+                $products->where('user_id', $user->id);
+            }
 
             if (! empty($status)) {
                 $products->where('status', $status);
@@ -47,6 +87,30 @@ class ProductController extends InertiaApplicationController
 
             if (! empty($isFeatured)) {
                 $products->where('is_featured', $isFeatured);
+            }
+
+            if (! empty($type)) {
+                $products->where('type', $type);
+            }
+
+            if (! empty($is_commentable)) {
+                $products->where('is_commentable', $is_commentable);
+            }
+
+            if (! empty($is_reactable)) {
+                $products->where('is_reactable', $is_reactable);
+            }
+
+            if (! empty($is_shareable)) {
+                $products->where('is_shareable', $is_shareable);
+            }
+
+            if (! empty($show_ratings)) {
+                $products->where('show_ratings', $show_ratings);
+            }
+
+            if (! empty($show_views)) {
+                $products->where('show_views', $show_views);
             }
 
             if (! empty($search)) {
@@ -80,8 +144,9 @@ class ProductController extends InertiaApplicationController
         $categories = Category::select('id as value', 'title as label')->get();
 
         $statusArr = Status::values();
+        $typeArr = Type::values();
 
-        return Inertia::render('Dashboard/Products/Create', ['categories' => $categories, 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/Products/Create', ['categories' => $categories, 'statusArr' => $statusArr, '$typeArr' => $typeArr]);
     }
 
     /**
@@ -137,10 +202,11 @@ class ProductController extends InertiaApplicationController
         });
 
         $statusArr = Status::values();
+        $typeArr = Type::values();
 
         $categories = Category::select('id as value', 'title as label') ->get();
 
-        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['images']), 'statusArr' => $statusArr, 'categories' => $categories]);
+        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['images']), 'statusArr' => $statusArr, 'categories' => $categories, '$typeArr' => $typeArr]);
     }
 
     /**
@@ -173,6 +239,10 @@ class ProductController extends InertiaApplicationController
     public function destroy(Product $product)
     {
         $product->delete();
+
+        $product->images()->detach();
+        $product->categories()->detach();
+
 
         if (session('last_visited_url')) {
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);

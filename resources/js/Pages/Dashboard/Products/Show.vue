@@ -41,6 +41,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
+                                v-can="'product.edit'"
                                 :href="route('admin.product.edit', product.id)"
                                 class="btn btn-primary"
                             >
@@ -51,6 +52,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
+                                v-can="'product.create'"
                                 :href="route('admin.product.create')"
                                 class="btn btn-primary"
                             >
@@ -61,6 +63,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'product.view'"
                                 :href="route('admin.product.index')"
                                 class="btn btn-primary"
                             >
@@ -132,20 +135,20 @@ defineProps({
                                                 <td
                                                     class="w-[20%] text-gray-900"
                                                     v-html="product.description"
-                                                > 
-                                                </td>
+                                                ></td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                 >
-                                                     <div v-for="image in product.images" :key="image.id">
-                                                            <img
-                                                                :src="image.url"
-                                                                :alt="
-                                                                    image.title
-                                                                "
-                                                                class="w-16 h-16 m-1"
-                                                            />
-                                                        </div>
+                                                    <div
+                                                        v-for="image in product.images"
+                                                        :key="image.id"
+                                                    >
+                                                        <img
+                                                            :src="image.url"
+                                                            :alt="image.title"
+                                                            class="w-16 h-16 m-1"
+                                                        />
+                                                    </div>
                                                 </td>
                                                 <td
                                                     class="w-[20%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
