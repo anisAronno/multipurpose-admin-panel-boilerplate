@@ -40,6 +40,7 @@ defineProps({
                             @mouseout="$emit('mouseOut', item)"
                         >
                             <Link
+                                v-can="item.permission"
                                 :href="route(item.route)"
                                 :class="[
                                     item.current
@@ -96,6 +97,7 @@ defineProps({
                                     class="px-2 py-1"
                                 >
                                     <Link
+                                        v-can="children.permission"
                                         :href="route(children.route)"
                                         :class="[
                                             children.current
@@ -125,6 +127,7 @@ defineProps({
                             ]"
                         >
                             <Link
+                                v-can="item.permission"
                                 :href="route(item.route)"
                                 :class="[
                                     item.current

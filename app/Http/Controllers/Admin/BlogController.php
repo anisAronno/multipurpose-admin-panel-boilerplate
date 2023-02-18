@@ -155,7 +155,7 @@ class BlogController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBlogRequest $request)
-    {
+    { 
         $data = $request->only('title', 'description', 'is_featured', 'status');
         $data['user_id'] = auth()->user()->id ;
 

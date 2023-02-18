@@ -32,7 +32,6 @@ const form = useForm({
     is_featured: props.blog?.is_featured ?? 0,
     categories: props.blog?.categoryArr ?? [],
 });
- 
 
 const blogHandle = () => {
     let url = "";
@@ -62,7 +61,7 @@ const blogHandle = () => {
             if (form.errors.categories) {
                 categoryInput.value.focus();
             }
-            if (form.errors.image) {
+            if (form.errors.images) {
                 imageInput.value.focus();
             }
         },
@@ -107,6 +106,7 @@ const blogHandle = () => {
                                         class="block text-sm font-medium text-gray-700 mb-1"
                                     />
                                     <TextEditor
+                                        ref="descriptionInput"
                                         v-model="form.description"
                                     ></TextEditor>
                                     <InputError
@@ -133,7 +133,7 @@ const blogHandle = () => {
                                         mode="tags"
                                         :searchable="true"
                                         placeholder="Pick some..."
-                                        class="block w-full multiselect-green form-controll dark:text-black break-all overflow-x-auto"
+                                        class="block w-full multiselect-green form-controll dark:text-black break-all"
                                         :classes="{
                                             search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
                                             singleLabelText:

@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'category.create'"
                                     :href="route('admin.category.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'category.view'"
                                     :href="route('admin.category.index')"
                                     class="btn btn-primary"
                                 >
@@ -209,6 +211,9 @@ defineProps({
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'category.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.category.show',
@@ -226,6 +231,9 @@ defineProps({
 
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'category.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.category.edit',
@@ -242,6 +250,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'category.delete'
+                                                                "
                                                                 :data="{
                                                                     id: category.id,
                                                                     model: 'category',
@@ -251,17 +262,27 @@ defineProps({
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                           <tfoot
+                                            <tfoot
                                                 class="bg-gray-50 min-w-full"
-                                                v-if="categories.meta.last_page > 1"
+                                                v-if="
+                                                    categories.meta.last_page >
+                                                    1
+                                                "
                                             >
                                                 <tr>
                                                     <td class="w-[100%] pl-2">
                                                         Show
-                                                        {{ categories.meta.from }}
+                                                        {{
+                                                            categories.meta.from
+                                                        }}
                                                         to
-                                                        {{ categories.meta.to }} from
-                                                        ({{ categories.meta.total }}
+                                                        {{
+                                                            categories.meta.to
+                                                        }}
+                                                        from ({{
+                                                            categories.meta
+                                                                .total
+                                                        }}
                                                         items)
                                                     </td>
                                                     <td
@@ -276,7 +297,8 @@ defineProps({
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :links="
-                                                                categories.meta.links
+                                                                categories.meta
+                                                                    .links
                                                             "
                                                         ></Pagination>
                                                     </td>
