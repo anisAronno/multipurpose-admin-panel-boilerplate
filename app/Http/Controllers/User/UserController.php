@@ -35,7 +35,7 @@ class UserController extends InertiaApplicationController
 
     public function index(Request $request)
     {
-        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $orderBy    = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
         $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
         $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
 

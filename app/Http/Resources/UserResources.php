@@ -29,8 +29,17 @@ class UserResources extends JsonResource
             'time_zone' => $this->time_zone,
             'language' => $this->language,
             'status' => $this->status,
-            'roles' => RoleResource::collection($this->roles)->pluck('name'),
             'is_premium' => $this->is_premium ==1 ? 'premium' : 'free',
+            'is_deletable' => $this->is_deletable,
+            'is_editable' => $this->is_editable,
+            'unreadNotifications' => $this->whenLoaded('unreadNotifications'),
+            'roles' => $this->whenLoaded('roles', function () {
+                return RoleResource::collection($this->roles)->pluck('name');
+            }),
+            'permissions' => $this->whenLoaded('permissions', function () {
+                return PermissionResource::collection($this->getAllPermissions())->pluck('name');
+            }),
+            'addresses' => AddressResource::collection($this->whenLoaded('addresses')),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

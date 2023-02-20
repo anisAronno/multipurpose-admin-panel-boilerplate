@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Role;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
-use App\Http\Resources\RoleWithPermissionResources;
+use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Models\User;
 use App\Helpers\CacheHelper;
@@ -31,7 +31,7 @@ class RolesController extends InertiaApplicationController
 
     public function index(Request $request)
     {
-        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $orderBy    = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
         $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
 
         $search     = $request->get('search', '');
@@ -75,7 +75,7 @@ class RolesController extends InertiaApplicationController
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Role/Index')->with(['roles' => RoleWithPermissionResources::collection($roles)]);
+        return Inertia::render('Dashboard/Role/Index')->with(['roles' => RoleResource::collection($roles)]);
     }
 
 
@@ -116,7 +116,7 @@ class RolesController extends InertiaApplicationController
     {
         $role->load('permissions');
 
-        return Inertia::render('Dashboard/Role/Show', ['role' => new RoleWithPermissionResources($role) ]);
+        return Inertia::render('Dashboard/Role/Show', ['role' => new RoleResource($role) ]);
     }
 
 

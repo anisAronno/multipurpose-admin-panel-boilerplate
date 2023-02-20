@@ -39,7 +39,7 @@ class BlogController extends InertiaApplicationController
      */
     public function index(Request $request)
     {
-        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $orderBy    = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
         $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
         $status     = in_array($request->get('status'), Status::values()) ? $request->status : '';
         $format     = in_array($request->get('format'), Format::values()) ? $request->format : '';
@@ -233,12 +233,12 @@ class BlogController extends InertiaApplicationController
                 $blog->categories()->sync($request->categories);
             }
 
-            if ($request->has('image')) {
-                $blog->images()->sync(array_column($request->get('image'), 'id'));
+            if ($request->has('images')) {
+                $blog->images()->sync(array_column($request->get('images'), 'id'));
             }
 
-            if ($request->has('images')) {
-                $blog->images()->syncWithPivotValues(array_column($request->get('images'), 'id'), ['is_featured' => 1]);
+            if ($request->has('image')) {
+                $blog->images()->syncWithPivotValues(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
             }
 
 

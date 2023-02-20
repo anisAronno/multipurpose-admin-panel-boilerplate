@@ -29,7 +29,7 @@ class CategoryController extends Controller
         $endDate   = $request->get('endDate', '');
         $page       = $request->get('page', 1);
 
-        $orderBy    = in_array($request->get('orderBy'), ['date']) ? $request->orderBy : 'created_at';
+        $orderBy    = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
         $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
 
         $isFeatured = $request->get('is_featured') ? $request->is_featured : '';
