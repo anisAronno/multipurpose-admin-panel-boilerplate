@@ -3,12 +3,10 @@
 namespace App\Observers\Blog;
 
 use App\Models\Blog;
-use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper; 
 
 class BlogObserver
-{
-    use ClearCache;
+{ 
 
     protected $key = '';
     protected $featuredBlogKey = '';
@@ -25,8 +23,8 @@ class BlogObserver
      */
     public function created(Blog $blog)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredBlogKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredBlogKey);
     }
 
     /**
@@ -37,8 +35,8 @@ class BlogObserver
      */
     public function updated(Blog $blog)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredBlogKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredBlogKey);
     }
 
     /**
@@ -49,8 +47,8 @@ class BlogObserver
      */
     public function deleted(Blog $blog)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredBlogKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredBlogKey);
     }
 
     /**
@@ -61,8 +59,8 @@ class BlogObserver
      */
     public function restored(Blog $blog)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredBlogKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredBlogKey);
     }
 
     /**
@@ -73,7 +71,7 @@ class BlogObserver
      */
     public function forceDeleted(Blog $blog)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredBlogKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredBlogKey);
     }
 }

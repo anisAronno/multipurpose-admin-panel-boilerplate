@@ -2,14 +2,11 @@
 
 namespace App\Observers;
 
-use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper; 
 use Spatie\Permission\Contracts\Role;
 
 class RoleObserver
-{
-    use ClearCache;
-
+{ 
     protected $roleCacheKey = '';
 
     protected $userCacheKey = '';
@@ -28,8 +25,8 @@ class RoleObserver
      */
     public function created(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheHelper::forgetCache($this->roleCacheKey);
+        CacheHelper::forgetCache($this->userCacheKey);
     }
 
     /**
@@ -40,8 +37,8 @@ class RoleObserver
      */
     public function updated(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheHelper::forgetCache($this->roleCacheKey);
+        CacheHelper::forgetCache($this->userCacheKey);
     }
 
     /**
@@ -52,8 +49,8 @@ class RoleObserver
      */
     public function deleted(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheHelper::forgetCache($this->roleCacheKey);
+        CacheHelper::forgetCache($this->userCacheKey);
     }
 
     /**
@@ -64,8 +61,8 @@ class RoleObserver
      */
     public function restored(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheHelper::forgetCache($this->roleCacheKey);
+        CacheHelper::forgetCache($this->userCacheKey);
     }
 
     /**
@@ -76,7 +73,7 @@ class RoleObserver
      */
     public function forceDeleted(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheHelper::forgetCache($this->roleCacheKey);
+        CacheHelper::forgetCache($this->userCacheKey);
     }
 }

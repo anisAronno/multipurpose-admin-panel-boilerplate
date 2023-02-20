@@ -19,7 +19,7 @@ class ImageResources extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'url' => FileHelpers::getUrl($this->url),
+            'url' =>  $this->url,
             'mimes' => $this->mimes,
             'type' => $this->type,
             'size' => $this->size,

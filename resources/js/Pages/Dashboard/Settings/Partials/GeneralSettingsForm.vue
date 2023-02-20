@@ -2,7 +2,7 @@
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Textarea from "@/Components/Textarea.vue";
+import TextArea from "@/Components/TextArea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 
@@ -132,7 +132,7 @@ const form = useForm({
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
                 <InputLabel class="text-xl" for="address" value="Address: " />
 
-                <Textarea
+                <TextArea
                     id="address"
                     type="text"
                     class="block w-full"

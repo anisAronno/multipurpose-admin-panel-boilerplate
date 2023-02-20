@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Cache;
+
 class CacheHelper
 {
     public static function getRoleCacheKey(): string
@@ -64,5 +66,10 @@ class CacheHelper
     public static function getImageCacheKey(): string
     {
         return '_image_';
+    }
+
+    public static function forgetCache($key)
+    {
+        Cache::tags($key)->flush();
     }
 }

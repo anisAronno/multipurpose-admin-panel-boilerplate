@@ -3,13 +3,10 @@
 namespace App\Observers;
 
 use App\Models\SpecialFeature;
-use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper; 
 
 class SpecialFeatureObserver
-{
-    use ClearCache;
-
+{ 
     protected $key = '';
     public function __construct()
     {
@@ -23,7 +20,7 @@ class SpecialFeatureObserver
      */
     public function created(SpecialFeature $specialFeature)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -34,7 +31,7 @@ class SpecialFeatureObserver
      */
     public function updated(SpecialFeature $specialFeature)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -45,7 +42,7 @@ class SpecialFeatureObserver
      */
     public function deleted(SpecialFeature $specialFeature)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -56,7 +53,7 @@ class SpecialFeatureObserver
      */
     public function restored(SpecialFeature $specialFeature)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -67,6 +64,6 @@ class SpecialFeatureObserver
      */
     public function forceDeleted(SpecialFeature $specialFeature)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 }

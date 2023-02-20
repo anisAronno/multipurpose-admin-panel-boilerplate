@@ -3,13 +3,10 @@
 namespace App\Observers;
 
 use App\Models\Category;
-use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper; 
 
 class CategoryObserver
-{
-    use ClearCache;
-
+{ 
     protected $key = '';
     protected $featuredCategory = '';
     public function __construct()
@@ -25,8 +22,8 @@ class CategoryObserver
      */
     public function created(Category $category)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredCategory);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredCategory);
     }
 
     /**
@@ -37,8 +34,8 @@ class CategoryObserver
      */
     public function updated(Category $category)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredCategory);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredCategory);
     }
 
     /**
@@ -49,8 +46,8 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredCategory);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredCategory);
     }
 
     /**
@@ -61,8 +58,8 @@ class CategoryObserver
      */
     public function restored(Category $category)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredCategory);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredCategory);
     }
 
     /**
@@ -73,7 +70,7 @@ class CategoryObserver
      */
     public function forceDeleted(Category $category)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->featuredCategory);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->featuredCategory);
     }
 }

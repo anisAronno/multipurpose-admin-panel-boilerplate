@@ -23,12 +23,12 @@ class ImageController extends InertiaApplicationController
         $startDate = $request->get('startDate', '');
         $endDate   = $request->get('endDate', '');
         $page       = $request->get('page', 1);
-        $specialFeatureCacheKey = CacheHelper::getSpecialFeatureCacheKey();
+        $imageCacheKey = CacheHelper::getImageCacheKey();
 
         $user  = auth()->user();
-        $key =  $specialFeatureCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
+        $key =  $imageCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
 
-        $images = Cache::tags([$specialFeatureCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $images = Cache::tags([$imageCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $search,

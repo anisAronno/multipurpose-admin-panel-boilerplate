@@ -3,12 +3,10 @@
 namespace App\Observers\Product;
 
 use App\Models\Product;
-use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper; 
 
 class ProductObserver
-{
-    use ClearCache;
+{ 
 
     protected $key = '';
     protected $feturedProductKey = '';
@@ -25,8 +23,8 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -37,8 +35,8 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -49,8 +47,8 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -61,8 +59,8 @@ class ProductObserver
      */
     public function restored(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -73,7 +71,7 @@ class ProductObserver
      */
     public function forceDeleted(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 }

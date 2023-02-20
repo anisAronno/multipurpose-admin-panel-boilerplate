@@ -4,12 +4,9 @@ namespace App\Observers;
 
 use App\Models\Image;
 use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
 
 class ImageObserver
 {
-    use ClearCache;
-
     protected $imageCacheKey = '';
 
     public function __construct()
@@ -25,7 +22,7 @@ class ImageObserver
      */
     public function created(Image $image)
     {
-        $this->clearCache($this->imageCacheKey);
+        CacheHelper::forgetCache($this->imageCacheKey);
     }
 
     /**
@@ -36,7 +33,7 @@ class ImageObserver
      */
     public function updated(Image $image)
     {
-        $this->clearCache($this->imageCacheKey);
+        CacheHelper::forgetCache($this->imageCacheKey);
     }
 
     /**
@@ -47,7 +44,7 @@ class ImageObserver
      */
     public function deleted(Image $image)
     {
-        $this->clearCache($this->imageCacheKey);
+        CacheHelper::forgetCache($this->imageCacheKey);
     }
 
     /**
@@ -58,7 +55,7 @@ class ImageObserver
      */
     public function restored(Image $image)
     {
-        $this->clearCache($this->imageCacheKey);
+        CacheHelper::forgetCache($this->imageCacheKey);
     }
 
     /**
@@ -69,6 +66,6 @@ class ImageObserver
      */
     public function forceDeleted(Image $image)
     {
-        $this->clearCache($this->imageCacheKey);
+        CacheHelper::forgetCache($this->imageCacheKey);
     }
 }

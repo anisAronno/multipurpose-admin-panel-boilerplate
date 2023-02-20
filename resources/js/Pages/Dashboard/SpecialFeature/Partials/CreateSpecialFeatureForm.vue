@@ -2,7 +2,7 @@
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Textarea from "@/Components/Textarea.vue";
+import TextArea from "@/Components/TextArea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import defaultFile from "@/Stores/defaultFile.js";
 import { useForm } from "@inertiajs/vue3";
@@ -111,7 +111,7 @@ const storeCategory = () => {
                                     value="Description :"
                                     class="block text-sm font-medium text-gray-700"
                                 />
-                                <Textarea
+                                <TextArea
                                     id="description"
                                     ref="descriptionInput"
                                     v-model="form.description"

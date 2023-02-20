@@ -4,12 +4,9 @@ namespace App\Observers;
 
 use App\Models\Tag;
 use App\Helpers\CacheHelper;
-use App\Traits\ClearCache;
 
 class TagObserver
 {
-    use ClearCache;
-
     protected $tagCacheKey = '';
     public function __construct()
     {
@@ -23,7 +20,7 @@ class TagObserver
      */
     public function created(Tag $tag)
     {
-        $this->clearCache($this->tagCacheKey);
+        CacheHelper::forgetCache($this->tagCacheKey);
     }
 
     /**
@@ -34,7 +31,7 @@ class TagObserver
      */
     public function updated(Tag $tag)
     {
-        $this->clearCache($this->tagCacheKey);
+        CacheHelper::forgetCache($this->tagCacheKey);
     }
 
     /**
@@ -45,7 +42,7 @@ class TagObserver
      */
     public function deleted(Tag $tag)
     {
-        $this->clearCache($this->tagCacheKey);
+        CacheHelper::forgetCache($this->tagCacheKey);
     }
 
     /**
@@ -56,7 +53,7 @@ class TagObserver
      */
     public function restored(Tag $tag)
     {
-        $this->clearCache($this->tagCacheKey);
+        CacheHelper::forgetCache($this->tagCacheKey);
     }
 
     /**
@@ -67,6 +64,6 @@ class TagObserver
      */
     public function forceDeleted(Tag $tag)
     {
-        $this->clearCache($this->tagCacheKey);
+        CacheHelper::forgetCache($this->tagCacheKey);
     }
 }
