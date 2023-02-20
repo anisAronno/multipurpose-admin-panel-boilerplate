@@ -176,19 +176,16 @@ defineProps({
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
-                                                        <div
-                                                            v-for="image in blog.images"
-                                                            :key="image.id"
-                                                            class="flex gap-2"
-                                                        >
-                                                            <img
-                                                                :src="image.url"
-                                                                :alt="
-                                                                    image.title
-                                                                "
-                                                                class="w-16 h-16 my-1"
-                                                            />
-                                                        </div>
+                                                        <img
+                                                            :src="
+                                                                blog.image?.url
+                                                            "
+                                                            :alt="
+                                                                blog.image
+                                                                    ?.title
+                                                            "
+                                                            class="w-16 h-16 my-1"
+                                                        />
                                                     </td>
                                                     <td
                                                         class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
@@ -292,7 +289,7 @@ defineProps({
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                           <tfoot
+                                            <tfoot
                                                 class="bg-gray-50 min-w-full"
                                                 v-if="blogs.meta.last_page > 1"
                                             >

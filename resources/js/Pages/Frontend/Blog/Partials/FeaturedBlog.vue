@@ -68,14 +68,10 @@ defineProps({
                                         {{ blog.title }}
                                     </p>
                                 </Link>
-                                <p class="mt-3 text-base text-gray-500">
-                                    {{
-                                        blog.description
-                                            .split(" ")
-                                            .slice(0, 15)
-                                            .join(" ") + " ..."
-                                    }}
-                                </p>
+                                <p
+                                    class="mt-3 text-base text-gray-500"
+                                    v-html="excerpt(blog.description)"
+                                ></p>
                             </a>
                         </div>
                         <div class="mt-6 flex items-center">

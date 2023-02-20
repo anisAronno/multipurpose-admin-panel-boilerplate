@@ -112,10 +112,15 @@ class SpecialFeatureController extends InertiaApplicationController
         try {
             $specialFeature = SpecialFeature::create($data);
 
-            $specialFeature->images()->sync(array_column($request->get('images'), 'id'));
 
             if ($specialFeature) {
-                $specialFeature->images()->attach(array_column($request->get('images'), 'id'));
+                if ($request->has('image')) {
+                    $specialFeature->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                }
+
+                if ($request->has('images')) {
+                    $specialFeature->images()->attach(array_column($request->get('images'), 'id'));
+                }
             }
 
             return Redirect::route('admin.special-feature.index')->with(['success' => true, 'message', 'Created successfull']);

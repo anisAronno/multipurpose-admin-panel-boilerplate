@@ -55,7 +55,7 @@ class ImageController extends InertiaApplicationController
                 $images->orderBy($orderBy, $order);
             }
 
-            return $images->paginate(10);
+            return $images->paginate(20);
         });
 
         return response()->json(ImageResources::collection($images));

@@ -163,13 +163,18 @@ class ProductController extends InertiaApplicationController
         try {
             $product = Product::create($data);
 
-            if ($request->has('categories')) {
-                $product->categories()->attach($request->get('categories'));
-            }
+            if ($product) {
+                if ($request->has('categories')) {
+                    $product->categories()->attach($request->get('categories'));
+                }
 
-            if ($request->has('images')) {
-                $product->categories()->attach($request->get('categories'));
-                $product->images()->attach(array_column($request->get('images'), 'id'));
+                if ($request->has('image')) {
+                    $product->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                }
+
+                if ($request->has('images')) {
+                    $product->images()->attach(array_column($request->get('images'), 'id'));
+                }
             }
             return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfully']);
         } catch (\Throwable $th) {

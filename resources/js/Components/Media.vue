@@ -355,7 +355,7 @@ const updateImage = async (image) => {
                             ]"
                         >
                             <div>
-                                <div class="w-full">
+                                <div class="w-full    text-gray-900   dark:text-gray-50">
                                     <img
                                         :src="editAbleImage.url"
                                         :alt="editAbleImage.title"

@@ -75,7 +75,7 @@ class BlogController extends InertiaApplicationController
             $show_views,
             $format,
         ) {
-            $blogs = Blog::with(['categories', 'images', 'user']);
+            $blogs = Blog::with(['categories', 'image', 'user']);
 
             if (! $user->haveAdministrativeRole()) {
                 $blogs->where('user_id', $user->id);
@@ -155,7 +155,7 @@ class BlogController extends InertiaApplicationController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBlogRequest $request)
-    { 
+    {
         $data = $request->only('title', 'description', 'is_featured', 'status');
         $data['user_id'] = auth()->user()->id ;
 
@@ -163,8 +163,17 @@ class BlogController extends InertiaApplicationController
             $blog = Blog::create($data);
 
             if ($blog) {
-                $blog->categories()->attach($request->get('categories'));
-                $blog->images()->attach(array_column($request->get('images'), 'id'));
+                if ($request->has('categories')) {
+                    $blog->categories()->attach($request->get('categories'));
+                }
+
+                if ($request->has('image')) {
+                    $blog->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                }
+
+                if ($request->has('images')) {
+                    $blog->images()->attach(array_column($request->get('images'), 'id'));
+                }
             }
 
             return Redirect::route('admin.blog.index')->with(['success' => true, 'message', 'Created successfull']);
@@ -181,7 +190,7 @@ class BlogController extends InertiaApplicationController
        */
     public function show(Blog $blog)
     {
-        $blog->load(['categories', 'images']);
+        $blog->load(['categories', 'image', 'images']);
 
         return Inertia::render('Dashboard/Blog/Show')->with(['blog' => $blog]);
     }
@@ -193,7 +202,7 @@ class BlogController extends InertiaApplicationController
      */
     public function edit(Blog $blog)
     {
-        $blog->load(['images', 'categories']);
+        $blog->load(['image', 'images', 'categories']);
 
         $blog->categoryArr = $blog->categories->map(function ($item, $key) {
             return $item->id;
@@ -219,10 +228,19 @@ class BlogController extends InertiaApplicationController
         try {
             $blog->update($request->only('title', 'description', 'is_featured', 'status'));
 
-            if ($request->categories) {
+
+            if ($request->has('categories')) {
                 $blog->categories()->sync($request->categories);
-                $blog->images()->sync(array_column($request->get('images'), 'id'));
             }
+
+            if ($request->has('image')) {
+                $blog->images()->sync(array_column($request->get('image'), 'id'));
+            }
+
+            if ($request->has('images')) {
+                $blog->images()->syncWithPivotValues(array_column($request->get('images'), 'id'), ['is_featured' => 1]);
+            }
+
 
             if (session('last_visited_url')) {
                 return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);

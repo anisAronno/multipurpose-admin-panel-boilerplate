@@ -119,7 +119,15 @@ class CategoryController extends InertiaApplicationController
         try {
             $category = Category::create($data);
 
-            $category->images()->attach(array_column($request->get('images'), 'id'));
+            if ($category) {
+                if ($request->has('image')) {
+                    $category->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                }
+
+                if ($request->has('images')) {
+                    $category->images()->attach(array_column($request->get('images'), 'id'));
+                }
+            }
 
             return Redirect::route('admin.category.index')->with(['success' => true, 'message', 'Created successfull']);
         } catch (\Throwable $th) {

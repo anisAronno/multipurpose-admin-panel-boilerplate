@@ -20,6 +20,7 @@ const props = defineProps({
 const titleInput = ref(null);
 const descriptionInput = ref(null);
 const imageInput = ref(null);
+const imagesInput = ref(null);
 const statusInput = ref(null);
 const categoryInput = ref(null);
 const isFeaturedInput = ref(null);
@@ -28,6 +29,7 @@ const form = useForm({
     title: props.blog?.title ?? "",
     description: props.blog?.description ?? "",
     images: props.blog?.images ?? [],
+    image: props.blog?.image ?? [],
     status: props.blog?.status ?? "",
     is_featured: props.blog?.is_featured ?? 0,
     categories: props.blog?.categoryArr ?? [],
@@ -62,6 +64,9 @@ const blogHandle = () => {
                 categoryInput.value.focus();
             }
             if (form.errors.images) {
+                imagesInput.value.focus();
+            }
+            if (form.errors.image) {
                 imageInput.value.focus();
             }
         },
@@ -191,6 +196,15 @@ const blogHandle = () => {
                                         class="mt-2 col-start-2 col-span-4"
                                     />
                                 </div>
+                                <div class="my-5 text-right">
+                                    <media
+                                        v-model="form.image"
+                                        imageWidth="20"
+                                        addBtnLabel="Add feature image"
+                                        showPreview="true"
+                                        ref="imageInput"
+                                    ></media>
+                                </div>
 
                                 <div class="my-5 text-right">
                                     <media
@@ -199,6 +213,7 @@ const blogHandle = () => {
                                         addBtnLabel="Add Images"
                                         allowMultiple="true"
                                         showPreview="true"
+                                        ref="imagesInput"
                                     ></media>
                                 </div>
                             </div>
