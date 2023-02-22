@@ -29,7 +29,7 @@ class HomeController extends Controller
         $featuredBlogKey = CacheHelper::getFeaturedBlogCacheKey();
         $specialFeatureKey = CacheHelper::getSpecialFeatureCacheKey();
 
-        $featuredProducts = Cache::tags([$featuredProductKey])->remember($featuredProductKey, 10, function () {
+        $featuredProducts = Cache::tags([$featuredProductKey])->remember($featuredProductKey, now()->addDay(), function () {
             return Product::isActive()->isFeatured()
             ->with(['image'])
             ->orderBy('id', 'desc')
@@ -37,7 +37,7 @@ class HomeController extends Controller
             ->get();
         });
 
-        $featuredCategory = Cache::tags([$featuredCatKey])->remember($featuredCatKey, 10, function () {
+        $featuredCategory = Cache::tags([$featuredCatKey])->remember($featuredCatKey, now()->addDay(), function () {
             return Category::whereHas('products', function ($query) {
                 $query->where('categoryable_type', Product::class);
             })->isActive()->isFeatured()
@@ -47,13 +47,13 @@ class HomeController extends Controller
             ->get();
         });
 
-        $featuredBlog = Cache::tags([$featuredBlogKey])->remember($featuredBlogKey, 10, function () {
+        $featuredBlog = Cache::tags([$featuredBlogKey])->remember($featuredBlogKey, now()->addDay(), function () {
             return Blog::isActive()->isFeatured()
             ->with(['categories', 'image', 'user'])
             ->orderBy('id', 'desc')->limit(3)->get();
         });
 
-        $specialFeatures = Cache::tags([$specialFeatureKey])->remember($specialFeatureKey, 10, function () {
+        $specialFeatures = Cache::tags([$specialFeatureKey])->remember($specialFeatureKey, now()->addDay(), function () {
             return SpecialFeature::isActive()
             ->with(['image'])
             ->orderBy('id', 'desc')

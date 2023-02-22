@@ -54,7 +54,7 @@ const props = defineProps({
 });
 
 const images = ref([]);
-const activeTab = ref("upload");
+const activeTab = ref("media");
 let modalShow = ref(false);
 let isLoaded = ref(false);
 let isUpdated = ref(false);
@@ -196,7 +196,10 @@ const updateImage = async (image) => {
 
 <template>
     <div>
-        <span @click="modalShow = true" class="btn btn-primary cursor-pointer">
+        <span
+            @click="(modalShow = true), setActiveTab('media')"
+            class="btn btn-primary cursor-pointer"
+        >
             <span v-if="selectedImages.length == 0">{{ addBtnLabel }}</span>
             <span v-else>{{ updateBtnLabel }}</span>
         </span>
@@ -355,7 +358,9 @@ const updateImage = async (image) => {
                             ]"
                         >
                             <div>
-                                <div class="w-full    text-gray-900   dark:text-gray-50">
+                                <div
+                                    class="w-full text-gray-900 dark:text-gray-50"
+                                >
                                     <img
                                         :src="editAbleImage.url"
                                         :alt="editAbleImage.title"

@@ -59,22 +59,22 @@ class BlogController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $blogCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $format]));
 
-        $blogs = Cache::tags([$blogCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
-            $orderBy,
-            $order,
-            $status,
-            $isFeatured,
-            $search,
-            $startDate,
-            $endDate,
-            $user,
-            $is_commentable,
-            $is_reactable,
-            $is_shareable,
-            $show_ratings,
-            $show_views,
-            $format,
-        ) {
+        // $blogs = Cache::tags([$blogCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        //     $orderBy,
+        //     $order,
+        //     $status,
+        //     $isFeatured,
+        //     $search,
+        //     $startDate,
+        //     $endDate,
+        //     $user,
+        //     $is_commentable,
+        //     $is_reactable,
+        //     $is_shareable,
+        //     $show_ratings,
+        //     $show_views,
+        //     $format,
+        // ) {
             $blogs = Blog::with(['categories', 'image', 'user']);
 
             if (! $user->haveAdministrativeRole()) {
@@ -126,12 +126,12 @@ class BlogController extends InertiaApplicationController
                 $blogs->orderBy($orderBy, $order);
             }
 
-            return $blogs->paginate(10);
-        });
+            $result  = $blogs->paginate(10);
+        // });
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Blog/Index')->with(['blogs' => BlogResources::collection($blogs)]);
+        return Inertia::render('Dashboard/Blog/Index')->with(['blogs' => BlogResources::collection($result)]);
     }
 
     /**
@@ -238,7 +238,7 @@ class BlogController extends InertiaApplicationController
             }
 
             if ($request->has('image')) {
-                $blog->images()->syncWithPivotValues(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                $blog->images()->sync(array_column($request->get('image'), 'id'));
             }
 
 

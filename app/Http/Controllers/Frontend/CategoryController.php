@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
         $key =  $categoryCacheKey.md5(serialize([$orderBy, $order,  $isFeatured, $page, $search, $startDate, $endDate]));
 
-        $categories = Cache::tags([$categoryCacheKey ])->remember($key, 10, function () use (
+        $categories = Cache::tags([$categoryCacheKey ])->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $isFeatured,

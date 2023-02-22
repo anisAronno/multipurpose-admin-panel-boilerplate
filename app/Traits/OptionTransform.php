@@ -15,7 +15,7 @@ trait OptionTransform
         $key = CacheHelper::getOptionsCacheKey(1);
 
         try {
-            $options = Cache::remember($key, 10, function () {
+            $options = Cache::remember($key, now()->addDay(), function () {
                 $response = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });
@@ -74,7 +74,7 @@ trait OptionTransform
         $key = CacheHelper::getOptionsCacheKey(2);
 
         try {
-            $options = Cache::remember($key, 10, function () use ($settingFields) {
+            $options = Cache::remember($key, now()->addDay(), function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });
@@ -103,7 +103,7 @@ trait OptionTransform
         $key = CacheHelper::getOptionsCacheKey(3);
 
         try {
-            $options = Cache::remember($key, 10, function () use ($settingFields) {
+            $options = Cache::remember($key, now()->addDay(), function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereNotIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });

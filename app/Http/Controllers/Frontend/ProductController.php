@@ -149,7 +149,7 @@ class ProductController extends Controller
 
         $featuredProductKey = CacheHelper::getFeaturedProductCacheKey();
 
-        $featuredProducts = Cache::tags([$featuredProductKey])->remember($featuredProductKey, 10, function () {
+        $featuredProducts = Cache::tags([$featuredProductKey])->remember($featuredProductKey, now()->addDay(), function () {
             return Product::isActive()->isFeatured()
             ->with(['image'])
             ->orderBy('id', 'desc')

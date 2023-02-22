@@ -70,9 +70,9 @@ defineProps({
                                 class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                             >
                                 <table
-                                    class="min-w-full table-auto divide-y divide-gray-300 bg-gray-50 text-gray-900 dark:text-gray-100 dark:bg-gray-800"
+                                    class="p-10 table-auto divide-y divide-gray-300 bg-gray-50 text-gray-900 dark:text-gray-100 dark:bg-gray-800"
                                 >
-                                    <thead class="w-full">
+                                    <thead class="w-full ">
                                         <tr>
                                             <th
                                                 scope="col"

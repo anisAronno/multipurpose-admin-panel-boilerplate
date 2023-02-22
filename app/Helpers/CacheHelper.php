@@ -70,6 +70,7 @@ class CacheHelper
 
     public static function forgetCache($key)
     {
+        logger()->debug($key);
         Cache::tags($key)->flush();
     }
 }
