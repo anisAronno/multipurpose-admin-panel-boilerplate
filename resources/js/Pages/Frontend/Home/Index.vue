@@ -51,7 +51,7 @@ defineProps({
         </div>
 
         <div
-            class="text-white"
+            class="text-white bg-gray-900"
         >
             <Readme></Readme>
         </div>

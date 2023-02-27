@@ -22,7 +22,6 @@ Full-stack web developer from Dhaka, Bangladesh. I have rich experience in larav
 
 <div class="flex flex-wrap gap-2 my-5 sm:my-10">
 
-
 <img alt="C" src="https://img.shields.io/badge/c%20-%2300599C.svg?&style=for-the-badge&logo=c&logoColor=white"/> 
 <img alt="PHP" src="https://img.shields.io/badge/PHP%20-%23FF9900.svg?&style=for-the-badge&logo=php&logoColor=white"/>
 <img alt="Python" src="https://img.shields.io/badge/python%20-%2314354C.svg?&style=for-the-badge&logo=python&logoColor=white"/> 
@@ -78,8 +77,8 @@ Full-stack web developer from Dhaka, Bangladesh. I have rich experience in larav
 <br/>
 
 [![willianrod's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=anis3139&layout=compact&theme=radical&count_private=true)](https://github.com/anis3139)
- 
-<div class=" my-10 text-black dark:text-white grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+<div class=" my-10   grid grid-cols-1 sm:grid-cols-2 gap-5">
 <div>
 <h1 class="text-xl mb-5 underline underline-offset-8 ">
 Some of my PHP Projects
