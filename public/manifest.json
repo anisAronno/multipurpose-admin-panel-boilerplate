@@ -1,7 +1,7 @@
 {
-    "name": "Admin Panel",
-    "short_name": "Admin Panel",
-    "description": "Admin Panel",
+    "name": "anisAronno",
+    "short_name": "anisAronno",
+    "description": "anisAronno",
     "lang": "en-US",
     "start_url": "/index.php",
     "display": "standalone",

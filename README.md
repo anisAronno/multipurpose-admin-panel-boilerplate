@@ -7,9 +7,9 @@ Application with laravel 10, vue 3, vite 4, inertia 1.0, tailwind 3, typescript
 ## Installation
 
 
-Clone the repository
+Install project with composer command
 
-    git clone https://github.com/anisAronno/multipurpose-admin-panel-boilerplate.git
+composer create-project anisaronno/multipurpose-admin-panel-boilerplate
 
 Switch to the repo folder
 
