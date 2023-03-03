@@ -3,7 +3,7 @@ import DangerButton from "@/Components/DangerButton.vue";
 import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import defaultFile from "@/Stores/defaultFile.js";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 const modalShow = ref(false);

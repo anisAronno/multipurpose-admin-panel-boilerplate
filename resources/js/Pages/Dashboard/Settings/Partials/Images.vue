@@ -1,8 +1,8 @@
 <script setup>
 import Image from "@/Components/Image/Image.vue";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 </script>
 <template>
     <div

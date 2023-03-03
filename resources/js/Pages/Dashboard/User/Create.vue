@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateUserForm from "@/Pages/Dashboard/User/Partials/CreateUserForm.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 
 defineProps({
     roles: Object,
@@ -39,7 +39,7 @@ defineProps({
                                 Create a new users with roles.
                             </p>
                         </div>
-                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none ">
+                        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                             <Link
                                 :href="route('user.index')"
                                 class="btn btn-primary"

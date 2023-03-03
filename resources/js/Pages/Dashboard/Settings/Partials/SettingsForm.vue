@@ -7,7 +7,7 @@ import TextInput from "@/Components/TextInput.vue";
 import Toggle from "@/Components/Toggle.vue";
 import { useCountries, useLanguage } from "@/composables/useCountries";
 import defaultFile from "@/Stores/defaultFile";
-import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 
 const { userCountry, timeZoneList, userTimeZone, countries, countryWithCode } =
@@ -19,7 +19,7 @@ defineProps({
     userDefaultStatus: Object,
 });
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 
 const languageArray = useLanguage(options.existing_language_file);
 

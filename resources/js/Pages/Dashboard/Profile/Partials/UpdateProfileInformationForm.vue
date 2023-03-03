@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { Link, useForm, usePage } from "@inertiajs/inertia-vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 const props = defineProps({
     mustVerifyEmail: Boolean,
@@ -11,8 +11,7 @@ const props = defineProps({
     genderArr: Object,
 });
 
-const user = usePage().props.value.auth.user;
-
+const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,
@@ -31,7 +30,7 @@ const form = useForm({
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 Update your account's profile information and email address.
             </p>
-        </header> 
+        </header>
         <form
             @submit.prevent="form.patch(route('profile.update'))"
             class="mt-6 space-y-6"
@@ -67,8 +66,6 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-
-
             <div>
                 <InputLabel for="gender" value="Gender" />
 
@@ -80,7 +77,7 @@ const form = useForm({
                     class="block w-full multiselect-green form-controll dark:text-black"
                     :searchable="true"
                     :classes="{
-                         search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
+                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
                         singleLabelText:
                             '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
                     }"

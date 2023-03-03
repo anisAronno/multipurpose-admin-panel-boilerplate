@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Toast from "@/Components/Toast.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,

@@ -4,7 +4,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import defaultFile from "@/Stores/defaultFile.js";
-import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 const props = defineProps({
@@ -15,7 +15,7 @@ const props = defineProps({
 const avatarInput = ref(null);
 const defaultImage = ref(defaultFile.avatar);
 
-const user = usePage().props.value.auth.user;
+const user = usePage().props.auth.user;
 
 const form = useForm({
     avatar: user.avatar,

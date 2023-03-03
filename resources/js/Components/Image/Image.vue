@@ -2,7 +2,7 @@
 import DeleteImage from "@/Components/Image/DeleteImage.vue";
 import defaultFile from "@/Stores/defaultFile.js";
 import toast from "@/Stores/toast.js";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 const props = defineProps({

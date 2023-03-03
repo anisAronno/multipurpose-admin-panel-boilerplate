@@ -1,11 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import Address from "@/Pages/Dashboard/Profile/Partials/Address.vue";
 import DeleteUserForm from "@/Pages/Dashboard/Profile/Partials/DeleteUserForm.vue";
 import ProfilePicture from "@/Pages/Dashboard/Profile/Partials/ProfilePicture.vue";
-import Address from "@/Pages/Dashboard/Profile/Partials/Address.vue";
 import UpdatePasswordForm from "@/Pages/Dashboard/Profile/Partials/UpdatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/Pages/Dashboard/Profile/Partials/UpdateProfileInformationForm.vue";
+import { Head } from "@inertiajs/vue3";
 
 defineProps({
     mustVerifyEmail: Boolean,
@@ -58,7 +58,10 @@ defineProps({
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
                 >
-                    <Address class="max-w-full min-w-full"  :addresses="addresses"/>
+                    <Address
+                        class="max-w-full min-w-full"
+                        :addresses="addresses"
+                    />
                 </div>
                 <div
                     class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"

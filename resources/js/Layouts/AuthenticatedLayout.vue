@@ -4,7 +4,7 @@ import Toast from "@/Components/Toast.vue";
 import DesktopMenu from "@/Layouts/Partials/DesktopMenu.vue";
 import Header from "@/Layouts/Partials/Header.vue";
 import MobileMenu from "@/Layouts/Partials/MobileMenu.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 
 import {
@@ -150,7 +150,8 @@ onMounted(() => {
             >
                 <Header
                     @toggleMenu="
-                        (sidebarOpen = !sidebarOpen), (isOpenSidebar = !isOpenSidebar)
+                        (sidebarOpen = !sidebarOpen),
+                            (isOpenSidebar = !isOpenSidebar)
                     "
                     :isOpenSidebar="isOpenSidebar"
                 ></Header>

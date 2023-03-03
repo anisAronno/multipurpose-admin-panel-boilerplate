@@ -6,7 +6,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useCountries } from "@/composables/useCountries";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
 import { ref } from "vue";
 const { userCountry, countries } = useCountries();

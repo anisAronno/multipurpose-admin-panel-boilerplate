@@ -3,7 +3,7 @@ import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/vue3";
 defineProps({
     users: Object,
 });
@@ -84,7 +84,7 @@ defineProps({
                                         </div>
                                     </div>
                                     <div
-                                        v-if="users.data.length > 0"
+                                        v-if="users.data?.length > 0"
                                         class="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                                     >
                                         <table

@@ -3,14 +3,14 @@ import Sync from "@/Components/Icon/Sync.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Images from "@/Pages/Dashboard/Settings/Partials/Images.vue";
 import SettingsForm from "@/Pages/Dashboard/Settings/Partials/SettingsForm.vue";
-import { Head, usePage } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 defineProps({
     roleArr: Object,
     socialLoginFields: Object,
     userDefaultStatus: Object,
 });
 
-const options = usePage().props.value.global.options;
+const options = usePage().props.global.options;
 </script>
 
 <template>
@@ -24,7 +24,10 @@ const options = usePage().props.value.global.options;
                 >
                     Settings
                 </h2>
-                <Link :href="route('cache.clear')" class="flex items-center gap-1 text-blue-700 hover:text-blue-500 text-md">
+                <Link
+                    :href="route('cache.clear')"
+                    class="flex items-center gap-1 text-blue-700 hover:text-blue-500 text-md"
+                >
                     <Sync class="w-5 h-5 animate-spin"></Sync>
                     <span>Cache Clear</span></Link
                 >

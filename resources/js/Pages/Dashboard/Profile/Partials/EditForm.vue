@@ -6,9 +6,9 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useCountries } from "@/composables/useCountries";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import Multiselect from "@vueform/multiselect";
-import { watch, ref } from "vue";
+import { ref, watch } from "vue";
 
 const { userCountry, countries } = useCountries();
 
@@ -217,11 +217,11 @@ const editRecord = (id) => {
                             :options="countries"
                             :selected="form.country"
                             placeholder="Pick some..."
-                               ref="countryInput"
+                            ref="countryInput"
                             class="block w-full multiselect-green form-controll dark:text-black"
                             :searchable="true"
                             :classes="{
-                                 search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
+                                search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-700',
                                 singleLabelText:
                                     '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
                             }"
