@@ -1,10 +1,20 @@
 {
-    "name": "laravel/laravel",
+    "name": "anisaronno/multipurpose-admin-panel-boilerplate",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Anichur Rahaman",
+            "email": "contact@anichur.com"
+        }
+    ],
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "vue3",
+        "inertia",
+        "tailwind",
+        "admin-panel"
     ],
     "license": "MIT",
     "require": {
