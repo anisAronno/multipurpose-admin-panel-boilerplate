@@ -9,7 +9,7 @@ Application with laravel 10, vue 3, vite 4, inertia 1.0, tailwind 3, typescript
 
 Clone the repository
 
-    git clone https://github.com/anis3139/multipurpose-admin-panel-boilerplate.git
+    git clone https://github.com/anisAronno/multipurpose-admin-panel-boilerplate.git
 
 Switch to the repo folder
 
