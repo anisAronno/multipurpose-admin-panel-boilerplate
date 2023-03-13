@@ -35,6 +35,16 @@ return [
             'root' => storage_path('app'),
             'throw' => false,
             'url' => env('APP_URL').'/storage',
+            'permissions' => [
+                'file' => [
+                    'public' => 0644,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0755,
+                    'private' => 0755,
+                ],
+             ],
         ],
 
         'public' => [
