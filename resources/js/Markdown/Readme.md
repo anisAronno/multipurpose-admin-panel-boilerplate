@@ -10,7 +10,7 @@
 Full-stack web developer from Dhaka, Bangladesh. I have rich experience in laravel and vuejs based web application development, also I am good at WordPress. Using PHP as primary backend language since 2017. Have working experience in Python, PHP, Golang, JavaScript, TypeScript, Laravel, Lumen, Node JS, Express JS, VueJs, React Js, MySQL, MongoDB, Google Cloud, BigQuery, Datastore, Nginx, Docker and Git also.
 	Currently, working as a Software Engineer in <a class="text-blue-500" target="_blank" href="https://wedevs.com/about/team"> weDevs </a> in <a href="https://appsero.com" class="text-blue-500" target="_blank">Appsero </a>  Project.
 <div class="flex my-5">
-  <a align="bottom" class="text-blue-500" href="https://github.com/anis3139/anis3139/raw/main/anis3139.pdf" download>Download Resume </a>
+  <a align="bottom" class="text-blue-500" href="https://github.com/anisAronno/anisAronno/raw/main/anisAronno.pdf" download>Download Resume </a>
   <img align="top" src="https://img.icons8.com/windows/32/000000/download--v1.png"/>
 </div>
 </div>
@@ -48,11 +48,11 @@ Full-stack web developer from Dhaka, Bangladesh. I have rich experience in larav
 </div>
 
 <div class="flex flex-wrap gap-5">
-<img src="https://github-readme-stats.vercel.app/api?username=anis3139&show_icons=true&count_private=true&theme=radical" alt="Anis Github Stats"/>
+<img src="https://github-readme-stats.vercel.app/api?username=anisAronno&show_icons=true&count_private=true&theme=radical" alt="Anis Github Stats"/>
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anis3139&langs_count=5&hide=css,html&layout=compact&theme=radical&count_private=true)](https://github.com/anis3139)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anisAronno&langs_count=5&hide=css,html&layout=compact&theme=radical&count_private=true)](https://github.com/anisAronno)
 
-[![GitHub Streak](https://github-readme-streak-stats.herokuapp.com?user=anis3139&count_private=true&theme=radical&date_format=j%20M%5B%20Y%5D&mode=weekly)](<[https://git.io/streak-stats](https://github.com/anis3139)>)
+[![GitHub Streak](https://github-readme-streak-stats.herokuapp.com?user=anisAronno&count_private=true&theme=radical&date_format=j%20M%5B%20Y%5D&mode=weekly)](<[https://git.io/streak-stats](https://github.com/anisAronno)>)
 
 </div>
 
@@ -67,16 +67,16 @@ Full-stack web developer from Dhaka, Bangladesh. I have rich experience in larav
 </div>
 <div>
 
-[![github](https://img.shields.io/github/followers/anis3139?logo=github&style=plastic)](https://github.com/anis3139?tab=followers)
+[![github](https://img.shields.io/github/followers/anisAronno?logo=github&style=plastic)](https://github.com/anisAronno?tab=followers)
 
 </div>
 <div class="flex items-center">
-<img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="20px"><a href="https://github.com/anis3139"><img alt="views" title="Github views" src="https://komarev.com/ghpvc/?username=anis3139&style=plastic&color=blueviolet" width="100"/></a><img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="20px">
+<img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="20px"><a href="https://github.com/anisAronno"><img alt="views" title="Github views" src="https://komarev.com/ghpvc/?username=anisAronno&style=plastic&color=blueviolet" width="100"/></a><img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="20px">
 </div>
 </div>
 <br/>
 
-[![willianrod's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=anis3139&layout=compact&theme=radical&count_private=true)](https://github.com/anis3139)
+[![willianrod's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=anisAronno&layout=compact&theme=radical&count_private=true)](https://github.com/anisAronno)
 
 <div class=" my-10   grid grid-cols-1 sm:grid-cols-2 gap-5">
 <div>
@@ -90,29 +90,28 @@ Some of my PHP Projects
 </div>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/anis3139/ecom-final"> Laravel basic ecommerce</a> (TODO: 
-Should complete)
+<a  class="text-blue-700 " href="https://github.com/anisAronno/ecom-final"> Laravel basic ecommerce</a>  
 </div>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/anis3139/multipurpose-admin-panel-boilerplate"> 
+<a  class="text-blue-700 " href="https://github.com/anisAronno/multipurpose-admin-panel-boilerplate"> 
 Multiperpose Admin Panel BoilerPlate</a>
 </div>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/anis3139/educulture"> WP Study Abroad theme</a>
+<a  class="text-blue-700 " href="https://github.com/anisAronno/educulture"> WP Study Abroad theme</a>
 </div>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/anis3139/jurist"> WP theme for Lawer</a>
+<a  class="text-blue-700 " href="https://github.com/anisAronno/jurist"> WP theme for Lawer</a>
 </div>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/anis3139/atl-extension"> WP Elementor Plugin Extension</a>
+<a  class="text-blue-700 " href="https://github.com/anisAronno/atl-extension"> WP Elementor Plugin Extension</a>
 </div>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/anis3139/saad_contacts"> WP Contact Form </a>
+<a  class="text-blue-700 " href="https://github.com/anisAronno/saad_contacts"> WP Contact Form </a>
 </div>
 
 </div>
@@ -122,15 +121,15 @@ Some of my Node Projects
 </h1>
 
 <div >
-<a  class="text-blue-700 " href="https://github.com/appsero"> Appsero Pay</a> (Appsero pay as a 
+<a  class="text-blue-700 " href="https://checkout.appsero.com"> Appsero Pay</a> (Appsero pay as a 
 payment method for Appsero and it's Private Project)
 </div>
 <div >
-<a  class="text-blue-700 " href="https://github.com/appsero"> My Appsero</a> (My Appsero is 
+<a  class="text-blue-700 " href="https://my.appsero.com"> My Appsero</a> (My Appsero is 
 customer panel for Appsero Client and it's Private Project)
 </div>
 <div>
-<a  class="text-blue-700 " href="https://github.com/anis3139/node-and-vue-fullstack-boilerplate"> Node & Vue 
+<a  class="text-blue-700 " href="https://github.com/anisAronno/node-and-vue-fullstack-boilerplate"> Node & Vue 
 js Fullstack Boilerplate</a>
 </div>
 </div>
@@ -142,10 +141,10 @@ js Fullstack Boilerplate</a>
 <h1 class="text-xl my-5 underline underline-offset-8 ">Connect with me</h1>
 
 <div class="flex flex-wrap my-5 gap-4">
-    <a href="https://github.com/anis3139" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="anis3139" height="30" width="40" /></a>
-    <a href="https://twitter.com/anis3139" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="anis3139" height="30" width="40" /></a>
-    <a href="https://linkedin.com/in/anis3139" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="anis3139" height="30" width="40" /></a>
-    <a href="https://facebook.com/anis3139" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="anis3139" height="30" width="40" /></a>
+    <a href="https://github.com/anisAronno" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="anisAronno" height="30" width="40" /></a>
+    <a href="https://twitter.com/anisAronno" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="anisAronno" height="30" width="40" /></a>
+    <a href="https://linkedin.com/in/anisAronno" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="anisAronno" height="30" width="40" /></a>
+    <a href="https://facebook.com/anisAronno" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="anisAronno" height="30" width="40" /></a>
 
 </div>
 </div>
@@ -153,7 +152,7 @@ js Fullstack Boilerplate</a>
 <div>
 <div>
 <h1 class="my-5 text-xl underline underline-offset-8 ">Support</h1>
-<a href="https://www.buymeacoffee.com/anis3139" target="_blank"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="anis3139" /></a>
+<a href="https://www.buymeacoffee.com/anisAronno" target="_blank"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="anisAronno" /></a>
 </div>
 
 </div>
