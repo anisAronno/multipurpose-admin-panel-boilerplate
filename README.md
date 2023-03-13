@@ -7,25 +7,15 @@ Application with laravel, vue js, vite, inertia js, tailwind css, typescript
 ## Installation
 
 
-Clone the repository
+Install project with composer command
 
-    git clone https://github.com/anis3139/multipurpose-admin-panel-boilerplate.git
+```
+composer create-project anisaronno/multipurpose-admin-panel-boilerplate admin-panel
+```
 
 Switch to the repo folder
 
-    cd multipurpose-admin-panel-boilerplate
-
-Install all the dependencies using composer
-
-    composer install
-
-Copy the example env file and make the required configuration changes in the .env file
-
-    cp .env.example .env
-
-Generate a new application key
-
-    php artisan key:generate
+    cd admin-panel
 
 Run the database migrations (**Set the database connection in .env before migrating**)
 

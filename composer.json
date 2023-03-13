@@ -1,10 +1,21 @@
 {
-    "name": "laravel/laravel",
+    "name": "anisaronno/multipurpose-admin-panel-boilerplate",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Application with laravel-10, vue-3, vite -4 , inertia 1, typescript, tailwind-3",
+    "version": "0.0.6",
     "keywords": [
-        "framework",
-        "laravel"
+        "laravel",
+        "vuejs",
+        "tailwindcss",
+        "inertiajs",
+        "admin-panel",
+        "dashboard"
+    ],
+    "authors": [
+        {
+            "name": "Anichur Rahaman",
+            "email": "contact@anichur.com"
+        }
     ],
     "license": "MIT",
     "require": {
