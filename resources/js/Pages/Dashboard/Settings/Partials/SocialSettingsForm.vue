@@ -44,7 +44,6 @@ const form = useForm({
                     type="text"
                     class="block w-full"
                     v-model="form.facebook_url"
-                    required
                     autocomplete="facebook_url"
                 />
 
@@ -63,7 +62,6 @@ const form = useForm({
                     type="text"
                     class="block w-full"
                     v-model="form.instagram_url"
-                    required
                     autocomplete="instagram_url"
                 />
 
@@ -82,7 +80,6 @@ const form = useForm({
                     type="text"
                     class="block w-full"
                     v-model="form.twitter_url"
-                    required
                     autocomplete="twitter_url"
                 />
 
@@ -101,7 +98,6 @@ const form = useForm({
                     type="text"
                     class="block w-full"
                     v-model="form.youtube_channel_url"
-                    required
                     autocomplete="youtube_channel_url"
                 />
 
@@ -123,7 +119,6 @@ const form = useForm({
                     type="text"
                     class="block w-full"
                     v-model="form.linkedin_url"
-                    required
                     autocomplete="linkedin_url"
                 />
 
@@ -141,7 +136,6 @@ const form = useForm({
                     type="text"
                     class="block w-full"
                     v-model="form.github_url"
-                    required
                     autocomplete="github_url"
                 />
 

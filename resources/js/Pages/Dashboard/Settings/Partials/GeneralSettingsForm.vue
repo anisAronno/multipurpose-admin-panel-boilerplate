@@ -15,13 +15,7 @@ const form = useForm({
     email: options.email,
     phone: options.phone,
     organization_name: options.organization_name,
-    map: options.map,
-    facebook_url: options.facebook_url,
-    instagram_url: options.instagram_url,
-    twitter_url: options.twitter_url,
-    youtube_channel_url: options.youtube_channel_url,
-    linkedin_url: options.linkedin_url,
-    github_url: options.github_url,
+    map: options.map, 
 });
 </script>
 
@@ -127,6 +121,28 @@ const form = useForm({
                 <InputError
                     class="mt-2"
                     :message="form.errors.organization_name"
+                />
+            </div>
+
+            <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
+                <InputLabel
+                    class="text-xl"
+                    for="map"
+                    value="Google Map Location: "
+                />
+
+                <TextInput
+                    id="map"
+                    type="text"
+                    class="block w-full"
+                    v-model="form.map"
+                    required
+                    autocomplete="map"
+                />
+
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.map"
                 />
             </div>
             <div class="p-2 sm:p-4 space-y-2 sm:space-y-5 w-full">
