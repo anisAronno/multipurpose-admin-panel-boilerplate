@@ -92,6 +92,8 @@ defineProps({
                                     @click="$emit('mouseOver', item)"
                                 >
                                     <div
+                                        v-can="item.permission"
+                                        :href="route(item.route)"
                                         :class="[
                                             item.current
                                                 ? 'bg-indigo-800 text-white'
@@ -148,6 +150,7 @@ defineProps({
                                             class="px-2 py-1"
                                         >
                                             <Link
+                                                v-can="children.permission"
                                                 :href="route(children.route)"
                                                 :class="[
                                                     children.current

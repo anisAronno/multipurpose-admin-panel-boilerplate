@@ -1,6 +1,10 @@
 import "../css/app.css";
 import "./bootstrap";
 
+import {
+    permissionDirective,
+    roleDirective,
+} from "@/Directives/permissions.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -26,6 +30,8 @@ createInertiaApp({
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
             .mixin(translations)
+            .directive("can", permissionDirective)
+            .directive("role", roleDirective)
             .mount(el);
     },
 });
