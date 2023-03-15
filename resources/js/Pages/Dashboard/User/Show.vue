@@ -41,6 +41,7 @@ defineProps({
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
                             <Link
+                                v-can="'user.edit'"
                                 :href="route('admin.user.edit', user.id)"
                                 class="btn btn-primary"
                             >
@@ -51,6 +52,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
+                                v-can="'user.create'"
                                 :href="route('admin.user.create')"
                                 class="btn btn-primary"
                             >
@@ -61,6 +63,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'user.view'"
                                 :href="route('admin.user.index')"
                                 class="btn btn-primary"
                             >

@@ -40,7 +40,8 @@ defineProps({
                         <div
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                         >
-                            <Link
+                           <Link
+                                v-can="'product.edit'"
                                 :href="route('admin.product.edit', product.id)"
                                 class="btn btn-primary"
                             >
@@ -51,6 +52,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
+                                v-can="'product.create'"
                                 :href="route('admin.product.create')"
                                 class="btn btn-primary"
                             >
@@ -61,6 +63,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'product.view'"
                                 :href="route('admin.product.index')"
                                 class="btn btn-primary"
                             >

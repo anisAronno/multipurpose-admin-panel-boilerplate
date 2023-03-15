@@ -43,7 +43,8 @@ defineProps({
                             <div
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
-                                <Link
+                                 <Link
+                                    v-can="'contact.view'"
                                     :href="route('admin.contact.index')"
                                     class="btn btn-primary"
                                 >
@@ -209,7 +210,10 @@ defineProps({
                                                                 </Link>
                                                             </div>
 
-                                                            <DeleteForm
+                                                             <DeleteForm
+                                                                v-can="
+                                                                    'contact.delete'
+                                                                "
                                                                 :data="{
                                                                     id: contact.id,
                                                                     model: 'contact',

@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'product.create'"
                                     :href="route('admin.product.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'product.view'"
                                     :href="route('admin.product.index')"
                                     class="btn btn-primary"
                                 >
@@ -101,12 +103,6 @@ defineProps({
 
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900 break-words"
-                                                    >
-                                                        Description
-                                                    </th>
-                                                    <th
-                                                        scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Image
@@ -152,38 +148,13 @@ defineProps({
                                                     :id="product.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%] text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ product.title }}
                                                     </td>
 
                                                     <td
                                                         class="min-w-[10%] p-3 text-md text-gray-500"
-                                                    >
-                                                        <span
-                                                            class="break-words w-10"
-                                                        >
-                                                            {{
-                                                                product.description
-                                                                    ? product.description
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
-                                                        </span>
-                                                    </td>
-
-                                                    <td
-                                                        class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
                                                             :src="product.image"
@@ -192,7 +163,7 @@ defineProps({
                                                         />
                                                     </td>
                                                     <td
-                                                        class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[40%] p-3 text-md text-gray-500"
                                                     >
                                                         <div
                                                             v-for="(
@@ -220,29 +191,33 @@ defineProps({
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{
                                                             product.is_featured
                                                         }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ product.status }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ product.created_at }}
                                                     </td>
                                                     <td
-                                                        class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
+                                                        class="min-w-[10%] max-w-[30%] text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
                                                         >
-                                                            <div>
+                                                            <div
+                                                                v-can="
+                                                                    'product.view'
+                                                                "
+                                                            >
                                                                 <Link
                                                                     :href="
                                                                         route(
@@ -259,7 +234,11 @@ defineProps({
                                                                 </Link>
                                                             </div>
 
-                                                            <div>
+                                                            <div
+                                                                v-can="
+                                                                    'product.edit'
+                                                                "
+                                                            >
                                                                 <Link
                                                                     :href="
                                                                         route(
@@ -277,6 +256,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'product.delete'
+                                                                "
                                                                 :data="{
                                                                     id: product.id,
                                                                     model: 'product',

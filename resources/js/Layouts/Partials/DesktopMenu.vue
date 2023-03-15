@@ -4,7 +4,6 @@ import {
     ChevronDoubleDownIcon,
     ChevronDoubleRightIcon,
 } from "@heroicons/vue/24/outline";
-
 import { Link } from "@inertiajs/inertia-vue3";
 defineProps({
     navigation: Object,
@@ -36,8 +35,8 @@ defineProps({
                                     ? 'bg-indigo-600 text-white p-0.5 rounded-sm'
                                     : '',
                             ]"
-                            @mouseover="$emit('mouseOver', item)"
-                            @mouseout="$emit('mouseOut', item)"
+                            class="relative"
+                            @click="$emit('toggleSidebar', item)"
                         >
                             <Link
                                 v-can="item.permission"
@@ -55,31 +54,22 @@ defineProps({
                                     aria-hidden="true"
                                 />
                                 {{ item.name }}
-                                <span
-                                    v-if="
+                            </Link>
+                            <span
+                                class="absolute right-0 top-3 cursor-pointer text-indigo-300 hover:text-indigo-50 hover:scale-110"
+                                v-if="item?.children?.length > 0"
+                            >
+                                <component
+                                    :is="
                                         item.current &&
                                         item?.children?.length > 0
+                                            ? ChevronDoubleDownIcon
+                                            : ChevronDoubleRightIcon
                                     "
-                                    class="absolute right-0 mr-2"
-                                >
-                                    <ChevronDoubleDownIcon
-                                        class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                        aria-hidden="true"
-                                    ></ChevronDoubleDownIcon>
-                                </span>
-                                <span
-                                    v-else-if="
-                                        !item.current &&
-                                        item?.children?.length > 0
-                                    "
-                                    class="absolute right-0 mr-2"
-                                >
-                                    <ChevronDoubleRightIcon
-                                        class="mr-3 h-4 w-4 flex-shrink-0 text-indigo-300"
-                                        aria-hidden="true"
-                                    ></ChevronDoubleRightIcon>
-                                </span>
-                            </Link>
+                                    class="mr-3 h-4 w-4 flex-shrink-0"
+                                    aria-hidden="true"
+                                />
+                            </span>
                             <div
                                 class="p-2 my-1 mx-3 border border-indigo-600 rounded-md bg-indigo-700 shadow-md"
                                 :class="{

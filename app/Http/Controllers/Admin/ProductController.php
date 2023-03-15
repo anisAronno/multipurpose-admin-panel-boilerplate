@@ -20,6 +20,15 @@ use Illuminate\Support\Facades\Session;
 
 class ProductController extends InertiaApplicationController
 {
+      public function __construct()
+    {
+        $this->middleware('permission:product.view|product.create|product.edit|product.delete|product.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:product.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product.edit|permission:product.status|', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product.delete', ['only' => ['destroy']]);
+
+        $this->authorizeResource(Product::class, 'product');
+    }
     /**
      * Summary of index
      * @param Request $request

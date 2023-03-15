@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'category.create'"
                                     :href="route('admin.category.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'category.view'"
                                     :href="route('admin.category.index')"
                                     class="btn btn-primary"
                                 >
@@ -101,12 +103,6 @@ defineProps({
 
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900 break-words"
-                                                    >
-                                                        Description
-                                                    </th>
-                                                    <th
-                                                        scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Image
@@ -146,38 +142,13 @@ defineProps({
                                                     :id="category.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%] text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ category.title }}
                                                     </td>
 
                                                     <td
                                                         class="min-w-[10%] p-3 text-md text-gray-500"
-                                                    >
-                                                        <span
-                                                            class="break-words w-10"
-                                                        >
-                                                            {{
-                                                                category.description
-                                                                    ? category.description
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
-                                                        </span>
-                                                    </td>
-
-                                                    <td
-                                                        class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
                                                             :src="
@@ -190,19 +161,19 @@ defineProps({
                                                         />
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{
                                                             category.is_featured
                                                         }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ category.status }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{
                                                             category.created_at
@@ -216,6 +187,9 @@ defineProps({
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'category.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.category.show',
@@ -233,6 +207,9 @@ defineProps({
 
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'category.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.category.edit',
@@ -249,6 +226,9 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'category.delete'
+                                                                "
                                                                 :data="{
                                                                     id: category.id,
                                                                     model: 'category',

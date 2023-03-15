@@ -1,7 +1,7 @@
 {
-    "name": "Admin Panel",
-    "short_name": "Admin Panel",
-    "description": "Admin Panel",
+    "name": "SNMLeathers",
+    "short_name": "SNMLeathers",
+    "description": "SNMLeathers",
     "lang": "en-US",
     "start_url": "/index.php",
     "display": "standalone",

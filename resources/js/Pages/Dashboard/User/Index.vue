@@ -46,6 +46,7 @@ const page = usePage().props.value.global.options;
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'user.create'"
                                     :href="route('admin.user.create')"
                                     class="btn btn-primary"
                                 >
@@ -56,6 +57,7 @@ const page = usePage().props.value.global.options;
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'user.view'"
                                     :href="route('admin.user.index')"
                                     class="btn btn-primary"
                                 >
@@ -148,19 +150,19 @@ const page = usePage().props.value.global.options;
                                                     :id="user.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%]  text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ user.name }}
                                                     </td>
 
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%]  p-3 text-md text-gray-500"
                                                     >
                                                         {{ user.email }}
                                                     </td>
 
                                                     <td
-                                                        class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
+                                                        class=" min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
                                                             :src="user.avatar"
@@ -169,7 +171,7 @@ const page = usePage().props.value.global.options;
                                                         />
                                                     </td>
                                                     <td
-                                                        class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[40%]  p-3 text-md text-gray-500"
                                                     >
                                                         <div
                                                             v-for="role in user.roles"
@@ -184,12 +186,12 @@ const page = usePage().props.value.global.options;
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%]  p-3 text-md text-gray-500"
                                                     >
                                                         {{ user.status }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%]  p-3 text-md text-gray-500"
                                                     >
                                                         {{
                                                             formattedDate(
@@ -197,14 +199,17 @@ const page = usePage().props.value.global.options;
                                                             )
                                                         }}
                                                     </td>
-                                                    <td
-                                                        class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
+                                                     <td
+                                                        class=" min-w-[10%] max-w-[30%] text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'user.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.user.show',
@@ -219,9 +224,11 @@ const page = usePage().props.value.global.options;
                                                                     />
                                                                 </Link>
                                                             </div>
-
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'user.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.user.edit',
@@ -236,10 +243,12 @@ const page = usePage().props.value.global.options;
                                                                     />
                                                                 </Link>
                                                             </div>
-
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'user.delete'
+                                                                "
                                                                 v-if="
-                                                                    user.isDeletable
+                                                                    user.is_deletable
                                                                 "
                                                                 :data="{
                                                                     id: user.id,

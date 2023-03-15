@@ -40,7 +40,9 @@ defineProps({
                         <div
                             class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-2"
                         >
+                            
                             <Link
+                                v-can="'role.edit'"
                                 :href="route('admin.role.edit', role.id)"
                                 class="btn btn-primary"
                             >
@@ -51,6 +53,7 @@ defineProps({
                                 Edit
                             </Link>
                             <Link
+                                v-can="'role.create'"
                                 :href="route('admin.role.create')"
                                 class="btn btn-primary"
                             >
@@ -61,6 +64,7 @@ defineProps({
                                 Create New
                             </Link>
                             <Link
+                                v-can="'role.view'"
                                 :href="route('admin.role.index')"
                                 class="btn btn-primary"
                             >

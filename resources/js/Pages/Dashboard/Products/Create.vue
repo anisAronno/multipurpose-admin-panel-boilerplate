@@ -41,8 +41,9 @@ defineProps({
                             </p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                            <Link
-                                :href="route('admin.user.index')"
+                             <Link
+                                v-can="'product.view'"
+                                :href="route('admin.product.index')"
                                 class="btn btn-primary"
                             >
                                 <font-awesome-icon

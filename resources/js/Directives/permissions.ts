@@ -1,8 +1,9 @@
-import { usePage } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/inertia-vue3";
 import { DirectiveOptions } from "vue";
 
 const usePermissionAndRole = () => {
-    let page = usePage().props;
+    let page = usePage()?.props?.value;  
+    
     return {
         permissions: page?.auth?.user?.permissions,
         roles: page?.auth?.user?.roles,

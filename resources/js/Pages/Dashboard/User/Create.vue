@@ -40,7 +40,8 @@ defineProps({
                             </p>
                         </div>
                         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                            <Link
+                         <Link
+                                v-can="'user.view'"
                                 :href="route('admin.user.index')"
                                 class="btn btn-primary"
                             >

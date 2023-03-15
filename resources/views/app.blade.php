@@ -9,8 +9,8 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Admin Panel">
-    <meta name="apple-mobile-web-app-title" content="Admin Panel">
+    <meta name="application-name" content="SNMLeathers">
+    <meta name="apple-mobile-web-app-title" content="SNMLeathers">
     <meta name="theme-color" content="#44ce6f">
     <meta name="msapplication-navbutton-color" content="#44ce6f">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">

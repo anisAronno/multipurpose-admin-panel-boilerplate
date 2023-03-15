@@ -18,6 +18,16 @@ use Illuminate\Support\Facades\Session;
 
 class CategoryController extends InertiaApplicationController
 {
+     /**
+    * Filter role and permission
+    */
+    public function __construct()
+    {
+        $this->middleware('permission:category.view|category.create|category.edit|category.delete|category.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:category.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:category.edit|permission:category.status|', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:category.delete', ['only' => ['destroy']]);
+    }
     /**
      * Summary of index
      * @param Request $request

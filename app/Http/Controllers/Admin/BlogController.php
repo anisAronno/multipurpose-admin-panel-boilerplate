@@ -19,6 +19,15 @@ use Illuminate\Support\Facades\Session;
 
 class BlogController extends InertiaApplicationController
 {
+    public function __construct()
+    {
+        $this->middleware('permission:blog.view|blog.create|blog.edit|blog.delete|blog.status', ['only' => ['index', 'store']]);
+        $this->middleware('permission:blog.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:blog.edit|permission:blog.status|', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:blog.delete', ['only' => ['destroy']]);
+
+        $this->authorizeResource(Blog::class, 'blog');
+    }
     /**
      * Summary of index
      * @param Request $request

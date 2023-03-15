@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'blog.create'"
                                     :href="route('admin.blog.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'blog.view'"
                                     :href="route('admin.blog.index')"
                                     class="btn btn-primary"
                                 >
@@ -101,12 +103,6 @@ defineProps({
 
                                                     <th
                                                         scope="col"
-                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900 break-words"
-                                                    >
-                                                        Description
-                                                    </th>
-                                                    <th
-                                                        scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
                                                     >
                                                         Image
@@ -152,38 +148,24 @@ defineProps({
                                                     :id="blog.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="max-w-[20%] break-all text-left p-4 font-semibold capitalize"
                                                     >
-                                                        {{ blog.title }}
+                                                        <Link
+                                                            v-can="'blog.view'"
+                                                            :href="
+                                                                route(
+                                                                    'admin.blog.show',
+                                                                    blog.id
+                                                                )
+                                                            "
+                                                            class="text-gray-50 dark:text-gray-800"
+                                                        >
+                                                            {{ blog.title }}
+                                                        </Link>
                                                     </td>
 
                                                     <td
                                                         class="min-w-[10%] p-3 text-md text-gray-500"
-                                                    >
-                                                        <span
-                                                            class="break-words w-10"
-                                                        >
-                                                            {{
-                                                                blog.description
-                                                                    ? blog.description
-                                                                          .split(
-                                                                              " "
-                                                                          )
-                                                                          .slice(
-                                                                              0,
-                                                                              10
-                                                                          )
-                                                                          .join(
-                                                                              " "
-                                                                          ) +
-                                                                      "..."
-                                                                    : ""
-                                                            }}
-                                                        </span>
-                                                    </td>
-
-                                                    <td
-                                                        class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
                                                             :src="blog.image"
@@ -192,12 +174,12 @@ defineProps({
                                                         />
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ blog.is_featured }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[40%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[40%] p-3 text-md text-gray-500"
                                                     >
                                                         <div
                                                             v-for="(
@@ -225,23 +207,26 @@ defineProps({
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ blog.status }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%] whitespace-nowrap p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ blog.created_at }}
                                                     </td>
                                                     <td
-                                                        class="whitespace-nowrap min-w-[10%] max-w-[30%] text-right text-sm font-medium"
+                                                        class="max-w-[20%] break-all text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'blog.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.blog.show',
@@ -256,9 +241,11 @@ defineProps({
                                                                     />
                                                                 </Link>
                                                             </div>
-
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'blog.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.blog.edit',
@@ -273,8 +260,10 @@ defineProps({
                                                                     />
                                                                 </Link>
                                                             </div>
-
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'blog.delete'
+                                                                "
                                                                 :data="{
                                                                     id: blog.id,
                                                                     model: 'blog',

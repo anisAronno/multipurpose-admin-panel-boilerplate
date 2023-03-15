@@ -15,6 +15,7 @@ import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 library.add(fas);
 import { translations } from "./Mixins/translations";
+import excerpt from "./Helper/excerpt";
 
 createInertiaApp({
     title: (title) => `${title} - ${usePage().props.value?.global?.options?.site_name}`,
@@ -30,6 +31,7 @@ createInertiaApp({
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
             .mixin(translations)
+            .mixin(excerpt)
             .directive("can", permissionDirective)
             .directive("role", roleDirective)
             .mount(el);

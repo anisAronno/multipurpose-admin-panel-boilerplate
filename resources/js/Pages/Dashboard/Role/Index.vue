@@ -44,6 +44,7 @@ defineProps({
                                 class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-1 sm:space-x-2 space-y-2 sm:space-y-0"
                             >
                                 <Link
+                                    v-can="'role.create'"
                                     :href="route('admin.role.create')"
                                     class="btn btn-primary"
                                 >
@@ -54,6 +55,7 @@ defineProps({
                                     Create New
                                 </Link>
                                 <Link
+                                    v-can="'role.view'"
                                     :href="route('admin.role.index')"
                                     class="btn btn-primary"
                                 >
@@ -129,7 +131,7 @@ defineProps({
                                                     :id="role.id"
                                                 >
                                                     <td
-                                                        class="w-[15%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="w-[15%]  text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ role.name }}
                                                     </td>
@@ -157,13 +159,16 @@ defineProps({
                                                         {{ role.created_at }}
                                                     </td>
                                                     <td
-                                                        class="w-[10%] whitespace-nowrap text-right text-sm font-medium"
+                                                        class="w-[10%]  text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"
                                                         >
                                                             <div>
                                                                 <Link
+                                                                    v-can="
+                                                                        'role.view'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.role.show',
@@ -181,10 +186,13 @@ defineProps({
 
                                                             <div
                                                                 v-if="
-                                                                    role.isEditable
+                                                                    role.is_editable
                                                                 "
                                                             >
                                                                 <Link
+                                                                    v-can="
+                                                                        'role.edit'
+                                                                    "
                                                                     :href="
                                                                         route(
                                                                             'admin.role.edit',
@@ -201,8 +209,11 @@ defineProps({
                                                             </div>
 
                                                             <DeleteForm
+                                                                v-can="
+                                                                    'role.delete'
+                                                                "
                                                                 v-if="
-                                                                    role.isDeletable
+                                                                    role.is_deletable
                                                                 "
                                                                 :data="{
                                                                     id: role.id,
