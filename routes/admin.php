@@ -109,7 +109,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
         Route::get('/model/settings', [OptionController::class, 'modelControll'])->name('option.model');
 
-        Route::get('/page', [PageController::class, 'index'])->name('page.index');
+        Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
 
         Route::post('mark-read', [NotificationController::class, 'markNotification'])
         ->name('notification.mark.read');

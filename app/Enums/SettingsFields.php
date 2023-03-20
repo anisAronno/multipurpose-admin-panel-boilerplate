@@ -38,4 +38,6 @@ enum SettingsFields: string
     case MODEL_TWO = 'model_two';
     case MODEL_THREE = 'model_three';
     case MODEL_FOUR = 'model_four';
+    case ABOUT_IMAGE = 'about_image';
+    case VISSION_MISSION_IMAGE = 'vission_mission_image';
 }

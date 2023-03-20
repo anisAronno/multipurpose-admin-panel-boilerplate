@@ -9,8 +9,8 @@
             <div class="p-5 sm:p-10">
                 <img
                     class="w-full h-96 rounded-md"
-                    src="https://tailwindui.com/img/ecommerce-images/category-page-05-image-card-01.jpg"
-                    alt=""
+                    :src="$page.props.global.options.about_image"
+                    alt="About Picture"
                 />
             </div>
             <div class="p-5 sm:p-10">

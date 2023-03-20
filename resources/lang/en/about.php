@@ -2,7 +2,7 @@
 
 return [
     "about" =>[
-        'title' => 'Contact',
+        'title' => 'About',
         'phone' => "Phone number",
         'heading' => "All Products",
         'us' => [

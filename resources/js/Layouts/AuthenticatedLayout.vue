@@ -29,7 +29,7 @@ const isLoaded = ref(false);
 if (width.value > 1400) {
     isOpenSidebar.value = true;
 }
- 
+
 function toggleSidebar(item) {
     if (!isOpenSidebar) {
         return;
@@ -239,7 +239,7 @@ const navigation = ref([
                 current: route().current("admin.contact.index"),
             },
         ],
-    },
+    }, 
     {
         name: "Settings",
         route: "admin.option.index",
@@ -248,7 +248,9 @@ const navigation = ref([
         current:
             route().current("admin.option.index") ||
             route().current("admin.option.general") ||
-            route().current("admin.option.general"),
+            route().current("admin.option.general") ||
+            route().current("admin.option.social") ||
+            route().current("admin.option.model"),
         children: [
             {
                 name: "Application Settings",
@@ -272,7 +274,7 @@ const navigation = ref([
                 current: route().current("admin.option.social"),
             },
             {
-                name: "Model Feature",
+                name: "Extra Settings",
                 route: "admin.option.model",
                 permission: "options.create",
                 icon: CogIcon,
@@ -314,7 +316,7 @@ const navigation = ref([
             <DesktopMenu
                 :navigation="navigation"
                 :isOpenSidebar="isOpenSidebar"
-                @toggleSidebar="toggleSidebar" 
+                @toggleSidebar="toggleSidebar"
             ></DesktopMenu>
 
             <div
