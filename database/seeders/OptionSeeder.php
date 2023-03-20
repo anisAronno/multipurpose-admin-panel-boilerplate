@@ -68,5 +68,7 @@ class OptionSeeder extends Seeder
         $option::setOption('model_two', 'https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg');
         $option::setOption('model_three', 'https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-01.jpg');
         $option::setOption('model_four', 'https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-02.jpg');
+        $option::setOption('about_image', 'https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-02.jpg');
+        $option::setOption('vission_mission_image', 'https://tailwindui.com/img/ecommerce-images/home-page-03-favorite-02.jpg');
     }
 }
