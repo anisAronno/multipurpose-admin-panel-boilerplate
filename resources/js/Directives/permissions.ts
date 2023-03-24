@@ -13,7 +13,7 @@ const can = (value: string) => {
     let _return = false;
     let permissions = usePermissionAndRole().permissions;
 
-    if (permissions.length == 0) {
+    if (permissions?.length == 0) {
         _return = false;
     }
 
@@ -30,12 +30,12 @@ const can = (value: string) => {
     } else if (value.includes("&")) {
         _return = true;
         value.split("&").forEach(function (item) {
-            if (!permissions.includes(item.trim())) {
+            if (!permissions?.includes(item.trim())) {
                 _return = false;
             }
         });
     } else {
-        _return = permissions.includes(value.trim());
+        _return = permissions?.includes(value.trim());
     }
 
     return _return;
