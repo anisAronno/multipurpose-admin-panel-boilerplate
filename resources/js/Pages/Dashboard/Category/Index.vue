@@ -100,13 +100,7 @@ defineProps({
                                                     >
                                                         Title
                                                     </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        class="px-3 py-3.5 text-left text-base font-bold text-gray-900 break-words"
-                                                    >
-                                                        Description
-                                                    </th>
+ 
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-base font-bold text-gray-900"
@@ -151,21 +145,7 @@ defineProps({
                                                         class="min-w-[10%] whitespace-nowrap text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ category.title }}
-                                                    </td>
-
-                                                    <td
-                                                        class="min-w-[10%] p-3 text-md text-gray-500"
-                                                    >
-                                                        <span
-                                                            class="break-words w-10"
-                                                            v-html="
-                                                                excerpt(
-                                                                    category.description,
-                                                                    10
-                                                                )
-                                                            "
-                                                        ></span>
-                                                    </td>
+                                                    </td> 
 
                                                     <td
                                                         class="whitespace-nowrap min-w-[10%] p-3 text-md text-gray-500"
@@ -269,24 +249,9 @@ defineProps({
                                                     1
                                                 "
                                             >
-                                                <tr>
-                                                    <td class="w-[100%] pl-2">
-                                                        Show
-                                                        {{
-                                                            categories.meta.from
-                                                        }}
-                                                        to
-                                                        {{
-                                                            categories.meta.to
-                                                        }}
-                                                        from ({{
-                                                            categories.meta
-                                                                .total
-                                                        }}
-                                                        items)
-                                                    </td>
+                                                <tr> 
                                                     <td
-                                                        colspan="6"
+                                                        colspan="20"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
@@ -296,9 +261,8 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
+                                                            :meta="
                                                                 categories.meta
-                                                                    .links
                                                             "
                                                         ></Pagination>
                                                     </td>

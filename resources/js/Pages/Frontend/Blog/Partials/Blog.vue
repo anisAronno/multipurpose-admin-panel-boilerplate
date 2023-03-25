@@ -87,12 +87,11 @@ defineProps({
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> 
         <Pagination
-            v-if="blogs.last_page > 1"
+            v-if="blogs.meta.last_page > 1"
             class="my-5 dark:text-white flex justify-end p-3"
-            :links="blogs.links"
+            :meta="blogs.meta"
         ></Pagination>
     </div>
 </template>

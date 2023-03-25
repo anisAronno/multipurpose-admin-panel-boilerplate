@@ -245,23 +245,14 @@ defineProps({
                                         </tr>
                                     </tbody>
                                     <tfoot v-if="blogs.meta.last_page > 1">
-                                        <tr>
-                                            <td class="pl-4" colspan="1">
-                                                Show
-                                                {{ blogs.meta.from }}
-                                                to
-                                                {{ blogs.meta.to }} from ({{
-                                                    blogs.meta.total
-                                                }}
-                                                items)
-                                            </td>
-                                            <td colspan="9" class="">
+                                        <tr> 
+                                            <td colspan="90" class="">
                                                 <Pagination
                                                     v-if="
                                                         blogs.meta.last_page > 1
                                                     "
                                                     class="mt-6 dark:text-gray-100 flex justify-end p-3"
-                                                    :links="blogs.meta.links"
+                                                    :meta="blogs.meta"
                                                 ></Pagination>
                                             </td>
                                         </tr>

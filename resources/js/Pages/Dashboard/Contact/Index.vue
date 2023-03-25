@@ -220,18 +220,8 @@ defineProps({
                                                 "
                                             >
                                                 <tr>
-                                                    <td class="w-[100%] pl-2">
-                                                        Show
-                                                        {{ contacts.meta.from }}
-                                                        to
-                                                        {{ contacts.meta.to }}
-                                                        from ({{
-                                                            contacts.meta.total
-                                                        }}
-                                                        items)
-                                                    </td>
                                                     <td
-                                                        colspan="7"
+                                                        colspan="70"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
@@ -241,9 +231,8 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
+                                                            :meta="
                                                                 contacts.meta
-                                                                    .links
                                                             "
                                                         ></Pagination>
                                                     </td>

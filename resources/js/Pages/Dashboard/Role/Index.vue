@@ -229,18 +229,8 @@ defineProps({
                                                 v-if="roles.meta.last_page > 1"
                                             >
                                                 <tr>
-                                                    <td class="w-[100%] pl-2">
-                                                        Show
-                                                        {{ roles.meta.from }}
-                                                        to
-                                                        {{ roles.meta.to }}
-                                                        from ({{
-                                                            roles.meta.total
-                                                        }}
-                                                        items)
-                                                    </td>
                                                     <td
-                                                        colspan="10"
+                                                        colspan="100"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
@@ -250,9 +240,7 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
-                                                                roles.meta.links
-                                                            "
+                                                            :meta="roles.meta"
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

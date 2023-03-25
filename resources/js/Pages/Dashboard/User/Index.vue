@@ -263,15 +263,7 @@ const page = usePage()?.props?.global?.options;
                                                 class="bg-gray-50 min-w-full"
                                                 v-if="users.meta.last_page > 1"
                                             >
-                                                <tr>
-                                                    <td class="w-[100%] pl-2">
-                                                        Show
-                                                        {{ users.meta.from }}
-                                                        to
-                                                        {{ users.meta.to }} from
-                                                        ({{ users.meta.total }}
-                                                        items)
-                                                    </td>
+                                                <tr> 
                                                     <td
                                                         colspan="6"
                                                         class="w-[100%]"
@@ -283,8 +275,8 @@ const page = usePage()?.props?.global?.options;
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
-                                                                users.meta.links
+                                                            :meta="
+                                                                users.meta
                                                             "
                                                         ></Pagination>
                                                     </td>

@@ -262,24 +262,7 @@ defineProps({
                                                         .last_page > 1
                                                 "
                                             >
-                                                <tr>
-                                                    <td class="w-[100%] pl-2">
-                                                        Show
-                                                        {{
-                                                            specialFeatures.meta
-                                                                .from
-                                                        }}
-                                                        to
-                                                        {{
-                                                            specialFeatures.meta
-                                                                .to
-                                                        }}
-                                                        from ({{
-                                                            specialFeatures.meta
-                                                                .total
-                                                        }}
-                                                        items)
-                                                    </td>
+                                                <tr> 
                                                     <td
                                                         colspan="10"
                                                         class="w-[100%]"
@@ -292,9 +275,9 @@ defineProps({
                                                                 1
                                                             "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="
+                                                            :meta="
                                                                 specialFeatures
-                                                                    .meta.links
+                                                                    .meta
                                                             "
                                                         ></Pagination>
                                                     </td>

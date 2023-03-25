@@ -3,10 +3,7 @@ import { Quill, QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.bubble.css";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import axios from "axios";
-import BlotFormatter from "quill-blot-formatter";
-import * as Emoji from "quill-emoji";
-import "quill-emoji/dist/quill-emoji";
-import "quill-emoji/dist/quill-emoji.css";
+import BlotFormatter from "quill-blot-formatter"; 
 import htmlEditButton from "quill-html-edit-button";
 import ImageUploader from "quill-image-uploader";
 import { ref } from "vue";
@@ -36,15 +33,13 @@ const toolbarOptions = {
         [{ font: [] }],
         [{ align: [] }],
         ["link", "image", "video"],
-        ["clean"],
-        ["emoji"],
+        ["clean"], 
     ],
 };
 
 const inputValue = ref(props.modelValue);
 
-Quill.register({
-    "modules/emoji": Emoji,
+Quill.register({ 
     "modules/htmlEditButton": htmlEditButton,
 });
 

@@ -42,7 +42,7 @@ defineProps({
             <Pagination
                 v-if="products.meta.last_page > 1"
                 class="mt-6 dark:text-white flex justify-end p-3"
-                :links="products.meta.links"
+                :meta="products.meta"
             ></Pagination>
         </div>
     </div>
