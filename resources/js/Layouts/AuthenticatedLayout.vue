@@ -16,7 +16,7 @@ import {
     UserGroupIcon,
     UsersIcon,
 } from "@heroicons/vue/24/outline";
-import { Head, Link } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import { useWindowSize } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
@@ -30,7 +30,7 @@ if (width.value > 1400) {
     isOpenSidebar.value = true;
 }
 
-function mouseOver(item) {
+function toggleSidebar(item) {
     if (!isOpenSidebar) {
         return;
     }
@@ -42,24 +42,8 @@ function mouseOver(item) {
         return;
     }
     setTimeout(() => {
-        item.current = true;
-    }, 100);
-}
-function mouseOut(item) {
-    if (!isOpenSidebar) {
-        return;
-    }
-
-    if (
-        item.route.split(".").slice(0, 2).join(".") ==
-        route().current().split(".").slice(0, 2).join(".")
-    ) {
-        return;
-    }
-
-    setTimeout(() => {
-        item.current = false;
-    }, 100);
+        item.current = !item.current;
+    }, 50);
 }
 
 function loaded(data = true) {
@@ -255,7 +239,7 @@ const navigation = ref([
                 current: route().current("admin.contact.index"),
             },
         ],
-    },
+    }, 
     {
         name: "Settings",
         route: "admin.option.index",
@@ -264,7 +248,9 @@ const navigation = ref([
         current:
             route().current("admin.option.index") ||
             route().current("admin.option.general") ||
-            route().current("admin.option.general"),
+            route().current("admin.option.general") ||
+            route().current("admin.option.social") ||
+            route().current("admin.option.model"),
         children: [
             {
                 name: "Application Settings",
@@ -288,7 +274,7 @@ const navigation = ref([
                 current: route().current("admin.option.social"),
             },
             {
-                name: "Model Feature",
+                name: "Extra Settings",
                 route: "admin.option.model",
                 permission: "options.create",
                 icon: CogIcon,
@@ -322,7 +308,7 @@ const navigation = ref([
                 :sidebarOpen="sidebarOpen"
                 :navigation="navigation"
                 @toggleMobileMenu="sidebarOpen = !sidebarOpen"
-                @mouseOver="mouseOver"
+                @toggleSidebar="toggleSidebar"
             ></MobileMenu>
 
             <!-- Static sidebar for desktop -->
@@ -330,8 +316,7 @@ const navigation = ref([
             <DesktopMenu
                 :navigation="navigation"
                 :isOpenSidebar="isOpenSidebar"
-                @mouseOver="mouseOver"
-                @mouseOut="mouseOut"
+                @toggleSidebar="toggleSidebar"
             ></DesktopMenu>
 
             <div

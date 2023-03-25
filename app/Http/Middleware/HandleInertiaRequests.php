@@ -2,11 +2,13 @@
 
 namespace App\Http\Middleware;
 
+
 use App\Http\Resources\UserResources;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
+
 
 class HandleInertiaRequests extends Middleware
 {
@@ -38,7 +40,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user() ? new UserResources($request->user()) : $request->user(),
+                'user' => $request->user() ? new UserResources($request->user()->load(['unreadNotifications', 'permissions', 'roles'])) : $request->user(),
             ],
             'global' => [
                 'options' => Option::getSettings(),
@@ -47,9 +49,8 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message'),
                 'success' => fn () => $request->session()->get('success'),
             ],
-            'csrf_token' => csrf_token(),
             'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy())->toArray(), [
+                return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
                 ]);
             },
