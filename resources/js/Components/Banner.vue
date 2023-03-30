@@ -2,8 +2,7 @@
 <template>
     <div
         class="bg-cyan-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14 bg-cover bg-center pb-10"
-        :style="`background-image: url(${$page.props.global.options.banner}); `"
-        id="bg-banner"
+      
     >
         <div class="mx-auto max-w-full lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -46,7 +45,7 @@
                     </div>
                 </div>
                 <div
-                    class="mt-12 -mb-16 sm:-mb-48 lg:relative lg:m-0 hidden lg:block"
+                    class="mt-12 sm:-mb-48 lg:relative lg:m-0 "
                 >
                     <div
                         class="mx-auto max-w-md px-6 sm:max-w-2xl lg:max-w-none lg:px-0"
@@ -63,9 +62,5 @@
     </div>
 </template>
 <style scoped>
-@media only screen and (min-width: 1024px) {
-    #bg-banner {
-        background-image: none !important;
-    }
-}
+ 
 </style>
