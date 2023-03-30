@@ -265,7 +265,7 @@ const page = usePage()?.props?.global?.options;
                                             >
                                                 <tr> 
                                                     <td
-                                                        colspan="6"
+                                                        colspan="16"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination

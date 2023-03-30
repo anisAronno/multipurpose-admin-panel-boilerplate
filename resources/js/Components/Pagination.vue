@@ -6,7 +6,7 @@
                 {{ meta.from }}
                 to
                 {{ meta.to }}
-                from {{ meta.total }} items
+                of {{ meta.total }} results
                 
             </p>
         </div> 

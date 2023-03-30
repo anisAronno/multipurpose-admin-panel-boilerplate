@@ -18,7 +18,7 @@ class RatingFactory extends Factory
     public function definition(): array
     {
         return [
-            'star' => $this->faker->randomFloat(2, 1, 5),
+            'star' => $this->faker->numberBetween(1, 5),
             'user_id' => User::all(['id'])->random(),
         ];
     }

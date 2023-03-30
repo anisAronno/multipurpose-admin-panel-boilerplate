@@ -16,7 +16,9 @@ defineProps({
         :class="isOpenSidebar ? 'md:w-64' : 'md:w-20'"
     >
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex flex-grow flex-col overflow-y-auto bg-gray-100 dark:bg-gray-800 pt-5">
+        <div
+            class="flex flex-grow flex-col overflow-y-auto bg-gray-100 dark:bg-gray-800 pt-5"
+        >
             <div class="flex flex-shrink-0 items-center px-4">
                 <Link :href="route('dashboard')">
                     <ApplicationLogo
@@ -97,7 +99,7 @@ defineProps({
                                         class="px-1 py-1.5 group flex items-center text-sm font-medium rounded-md"
                                         ><component
                                             :is="children.icon"
-                                            class="mr-3 ml-1 h-4 w-4 flex-shrink-0   text-gray-900 dark:text-white"
+                                            class="mr-3 ml-1 h-4 w-4 flex-shrink-0 text-gray-900 dark:text-white"
                                             aria-hidden="true"
                                         />
                                         {{ children.name }}
@@ -112,7 +114,7 @@ defineProps({
                             :key="item.name"
                             :class="[
                                 item.current
-                                    ?  ' bg-gray-400 dark:bg-gray-600 text-gray-900 dark:text-white p-0.5 rounded-sm my-2'
+                                    ? ' bg-gray-400 dark:bg-gray-600 text-gray-900 dark:text-white p-0.5 rounded-sm my-2'
                                     : '',
                             ]"
                         >
@@ -128,7 +130,7 @@ defineProps({
                             >
                                 <component
                                     :is="item.icon"
-                                    class="mr-3 h-8 w-8 flex-shrink-0 dark:text-gray-300 text-gray-900"
+                                    class="mr-3 h-6 w-6 2xl:h-8 2xl:w-8 flex-shrink-0 dark:text-gray-300 text-gray-900"
                                     aria-hidden="true"
                                 />
                             </Link>
