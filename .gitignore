@@ -1,5 +1,6 @@
 /bootstrap/ssr
-/node_modules 
+/node_modules
+/public/build
 /public/hot
 /public/storage
 /storage/*.key
@@ -17,3 +18,8 @@ yarn-error.log
 /.idea
 /.vscode
 /data
+.DS_Store
+*/.DS_Store
+**/.DS_Store
+***/.DS_Store
+****/.DS_Store
