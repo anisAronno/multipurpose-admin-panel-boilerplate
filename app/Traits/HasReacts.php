@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\React;
 
-trait Reactable
+trait HasReacts
 {
     public function reacts()
     {

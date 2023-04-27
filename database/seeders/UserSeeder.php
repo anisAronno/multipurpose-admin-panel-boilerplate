@@ -8,10 +8,10 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Favourite;
 use App\Models\LoginHistory;
+use App\Models\SearchHistory;
 use App\Models\Product;
 use App\Models\Rating;
-use App\Models\React;
-use App\Models\SearchHistory;
+use App\Models\React; 
 use App\Models\ShareHistory;
 use App\Models\SocialLogin;
 use App\Models\Tag;
@@ -49,7 +49,6 @@ class UserSeeder extends Seeder
             ->has(React::factory()->count(2), 'reacts')
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
-            ->has(SearchHistory::factory()->count(2), 'searches')
             ->afterCreating(function ($blog) {
                 $blog->images->first()->pivot->is_featured = 1;
                 $blog->images->first()->pivot->save();
@@ -68,13 +67,13 @@ class UserSeeder extends Seeder
             ->has(React::factory()->count(2), 'reacts')
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
-            ->has(SearchHistory::factory()->count(2), 'searches')
             ->afterCreating(function ($product) {
                 $product->images->first()->pivot->is_featured = 1;
                 $product->images->first()->pivot->save();
             })
         )
         ->has(LoginHistory::factory()->count(2))
+        ->has(SearchHistory::factory()->count(2))
         ->create()->each(function ($user) {
             $user->assignRole('user');
         });

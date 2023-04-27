@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\Image;
 
-trait Imageable
+trait HasImages
 {
     public function images()
     {

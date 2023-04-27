@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models; 
+namespace App\Models;
 
-use App\Helpers\UniqueSlug; 
-use App\Traits\Imageable;
+use App\Helpers\UniqueSlug;
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model; 
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Enums\Status;
@@ -14,7 +14,7 @@ class SpecialFeature extends Model
 {
     use HasFactory;
     use LogsActivity;
-    use Imageable;
+    use HasImages;
 
     /**
     * The attributes that are mass assignable.
@@ -23,7 +23,7 @@ class SpecialFeature extends Model
     */
     protected $fillable = [
         'title',
-        'description', 
+        'description',
         'status',
         'is_featured',
         'slug',
@@ -61,8 +61,8 @@ class SpecialFeature extends Model
         'status' => Status::class,
     ];
 
-     public function scopeIsActive($query)
-     {
-         return $query->where('status', '=', Status::PUBLISHED);
-     }
+    public function scopeIsActive($query)
+    {
+        return $query->where('status', '=', Status::PUBLISHED);
+    }
 }

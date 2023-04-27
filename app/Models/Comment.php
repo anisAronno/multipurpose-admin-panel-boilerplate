@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Imageable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
-use App\Enums\Status;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Comment extends Model
@@ -15,7 +15,7 @@ class Comment extends Model
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-    use Imageable;
+    use HasImages;
 
     /**
     * The attributes that are mass assignable.

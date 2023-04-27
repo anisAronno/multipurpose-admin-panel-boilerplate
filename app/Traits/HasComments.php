@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\Comment;
 
-trait Commentable
+trait HasComments
 {
     public function comments()
     {

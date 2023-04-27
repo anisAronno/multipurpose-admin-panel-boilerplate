@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use App\Helpers\UniqueSlug;
 use App\Traits\CheckStatusAndFeture;
-use App\Traits\Imageable;
+use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
-use App\Enums\Status; 
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Category extends Model
@@ -18,7 +18,7 @@ class Category extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
-    use Imageable;
+    use HasImages;
 
     /**
     * The attributes that are mass assignable.
@@ -64,7 +64,7 @@ class Category extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'status' => Status::class, 
+        'status' => Status::class,
     ];
 
     /**

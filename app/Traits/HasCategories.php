@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\Category;
 
-trait Categoryable
+trait HasCategories
 {
     public function categories()
     {

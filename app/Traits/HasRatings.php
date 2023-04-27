@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Models\Rating;
 
-trait Ratingable
+trait HasRatings
 {
     public function ratings()
     {

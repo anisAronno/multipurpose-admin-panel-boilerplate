@@ -3,25 +3,24 @@
 namespace App\Models;
 
 use App\Enums\Format;
+use App\Enums\Status;
 use App\Helpers\UniqueSlug;
-use App\Traits\Categoryable;
 use App\Traits\CheckStatusAndFeture;
-use App\Traits\Commentable;
 use App\Traits\Favourable;
 use App\Traits\HasAuthor;
-use App\Traits\Imageable;
-use App\Traits\Ratingable;
-use App\Traits\Reactable;
-use App\Traits\Searchable;
+use App\Traits\HasCategories;
+use App\Traits\HasComments;
+use App\Traits\HasImages;
+use App\Traits\HasRatings;
+use App\Traits\HasReacts;
+use App\Traits\HasTags;
+use App\Traits\HasVisitors; 
 use App\Traits\Shareable;
-use App\Traits\Taggable;
-use App\Traits\Visitorable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use App\Enums\Status;
 
 class Blog extends Model
 {
@@ -29,17 +28,16 @@ class Blog extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
-    use Imageable;
-    use Categoryable;
+    use HasImages;
+    use HasCategories;
     use HasAuthor;
-    use Taggable;
-    use Commentable;
+    use HasTags;
+    use HasComments;
     use Favourable;
-    use Ratingable;
-    use Reactable;
-    use Visitorable;
-    use Shareable;
-    use Searchable;
+    use HasRatings;
+    use HasReacts;
+    use HasVisitors;
+    use Shareable; 
 
     /**
     * The attributes that are mass assignable.

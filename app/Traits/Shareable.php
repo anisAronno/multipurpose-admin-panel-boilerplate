@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Traits;
-
-use App\Models\Rating;
+ 
+use App\Models\ShareHistory;
 
 trait Shareable
 {
     public function shares()
     {
-        return $this->morphMany(Rating::class, 'shareable');
+        return $this->morphMany(ShareHistory::class, 'shareable');
     }
 }

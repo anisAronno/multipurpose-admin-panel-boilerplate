@@ -9,14 +9,7 @@ class SearchHistory extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'key',
-        'shareable_id',
-        'shareable_type',
+        'key', 
         'user_id'
-    ];
-
-    public function shareable()
-    {
-        return $this->morphTo();
-    }
+    ]; 
 }

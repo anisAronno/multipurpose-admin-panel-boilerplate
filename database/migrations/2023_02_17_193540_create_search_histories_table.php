@@ -13,9 +13,7 @@ return new class () extends Migration {
     {
         Schema::create('search_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('key', 50)->nullable()->index();
-            $table->text('searchable_id')->nullable();
-            $table->text('searchable_type')->nullable();
+            $table->string('key', 255)->nullable()->index(); 
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });

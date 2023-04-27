@@ -18,7 +18,7 @@ class SearchHistoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'key' => $this->faker->name(),
+            'key' => $this->faker->city(),
             'user_id' => User::all(['id'])->random(),
         ];
     }

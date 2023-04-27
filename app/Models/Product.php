@@ -2,24 +2,23 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use App\Enums\Type;
 use App\Helpers\UniqueSlug;
-use App\Traits\Categoryable;
 use App\Traits\CheckStatusAndFeture;
-use App\Traits\Commentable;
 use App\Traits\Favourable;
 use App\Traits\HasAuthor;
-use App\Traits\Imageable;
-use App\Traits\Ratingable;
-use App\Traits\Reactable; 
-use App\Traits\Searchable;
+use App\Traits\HasCategories;
+use App\Traits\HasComments;
+use App\Traits\HasImages;
+use App\Traits\HasRatings;
+use App\Traits\HasReacts;
+use App\Traits\HasTags; 
 use App\Traits\Shareable;
-use App\Traits\Taggable;
-use App\Traits\Visitorable;
+use App\Traits\HasVisitors;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Enums\Status;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -30,16 +29,15 @@ class Product extends Model
     use LogsActivity;
     use CheckStatusAndFeture;
     use HasAuthor;
-    use Imageable;
-    use Categoryable;
-    use Taggable;
-    use Commentable;
+    use HasImages;
+    use HasCategories;
+    use HasTags;
+    use HasComments;
     use Favourable;
-    use Ratingable;
-    use Reactable; 
-    use Visitorable;
-    use Shareable;
-    use Searchable;
+    use HasRatings;
+    use HasReacts;
+    use HasVisitors;
+    use Shareable; 
 
     /**
      * The attributes that are mass assignable.
