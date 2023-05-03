@@ -12,9 +12,9 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('favourites', function (Blueprint $table) {
-            $table->id(); 
-            $table->text('favourable_id')->nullable();
-            $table->text('favourable_type')->nullable();
+            $table->id();
+            $table->text('favouriteable_id')->nullable();
+            $table->text('favouriteable_type')->nullable();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

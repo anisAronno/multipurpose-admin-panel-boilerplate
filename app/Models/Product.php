@@ -6,7 +6,7 @@ use App\Enums\Status;
 use App\Enums\Type;
 use App\Helpers\UniqueSlug;
 use App\Traits\CheckStatusAndFeture;
-use App\Traits\Favourable;
+use App\Traits\Favouriteable;
 use App\Traits\HasAuthor;
 use App\Traits\HasCategories;
 use App\Traits\HasComments;
@@ -33,7 +33,7 @@ class Product extends Model
     use HasCategories;
     use HasTags;
     use HasComments;
-    use Favourable;
+    use Favouriteable;
     use HasRatings;
     use HasReacts;
     use HasVisitors;
