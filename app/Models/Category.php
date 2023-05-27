@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Featured;
+use App\Enums\Status;
 use App\Helpers\FileHelpers;
 use App\Helpers\UniqueSlug;
 use App\Traits\CheckStatusAndFeture;
@@ -10,8 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
-use App\Enums\Status;
-use App\Enums\Featured;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Category extends Model
@@ -36,6 +36,7 @@ class Category extends Model
         'is_featured',
         'slug',
         'user_id',
+        'parent_id'
     ];
 
     /**
@@ -100,5 +101,79 @@ class Category extends Model
     public function products()
     {
         return $this->morphedByMany(Product::class, 'categoryable');
-    } 
+    }
+
+
+
+    public static function tree($nested = true)
+    {
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug');
+
+        return self::buildTree($query, $nested);
+    }
+
+    public static function productTree($nested = true)
+    {
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug')
+            ->isActive()
+            ->has('products', '>=', 1)
+            ->withCount('products')
+            ->orderByDesc('products_count');
+
+        return self::buildTree($query, $nested);
+    }
+
+    public static function blogTree($nested = true)
+    {
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug')
+            ->isActive()
+            ->has('blogs', '>=', 1)
+            ->withCount('blogs')
+            ->orderByDesc('blogs_count');
+
+        return self::buildTree($query, $nested);
+    }
+
+    private static function buildTree($query, $nested)
+    {
+        $allCategories = $query->get();
+        $rootCategories = $allCategories->whereNull('parent_id');
+
+        if ($nested) {
+            self::buildNestedTree($rootCategories, $allCategories);
+            return $rootCategories;
+        } else {
+            $formattedCategories = [];
+            self::buildFlatTree($rootCategories, $allCategories, $formattedCategories);
+            return $formattedCategories;
+        }
+    }
+
+    private static function buildNestedTree(&$categories, $allCategories)
+    {
+        foreach ($categories as $category) {
+            $children = $allCategories->where('parent_id', $category->value)->values();
+            if ($children->isNotEmpty()) {
+                $category->children = $children;
+                self::buildNestedTree($category->children, $allCategories);
+            }
+        }
+    }
+
+    private static function buildFlatTree($categories, $allCategories, &$result, $prefix = '', $depth = 0)
+    {
+        foreach ($categories as $category) {
+            $categoryData = [
+                'value' => $category->value,
+                'label' => $prefix . $category->label,
+                'parent_id' => $category->parent_id,
+            ];
+
+            $result[] = $categoryData;
+
+            $children = $allCategories->where('parent_id', $category->value);
+            self::buildFlatTree($children, $allCategories, $result, $prefix . '-', $depth + 1);
+        }
+    }
+
 }

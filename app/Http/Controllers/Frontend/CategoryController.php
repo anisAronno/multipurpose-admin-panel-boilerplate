@@ -8,8 +8,8 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -107,4 +107,23 @@ class CategoryController extends Controller
     {
         //
     }
+
+
+    public function singleCat(Category $category)
+    {
+        if (! $category->isActive()) {
+            abort(403);
+        }
+
+        $category->load(['blogs', 'products']);
+
+        $category->load(['blogs' => function ($query) {
+            $query->isActive();
+        }, 'products' => function ($query) {
+            $query->isActive();
+        }])->isActive();
+
+        return response()->json($category);
+    }
+
 }

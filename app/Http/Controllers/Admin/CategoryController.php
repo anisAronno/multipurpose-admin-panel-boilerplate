@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Featured;
+use App\Enums\Status;
+use App\Helpers\FileHelpers;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Enums\Status;
-use App\Enums\Featured;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class CategoryController extends InertiaApplicationController
 {
-     /**
+    /**
     * Filter role and permission
     */
     public function __construct()
@@ -64,8 +64,9 @@ class CategoryController extends InertiaApplicationController
     {
         $statusArr = Status::values();
         $featuredArr = Featured::values();
+        $categories = Category::tree(false);
 
-        return Inertia::render('Dashboard/Category/Create', ['statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Category/Create', ['statusArr' => $statusArr, 'featuredArr'=>$featuredArr, 'categories' => $categories]);
     }
 
     /**
@@ -76,7 +77,7 @@ class CategoryController extends InertiaApplicationController
      */
     public function store(StoreCategoryRequest $request)
     {
-        $data = $request->only('title', 'description', 'is_featured', 'status');
+        $data = $request->only('title', 'description', 'is_featured', 'status', 'parent_id');
         $data['user_id'] = auth()->user()->id ;
 
         if ($request->image) {
@@ -111,8 +112,9 @@ class CategoryController extends InertiaApplicationController
     {
         $statusArr = Status::values();
         $featuredArr = Featured::values();
+        $categories = Category::tree(false);
 
-        return Inertia::render('Dashboard/Category/Edit', ['category' => $category, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr]);
+        return Inertia::render('Dashboard/Category/Edit', ['category' => $category, 'statusArr' => $statusArr, 'featuredArr'=>$featuredArr, 'categories' => $categories]);
     }
 
     /**
@@ -124,7 +126,7 @@ class CategoryController extends InertiaApplicationController
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         try {
-            $category->update($request->only('title', 'description', 'is_featured', 'status'));
+            $category->update($request->only('title', 'description', 'is_featured', 'status', 'parent_id'));
 
             if (session('last_visited_category_url')) {
                 return Redirect::to(session('last_visited_category_url'))->with(['success' => true, 'message', 'Updated successfull']);

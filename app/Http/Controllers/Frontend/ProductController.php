@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
@@ -23,11 +24,13 @@ class ProductController extends Controller
 
         $key = CacheServices::getProductCacheKey($currentPage);
 
+        $categories = Category::productTree()->take(10);  
+
         $products = Cache::remember($key, 10, function () {
             return Product::isActive()->orderBy('id', 'desc')->paginate(16);
         });
 
-        return Inertia::render('Frontend/Products/Index')->with(['products' => $products]);
+        return Inertia::render('Frontend/Products/Index')->with(['products' => $products, 'categories' => $categories]);
     }
 
     /**

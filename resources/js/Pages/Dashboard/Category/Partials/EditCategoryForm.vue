@@ -14,6 +14,7 @@ const props = defineProps({
     category: Object,
     statusArr: Object,
     featuredArr: Object,
+    categories: Object,
 });
 
 const titleInput = ref(null);
@@ -29,6 +30,7 @@ const form = useForm({
     imagePreview: props.category.image || defaultFile.placeholder,
     status: props.category.status,
     is_featured: props.category.is_featured,
+    parent_id: props.category.parent_id,
 });
 
 const previewImage = (e) => {
@@ -56,6 +58,9 @@ const updateCategory = () => {
             }
             if (form.errors.image) {
                 imageInput.value.focus();
+            }
+            if (form.errors.parent_id) {
+                parentIdInput.value.focus();
             }
         },
     });
@@ -105,6 +110,33 @@ const updateCategory = () => {
                                 />
                                 <InputError
                                     :message="form.errors.description"
+                                    class="mt-2 col-start-2 col-span-4"
+                                />
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                                <InputLabel
+                                    for="parent_id"
+                                    value="Parent Category :"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                />
+
+                                <Multiselect
+                                    v-model="form.parent_id"
+                                    :options="categories"
+                                    :selected="form.parent_id"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-black"
+                                    :searchable="true"
+                                    :classes="{
+                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                        singleLabelText:
+                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                    }"
+                                >
+                                </Multiselect>
+                                <InputError
+                                    :message="form.errors.parent_id"
                                     class="mt-2 col-start-2 col-span-4"
                                 />
                             </div>

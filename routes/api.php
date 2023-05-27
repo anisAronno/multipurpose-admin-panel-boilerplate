@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CategoryController;
 use App\Models\LoginHistory;
 use App\Services\User\LoginHistoryService;
 use Illuminate\Http\Request;
@@ -23,3 +24,5 @@ Route::get('/test', function (Request $request) {
     $ipDetails['user_id'] = 1;
     LoginHistory::insert($ipDetails);
 });
+
+Route::get('/category/{category}', [CategoryController::class, 'singleCat'])->name('singleCat');

@@ -7,6 +7,7 @@ import Products from "@/Pages/Frontend/Products/Partials/Products.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 defineProps({
     products: Object,
+    categories: Object,
 });
 </script>
 
@@ -31,7 +32,10 @@ defineProps({
                         {{ __("product.description") }}
                     </p>
                 </div>
-                <Products :products="products"></Products>
+                <Products
+                    :products="products"
+                    :categories="categories"
+                ></Products>
             </div>
             <Feature></Feature>
             <Contact></Contact>

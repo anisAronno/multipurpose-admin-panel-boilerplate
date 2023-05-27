@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User;
 
 return new class () extends Migration {
     /**
@@ -20,6 +20,7 @@ return new class () extends Migration {
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->string('is_featured')->default('N/A');
+            $table->foreignId('parent_id')->nullable()->constrained('categories')->nullable()->nullOnDelete(); 
             $table->string('status')->default('Draft');
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

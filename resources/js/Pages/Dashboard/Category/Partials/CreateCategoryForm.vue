@@ -12,6 +12,7 @@ import Multiselect from "@vueform/multiselect";
 const props = defineProps({
     statusArr: Object,
     featuredArr: Object,
+    categories: Object,
 });
 
 const titleInput = ref(null);
@@ -26,6 +27,7 @@ const form = useForm({
     image: "",
     imagePreview: defaultFile.placeholder,
     status: "",
+    parent_id: "",
     is_featured: false,
 });
 
@@ -55,6 +57,9 @@ const storeCategory = () => {
             if (form.errors.image) {
                 imageInput.value.focus();
             }
+            if (form.errors.parent_id) {
+                parent_id.value.focus();
+            }
         },
     });
 };
@@ -64,7 +69,7 @@ const storeCategory = () => {
     <section class="dark:text-white">
         <form @submit.prevent="storeCategory" class="mt-6 space-y-6 p-3">
             <div class="mt-10 sm:mt-0">
-                <div class="overflow-hidden shadow sm:rounded-md">
+                <div class="shadow sm:rounded-md pb-2 overflow-auto"> 
                     <div class="bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6 mb-10">
                             <div class="col-span-6 sm:col-span-3">
@@ -139,6 +144,33 @@ const storeCategory = () => {
                                         class="w-full h-full object-contain"
                                     />
                                 </span>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                                <InputLabel
+                                    for="parent_id"
+                                    value="Parent Category :"
+                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                />
+
+                                <Multiselect
+                                    v-model="form.parent_id"
+                                    :options="categories"
+                                    :selected="form.parent_id"
+                                    placeholder="Pick some..."
+                                    class="block w-full multiselect-green form-controll dark:text-black"
+                                    :searchable="true"
+                                    :classes="{
+                                        search: ' border-none border-l-0 rounded-sm mr-2  text-gray-900 bg-gray-200  dark:text-gray-50 dark:bg-gray-800',
+                                        singleLabelText:
+                                            '  bg-[#10B981] rounded py-0.5 px-3 text-sm  text-white font-semibold',
+                                    }"
+                                >
+                                </Multiselect>
+                                <InputError
+                                    :message="form.errors.parent_id"
+                                    class="mt-2 col-start-2 col-span-4"
+                                />
                             </div>
 
                             <div class="col-span-6 sm:col-span-3 lg:col-span-3">
