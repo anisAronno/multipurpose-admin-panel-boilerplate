@@ -37,23 +37,29 @@ jobs:
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "APP_ENV=production" >> .env
-          echo "APP_DEBUG=true" >> .env
+          echo "APP_DEBUG=false" >> .env
           echo "LOG_VIEWER_ENABLED=true" >> .env
           echo "LOG_VIEWER_CACHE_DRIVER=file" >> .env
-          echo "TELESCOPE_ENABLED=true" >> .env
+          echo "TELESCOPE_ENABLED=false" >> .env
           echo "ACTIVITY_LOGGER_ENABLED=true" >> .env
 
       - name: Generate application key
         run: php artisan key:generate
 
+      - name: Storage Link
+        run: php artisan storage:link
+
+      - name: Clear All Cache
+        run: php artisan optimize:clear
+
       - name: Build assets with npm
-        run: npm run build 
-        
+        run: npm run build
+
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server_dir: /public_html  # Change this to the desired deployment directory
+          server_dir: /public_html # Change this to the desired deployment directory
           local_dir: ./public
