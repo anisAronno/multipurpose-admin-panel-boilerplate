@@ -82,7 +82,7 @@ function getProducts(catID) {
                                                     "
                                                     class="cursor-pointer"
                                                 >
-                                                    - {{ child2.label }}</span
+                                                    -- {{ child2.label }}</span
                                                 >
                                             </li>
                                             <li

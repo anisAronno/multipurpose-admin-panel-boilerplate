@@ -1,0 +1,59 @@
+name: Deploy to cPanel
+on:
+  push:
+    branches:
+      - startup-company # Change this to your desired branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2" # Change this to your desired PHP version
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --prefer-dist --no-scripts --no-progress --no-interaction
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # Change this to your desired Node.js version
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
+
+      - name: Set environment variables
+        run: |
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "APP_ENV=production" >> .env
+          echo "APP_DEBUG=true" >> .env
+          echo "LOG_VIEWER_ENABLED=true" >> .env
+          echo "LOG_VIEWER_CACHE_DRIVER=file" >> .env
+          echo "TELESCOPE_ENABLED=true" >> .env
+          echo "ACTIVITY_LOGGER_ENABLED=true" >> .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Build assets with npm
+        run: npm run build
+
+      - name: Deploy to cPanel
+        uses: appleboy/cpanel-action@v2
+        with:
+          server: ftp.snmleathers.com
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          directory: /public_html # Change this to the desired deployment directory
+          source: ./
