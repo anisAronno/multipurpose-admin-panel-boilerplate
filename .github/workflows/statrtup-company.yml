@@ -68,6 +68,6 @@ jobs:
           server_dir: /public_html  # Change this to the desired deployment directory
           local_dir: ./public
           synchronize: true
-          exclude: .env  # Exclude the .env file from synchronization
+          exclude: ".env,node_modules/"
 
 
