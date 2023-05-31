@@ -47,13 +47,13 @@ jobs:
         run: php artisan key:generate
 
       - name: Build assets with npm
-        run: npm run build
-
-      - name: Deploy to cPanel
-        uses: appleboy/ssh-action@master
+        run: npm run build 
+        
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          server: ftp.snmleathers.com
-          username: ${{ secrets.CPANEL_USERNAME }}
-          password: ${{ secrets.CPANEL_PASSWORD }}
-          directory: /public_html # Change this to the desired deployment directory
-          source: ./
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server_dir: /public_html  # Change this to the desired deployment directory
+          local_dir: ./public
