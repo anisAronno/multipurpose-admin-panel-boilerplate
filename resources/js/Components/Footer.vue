@@ -1,9 +1,8 @@
 <script setup>
-import { useMenu } from "@/Composables/useMenu";
-import SocialLink from "@/Components/SocialLink.vue"; 
+import { useMenu } from "@/composables/useMenu";
+import SocialLink from "@/Components/SocialLink.vue";
 
 const { navigation } = useMenu();
- 
 </script>
 
 <template>
@@ -12,7 +11,7 @@ const { navigation } = useMenu();
             class="mx-auto w-full overflow-hidden py-20 px-6 sm:py-24 lg:px-8 bg-cyan-100 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
         >
             <nav
-                class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12 "
+                class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
                 aria-label="Footer"
             >
                 <div v-for="item in navigation" :key="item.name" class="pb-6">
@@ -24,12 +23,14 @@ const { navigation } = useMenu();
                 </div>
             </nav>
             <SocialLink></SocialLink>
-            <p class="mt-10 text-center text-md leading-5 text-gray-600 dark:text-gray-400">
+            <p
+                class="mt-10 text-center text-md leading-5 text-gray-600 dark:text-gray-400"
+            >
                 &copy; {{ currentYear }}
                 {{ $page.props.global.options.organization_name }}.
                 {{ __("footer.copyright.text") }}
             </p>
-            <p class="text-center text-sm mt-3 leading-5 text-gray-500 ">
+            <p class="text-center text-sm mt-3 leading-5 text-gray-500">
                 {{ __("footer.design.developed_by") }}
                 <a
                     class="text-md text-blue-600"

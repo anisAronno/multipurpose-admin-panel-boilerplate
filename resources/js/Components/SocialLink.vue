@@ -1,5 +1,5 @@
 <script setup>
-import { useSocial } from "@/Composables/useSocial.js";
+import { useSocial } from "@/composables/useSocial.js";
 import { usePage } from "@inertiajs/inertia-vue3";
 
 const { socialLink } = useSocial();

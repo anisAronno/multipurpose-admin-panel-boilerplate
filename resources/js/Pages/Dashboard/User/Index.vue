@@ -2,7 +2,7 @@
 import DeleteForm from "@/Components/DeleteForm.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Search from "@/Components/Search.vue";
-import { formattedDate } from "@/Composables/useDate";
+import { formattedDate } from "@/composables/useDate";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, usePage } from "@inertiajs/inertia-vue3";
 defineProps({
@@ -150,19 +150,19 @@ const page = usePage().props.value.global.options;
                                                     :id="user.id"
                                                 >
                                                     <td
-                                                        class="min-w-[10%]  text-left p-4 font-semibold text-gray-900 capitalize"
+                                                        class="min-w-[10%] text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ user.name }}
                                                     </td>
 
                                                     <td
-                                                        class="min-w-[10%]  p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ user.email }}
                                                     </td>
 
                                                     <td
-                                                        class=" min-w-[10%] p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         <img
                                                             :src="user.avatar"
@@ -171,7 +171,7 @@ const page = usePage().props.value.global.options;
                                                         />
                                                     </td>
                                                     <td
-                                                        class="min-w-[40%]  p-3 text-md text-gray-500"
+                                                        class="min-w-[40%] p-3 text-md text-gray-500"
                                                     >
                                                         <div
                                                             v-for="role in user.roles"
@@ -186,12 +186,12 @@ const page = usePage().props.value.global.options;
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%]  p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{ user.status }}
                                                     </td>
                                                     <td
-                                                        class="min-w-[10%]  p-3 text-md text-gray-500"
+                                                        class="min-w-[10%] p-3 text-md text-gray-500"
                                                     >
                                                         {{
                                                             formattedDate(
@@ -199,8 +199,8 @@ const page = usePage().props.value.global.options;
                                                             )
                                                         }}
                                                     </td>
-                                                     <td
-                                                        class=" min-w-[10%] max-w-[30%] text-right text-sm font-medium"
+                                                    <td
+                                                        class="min-w-[10%] max-w-[30%] text-right text-sm font-medium"
                                                     >
                                                         <div
                                                             class="flex justify-end flex-wrap gap-2 pr-3"

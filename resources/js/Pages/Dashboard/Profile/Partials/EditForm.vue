@@ -5,7 +5,7 @@ import Modal from "@/Components/Modal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Textarea from "@/Components/Textarea.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { useCountries } from "@/Composables/useCountries";
+import { useCountries } from "@/composables/useCountries";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
 import { ref, watch } from "vue";

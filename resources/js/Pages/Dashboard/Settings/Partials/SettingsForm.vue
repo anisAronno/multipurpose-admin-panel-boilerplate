@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Toggle from "@/Components/Toggle.vue";
-import { useCountries, useLanguage } from "@/Composables/useCountries";
+import { useCountries, useLanguage } from "@/composables/useCountries";
 import defaultFile from "@/Stores/defaultFile";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Multiselect from "@vueform/multiselect";
