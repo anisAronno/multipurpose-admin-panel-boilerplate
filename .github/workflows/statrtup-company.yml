@@ -52,6 +52,7 @@ jobs:
           echo "mkdir storage/framework" | ftp -n ${{ secrets.FTP_SERVER }}
           echo "mkdir storage/logs" | ftp -n ${{ secrets.FTP_SERVER }}
           echo "mkdir storage/temp" | ftp -n ${{ secrets.FTP_SERVER }}
+          echo "mkdir storage/debugbar" | ftp -n ${{ secrets.FTP_SERVER }}
       
       - name: Storage Link
         run: php artisan storage:link
@@ -63,16 +64,20 @@ jobs:
         run: |
           rm -rf node_modules
           echo "node_modules/" >> .gitignore
-          
+
       - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
           server_dir: /public_html  # Change this to the desired deployment directory
           local_dir: ./public
           synchronize: true
-          exclude: ".env,node_modules/"
-
-
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.env/**

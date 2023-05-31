@@ -38,7 +38,7 @@ defineProps({
 
             <FeaturedBlog :featuredBlog="featuredBlog"></FeaturedBlog>
             <!-- CTA Section -->
-            <Contact></Contact>
+            <!-- <Contact></Contact> -->
         </div>
     </MasterLayout>
 </template>
