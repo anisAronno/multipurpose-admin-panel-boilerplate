@@ -49,9 +49,6 @@ jobs:
       - name: Storage Link
         run: php artisan storage:link
 
-      - name: Clear All Cache
-        run: php artisan optimize:clear
-
       - name: Build assets with npm
         run: npm run build
 
