@@ -46,18 +46,6 @@ jobs:
           echo "LOG_VIEWER_CACHE_DRIVER=file" >> .env
           echo "TELESCOPE_ENABLED=false" >> .env
           echo "ACTIVITY_LOGGER_ENABLED=true" >> .env
-          echo "SITE_ROOT=\"$(pwd)\"" >> .env
-          echo "chmod -R 775 storage bootstrap/cache" >> .env
-          echo "chmod -R 775 public" >> .env
-          echo "chmod -R 775 vendor" >> .env
-          echo "chown -R www-data:www-data storage bootstrap/cache" >> .env
-          echo "chown -R www-data:www-data public" >> .env
-          echo "chown -R www-data:www-data vendor" >> .env
-          echo "php artisan cache:clear" >> .env
-          echo "php artisan view:clear" >> .env
-          echo "php artisan config:clear" >> .env
-          echo "php artisan route:cache" >> .env
-          echo "php artisan optimize" >> .env
 
       - name: Generate application key
         run: php artisan key:generate
