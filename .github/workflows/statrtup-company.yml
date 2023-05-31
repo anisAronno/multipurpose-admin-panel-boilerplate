@@ -15,7 +15,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'  # Change this to your desired PHP version
+          php-version: "8.2"
 
       - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --no-scripts --no-progress --no-interaction
@@ -23,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Change this to your desired Node.js version
+          node-version: "18"
 
       - name: Install npm dependencies
         run: npm ci
@@ -36,7 +36,11 @@ jobs:
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "APP_URL=${{ secrets.APP_URL }}" >> .env
+          echo "ASSET_URL=${{ secrets.APP_URL }}" >> .env
+          echo "PUBLIC_URL=${{ secrets.APP_URL }}" >> .env
           echo "APP_ENV=production" >> .env
+          echo "APP_NAME=SNMLeathers" >> .env
           echo "APP_DEBUG=false" >> .env
           echo "LOG_VIEWER_ENABLED=true" >> .env
           echo "LOG_VIEWER_CACHE_DRIVER=file" >> .env
@@ -53,7 +57,22 @@ jobs:
           echo "mkdir storage/logs" | ftp -n ${{ secrets.FTP_SERVER }}
           echo "mkdir storage/temp" | ftp -n ${{ secrets.FTP_SERVER }}
           echo "mkdir storage/debugbar" | ftp -n ${{ secrets.FTP_SERVER }}
-      
+
+      - name: Set file permissions
+        run: |
+          echo "SITE_ROOT=\"$(pwd)\"" >> .env
+          echo "chmod -R 775 storage bootstrap/cache" >> .env
+          echo "chmod -R 775 public" >> .env
+          echo "chmod -R 775 vendor" >> .env
+          echo "chown -R www-data:www-data storage bootstrap/cache" >> .env
+          echo "chown -R www-data:www-data public" >> .env
+          echo "chown -R www-data:www-data vendor" >> .env
+          echo "php artisan cache:clear" >> .env
+          echo "php artisan view:clear" >> .env
+          echo "php artisan config:clear" >> .env
+          echo "php artisan route:cache" >> .env
+          echo "php artisan optimize" >> .env
+
       - name: Storage Link
         run: php artisan storage:link
 
@@ -73,7 +92,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          server_dir: /public_html  # Change this to the desired deployment directory
+          server_dir: /public_html # Change this to the desired deployment directory
           local_dir: ./public
           dangerous-clean-slate: true
           synchronize: true
@@ -81,4 +100,3 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
-            **/.env/**
