@@ -75,6 +75,7 @@ jobs:
           port: 21
           server_dir: /public_html  # Change this to the desired deployment directory
           local_dir: ./public
+          dangerous-clean-slate: true
           synchronize: true
           exclude: |
             **/.git*

@@ -34,7 +34,7 @@ function getProducts(catID) {
                     <h2
                         class="my-5 font-bold underline underline-offset-4 text-2xl"
                     >
-                        Product by Category
+                        Product categories
                     </h2>
                     <div
                         v-for="category in categories"
