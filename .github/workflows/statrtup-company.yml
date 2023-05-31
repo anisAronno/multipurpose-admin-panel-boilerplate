@@ -57,7 +57,7 @@ jobs:
         run: php artisan storage:link
 
       - name: Build assets with npm
-        run: npm run production
+        run: npm run build
 
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
