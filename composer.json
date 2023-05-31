@@ -15,14 +15,14 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.8",
         "laravel/socialite": "^5.5",
+        "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.7",
         "opcodesio/log-viewer": "^1.8",
         "predis/predis": "^2.0",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-permission": "^5.7",
         "stevebauman/location": "^6.5",
-        "tightenco/ziggy": "^1.0",
-        "laravel/telescope": "^4.10"
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
