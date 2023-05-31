@@ -50,7 +50,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to cPanel
-        uses: appleboy/cpanel-action@v2
+        uses: appleboy/ssh-action@master
         with:
           server: ftp.snmleathers.com
           username: ${{ secrets.CPANEL_USERNAME }}
