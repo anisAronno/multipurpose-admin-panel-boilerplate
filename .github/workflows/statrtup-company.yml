@@ -59,6 +59,11 @@ jobs:
       - name: Build assets with npm
         run: npm run build
 
+      - name: Exclude node_modules directory
+        run: |
+          rm -rf node_modules
+          echo "node_modules/" >> .gitignore
+          
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
