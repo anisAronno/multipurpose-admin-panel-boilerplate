@@ -21,7 +21,8 @@
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-permission": "^5.7",
         "stevebauman/location": "^6.5",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.0",
+        "laravel/telescope": "^4.10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
@@ -29,7 +30,6 @@
         "laravel/breeze": "^1.16",
         "laravel/pint": "^1.4",
         "laravel/sail": "^1.0.1",
-        "laravel/telescope": "^4.10",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
