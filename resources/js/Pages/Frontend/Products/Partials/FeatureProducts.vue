@@ -5,7 +5,7 @@ defineProps({
 </script>
 <template>
     <div
-        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5"
+        class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 mt-5"
         v-if="featuredProducts?.length > 0"
     >
         <div class="mx-auto max-w-full overflow-hidden sm:px-6 lg:px-8">

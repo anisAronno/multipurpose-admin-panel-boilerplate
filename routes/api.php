@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Models\LoginHistory;
 use App\Services\User\LoginHistoryService;
 use Illuminate\Http\Request;
@@ -25,4 +25,4 @@ Route::get('/test', function (Request $request) {
     LoginHistory::insert($ipDetails);
 });
 
-Route::get('/category/{category}', [CategoryController::class, 'singleCat'])->name('singleCat');
+Route::get('/product/{category}', [ProductController::class, 'productByCategory'])->name('productByCategory');

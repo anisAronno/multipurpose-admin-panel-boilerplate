@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -106,24 +107,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
-    }
-
-
-    public function singleCat(Category $category)
-    {
-        if (! $category->isActive()) {
-            abort(403);
-        }
-
-        $category->load(['blogs', 'products']);
-
-        $category->load(['blogs' => function ($query) {
-            $query->isActive();
-        }, 'products' => function ($query) {
-            $query->isActive();
-        }])->isActive();
-
-        return response()->json($category);
     }
 
 }

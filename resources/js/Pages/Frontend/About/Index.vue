@@ -16,7 +16,7 @@ import { Head } from "@inertiajs/inertia-vue3";
             <Hero>{{ __("hero.about", "About us") }}</Hero>
             <About></About>
             <Goal></Goal>
-            <Contact></Contact>
+            <!-- <Contact></Contact> -->
         </div>
     </MasterLayout>
 </template>

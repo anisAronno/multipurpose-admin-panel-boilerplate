@@ -100,6 +100,12 @@ defineProps({
                                                     >
                                                         Title
                                                     </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="py-3.5 pr-3 pl-3 text-left text-base font-bold text-gray-900"
+                                                    >
+                                                        Parent Category
+                                                    </th>
 
                                                     <th
                                                         scope="col"
@@ -145,6 +151,11 @@ defineProps({
                                                         class="min-w-[10%] text-left p-4 font-semibold text-gray-900 capitalize"
                                                     >
                                                         {{ category.title }}
+                                                    </td>
+                                                    <td
+                                                        class="min-w-[10%] text-left p-4 font-semibold text-gray-900 capitalize"
+                                                    >
+                                                        {{ category?.parent?.title }}
                                                     </td>
 
                                                     <td

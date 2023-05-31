@@ -6,8 +6,7 @@ import { defineComponent, h } from "vue";
 const navigation = [
     { name: "Home", route: "home" },
     { name: "About", route: "about" },
-    { name: "Products", route: "products" },
-    { name: "Category", route: "category" },
+    { name: "Products", route: "products" }, 
     { name: "Blog", route: "blog" },
     { name: "Contact", route: "contact" },
 ];

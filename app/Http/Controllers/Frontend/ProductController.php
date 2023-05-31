@@ -24,7 +24,7 @@ class ProductController extends Controller
 
         $key = CacheServices::getProductCacheKey($currentPage);
 
-        $categories = Category::productTree()->take(10);  
+        $categories = Category::productTree()->take(20);
 
         $products = Cache::remember($key, 10, function () {
             return Product::isActive()->orderBy('id', 'desc')->paginate(16);

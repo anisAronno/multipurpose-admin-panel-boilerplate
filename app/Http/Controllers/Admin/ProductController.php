@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Enums\Featured;
+use App\Enums\Status;
+use App\Helpers\FileHelpers;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Enums\Status;
-use App\Enums\Featured;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class ProductController extends InertiaApplicationController
 {
-      public function __construct()
+    public function __construct()
     {
         $this->middleware('permission:product.view|product.create|product.edit|product.delete|product.status', ['only' => ['index', 'store']]);
         $this->middleware('permission:product.create', ['only' => ['create', 'store']]);
@@ -102,18 +101,18 @@ class ProductController extends InertiaApplicationController
         }
     }
 
-      /**
+    /**
        * Summary of show
        * @param Request $request
        * @param Product $product
        * @return \Inertia\Response
        */
-      public function show(Product $product)
-      {
-          $product->load(['categories']);
+    public function show(Product $product)
+    {
+        $product->load(['categories']);
 
-          return Inertia::render('Dashboard/Products/Show')->with(['product' => $product]);
-      }
+        return Inertia::render('Dashboard/Products/Show')->with(['product' => $product]);
+    }
 
     /**
      * Summary of edit
@@ -175,27 +174,40 @@ class ProductController extends InertiaApplicationController
         return $this->successWithMessage('Deleted successfull');
     }
 
-       public function imageUpdate(Request $request, Product $product)
-       {
-           if ($request->image) {
-               $path = FileHelpers::upload($request, 'image', 'products');
-               if (! $path) {
-                   return $this->failedWithMessage('Update Failed');
-               } else {
-                   FileHelpers::deleteFile($product->image);
-                   $product->update(['image' => $path]);
-               }
-           }
-
-           return $this->successWithMessage('Successfully Updated');
-       }
-
-         public function imageDelete(Product $product)
-         {
-             FileHelpers::deleteFile($product->image);
-
-             $product->update([$product->image = null]);
-
-             return $this->successWithMessage('Deleted successfull');
+     public function imageUpdate(Request $request, Product $product)
+     {
+         if ($request->image) {
+             $path = FileHelpers::upload($request, 'image', 'products');
+             if (! $path) {
+                 return $this->failedWithMessage('Update Failed');
+             } else {
+                 FileHelpers::deleteFile($product->image);
+                 $product->update(['image' => $path]);
+             }
          }
+
+         return $this->successWithMessage('Successfully Updated');
+     }
+
+    public function imageDelete(Product $product)
+    {
+        FileHelpers::deleteFile($product->image);
+
+        $product->update([$product->image = null]);
+
+        return $this->successWithMessage('Deleted successfull');
+    }
+
+    public function productByCategory(Category $category)
+    {
+        if (! $category->isActive()) {
+            abort(403);
+        }
+
+        $products = Product::whereHas('categories', function ($query) use ($category) {
+            $query->where('category_id', $category->id);
+        })->paginate(1);
+
+        return response()->json($products);
+    }
 }

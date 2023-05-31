@@ -37,8 +37,6 @@ defineProps({
                     :categories="categories"
                 ></Products>
             </div>
-            <Feature></Feature>
-            <Contact></Contact>
         </div>
     </MasterLayout>
 </template>

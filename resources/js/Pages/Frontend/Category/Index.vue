@@ -29,7 +29,7 @@ defineProps({
                 </p>
             </div>
             <Category :categories="categories"></Category>
-            <Contact></Contact>
+            <!-- <Contact></Contact> -->
         </div>
     </MasterLayout>
 </template>

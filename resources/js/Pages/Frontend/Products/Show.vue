@@ -22,7 +22,7 @@ defineProps({
             <FeatureProducts
                 :featuredProducts="featuredProducts"
             ></FeatureProducts>
-            <Contact></Contact>
+            <!-- <Contact></Contact> -->
         </div>
     </MasterLayout>
 </template>

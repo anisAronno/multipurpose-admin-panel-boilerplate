@@ -93,6 +93,10 @@ class Category extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
 
     public function blogs()
     {

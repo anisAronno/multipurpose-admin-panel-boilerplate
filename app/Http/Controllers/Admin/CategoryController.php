@@ -47,7 +47,7 @@ class CategoryController extends InertiaApplicationController
         }
 
         $categories = Cache::remember($key, 10, function () {
-            return Category::orderBy('id', 'desc')->paginate(10);
+            return Category::with('parent')->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_category_url', $request->fullUrl());

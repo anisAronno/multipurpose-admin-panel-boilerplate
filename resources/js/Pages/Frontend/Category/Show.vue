@@ -130,6 +130,6 @@ defineProps({
                 </div>
             </div>
         </div>
-        <Contact></Contact>
+        <!-- <Contact></Contact> -->
     </MasterLayout>
 </template>
