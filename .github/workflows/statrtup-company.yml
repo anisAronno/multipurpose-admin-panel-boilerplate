@@ -46,20 +46,6 @@ jobs:
           echo "LOG_VIEWER_CACHE_DRIVER=file" >> .env
           echo "TELESCOPE_ENABLED=false" >> .env
           echo "ACTIVITY_LOGGER_ENABLED=true" >> .env
-
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Create storage directories on FTP server
-        run: |
-          echo "mkdir storage/app" | ftp -n ${{ secrets.FTP_SERVER }}
-          echo "mkdir storage/framework" | ftp -n ${{ secrets.FTP_SERVER }}
-          echo "mkdir storage/logs" | ftp -n ${{ secrets.FTP_SERVER }}
-          echo "mkdir storage/temp" | ftp -n ${{ secrets.FTP_SERVER }}
-          echo "mkdir storage/debugbar" | ftp -n ${{ secrets.FTP_SERVER }}
-
-      - name: Set file permissions
-        run: |
           echo "SITE_ROOT=\"$(pwd)\"" >> .env
           echo "chmod -R 775 storage bootstrap/cache" >> .env
           echo "chmod -R 775 public" >> .env
@@ -72,6 +58,17 @@ jobs:
           echo "php artisan config:clear" >> .env
           echo "php artisan route:cache" >> .env
           echo "php artisan optimize" >> .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Create storage directories on FTP server
+        run: |
+          echo "mkdir storage/app" | ftp -n ${{ secrets.FTP_SERVER }}
+          echo "mkdir storage/framework" | ftp -n ${{ secrets.FTP_SERVER }}
+          echo "mkdir storage/logs" | ftp -n ${{ secrets.FTP_SERVER }}
+          echo "mkdir storage/temp" | ftp -n ${{ secrets.FTP_SERVER }}
+          echo "mkdir storage/debugbar" | ftp -n ${{ secrets.FTP_SERVER }}
 
       - name: Storage Link
         run: php artisan storage:link
