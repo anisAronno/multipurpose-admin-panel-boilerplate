@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductController;
+
+use App\Http\Controllers\Frontend\ProductController;
 use App\Models\LoginHistory;
 use App\Services\User\LoginHistoryService;
 use Illuminate\Http\Request;
@@ -25,4 +26,4 @@ Route::get('/test', function (Request $request) {
     LoginHistory::insert($ipDetails);
 });
 
-Route::get('/product/{category}', [ProductController::class, 'productByCategory'])->name('productByCategory');
+Route::get('/product', [ProductController::class, 'index'])->name('productByCategory');

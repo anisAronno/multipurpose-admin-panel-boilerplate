@@ -198,16 +198,4 @@ class ProductController extends InertiaApplicationController
         return $this->successWithMessage('Deleted successfull');
     }
 
-    public function productByCategory(Category $category)
-    {
-        if (! $category->isActive()) {
-            abort(403);
-        }
-
-        $products = Product::whereHas('categories', function ($query) use ($category) {
-            $query->where('category_id', $category->id);
-        })->paginate(1);
-
-        return response()->json($products);
-    }
 }

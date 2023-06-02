@@ -20,11 +20,27 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $this->validate($request, [
+            'category'  => 'nullable|array'
+        ]);
+
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
         $key = CacheServices::getProductCacheKey($currentPage);
 
         $categories = Category::productTree()->take(20);
+
+        if (! empty($request->category)) {
+            $catArr = Category::whereIn('id', $request->category)->pluck('id');
+
+            if (count($catArr) > 0) {
+                $products = Product::whereHas('categories', function ($query) use ($catArr) {
+                    $query->whereIn('category_id', $catArr)->isActive();
+                })->paginate(10);
+                return Inertia::render('Frontend/Products/Index')->with(['products' => $products, 'categories' => $categories]);
+            }
+
+        }
 
         $products = Cache::remember($key, 10, function () {
             return Product::isActive()->orderBy('id', 'desc')->paginate(16);
@@ -111,4 +127,5 @@ class ProductController extends Controller
     {
         //
     }
+
 }
