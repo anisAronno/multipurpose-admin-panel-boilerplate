@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Support\Carbon;
+
 
 class Contact extends Model
 {
@@ -38,5 +40,10 @@ class Contact extends Model
                 ])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
+    }
+    
+      public static function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->diffForHumans();
     }
 }
