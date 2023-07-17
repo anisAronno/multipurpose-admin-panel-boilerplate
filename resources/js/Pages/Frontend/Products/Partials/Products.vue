@@ -42,7 +42,7 @@ function getProducts(catID) {
                         class="mb-4"
                     >
                         <div
-                            class="font-semibold cursor-pointer"
+                            class="font-normal sm:font-semibold cursor-pointer text-sm sm:text-lg md:text-lg"
                             @click="getProducts(category.value)"
                         >
                             {{ category.label }}
@@ -104,7 +104,7 @@ function getProducts(catID) {
                 </div>
                 <div class="col-span-4">
                     <div
-                        class="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"
+                        class="-mx-px grid grid-cols-1 sm:grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"
                     >
                         <div
                             v-for="product in productList.data"
@@ -140,7 +140,7 @@ function getProducts(catID) {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <Pagination
                 v-if="productList.last_page > 1"
                 class="mt-6 dark:text-white flex justify-end p-3"

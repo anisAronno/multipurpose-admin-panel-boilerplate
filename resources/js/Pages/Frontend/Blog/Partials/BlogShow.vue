@@ -12,7 +12,7 @@ defineProps({
         >
             <div class="p-5 sm:p-10">
                 <img
-                    class="w-full h-96 rounded-md"
+                    class="w-96 h-auto rounded-md"
                     :src="blog.image"
                     :alt="blog.title"
                 />
