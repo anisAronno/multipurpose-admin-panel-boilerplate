@@ -118,7 +118,7 @@ class Category extends Model
 
     public static function productTree($nested = true)
     {
-        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug')
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug', 'image')
             ->isActive()
             ->has('products', '>=', 1)
             ->withCount('products')

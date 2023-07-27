@@ -5,17 +5,13 @@ const form = useForm({
     search: "",
 });
 
-let searchQuery = ref("");
+const searchQuery = ref("");
 const queryString = usePage().url;
 
-const route = queryString.value.split("?")[0];
+const params = new URLSearchParams(queryString.value.split("?")[1]);
+searchQuery.value = params.get("search") || "";
 
-if (queryString.value.indexOf("?") != -1) {
-    let query = queryString.value.split("?")[1];
-    if (query.indexOf("search") != -1) {
-        searchQuery.value = queryString.value.split("?")[1]?.split("=")[1];
-    }
-}
+const route = queryString.value.split("?")[0];
 
 watch(
     () => form.search,
