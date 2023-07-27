@@ -25,7 +25,7 @@ class UserStatusCheckRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        dd($this->user());
+        return [];
     }
 
     /**

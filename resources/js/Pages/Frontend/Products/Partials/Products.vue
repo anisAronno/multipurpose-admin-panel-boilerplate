@@ -2,31 +2,38 @@
 import Pagination from "@/Components/Pagination.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import axios from "axios";
-import { ref } from "vue";
+import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import search from "@/Components/Search.vue";
 
 const props = defineProps({
     products: Object,
     categories: Object,
 });
 
-const productList = ref(props.products);
+const form = useForm({
+    category: [],
+});
+
+const searchRoute = usePage().url?.value.split("?")[0];
 
 function getProducts(catID) {
-    axios
-        .get(route("productByCategory", catID))
-        .then((res) => {
-            productList.value = res.data;
-        })
-        .catch((e) => {
-            console.log(e.message);
-        });
+    form.category = catID;
+    form.get(searchRoute, {
+        preserveScroll: true,
+        onSuccess: () => form.reset(),
+        onError: () => {
+            console.log(form.errors.category);
+        },
+    });
 }
 </script>
 <template>
     <div class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50">
         <div class="mx-auto max-w-full overflow-hidden sm:px-6 lg:px-8">
             <h2 class="sr-only">{{ __("product.mobile_title") }}</h2>
-
+            <div class="my-5 flex justify-end">
+                <search class="float-right space-x-5" />
+            </div>
             <div class="grid grid-cols-6">
                 <div
                     class="col-span-2 overflow-hidden px-2 break-words break-all"
@@ -36,6 +43,12 @@ function getProducts(catID) {
                     >
                         Product categories
                     </h2>
+                    <h4
+                        class="my-5 font-semibold cursor-pointer"
+                        @click="getProducts(null)"
+                    >
+                        Show All
+                    </h4>
                     <div
                         v-for="category in categories"
                         :key="category.value"
@@ -107,7 +120,7 @@ function getProducts(catID) {
                         class="-mx-px grid grid-cols-1 sm:grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4"
                     >
                         <div
-                            v-for="product in productList.data"
+                            v-for="product in products.data"
                             :key="product.id"
                             class="group border border-gray-200 p-4 sm:p-6"
                         >
@@ -142,9 +155,9 @@ function getProducts(catID) {
                 </div>
             </div>
             <Pagination
-                v-if="productList.last_page > 1"
+                v-if="products.last_page > 1"
                 class="mt-6 dark:text-white flex justify-end p-3"
-                :links="productList.links"
+                :links="products.links"
             ></Pagination>
         </div>
     </div>

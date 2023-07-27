@@ -18,35 +18,49 @@ class ProductController extends Controller
      * Summary of index
      * @return \Inertia\Response
      */
+
     public function index(Request $request)
     {
-        $this->validate($request, [
-            'category'  => 'nullable|array'
-        ]);
+        $orderBy   = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
+        $order     = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
+        $search    = $request->get('search', '');
+        $startDate = $request->get('startDate', '');
+        $endDate   = $request->get('endDate', '');
+        $category  = $request->get('category', '');
 
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $product = Product::with(['categories']);
+        $categoryModel = new Category();
 
-        $key = CacheServices::getProductCacheKey($currentPage);
-
-        $categories = Category::productTree()->take(20);
-
-        if (! empty($request->category)) {
-            $catArr = Category::whereIn('id', $request->category)->pluck('id');
-
-            if (count($catArr) > 0) {
-                $products = Product::whereHas('categories', function ($query) use ($catArr) {
-                    $query->whereIn('category_id', $catArr)->isActive();
-                })->paginate(10);
-                return Inertia::render('Frontend/Products/Index')->with(['products' => $products, 'categories' => $categories]);
-            }
-
+        if (!empty($search)) {
+            $product->where('title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('description', 'LIKE', '%' . $search . '%');
         }
 
-        $products = Cache::remember($key, 10, function () {
-            return Product::isActive()->orderBy('id', 'desc')->paginate(16);
-        });
+        if (!empty($category)) {
+            $catArr = $categoryModel->where('id', $request->category)->pluck('id');
+            if (count($catArr) > 0) {
+                $product->whereHas('categories', function ($query) use ($catArr) {
+                    $query->whereIn('category_id', $catArr)->isActive();
+                });
+            }
+        }
 
-        return Inertia::render('Frontend/Products/Index')->with(['products' => $products, 'categories' => $categories]);
+        if (!empty($startDate) && !empty($endDate)) {
+            $product->where('created_at', '>=', new \DateTime($startDate))
+                    ->where('created_at', '<=', new \DateTime($endDate));
+        }
+
+        if (!empty($orderBy)) {
+            $product->orderBy($orderBy, $order);
+        }
+
+        $products = $product->paginate(12)->withQueryString();
+        $categories = $categoryModel->productTree()->take(20);
+
+        return Inertia::render('Frontend/Products/Index')->with([
+            'products' => $products,
+            'categories' => $categories,
+        ]);
     }
 
     /**

@@ -15,8 +15,8 @@
                             link.active,
                     }"
                     :href="link.url"
-                    v-html="__(link.label)"
                 >
+                    <span v-html="__(link.label)"></span>
                 </Link>
             </template>
         </div>
