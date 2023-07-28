@@ -37,7 +37,7 @@ class ProductController extends Controller
         }
 
         if (!empty($category)) {
-            $catArr = $categoryModel->where('id', $request->category)->pluck('id');
+            $catArr = $categoryModel->where('slug', $request->category)->pluck('id');
             if (count($catArr) > 0) {
                 $product->whereHas('categories', function ($query) use ($catArr) {
                     $query->whereIn('category_id', $catArr)->isActive();
@@ -56,7 +56,7 @@ class ProductController extends Controller
 
         $products = $product->paginate(12)->withQueryString();
         $categories = $categoryModel->productTree()->take(20);
-
+       
         return Inertia::render('Frontend/Products/Index')->with([
             'products' => $products,
             'categories' => $categories,

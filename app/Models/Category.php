@@ -111,14 +111,14 @@ class Category extends Model
 
     public static function tree($nested = true)
     {
-        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug');
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug', 'image', 'description');
 
         return self::buildTree($query, $nested);
     }
 
     public static function productTree($nested = true)
     {
-        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug', 'image')
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug', 'image', 'description')
             ->isActive()
             ->has('products', '>=', 1)
             ->withCount('products')
@@ -129,7 +129,7 @@ class Category extends Model
 
     public static function blogTree($nested = true)
     {
-        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug')
+        $query = Category::select('id as value', 'title as label', 'parent_id', 'slug', 'image', 'description')
             ->isActive()
             ->has('blogs', '>=', 1)
             ->withCount('blogs')
