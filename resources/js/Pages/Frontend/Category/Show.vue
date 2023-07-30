@@ -65,8 +65,8 @@ defineProps({
                                     :href="route('product.show', product.slug)"
                                 >
                                     <img
-                                        :src="product.image?.url"
-                                        :alt="product.image?.title"
+                                        :src="product.image"
+                                        :alt="product.title"
                                         class="h-full w-full object-cover object-center"
                                     />
                                 </Link>
@@ -102,14 +102,14 @@ defineProps({
                             v-for="blog in category.blogs"
                             :key="blog.id"
                             class="group border border-gray-200 p-4 sm:p-6"
-                        > 
+                        >
                             <div
                                 class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 group-hover:opacity-75"
                             >
                                 <Link :href="route('blog.show', blog.slug)">
                                     <img
-                                        :src="blog.image?.url"
-                                        :alt="blog.image?.title"
+                                        :src="blog.image"
+                                        :alt="blog.title"
                                         class="h-full w-full object-cover object-center"
                                     />
                                 </Link>

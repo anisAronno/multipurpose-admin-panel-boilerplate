@@ -8,7 +8,7 @@
         >
             <div class="p-5 sm:p-10">
                 <img
-                    class="w-full h-96 rounded-md"
+                    class="w-full h-auto rounded-md"
                     :src="$page.props.global.options.about_image"
                     alt="About Picture"
                 />
