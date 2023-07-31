@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Role;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
+use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\Cache\CacheServices;
@@ -56,7 +57,7 @@ class RolesController extends InertiaApplicationController
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
+        return Inertia::render('Dashboard/Role/Index')->with(['roles' => RoleResource::collection($roles)]);
     }
 
     /**
@@ -102,18 +103,17 @@ class RolesController extends InertiaApplicationController
         return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Created']);
     }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function show(Role $role)
-  {
-      $role->load('permissions');
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+      */
+    public function show(Role $role)
+    {
+        $role->load('permissions');
 
-      return Inertia::render('Dashboard/Role/Show', compact('role'));
-  }
+        return Inertia::render('Dashboard/Role/Show', ['role' => new RoleResource($role) ]);
+    }
 
     /**
      * Show the form for editing the specified resource.

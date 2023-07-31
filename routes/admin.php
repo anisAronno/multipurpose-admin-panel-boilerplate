@@ -5,11 +5,12 @@ use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\Role\RolesController;
+use App\Http\Controllers\LanguageStoreController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserController;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/Index');
@@ -55,4 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('mark-read', [NotificationController::class, 'markNotification'])
     ->name('notification.mark.read');
+
+    Route::post('/language', LanguageStoreController::class)->name('language.store');
+
 });

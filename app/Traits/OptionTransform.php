@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Enums\SettingsFields;
-use App\Helpers\LanguageHelper;
 use App\Services\Cache\CacheServices;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -15,9 +14,9 @@ trait OptionTransform
         $key = CacheServices::getOptionsCacheKey(1);
 
         try {
-            $options = Cache::remember($key, 10, function () {
+            $options = Cache::rememberForever($key, function () {
                 $response = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
+                    return [$name->option_key => $name->option_value];
                 });
 
                 return $response;
@@ -63,10 +62,15 @@ trait OptionTransform
 
     public static function getOption(string $key)
     {
-        try {
-            $option = self::where('option_key', $key)->first();
+        $cacheKey = CacheServices::getOptionsCacheKey(3);
 
+        try {
+            $option = Cache::rememberForever($cacheKey.ord($key)+10, function () use ($key) {
+                return self::where('option_key', $key)->first();
+
+            });
             return $option['option_value'];
+
         } catch (\Throwable $th) {
             return false;
         }
@@ -79,9 +83,9 @@ trait OptionTransform
         $key = CacheServices::getOptionsCacheKey(2);
 
         try {
-            $options = Cache::remember($key, 10, function () use ($settingFields) {
+            $options = Cache::rememberForever($key, function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
+                    return [$name->option_key => $name->option_value];
                 });
 
                 return $response;
