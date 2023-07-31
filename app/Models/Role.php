@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\AdministrativeRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Carbon;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role as ModelsRole;
@@ -24,12 +23,7 @@ class Role extends ModelsRole
         ->dontSubmitEmptyLogs();
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
-        }
-    }
+
 
     protected $appends = ['isDeletable', 'isEditable'];
 

@@ -137,23 +137,23 @@ class SocialLoginController extends InertiaApplicationController
         }
     }
 
-      /**
-       * Summary of storeUserLoginDetails
-       *
-       * @param  mixed  $user
-       * @return void
-       */
-      public function storeLoginDetails($user, $provider)
-      {
-          $data['ip'] = UserSystemInfoHelper::get_ip();
-          $data['auth_source'] = $provider;
-          $data['device_name'] = UserSystemInfoHelper::get_device();
-          $data['browser_name'] = UserSystemInfoHelper::get_browsers();
-          $data['os_name'] = UserSystemInfoHelper::get_os();
-          $data['auth_source'] = '';
+    /**
+     * Summary of storeUserLoginDetails
+     *
+     * @param  mixed  $user
+     * @return void
+     */
+    public function storeLoginDetails($user, $provider)
+    {
+        $data['ip'] = UserSystemInfoHelper::get_ip();
+        $data['auth_source'] = $provider;
+        $data['device_name'] = UserSystemInfoHelper::get_device();
+        $data['browser_name'] = UserSystemInfoHelper::get_browsers();
+        $data['os_name'] = UserSystemInfoHelper::get_os();
+        $data['auth_source'] = '';
 
-          $userDetails = array_merge($data, ['user_id' => $user->id]);
+        $userDetails = array_merge($data, ['user_id' => $user->id]);
 
-          LoginEvent::dispatch($userDetails);
-      }
+        LoginEvent::dispatch($userDetails);
+    }
 }

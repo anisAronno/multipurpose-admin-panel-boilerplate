@@ -213,19 +213,18 @@ defineProps({
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot class="bg-gray-50">
+                                            <tfoot
+                                                class="bg-gray-50 min-w-full"
+                                                v-if="roles.meta.last_page > 1"
+                                            >
                                                 <tr>
                                                     <td
-                                                        colspan="4"
+                                                        colspan="16"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
-                                                            v-if="
-                                                                roles.last_page >
-                                                                1
-                                                            "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :links="roles.links"
+                                                            :meta="roles.meta"
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

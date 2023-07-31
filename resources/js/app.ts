@@ -8,7 +8,7 @@ import { createInertiaApp, Link, usePage } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
-import { translations } from "./Mixins/translations";
+import { lang } from "./Mixins/lang";
 
 library.add(fas);
 
@@ -29,7 +29,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .component("font-awesome-icon", FontAwesomeIcon)
             .component("Link", Link)
-            .mixin(translations)
+            .mixin(lang)
             .mount(el);
     },
     progress: {

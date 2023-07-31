@@ -19,9 +19,10 @@ defineProps({
     userDefaultStatus: Object,
 });
 
-const options = usePage().props.global.options;
+const propsData = usePage().props;
+const options = propsData?.global.options;
 
-const languageArray = useLanguage(options.existing_language_file);
+const languageArray = useLanguage(propsData.languages);
 
 const form = useForm({
     site_name: options.site_name,
