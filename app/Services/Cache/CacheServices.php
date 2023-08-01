@@ -4,55 +4,55 @@ namespace App\Services\Cache;
 
 class CacheServices
 {
-    public static function getRoleCacheKey(int $token = null): string
+    public static function getRoleCacheKey(): string
     {
-        return 'role'.$token;
+        return 'role_';
     }
 
-    public static function getUserCacheKey(int $token = null): string
+    public static function getUserCacheKey(): string
     {
-        return 'user'.$token;
+        return 'user_';
     }
 
-    public static function getOptionsCacheKey(int $token = null): string
+    public static function getOptionsCacheKey(): string
     {
-        return 'option'.$token;
+        return 'option_';
     }
-    public static function getProductCacheKey(int $token = null): string
+    public static function getProductCacheKey(): string
     {
-        return 'product'.$token;
+        return 'product_';
     }
-    public static function getFeaturedProductCacheKey(int $token = null): string
+    public static function getFeaturedProductCacheKey(): string
     {
-        return 'featured_product'.$token;
+        return 'featured_product_';
     }
-    public static function getBlogCacheKey(int $token = null): string
+    public static function getBlogCacheKey(): string
     {
-        return 'blog'.$token;
+        return 'blog_';
     }
-    public static function getFeaturedBlogCacheKey(int $token = null): string
+    public static function getFeaturedBlogCacheKey(): string
     {
-        return 'featured_blog'.$token;
+        return 'featured_blog_';
     }
-    public static function getCategoryCacheKey(int $token = null): string
+    public static function getCategoryCacheKey(): string
     {
-        return 'category'.$token;
+        return 'category_';
     }
 
-     public static function getFeaturedCategoryCacheKey(int $token = null): string
-     {
-         return 'featured_category'.$token;
-     }
-
-
-    public static function getContactCacheKey(int $token = null): string
+    public static function getFeaturedCategoryCacheKey(): string
     {
-        return 'contact'.$token;
+        return 'featured_category_';
     }
 
 
-    public static function getSpecialFeatureCacheKey(int $token = null): string
+    public static function getContactCacheKey(): string
     {
-        return 'category'.$token;
+        return 'contact_';
+    }
+
+
+    public static function getSpecialFeatureCacheKey(): string
+    {
+        return 'category_';
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
-use App\Http\Controllers\Controller;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class BlogController extends Controller
 {
@@ -21,9 +21,10 @@ class BlogController extends Controller
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getBlogCacheKey($currentPage);
+        $key = CacheServices::getBlogCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $blogs = Cache::remember($key, 10, function () {
+        $blogs = Cache::remember($cacheKey, 10, function () {
             return Blog::isActive()->isFeatured()->orderBy('id', 'desc')->with('user')->paginate(9);
         });
 

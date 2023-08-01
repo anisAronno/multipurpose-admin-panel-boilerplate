@@ -46,9 +46,10 @@ class RolesController extends InertiaApplicationController
             return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
         }
 
-        $key = CacheServices::getRoleCacheKey($currentPage);
+        $key = CacheServices::getRoleCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $roles = Cache::remember($key, 10, function () {
+        $roles = Cache::remember($cacheKey, 10, function () {
             return Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
             }])->orderBy('id', 'desc')->paginate(10);
@@ -102,18 +103,18 @@ class RolesController extends InertiaApplicationController
         return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Created']);
     }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function show(Role $role)
-  {
-      $role->load('permissions');
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Role $role)
+    {
+        $role->load('permissions');
 
-      return Inertia::render('Dashboard/Role/Show', compact('role'));
-  }
+        return Inertia::render('Dashboard/Role/Show', compact('role'));
+    }
 
     /**
      * Show the form for editing the specified resource.

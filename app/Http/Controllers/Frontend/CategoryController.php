@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Models\Product;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -22,9 +21,10 @@ class CategoryController extends Controller
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getCategoryCacheKey($currentPage);
+        $key = CacheServices::getCategoryCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $categories = Cache::remember($key, 10, function () {
+        $categories = Cache::remember($cacheKey, 10, function () {
             return Category::whereHas('blogs')->orWhereHas('products')->isActive()->isFeatured()->orderBy('id', 'desc')->paginate(9);
         });
 

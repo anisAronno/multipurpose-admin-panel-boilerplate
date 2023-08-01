@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\InertiaApplicationController;
 use App\Models\Contact;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class ContactController extends InertiaApplicationController
 {
@@ -22,7 +22,7 @@ class ContactController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getContactCacheKey($currentPage);
+        $key = CacheServices::getContactCacheKey();
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -36,7 +36,9 @@ class ContactController extends InertiaApplicationController
             return Inertia::render('Dashboard/Contact/Index', ['contacts' => $contacts]);
         }
 
-        $contacts = Cache::remember($key, 10, function () {
+        $cacheKey =  $key.md5(serialize([$key]));
+
+        $contacts = Cache::remember($cacheKey, 10, function () {
             return Contact::orderBy('id', 'desc')->paginate(10);
         });
 
@@ -45,12 +47,12 @@ class ContactController extends InertiaApplicationController
         return Inertia::render('Dashboard/Contact/Index')->with(['contacts' => $contacts]);
     }
 
-      /**
-       * Summary of show
-       * @param Request $request
-       * @param Contact $contact
-       * @return \Inertia\Response
-       */
+    /**
+     * Summary of show
+     * @param Request $request
+     * @param Contact $contact
+     * @return \Inertia\Response
+     */
     public function show(Contact $contact)
     {
         return Inertia::render('Dashboard/Contact/Show')->with(['contact' => $contact]);

@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Enums\SettingsFields;
-use App\Helpers\Helpers;
 use App\Helpers\LanguageHelper;
 use App\Services\Cache\CacheServices;
 use Illuminate\Support\Facades\Cache;
@@ -12,10 +11,11 @@ trait OptionTransform
 {
     public static function getAllOptions()
     {
-        $key = CacheServices::getOptionsCacheKey(1);
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getAllOptions']));
 
         try {
-            $options = Cache::remember($key, 10, function () {
+            $options = Cache::remember($cacheKey, 10, function () {
                 $response = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });
@@ -58,9 +58,8 @@ trait OptionTransform
 
     public static function getOption(string $key)
     {
-        $optionChacheKey = CacheServices::getOptionsCacheKey(3);
-        $stringToNum = Helpers::stringToInteger($key);
-        $cacheKey =  $optionChacheKey.$stringToNum;
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getOption']));
 
         try {
             $option = Cache::rememberForever($cacheKey, function () use ($key) {
@@ -79,10 +78,11 @@ trait OptionTransform
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheServices::getOptionsCacheKey(2);
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getSettings']));
 
         try {
-            $options = Cache::remember($key, 10, function () use ($settingFields) {
+            $options = Cache::remember($cacheKey, 10, function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });
@@ -102,16 +102,17 @@ trait OptionTransform
 
     /**
      * Summary of getAllWithoutSettings
-     * @return TCacheValue|array
+     * @return mixed
      */
     public static function getAllWithoutSettings()
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheServices::getOptionsCacheKey(3);
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getSettings']));
 
         try {
-            $options = Cache::remember($key, 10, function () use ($settingFields) {
+            $options = Cache::remember($cacheKey, 10, function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereNotIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
                 });

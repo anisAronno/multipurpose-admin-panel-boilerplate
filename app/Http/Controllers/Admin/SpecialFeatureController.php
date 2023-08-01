@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
+use App\Helpers\FileHelpers;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreSpecialFeatureRequest;
 use App\Http\Requests\UpdateSpecialFeatureRequest;
 use App\Models\SpecialFeature;
-use App\Enums\Status;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class SpecialFeatureController extends InertiaApplicationController
 {
@@ -26,7 +26,7 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getSpecialFeatureCacheKey($currentPage);
+        $key = CacheServices::getSpecialFeatureCacheKey();
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -35,7 +35,9 @@ class SpecialFeatureController extends InertiaApplicationController
             return Inertia::render('Dashboard/SpecialFeature/Index', ['specialFeatures' => $specialFeatures]);
         }
 
-        $specialFeatures = Cache::remember($key, 10, function () {
+        $cacheKey =  $key.md5(serialize([$currentPage]));
+
+        $specialFeatures = Cache::remember($cacheKey, 10, function () {
             return SpecialFeature::orderBy('id', 'desc')->paginate(10);
         });
 
@@ -51,7 +53,7 @@ class SpecialFeatureController extends InertiaApplicationController
      */
     public function create()
     {
-        $statusArr = Status::values(); 
+        $statusArr = Status::values();
 
         return Inertia::render('Dashboard/SpecialFeature/Create', ['statusArr' => $statusArr]);
     }
@@ -64,7 +66,7 @@ class SpecialFeatureController extends InertiaApplicationController
      */
     public function store(StoreSpecialFeatureRequest $request)
     {
-        $data = $request->only('title', 'description', 'status'); 
+        $data = $request->only('title', 'description', 'status');
 
         if ($request->image) {
             $data['image'] = FileHelpers::upload($request, 'image', 'specialFeatures');
@@ -78,16 +80,16 @@ class SpecialFeatureController extends InertiaApplicationController
         }
     }
 
-      /**
-       * Summary of show
-       * @param Request $request
-       * @param SpecialFeature $specialFeature
-       * @return \Inertia\Response
-       */
-      public function show(SpecialFeature $specialFeature)
-      {
-          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => $specialFeature]);
-      }
+    /**
+     * Summary of show
+     * @param Request $request
+     * @param SpecialFeature $specialFeature
+     * @return \Inertia\Response
+     */
+    public function show(SpecialFeature $specialFeature)
+    {
+        return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => $specialFeature]);
+    }
 
     /**
      * Summary of edit

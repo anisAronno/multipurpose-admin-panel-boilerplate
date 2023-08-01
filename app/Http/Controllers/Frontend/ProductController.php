@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -28,12 +27,11 @@ class ProductController extends Controller
         $startDate = $request->get('startDate', '');
         $endDate   = $request->get('endDate', '');
         $category  = $request->get('category', '');
-        $page  = $request->get('page', '');
+        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
         $productCacheKey = CacheServices::getProductCacheKey();
 
-        $stringToNum = Helpers::stringToInteger($orderBy, $order, $search, $startDate, $endDate, $page, $category);
-        $cacheKey =  $productCacheKey.$stringToNum;
+        $cacheKey =  $productCacheKey.md5(serialize([$orderBy, $order, $search, $startDate, $endDate, $currentPage, $category]));
 
         $products = Cache::remember($cacheKey, now()->addDay(), function () use (
             $orderBy,

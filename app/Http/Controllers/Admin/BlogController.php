@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Featured;
+use App\Enums\Status;
+use App\Helpers\FileHelpers;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
-use App\Enums\Status;
-use App\Enums\Featured;
 use App\Models\Category;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
-use App\Helpers\FileHelpers;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class BlogController extends InertiaApplicationController
 {
@@ -37,7 +37,7 @@ class BlogController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getBlogCacheKey($currentPage);
+        $key = CacheServices::getBlogCacheKey();
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -46,7 +46,9 @@ class BlogController extends InertiaApplicationController
             return Inertia::render('Dashboard/Blog/Index', ['blogs' => $blogs]);
         }
 
-        $blogs = Cache::remember($key, 10, function () {
+        $cacheKey =  $key.md5(serialize([$currentPage]));
+
+        $blogs = Cache::remember($cacheKey, 10, function () {
             return Blog::with(['categories'])->orderBy('id', 'desc')->paginate(10);
         });
 
@@ -97,12 +99,12 @@ class BlogController extends InertiaApplicationController
         }
     }
 
-      /**
-       * Summary of show
-       * @param Request $request
-       * @param Blog $blog
-       * @return \Inertia\Response
-       */
+    /**
+     * Summary of show
+     * @param Request $request
+     * @param Blog $blog
+     * @return \Inertia\Response
+     */
     public function show(Blog $blog)
     {
         $blog->load(['categories']);

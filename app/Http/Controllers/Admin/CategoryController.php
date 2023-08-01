@@ -37,8 +37,6 @@ class CategoryController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getCategoryCacheKey($currentPage);
-
         if (! empty($request->search)) {
             $q = $request->search;
             $categories = Category::where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
@@ -46,7 +44,10 @@ class CategoryController extends InertiaApplicationController
             return Inertia::render('Dashboard/Category/Index', ['categories' => $categories]);
         }
 
-        $categories = Cache::remember($key, 10, function () {
+        $key = CacheServices::getCategoryCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
+
+        $categories = Cache::remember($cacheKey, 10, function () {
             return Category::with('parent')->orderBy('id', 'desc')->paginate(10);
         });
 
@@ -92,16 +93,16 @@ class CategoryController extends InertiaApplicationController
         }
     }
 
-      /**
-       * Summary of show
-       * @param Request $request
-       * @param Category $category
-       * @return \Inertia\Response
-       */
-      public function show(Category $category)
-      {
-          return Inertia::render('Dashboard/Category/Show')->with(['category' => $category]);
-      }
+    /**
+     * Summary of show
+     * @param Request $request
+     * @param Category $category
+     * @return \Inertia\Response
+     */
+    public function show(Category $category)
+    {
+        return Inertia::render('Dashboard/Category/Show')->with(['category' => $category]);
+    }
 
     /**
      * Summary of edit

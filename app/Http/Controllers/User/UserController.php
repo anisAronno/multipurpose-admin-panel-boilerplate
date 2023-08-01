@@ -11,12 +11,12 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-use Illuminate\Support\Carbon;
 
 class UserController extends InertiaApplicationController
 {
@@ -40,7 +40,6 @@ class UserController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getUserCacheKey($currentPage);
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -48,8 +47,10 @@ class UserController extends InertiaApplicationController
 
             return Inertia::render('Dashboard/User/Index', ['users' => $users]);
         }
+        $key = CacheServices::getUserCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $users = Cache::remember($key, 10, function () {
+        $users = Cache::remember($cacheKey, 10, function () {
             return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
         });
 
@@ -165,60 +166,60 @@ class UserController extends InertiaApplicationController
         return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Updated successfull']);
     }
 
-   /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-   public function destroy(User $user)
-   {
-       if (! $user->isDeletable) {
-           return $this->failedWithMessage('User is not delatable');
-       }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        if (! $user->isDeletable) {
+            return $this->failedWithMessage('User is not delatable');
+        }
 
-       $user->delete();
+        $user->delete();
 
-       if (session('last_visited_url')) {
-           return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
-       }
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
+        }
 
-       return $this->successWithMessage('Deleted successfull');
-   }
+        return $this->successWithMessage('Deleted successfull');
+    }
 
-   /**
-    * Summary of avatarUpdate
-    *
-    * @param  User  $user
-    * @return \Illuminate\Http\RedirectResponse
-    */
-   public function avatarUpdate(Request $request, User $user)
-   {
-       if ($request->image) {
-           $path = FileHelpers::upload($request, 'image', 'users');
-           if (! $path) {
-               return $this->successWithMessage('Update Failed');
-           } else {
-               FileHelpers::deleteFile($user->avatar);
-               $user->update([$user->avatar = $path]);
-           }
-       }
+    /**
+     * Summary of avatarUpdate
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function avatarUpdate(Request $request, User $user)
+    {
+        if ($request->image) {
+            $path = FileHelpers::upload($request, 'image', 'users');
+            if (! $path) {
+                return $this->successWithMessage('Update Failed');
+            } else {
+                FileHelpers::deleteFile($user->avatar);
+                $user->update([$user->avatar = $path]);
+            }
+        }
 
-       return $this->successWithMessage('Successfully Updated');
-   }
+        return $this->successWithMessage('Successfully Updated');
+    }
 
-   /**
-    * Remove the specified user avatar.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-   public function avatarDelete(User $user)
-   {
-       FileHelpers::deleteFile($user->avatar);
+    /**
+     * Remove the specified user avatar.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function avatarDelete(User $user)
+    {
+        FileHelpers::deleteFile($user->avatar);
 
-       $user->update([$user->avatar = null]);
+        $user->update([$user->avatar = null]);
 
-       return $this->failedWithMessage('Deleted successfull');
-   }
+        return $this->failedWithMessage('Deleted successfull');
+    }
 }

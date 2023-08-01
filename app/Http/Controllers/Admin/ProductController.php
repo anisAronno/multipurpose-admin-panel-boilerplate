@@ -37,9 +37,6 @@ class ProductController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getProductCacheKey($currentPage);
-
-
         if (! empty($request->search)) {
             $q = $request->search;
             $products = Product::with(['categories'])->where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
@@ -47,8 +44,10 @@ class ProductController extends InertiaApplicationController
             return Inertia::render('Dashboard/Products/Index', ['products' => $products]);
         }
 
+        $key = CacheServices::getProductCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $products = Cache::remember($key, 10, function () {
+        $products = Cache::remember($cacheKey, 10, function () {
             return Product::with(['categories'])->orderBy('id', 'desc')->paginate(10);
         });
 
@@ -174,20 +173,20 @@ class ProductController extends InertiaApplicationController
         return $this->successWithMessage('Deleted successfull');
     }
 
-     public function imageUpdate(Request $request, Product $product)
-     {
-         if ($request->image) {
-             $path = FileHelpers::upload($request, 'image', 'products');
-             if (! $path) {
-                 return $this->failedWithMessage('Update Failed');
-             } else {
-                 FileHelpers::deleteFile($product->image);
-                 $product->update(['image' => $path]);
-             }
-         }
+    public function imageUpdate(Request $request, Product $product)
+    {
+        if ($request->image) {
+            $path = FileHelpers::upload($request, 'image', 'products');
+            if (! $path) {
+                return $this->failedWithMessage('Update Failed');
+            } else {
+                FileHelpers::deleteFile($product->image);
+                $product->update(['image' => $path]);
+            }
+        }
 
-         return $this->successWithMessage('Successfully Updated');
-     }
+        return $this->successWithMessage('Successfully Updated');
+    }
 
     public function imageDelete(Product $product)
     {
