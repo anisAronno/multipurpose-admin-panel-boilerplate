@@ -11,10 +11,11 @@ trait OptionTransform
 {
     public static function getAllOptions()
     {
-        $key = CacheServices::getOptionsCacheKey(1);
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getAllOptions']));
 
         try {
-            $options = Cache::rememberForever($key, function () {
+            $options = Cache::remember($cacheKey, 10, function () {
                 $response = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return [$name->option_key => $name->option_value];
                 });
@@ -62,10 +63,11 @@ trait OptionTransform
 
     public static function getOption(string $key)
     {
-        $cacheKey = CacheServices::getOptionsCacheKey(3);
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getOption']));
 
         try {
-            $option = Cache::rememberForever($cacheKey.ord($key)+10, function () use ($key) {
+            $option = Cache::rememberForever($cacheKey, function () use ($key) {
                 return self::where('option_key', $key)->first();
 
             });
@@ -74,16 +76,18 @@ trait OptionTransform
         } catch (\Throwable $th) {
             return false;
         }
+
     }
 
     public static function getSettings()
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheServices::getOptionsCacheKey(2);
+        $key = CacheServices::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getSettings']));
 
         try {
-            $options = Cache::rememberForever($key, function () use ($settingFields) {
+            $options = Cache::rememberForever($cacheKey, function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
                     return [$name->option_key => $name->option_value];
                 });

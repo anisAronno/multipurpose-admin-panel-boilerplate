@@ -47,9 +47,10 @@ class RolesController extends InertiaApplicationController
             return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
         }
 
-        $key = CacheServices::getRoleCacheKey($currentPage);
+        $key = CacheServices::getRoleCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $roles = Cache::remember($key, 10, function () {
+        $roles = Cache::remember($cacheKey, 10, function () {
             return Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
             }])->orderBy('id', 'desc')->paginate(10);

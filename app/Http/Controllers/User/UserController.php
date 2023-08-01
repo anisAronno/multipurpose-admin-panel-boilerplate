@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -38,7 +39,6 @@ class UserController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getUserCacheKey($currentPage);
 
         if (! empty($request->search)) {
             $q = $request->search;
@@ -46,8 +46,10 @@ class UserController extends InertiaApplicationController
 
             return Inertia::render('Dashboard/User/Index', ['users' => $users]);
         }
+        $key = CacheServices::getUserCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $users = Cache::remember($key, 10, function () {
+        $users = Cache::remember($cacheKey, 10, function () {
             return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
         });
 

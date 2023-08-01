@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Helpers\CacheHelpers;
 use Illuminate\Support\Facades\Cache;
 
 trait ClearCache
@@ -14,12 +15,10 @@ trait ClearCache
      */
     public function clearCache($key)
     {
-        for ($i = 1; $i <= 5000; $i++) {
-            $newKey = $key.$i;
-            if (Cache::has($newKey)) {
-                Cache::forget($newKey);
-            } else {
-                break;
+        $allKeys = CacheHelpers::getCacheKeys($key);
+        foreach ($allKeys as  $oldKey) {
+            if (Cache::has($oldKey)) {
+                Cache::forget($oldKey);
             }
         }
     }
