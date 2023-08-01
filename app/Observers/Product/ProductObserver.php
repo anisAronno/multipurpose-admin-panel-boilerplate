@@ -2,20 +2,17 @@
 
 namespace App\Observers\Product;
 
+use App\Helpers\CacheHelper;
 use App\Models\Product;
-use App\Services\Cache\CacheServices;
-use App\Traits\ClearCache;
 
 class ProductObserver
 {
-    use ClearCache;
-
     protected $key = '';
     protected $feturedProductKey = '';
     public function __construct()
     {
-        $this->key = CacheServices::getProductCacheKey();
-        $this->feturedProductKey = CacheServices::getFeaturedProductCacheKey();
+        $this->key = CacheHelper::getProductCacheKey();
+        $this->feturedProductKey = CacheHelper::getFeaturedProductCacheKey();
     }
     /**
      * Handle the Product "created" event.
@@ -25,8 +22,8 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -37,8 +34,8 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -49,8 +46,8 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -61,8 +58,8 @@ class ProductObserver
      */
     public function restored(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 
     /**
@@ -73,7 +70,7 @@ class ProductObserver
      */
     public function forceDeleted(Product $product)
     {
-        $this->clearCache($this->key);
-        $this->clearCache($this->feturedProductKey);
+        CacheHelper::forgetCache($this->key);
+        CacheHelper::forgetCache($this->feturedProductKey);
     }
 }

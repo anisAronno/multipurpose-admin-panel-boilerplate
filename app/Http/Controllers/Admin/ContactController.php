@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\CacheHelper;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Models\Contact;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -22,8 +21,6 @@ class ContactController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getContactCacheKey();
-
         if (! empty($request->search)) {
             $q = $request->search;
             $contacts = Contact::where('name', 'LIKE', '%'.$q.'%')
@@ -36,9 +33,10 @@ class ContactController extends InertiaApplicationController
             return Inertia::render('Dashboard/Contact/Index', ['contacts' => $contacts]);
         }
 
-        $cacheKey =  $key.md5(serialize([$key]));
+        $key = CacheHelper::getContactCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $contacts = Cache::remember($cacheKey, 10, function () {
+        $contacts = CacheHelper::init($key)->remember($cacheKey, 10, function () {
             return Contact::orderBy('id', 'desc')->paginate(10);
         });
 

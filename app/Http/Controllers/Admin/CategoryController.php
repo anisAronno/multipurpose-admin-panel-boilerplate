@@ -9,7 +9,7 @@ use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
@@ -44,10 +44,10 @@ class CategoryController extends InertiaApplicationController
             return Inertia::render('Dashboard/Category/Index', ['categories' => $categories]);
         }
 
-        $key = CacheServices::getCategoryCacheKey();
+        $key = CacheHelper::getCategoryCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $categories = Cache::remember($cacheKey, 10, function () {
+        $categories = CacheHelper::init($key)->remember($cacheKey, 10, function () {
             return Category::with('parent')->orderBy('id', 'desc')->paginate(10);
         });
 

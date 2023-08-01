@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Featured;
 use App\Enums\Status;
+use App\Helpers\CacheHelper;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -44,10 +43,10 @@ class ProductController extends InertiaApplicationController
             return Inertia::render('Dashboard/Products/Index', ['products' => $products]);
         }
 
-        $key = CacheServices::getProductCacheKey();
+        $key = CacheHelper::getProductCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $products = Cache::remember($cacheKey, 10, function () {
+        $products = CacheHelper::init($key)->remember($cacheKey, 10, function () {
             return Product::with(['categories'])->orderBy('id', 'desc')->paginate(10);
         });
 

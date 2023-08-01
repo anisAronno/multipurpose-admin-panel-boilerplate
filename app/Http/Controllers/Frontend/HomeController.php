@@ -7,7 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\SpecialFeature;
-use App\Services\Cache\CacheServices;
+use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
@@ -21,26 +21,26 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $key = CacheServices::getFeaturedProductCacheKey();
-        $featuredCatKey = CacheServices::getFeaturedCategoryCacheKey();
-        $featuredBlogKey = CacheServices::getFeaturedBlogCacheKey();
-        $specialFeatureKey = CacheServices::getSpecialFeatureCacheKey();
+        $key = CacheHelper::getFeaturedProductCacheKey();
+        $featuredCatKey = CacheHelper::getFeaturedCategoryCacheKey();
+        $featuredBlogKey = CacheHelper::getFeaturedBlogCacheKey();
+        $specialFeatureKey = CacheHelper::getSpecialFeatureCacheKey();
 
-        $featuredProducts = Cache::remember($key, 10, function () {
+        $featuredProducts = CacheHelper::init($key)->remember($key, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
         });
 
-        $featuredCategory = Cache::remember($featuredCatKey, 10, function () {
+        $featuredCategory = CacheHelper::init($featuredCatKey)->remember($featuredCatKey, 10, function () {
             return Category::whereHas('products', function ($query) {
                 $query->where('categoryable_type', Product::class);
             })->isActive()->isFeatured()->orderBy('id', 'desc')->limit(3)->get();
         });
 
-        $featuredBlog = Cache::remember($featuredBlogKey, 10, function () {
+        $featuredBlog = CacheHelper::init($featuredBlogKey)->remember($featuredBlogKey, 10, function () {
             return Blog::isActive()->isFeatured()->with(['categories'])->orderBy('id', 'desc')->with('user')->limit(3)->get();
         });
 
-        $specialFeatures = Cache::remember($specialFeatureKey, 10, function () {
+        $specialFeatures = CacheHelper::init($specialFeatureKey)->remember($specialFeatureKey, 10, function () {
             return SpecialFeature::isActive()->orderBy('id', 'desc')->limit(4)->get();
         });
 

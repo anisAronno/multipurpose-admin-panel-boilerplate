@@ -2,19 +2,16 @@
 
 namespace App\Observers;
 
+use App\Helpers\CacheHelper;
 use App\Models\Contact;
-use App\Services\Cache\CacheServices;
-use App\Traits\ClearCache;
 
 class ContactObserver
 {
-    use ClearCache;
-
     protected $contactCacheKey = '';
 
     public function __construct()
     {
-        $this->contactCacheKey = CacheServices::getContactCacheKey();
+        $this->contactCacheKey = CacheHelper::getContactCacheKey();
     }
     /**
      * Handle the Contact "created" event.
@@ -24,7 +21,7 @@ class ContactObserver
      */
     public function created(Contact $contact)
     {
-        $this->clearCache($this->contactCacheKey);
+        CacheHelper::forgetCache($this->contactCacheKey);
     }
 
     /**
@@ -35,7 +32,7 @@ class ContactObserver
      */
     public function updated(Contact $contact)
     {
-        $this->clearCache($this->contactCacheKey);
+        CacheHelper::forgetCache($this->contactCacheKey);
     }
 
     /**
@@ -46,7 +43,7 @@ class ContactObserver
      */
     public function deleted(Contact $contact)
     {
-        $this->clearCache($this->contactCacheKey);
+        CacheHelper::forgetCache($this->contactCacheKey);
     }
 
     /**
@@ -57,7 +54,7 @@ class ContactObserver
      */
     public function restored(Contact $contact)
     {
-        $this->clearCache($this->contactCacheKey);
+        CacheHelper::forgetCache($this->contactCacheKey);
     }
 
     /**
@@ -68,6 +65,6 @@ class ContactObserver
      */
     public function forceDeleted(Contact $contact)
     {
-        $this->clearCache($this->contactCacheKey);
+        CacheHelper::forgetCache($this->contactCacheKey);
     }
 }

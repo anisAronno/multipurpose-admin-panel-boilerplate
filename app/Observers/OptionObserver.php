@@ -3,18 +3,15 @@
 namespace App\Observers;
 
 use App\Models\Option;
-use App\Services\Cache\CacheServices;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper;
 
 class OptionObserver
 {
-    use ClearCache;
-
     protected $optionsCacheKey = '';
 
     public function __construct()
     {
-        $this->optionsCacheKey = CacheServices::getOptionsCacheKey();
+        $this->optionsCacheKey = CacheHelper::getOptionsCacheKey();
     }
 
     /**
@@ -25,7 +22,7 @@ class OptionObserver
      */
     public function created(Option $option)
     {
-        $this->clearCache($this->optionsCacheKey);
+        CacheHelper::forgetCache($this->optionsCacheKey);
     }
 
     /**
@@ -36,7 +33,7 @@ class OptionObserver
      */
     public function updated(Option $option)
     {
-        $this->clearCache($this->optionsCacheKey);
+        CacheHelper::forgetCache($this->optionsCacheKey);
     }
 
     /**
@@ -47,7 +44,7 @@ class OptionObserver
      */
     public function deleted(Option $option)
     {
-        $this->clearCache($this->optionsCacheKey);
+        CacheHelper::forgetCache($this->optionsCacheKey);
     }
 
     /**
@@ -58,7 +55,7 @@ class OptionObserver
      */
     public function restored(Option $option)
     {
-        $this->clearCache($this->optionsCacheKey);
+        CacheHelper::forgetCache($this->optionsCacheKey);
     }
 
     /**
@@ -69,7 +66,7 @@ class OptionObserver
      */
     public function forceDeleted(Option $option)
     {
-        $this->clearCache($this->optionsCacheKey);
+        CacheHelper::forgetCache($this->optionsCacheKey);
 
     }
 }

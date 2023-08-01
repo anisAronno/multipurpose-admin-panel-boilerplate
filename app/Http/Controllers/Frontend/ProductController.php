@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\CacheHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -29,11 +28,11 @@ class ProductController extends Controller
         $category  = $request->get('category', '');
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $productCacheKey = CacheServices::getProductCacheKey();
+        $key = CacheHelper::getProductCacheKey();
 
-        $cacheKey =  $productCacheKey.md5(serialize([$orderBy, $order, $search, $startDate, $endDate, $currentPage, $category]));
+        $cacheKey =  $key.md5(serialize([$orderBy, $order, $search, $startDate, $endDate, $currentPage, $category]));
 
-        $products = Cache::remember($cacheKey, now()->addDay(), function () use (
+        $products = CacheHelper::init($key)->remember($cacheKey, now()->addDay(), function () use (
             $orderBy,
             $order,
             $search,
@@ -117,9 +116,9 @@ class ProductController extends Controller
             abort(403);
         }
 
-        $featuredProductKey = CacheServices::getFeaturedProductCacheKey();
+        $featuredProductKey = CacheHelper::getFeaturedProductCacheKey();
 
-        $featuredProducts = Cache::remember($featuredProductKey, 10, function () {
+        $featuredProducts = CacheHelper::init($featuredProductKey)->remember($featuredProductKey, 10, function () {
             return Product::isActive()->isFeatured()->orderBy('id', 'desc')->limit(8)->get();
         });
 

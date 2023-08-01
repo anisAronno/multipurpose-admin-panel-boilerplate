@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\Status;
+use App\Helpers\CacheHelper;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreSpecialFeatureRequest;
 use App\Http\Requests\UpdateSpecialFeatureRequest;
 use App\Models\SpecialFeature;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -26,8 +25,6 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $key = CacheServices::getSpecialFeatureCacheKey();
-
         if (! empty($request->search)) {
             $q = $request->search;
             $specialFeatures = SpecialFeature::where('title', 'LIKE', '%'.$q.'%')->orWhere('description', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
@@ -35,9 +32,10 @@ class SpecialFeatureController extends InertiaApplicationController
             return Inertia::render('Dashboard/SpecialFeature/Index', ['specialFeatures' => $specialFeatures]);
         }
 
+        $key = CacheHelper::getSpecialFeatureCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $specialFeatures = Cache::remember($cacheKey, 10, function () {
+        $specialFeatures = CacheHelper::init($key)->remember($cacheKey, 10, function () {
             return SpecialFeature::orderBy('id', 'desc')->paginate(10);
         });
 
