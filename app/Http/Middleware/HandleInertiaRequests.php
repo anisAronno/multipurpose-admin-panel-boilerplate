@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\CacheHelper;
 use App\Helpers\LanguageHelper;
 use App\Models\Option;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
@@ -68,7 +68,7 @@ class HandleInertiaRequests extends Middleware
 
         $locale = App::getLocale();
 
-        $key = CacheServices::getOptionsCacheKey();
+        $key = CacheHelper::getOptionsCacheKey();
 
         return Cache::rememberForever($key, function () use ($locale) {
             $phpTranslations = [];
@@ -95,7 +95,7 @@ class HandleInertiaRequests extends Middleware
 
     public function transletFromFile()
     {
-        $key = CacheServices::getOptionsCacheKey();
+        $key = CacheHelper::getOptionsCacheKey();
 
         return cache()->rememberForever($key, function () {
             return collect(File::allFiles(base_path('resources/lang/' . app()->getLocale())))

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Role;
 
+use App\Helpers\CacheHelper;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Models\User;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -47,10 +46,10 @@ class RolesController extends InertiaApplicationController
             return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
         }
 
-        $key = CacheServices::getRoleCacheKey();
+        $key = CacheHelper::getRoleCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $roles = Cache::remember($cacheKey, 10, function () {
+        $roles = CacheHelper::init($key)->remember($cacheKey, 10, function () {
             return Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
             }])->orderBy('id', 'desc')->paginate(10);

@@ -4,18 +4,15 @@ namespace App\Observers\User;
 
 use App\Helpers\FileHelpers;
 use App\Models\User;
-use App\Services\Cache\CacheServices;
-use App\Traits\ClearCache;
+use App\Helpers\CacheHelper;
 
 class UserObserver
 {
-    use ClearCache;
-
     public $key = '';
 
     public function __construct()
     {
-        $this->key = CacheServices::getUserCacheKey();
+        $this->key = CacheHelper::getUserCacheKey();
     }
 
     /**
@@ -26,7 +23,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -37,7 +34,7 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -48,7 +45,7 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
 
         FileHelpers::deleteFile($user->avatar);
     }
@@ -61,7 +58,7 @@ class UserObserver
      */
     public function restored(User $user)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
     }
 
     /**
@@ -72,7 +69,7 @@ class UserObserver
      */
     public function forceDeleted(User $user)
     {
-        $this->clearCache($this->key);
+        CacheHelper::forgetCache($this->key);
 
         FileHelpers::deleteFile($user->avatar);
     }

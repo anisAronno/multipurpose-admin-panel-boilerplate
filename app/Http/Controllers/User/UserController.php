@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Enums\UserStatus;
+use App\Helpers\CacheHelper;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
@@ -10,10 +11,7 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\UserResources;
 use App\Models\Role;
 use App\Models\User;
-use App\Services\Cache\CacheServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -46,10 +44,10 @@ class UserController extends InertiaApplicationController
 
             return Inertia::render('Dashboard/User/Index', ['users' => $users]);
         }
-        $key = CacheServices::getUserCacheKey();
+        $key = CacheHelper::getUserCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $users = Cache::remember($cacheKey, 10, function () {
+        $users = CacheHelper::init($key)->remember($cacheKey, 10, function () {
             return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
         });
 
