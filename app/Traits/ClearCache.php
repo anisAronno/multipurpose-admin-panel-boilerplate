@@ -14,13 +14,14 @@ trait ClearCache
      */
     public function clearCache($key)
     {
-        for ($i = 1; $i <= 99999; $i++) {
-            $newKey = $key.$i;
+        for ($i = 1; $i <= 9999; $i++) {
+            $newKey = $key . $i;
             if (Cache::has($newKey)) {
                 Cache::forget($newKey);
             } else {
-                break;
+                continue;
             }
         }
     }
+
 }

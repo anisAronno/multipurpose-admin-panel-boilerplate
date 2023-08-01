@@ -3,9 +3,9 @@
 namespace App\Traits;
 
 use App\Enums\SettingsFields;
+use App\Helpers\Helpers;
 use App\Helpers\LanguageHelper;
 use App\Services\Cache\CacheServices;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 
 trait OptionTransform
@@ -58,13 +58,21 @@ trait OptionTransform
 
     public static function getOption(string $key)
     {
-        try {
-            $option = self::where('option_key', $key)->first();
+        $optionChacheKey = CacheServices::getOptionsCacheKey(3);
+        $stringToNum = Helpers::stringToInteger($key);
+        $cacheKey =  $optionChacheKey.$stringToNum;
 
+        try {
+            $option = Cache::rememberForever($cacheKey, function () use ($key) {
+                return self::where('option_key', $key)->first();
+
+            });
             return $option['option_value'];
+
         } catch (\Throwable $th) {
             return false;
         }
+
     }
 
     public static function getSettings()

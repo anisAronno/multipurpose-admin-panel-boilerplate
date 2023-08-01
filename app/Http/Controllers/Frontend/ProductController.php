@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -27,40 +28,59 @@ class ProductController extends Controller
         $startDate = $request->get('startDate', '');
         $endDate   = $request->get('endDate', '');
         $category  = $request->get('category', '');
+        $page  = $request->get('page', '');
 
-        $product = Product::with(['categories']);
-        $categoryModel = new Category();
+        $productCacheKey = CacheServices::getProductCacheKey();
 
-        if (!empty($search)) {
-            $product->where('title', 'LIKE', '%' . $search . '%')
-                    ->orWhere('description', 'LIKE', '%' . $search . '%');
-        }
+        $stringToNum = Helpers::stringToInteger($orderBy, $order, $search, $startDate, $endDate, $page, $category);
+        $cacheKey =  $productCacheKey.$stringToNum;
 
-        if (!empty($category)) {
-            $catArr = $categoryModel->where('slug', $request->category)->pluck('id');
-            if (count($catArr) > 0) {
-                $product->whereHas('categories', function ($query) use ($catArr) {
-                    $query->whereIn('category_id', $catArr)->isActive();
-                });
+        $products = Cache::remember($cacheKey, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $search,
+            $startDate,
+            $endDate,
+            $category
+        ) {
+            $product = Product::with(['categories']);
+            $categoryModel = new Category();
+
+
+            if (!empty($search)) {
+                $product->where('title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('description', 'LIKE', '%' . $search . '%');
             }
-        }
 
-        if (!empty($startDate) && !empty($endDate)) {
-            $product->where('created_at', '>=', new \DateTime($startDate))
-                    ->where('created_at', '<=', new \DateTime($endDate));
-        }
+            if (!empty($category)) {
+                $catArr = $categoryModel->where('slug', $category)->pluck('id');
+                if (count($catArr) > 0) {
+                    $product->whereHas('categories', function ($query) use ($catArr) {
+                        $query->whereIn('category_id', $catArr)->isActive();
+                    });
+                }
+            }
 
-        if (!empty($orderBy)) {
-            $product->orderBy($orderBy, $order);
-        }
+            if (!empty($startDate) && !empty($endDate)) {
+                $product->where('created_at', '>=', new \DateTime($startDate))
+                        ->where('created_at', '<=', new \DateTime($endDate));
+            }
 
-        $products = $product->paginate(12)->withQueryString();
-        $categories = $categoryModel->productTree()->take(20);
-       
-        return Inertia::render('Frontend/Products/Index')->with([
-            'products' => $products,
-            'categories' => $categories,
-        ]);
+            if (!empty($orderBy)) {
+                $product->orderBy($orderBy, $order);
+            }
+
+            $products = $product->paginate(12)->withQueryString();
+
+            $categories = $categoryModel->productTree()->take(20);
+
+            return [
+                'products' => $products,
+                'categories' => $categories,
+            ];
+        });
+
+        return Inertia::render('Frontend/Products/Index')->with($products);
     }
 
     /**
