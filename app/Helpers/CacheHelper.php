@@ -10,21 +10,35 @@ class CacheHelper
 {
     public static function init($key)
     {
-        if (CacheHelper::supportTag()) {
+        if (self::supportTag()) {
             return Cache::tags($key);
         } else {
             return cache();
         }
     }
 
-
-    public static function getCacheDriver($key= null)
+    /**
+     * Forget Cache Key
+     *
+     * @param [type] $key
+     * @return void
+     */
+    public static function forgetCache($key)
     {
-        return Cache::getDefaultDriver();
+        if (self::supportTag()) {
+            return self::forgetCacheByTag($key);
+        } else {
+            return self::forgetCacheByKey($key);
+        }
 
     }
 
-    public static function getCacheKeys($key= null)
+    /**
+     * Get ALl Cache Key
+     *
+     * @param [type] $key
+      */
+    private static function getCacheKeys($key= null)
     {
         switch (self::getCacheDriver()) {
             case 'file':
@@ -38,23 +52,29 @@ class CacheHelper
         }
     }
 
+    /**
+     * Get Cache Driver
+     *
+     * @param [type] $key
+     */
+    private static function getCacheDriver($key= null)
+    {
+        return Cache::getDefaultDriver();
 
-    public static function supportTag()
+    }
+
+
+    /**
+     * Get Supprted driver
+     *
+     * @return bool
+     */
+    private static function supportTag()
     {
         if (! in_array(self::getCacheDriver(), ['file', 'dynamodb', 'database'])) {
             return true;
         } else {
             return false;
-        }
-
-    }
-
-    public static function forgetCache($key)
-    {
-        if (self::supportTag()) {
-            return self::forgetCacheByTag($key);
-        } else {
-            return self::forgetCacheByKey($key);
         }
 
     }

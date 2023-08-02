@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Opcodes\LogViewer\Facades\LogViewer;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,5 +37,11 @@ class AppServiceProvider extends ServiceProvider
         });
         JsonResource::withoutWrapping();
 
+        Str::macro('stringToInteger', function (...$strings) {
+            $concatenatedString = implode('', $strings);
+            $hashValue = hash('sha256', $concatenatedString);
+            $integerValue = intval($hashValue, 16);
+            return $integerValue ;
+        });
     }
 }
