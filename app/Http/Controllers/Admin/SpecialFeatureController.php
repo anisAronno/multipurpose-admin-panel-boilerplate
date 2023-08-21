@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
+use App\Helpers\CacheHelper;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreSpecialFeatureRequest;
 use App\Http\Requests\UpdateSpecialFeatureRequest;
 use App\Http\Resources\SpecialFeatureResources;
 use App\Models\SpecialFeature;
-use App\Enums\Status;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class SpecialFeatureController extends InertiaApplicationController
 {
@@ -47,7 +46,7 @@ class SpecialFeatureController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $specialFeatureCacheKey.md5(serialize([$orderBy, $order, $status, $page, $search, $startDate, $endDate,  ]));
 
-        $specialFeatures = Cache::tags([$specialFeatureCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $specialFeatures = CacheHelper::init($specialFeatureCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $status,

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Status;
+use App\Helpers\CacheHelper;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResources;
 use App\Models\Category;
-use App\Enums\Status;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class CategoryController extends InertiaApplicationController
 {
@@ -48,7 +47,7 @@ class CategoryController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $categoryCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate,  ]));
 
-        $categories = Cache::tags([$categoryCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $categories = CacheHelper::init($categoryCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $status,

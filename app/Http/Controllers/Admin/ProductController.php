@@ -59,7 +59,7 @@ class ProductController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $type]));
 
-        $products = Cache::tags([$productCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $products = CacheHelper::init($productCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $status,

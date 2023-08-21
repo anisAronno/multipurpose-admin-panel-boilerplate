@@ -101,6 +101,10 @@ class FileHelpers
 
         return in_array($extension, $allowedExtensions);
     }
+    public static function getDefaultImage(): string
+    {
+        return Storage::url('defaults/placeholder.png');
+    }
 
 
     private static function isDefaultFile($path): bool

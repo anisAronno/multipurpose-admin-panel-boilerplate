@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\CacheHelper;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Resources\ContactResources;
 use App\Models\Contact;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class ContactController extends InertiaApplicationController
 {
@@ -33,7 +32,7 @@ class ContactController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $contactCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
 
-        $contacts = Cache::tags([$contactCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $contacts = CacheHelper::init($contactCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $search,

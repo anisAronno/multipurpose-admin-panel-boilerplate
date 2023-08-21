@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\CacheHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResources;
 use App\Models\Category;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
@@ -37,7 +36,7 @@ class CategoryController extends Controller
 
         $key =  $categoryCacheKey.md5(serialize([$orderBy, $order,  $isFeatured, $page, $search, $startDate, $endDate]));
 
-        $categories = Cache::tags([$categoryCacheKey ])->remember($key, now()->addDay(), function () use (
+        $categories = CacheHelper::init($categoryCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $isFeatured,

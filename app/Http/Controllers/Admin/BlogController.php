@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\Format;
+use App\Enums\Status;
+use App\Helpers\CacheHelper;
+use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Http\Resources\BlogResources;
 use App\Models\Blog;
-use App\Enums\Status;
 use App\Models\Category;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
-use App\Http\Controllers\InertiaApplicationController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class BlogController extends InertiaApplicationController
 {
@@ -59,22 +58,22 @@ class BlogController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $blogCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $format]));
 
-        // $blogs = Cache::tags([$blogCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
-        //     $orderBy,
-        //     $order,
-        //     $status,
-        //     $isFeatured,
-        //     $search,
-        //     $startDate,
-        //     $endDate,
-        //     $user,
-        //     $is_commentable,
-        //     $is_reactable,
-        //     $is_shareable,
-        //     $show_ratings,
-        //     $show_views,
-        //     $format,
-        // ) {
+        $blogs = CacheHelper::init($blogCacheKey)->remember($key, now()->addDay(), function () use (
+            $orderBy,
+            $order,
+            $status,
+            $isFeatured,
+            $search,
+            $startDate,
+            $endDate,
+            $user,
+            $is_commentable,
+            $is_reactable,
+            $is_shareable,
+            $show_ratings,
+            $show_views,
+            $format,
+        ) {
             $blogs = Blog::with(['categories', 'image', 'user']);
 
             if (! $user->haveAdministrativeRole()) {
@@ -126,12 +125,12 @@ class BlogController extends InertiaApplicationController
                 $blogs->orderBy($orderBy, $order);
             }
 
-            $result  = $blogs->paginate(10);
-        // });
+            return $blogs->paginate(10);
+        });
 
         Session::put('last_visited_url', $request->fullUrl());
 
-        return Inertia::render('Dashboard/Blog/Index')->with(['blogs' => BlogResources::collection($result)]);
+        return Inertia::render('Dashboard/Blog/Index')->with(['blogs' => BlogResources::collection($blogs)]);
     }
 
     /**
@@ -182,12 +181,12 @@ class BlogController extends InertiaApplicationController
         }
     }
 
-      /**
-       * Summary of show
-       * @param Request $request
-       * @param Blog $blog
-       * @return \Inertia\Response
-       */
+    /**
+     * Summary of show
+     * @param Request $request
+     * @param Blog $blog
+     * @return \Inertia\Response
+     */
     public function show(Blog $blog)
     {
         $blog->load(['categories', 'image', 'images']);

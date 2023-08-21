@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\CacheHelper;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Http\Resources\ImageResources;
 use App\Models\Image;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class ImageController extends InertiaApplicationController
 {
@@ -28,7 +27,7 @@ class ImageController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $imageCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
 
-        $images = Cache::tags([$imageCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $images = CacheHelper::init($imageCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $search,
@@ -84,7 +83,7 @@ class ImageController extends InertiaApplicationController
             $data['url'] = FileHelpers::upload($request, 'image', 'images');
             $data['mimes'] = $request->image->extension();
             $data['type'] = $request->image->getClientMimeType();
-            $data['size'] = number_format($request->image->getSize()/(1024*1024), 2, '.', '')."MB";
+            $data['size'] = number_format($request->image->getSize() / (1024 * 1024), 2, '.', '')."MB";
         }
 
         try {
@@ -108,7 +107,7 @@ class ImageController extends InertiaApplicationController
             $data['url'] = FileHelpers::upload($request, 'image', 'images');
             $data['mimes'] = $request->image->extension();
             $data['type'] = $request->image->getClientMimeType();
-            $data['size'] = number_format($request->image->getSize()/(1024*1024), 2, '.', '')."MB";
+            $data['size'] = number_format($request->image->getSize() / (1024 * 1024), 2, '.', '')."MB";
         }
 
         try {

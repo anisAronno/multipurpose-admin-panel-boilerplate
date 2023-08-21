@@ -12,9 +12,8 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\UserResources;
 use App\Models\Role;
 use App\Models\User;
- use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -54,7 +53,7 @@ class UserController extends InertiaApplicationController
         $user  = auth()->user();
         $key =  $userCacheKey.md5(serialize([$orderBy, $order, $status, $is_premium, $page, $search, $startDate, $endDate,  ]));
 
-        $users = Cache::tags([$userCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
+        $users = CacheHelper::init($userCacheKey, $user->token)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $status,
@@ -204,24 +203,24 @@ class UserController extends InertiaApplicationController
         return $this->successWithMessage('Deleted successfull');
     }
 
-   public function avatarUpdate(Request $request, User $user)
-   {
-       if ($request->image) {
-           $path = FileHelpers::upload($request, 'image', 'users');
-           if (! $path) {
-               return $this->successWithMessage('Update Failed');
-           } else {
-               FileHelpers::deleteFile($user->avatar);
-               $user->update([$user->avatar = $path]);
-           }
-       }
+    public function avatarUpdate(Request $request, User $user)
+    {
+        if ($request->image) {
+            $path = FileHelpers::upload($request, 'image', 'users');
+            if (! $path) {
+                return $this->successWithMessage('Update Failed');
+            } else {
+                FileHelpers::deleteFile($user->avatar);
+                $user->update([$user->avatar = $path]);
+            }
+        }
 
         return $this->successWithMessage('Successfully Updated');
     }
 
-   public function avatarDelete(User $user)
-   {
-       FileHelpers::deleteFile($user->avatar);
+    public function avatarDelete(User $user)
+    {
+        FileHelpers::deleteFile($user->avatar);
 
         $user->update([$user->avatar = null]);
 

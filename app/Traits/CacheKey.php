@@ -55,4 +55,16 @@ trait CacheKey
     {
         return 'category_';
     }
+
+    public static function getImageCacheKey(): string
+    {
+        return '_image_';
+    }
+
+    public static function getTagCacheKey(): string
+    {
+        return 'tag_';
+    }
+
+   
 }

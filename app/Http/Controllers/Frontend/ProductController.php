@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Enums\Status;
 use App\Enums\Type;
+use App\Helpers\CacheHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -42,7 +41,7 @@ class ProductController extends Controller
 
         $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $type]));
 
-        $products = Cache::tags([$productCacheKey ])->remember($key, now()->addDay(), function () use (
+        $products = CacheHelper::init($productCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $status,
@@ -149,7 +148,7 @@ class ProductController extends Controller
 
         $featuredProductKey = CacheHelper::getFeaturedProductCacheKey();
 
-        $featuredProducts = Cache::tags([$featuredProductKey])->remember($featuredProductKey, now()->addDay(), function () {
+        $featuredProducts = CacheHelper::init($featuredProductKey)->remember($featuredProductKey, now()->addDay(), function () {
             return Product::isActive()->isFeatured()
             ->with(['image'])
             ->orderBy('id', 'desc')
@@ -158,7 +157,7 @@ class ProductController extends Controller
         });
 
 
-        return Inertia::render('Frontend/Products/Show')->with(['product' => new ProductResource($product->load('image')), 'featuredProducts'=> ProductResource::collection($featuredProducts)]);
+        return Inertia::render('Frontend/Products/Show')->with(['product' => new ProductResource($product->load('image')), 'featuredProducts' => ProductResource::collection($featuredProducts)]);
     }
 
     /**

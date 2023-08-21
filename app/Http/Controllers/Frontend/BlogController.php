@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\Format;
+use App\Helpers\CacheHelper;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Http\Resources\BlogResources;
 use App\Models\Blog;
-use App\Http\Controllers\Controller;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Cache;
 
 class BlogController extends Controller
 {
@@ -40,7 +39,7 @@ class BlogController extends Controller
 
         $key =  $blogCacheKey.md5(serialize([$orderBy, $order,  $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $format]));
 
-        $blogs = Cache::tags([$blogCacheKey])->remember($key, now()->addDay(), function () use (
+        $blogs = CacheHelper::init($blogCacheKey)->remember($key, now()->addDay(), function () use (
             $orderBy,
             $order,
             $isFeatured,
