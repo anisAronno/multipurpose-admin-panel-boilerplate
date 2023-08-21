@@ -24,7 +24,7 @@ function selectCategory(catSlug) {
             @click="selectCategory(null)"
         >
             <span
-                class="text-gray-200 text-lg border-b-gray-500 border-b pb-1"
+                class="dark:text-gray-200 text-lg border-b-gray-500 border-b pb-1"
                 :class="categoryValue.length == 0 ? ' !text-cyan-300' : ''"
             >
                 Show All
@@ -46,7 +46,7 @@ function selectCategory(catSlug) {
             <div v-if="category?.children?.length > 0" class="ml-4">
                 <ul>
                     <li
-                        v-for="child in category.children.slice(0, 4)"
+                        v-for="child in category.children.slice(0, 10)"
                         :key="child.slug"
                     >
                         <span
@@ -72,7 +72,10 @@ function selectCategory(catSlug) {
                         <div v-if="child?.children?.length > 0" class="ml-4">
                             <ul>
                                 <li
-                                    v-for="child2 in child.children.slice(0, 4)"
+                                    v-for="child2 in child.children.slice(
+                                        0,
+                                        10
+                                    )"
                                     :key="child2.slug"
                                 >
                                     <span
@@ -99,11 +102,9 @@ function selectCategory(catSlug) {
                                         </span>
                                     </span>
                                 </li>
-                                <li v-if="child?.children?.length > 4">...</li>
                             </ul>
                         </div>
                     </li>
-                    <li v-if="category?.children?.length > 4">...</li>
                 </ul>
             </div>
         </div>

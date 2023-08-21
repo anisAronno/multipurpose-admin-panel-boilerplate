@@ -72,7 +72,7 @@ function getProducts(catSlug) {
                 >
                     <h2 class="my-5">
                         <span
-                            class="font-bold text-gray-200 text-2xl border-b-gray-500 border-b pb-1"
+                            class="font-bold dark:text-gray-200 text-2xl border-b-gray-500 border-b pb-1"
                         >
                             Category List
                         </span>
