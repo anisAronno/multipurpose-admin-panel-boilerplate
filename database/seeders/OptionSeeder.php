@@ -34,11 +34,12 @@ class OptionSeeder extends Seeder
          *  ____________________________________________
          * ------------------------------------------
          * ***********************************************/
+        
 
         $option = new Option();
-        $option::setOption('logo', 'images/defaults/logo.png');
-        $option::setOption('fav_icon', 'images/defaults/fav_icon.png');
-        $option::setOption('banner', 'images/defaults/banner.png');
+        $option::setOption('logo', 'defaults/logo.png');
+        $option::setOption('fav_icon', 'defaults/fav_icon.png');
+        $option::setOption('banner', 'defaults/banner.png');
         $option::setOption('site_name', 'Portfolio');
         $option::setOption('site_title', 'My WebSite');
         $option::setOption('language', env('APP_LANGUAGE', 'en'));

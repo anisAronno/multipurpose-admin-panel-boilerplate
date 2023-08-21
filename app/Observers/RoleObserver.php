@@ -2,14 +2,15 @@
 
 namespace App\Observers;
 
-use App\Helpers\CacheHelper; 
+use App\Helpers\CacheHelper;
+
 use Spatie\Permission\Contracts\Role;
 
 class RoleObserver
-{ 
+{
     protected $roleCacheKey = '';
 
-    protected $userCacheKey = '';
+    public $userCacheKey = '';
 
     public function __construct()
     {

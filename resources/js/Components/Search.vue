@@ -4,7 +4,13 @@ import { ref, watch } from "vue";
 const form = useForm({
     search: "",
 });
-
+defineProps({
+    placeholder: {
+        type: String,
+        require: false,
+        default: `Search...`,
+    },
+});
 let searchQuery = ref("");
 const queryString = usePage()?.url; 
 const route = queryString.split("?")[0];
@@ -37,8 +43,10 @@ const searchHandaler = () => {
 </script>
 
 <template>
-    <div class="flex space-x-2 justify-between items-center">
-        <div>
+    <div
+        class="flex flex-col-reverse sm:flex-row space-x-2 justify-between items-center"
+    >
+        <div class="mt-5 sm:mt-0">
             <p v-if="searchQuery" class="text-lg">
                 Search result for:
                 <span class="font-bold dark:text-yellow-400 text-blue-900">{{
@@ -46,7 +54,7 @@ const searchHandaler = () => {
                 }}</span>
             </p>
         </div>
-        <div class="float-right">
+        <div class="sm:float-right">
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">
                 <div
@@ -70,7 +78,7 @@ const searchHandaler = () => {
                     type="text"
                     id="table-search-users"
                     class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search for users"
+                    :placeholder="placeholder"
                     v-model.lazy="form.search"
                     ref="searchInput"
                 />

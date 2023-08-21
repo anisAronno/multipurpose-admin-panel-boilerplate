@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Enums\Status;
 use App\Enums\UserStatus;
+use App\Helpers\CacheHelper;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
@@ -11,8 +12,7 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\UserResources;
 use App\Models\Role;
 use App\Models\User;
-use App\Helpers\CacheHelper;
-use Illuminate\Http\Request;
+ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +33,10 @@ class UserController extends InertiaApplicationController
         $this->middleware('permission:user.delete', ['only' => ['destroy']]);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+      */
     public function index(Request $request)
     {
         $orderBy    = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
@@ -124,11 +128,17 @@ class UserController extends InertiaApplicationController
         return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Created successfull']);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+      */
     public function show(User $user)
     {
         $user->load(['roles']);
 
-        return Inertia::render('Dashboard/User/Show', ['user' => $user]);
+
+        return Inertia::render('Dashboard/User/Show', ['user' =>  new UserResources($user)]);
     }
 
 
@@ -173,20 +183,26 @@ class UserController extends InertiaApplicationController
         return Redirect::route('admin.user.index')->with(['success' => true, 'message', 'Updated successfull']);
     }
 
-   public function destroy(User $user)
-   {
-       if (! $user->is_deletable) {
-           return $this->failedWithMessage('User is not delatable');
-       }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        if (! $user->isDeletable) {
+            return $this->failedWithMessage('User is not delatable');
+        }
 
-       $user->delete();
+        $user->delete();
 
-       if (session('last_visited_url')) {
-           return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
-       }
+        if (session('last_visited_url')) {
+            return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
+        }
 
-       return $this->successWithMessage('Deleted successfull');
-   }
+        return $this->successWithMessage('Deleted successfull');
+    }
 
    public function avatarUpdate(Request $request, User $user)
    {
@@ -200,15 +216,15 @@ class UserController extends InertiaApplicationController
            }
        }
 
-       return $this->successWithMessage('Successfully Updated');
-   }
+        return $this->successWithMessage('Successfully Updated');
+    }
 
    public function avatarDelete(User $user)
    {
        FileHelpers::deleteFile($user->avatar);
 
-       $user->update([$user->avatar = null]);
+        $user->update([$user->avatar = null]);
 
-       return $this->failedWithMessage('Deleted successfull');
-   }
+        return $this->failedWithMessage('Deleted successfull');
+    }
 }

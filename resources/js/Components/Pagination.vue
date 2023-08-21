@@ -7,9 +7,8 @@
                 to
                 {{ meta.to }}
                 of {{ meta.total }} results
-                
             </p>
-        </div> 
+        </div>
         <div class="flex flex-wrap -mb-1">
             <template v-for="(link, p) in meta.links" :key="p">
                 <div
@@ -19,14 +18,15 @@
                 />
                 <Link
                     v-else
+                    preserve-scroll
                     class="mr-1 mb-1 px-3 py-2 text-sm leading-4 border rounded focus:border-indigo-500 focus:text-indigo-500 dark:text-white dark:bg-gray-700 hover:dark:bg-gray-800 hover:bg-gray-700 hover:text-gray-100"
                     :class="{
                         'text-white bg-blue-700 dark:text-white dark:bg-blue-700':
                             link.active,
                     }"
-                    :href="link.url"
-                    v-html="__(link.label)"
+                    :href="link.url ?? ''"
                 >
+                    <span v-html="__(link.label)"></span>
                 </Link>
             </template>
         </div>

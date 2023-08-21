@@ -4,11 +4,10 @@ namespace App\Observers\User;
 
 use App\Helpers\FileHelpers;
 use App\Models\User;
-use App\Helpers\CacheHelper; 
+use App\Helpers\CacheHelper;
 
 class UserObserver
-{ 
-
+{
     public $key = '';
 
     public function __construct()

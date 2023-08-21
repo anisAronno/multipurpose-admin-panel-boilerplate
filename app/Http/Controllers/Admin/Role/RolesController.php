@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Role;
 
+use App\Helpers\CacheHelper;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
 use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Models\User;
-use App\Helpers\CacheHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -29,48 +28,31 @@ class RolesController extends InertiaApplicationController
         $this->middleware('permission:role.delete', ['only' => ['destroy']]);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-        $orderBy    = in_array($request->get('orderBy'), ['created_at']) ? $request->orderBy : 'created_at';
-        $order      = in_array($request->get('order'), ['asc', 'desc']) ? $request->order : 'desc';
+        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
 
-        $search     = $request->get('search', '');
-        $startDate = $request->get('startDate', '');
-        $endDate   = $request->get('endDate', '');
-        $page       = $request->get('page', 1);
-        $roleCacheKey = CacheHelper::getRoleCacheKey();
+        if (! empty($request->search)) {
+            $q = $request->search;
+            $roles = Role::with(['permissions' => function ($query) {
+                $query->select('id', 'name');
+            }])->where('name', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
 
-        $user  = auth()->user();
-        $key =  $roleCacheKey.md5(serialize([$orderBy, $order,  $page, $search, $startDate, $endDate,  ]));
+            return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
+        }
 
-        $roles = Cache::tags([$roleCacheKey, $user->token])->remember($key, now()->addDay(), function () use (
-            $orderBy,
-            $order,
-            $search,
-            $startDate,
-            $endDate,
-            $user,
-        ) {
-            $roles = Role::with([ 'permissions']);
+        $key = CacheHelper::getRoleCacheKey();
+        $cacheKey =  $key.md5(serialize([$currentPage]));
 
-            if (! $user->haveAdministrativeRole()) {
-                $roles->where('user_id', $user->id);
-            }
-
-            if (! empty($search)) {
-                $roles->where('title', 'LIKE', '%'.$search.'%')->orWhere('description', 'LIKE', '%'.$search.'%');
-            }
-
-            if (! empty($startDate) && ! empty($endDate)) {
-                $roles->where('created_at', '>=', new \DateTime($startDate));
-                $roles->where('created_at', '<=', new \DateTime($endDate));
-            }
-
-            if (! empty($orderBy)) {
-                $roles->orderBy($orderBy, $order);
-            }
-
-            return $roles->paginate(10);
+        $roles = CacheHelper::init($key)->remember($cacheKey, 10, function () {
+            return Role::with(['permissions' => function ($query) {
+                $query->select('id', 'name');
+            }])->orderBy('id', 'desc')->paginate(10);
         });
 
         Session::put('last_visited_url', $request->fullUrl());
@@ -78,7 +60,11 @@ class RolesController extends InertiaApplicationController
         return Inertia::render('Dashboard/Role/Index')->with(['roles' => RoleResource::collection($roles)]);
     }
 
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $permissions = Permission::orderBy('group_name')->get();
@@ -98,6 +84,12 @@ class RolesController extends InertiaApplicationController
         ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(RoleStoreRequest $request)
     {
         $role = Role::create(['name' => $request->name]);
@@ -108,10 +100,14 @@ class RolesController extends InertiaApplicationController
             $role->syncPermissions($permissions);
         }
 
-        return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Created']);
+        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Created']);
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+      */
     public function show(Role $role)
     {
         $role->load('permissions');
@@ -119,7 +115,12 @@ class RolesController extends InertiaApplicationController
         return Inertia::render('Dashboard/Role/Show', ['role' => new RoleResource($role) ]);
     }
 
-
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Role $role)
     {
         $permissions = Permission::orderBy('group_name')->get();
@@ -145,11 +146,18 @@ class RolesController extends InertiaApplicationController
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(RoleUpdateRequest $request, Role $role)
     {
         $permissions = $request->input('permissions');
 
-        if (empty($permissions) || ! $role->is_editable) {
+        if (empty($permissions) || ! $role->isEditable) {
             return Redirect::back()->with(['success' => false, 'message' => 'Role is not Updateable']);
         } else {
             $role->name = $request->name;
@@ -161,10 +169,15 @@ class RolesController extends InertiaApplicationController
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message' => 'successfully Updated']);
         }
 
-        return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Updated']);
+        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Updated']);
     }
 
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Role $role)
     {
         if (! $role->isDelatable) {
@@ -177,6 +190,6 @@ class RolesController extends InertiaApplicationController
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message' => 'successfully Deleted']);
         }
 
-        return Redirect::route('admin.role.index')->with(['success' => true, 'message' => 'successfully Deleted']);
+        return Redirect::route('role.index')->with(['success' => true, 'message' => 'successfully Deleted']);
     }
 }

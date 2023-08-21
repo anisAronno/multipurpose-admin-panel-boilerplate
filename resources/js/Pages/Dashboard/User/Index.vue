@@ -263,21 +263,14 @@ const page = usePage()?.props?.global?.options;
                                                 class="bg-gray-50 min-w-full"
                                                 v-if="users.meta.last_page > 1"
                                             >
-                                                <tr> 
+                                                <tr>
                                                     <td
                                                         colspan="16"
                                                         class="w-[100%]"
                                                     >
                                                         <Pagination
-                                                            v-if="
-                                                                users.meta
-                                                                    .last_page >
-                                                                1
-                                                            "
                                                             class="mt-6 dark:text-white flex justify-end p-3"
-                                                            :meta="
-                                                                users.meta
-                                                            "
+                                                            :meta="users.meta"
                                                         ></Pagination>
                                                     </td>
                                                 </tr>

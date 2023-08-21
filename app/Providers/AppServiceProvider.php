@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Option;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Opcodes\LogViewer\Facades\LogViewer;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,20 +33,17 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        if (! app()->runningInConsole()) {
-            $option = Option::getOption('time_zone');
-
-            if ($option) {
-                date_default_timezone_set($option);
-            }
-        }
-
-        app()->setLocale(Option::getOption('language'));
-
         LogViewer::auth(function ($request) {
             return $request->user()->haveAdministrativeRole();
         });
 
         JsonResource::withoutWrapping();
+
+        Str::macro('stringToInteger', function (...$strings) {
+            $concatenatedString = implode('', $strings);
+            $hashValue = hash('sha256', $concatenatedString);
+            $integerValue = intval($hashValue, 16);
+            return $integerValue ;
+        });
     }
 }

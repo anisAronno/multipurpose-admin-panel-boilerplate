@@ -3,21 +3,38 @@
 namespace App\Traits;
 
 use App\Enums\SettingsFields;
-use App\Helpers\LanguageHelper;
 use App\Helpers\CacheHelper;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 
 trait OptionTransform
 {
-    public static function getAllOptions()
+    public static function getOption(string $key)
     {
-        $key = CacheHelper::getOptionsCacheKey(1);
+        $key = CacheHelper::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getOption']));
 
         try {
-            $options = Cache::remember($key, now()->addDay(), function () {
+            $option = CacheHelper::init($key)->remember($cacheKey, now()->addDay(), function () use ($key) {
+                return self::where('option_key', $key)->first();
+
+            });
+            logger()->debug($option['option_value']);
+            return $option['option_value'];
+
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+    }
+
+    public static function getAllOptions()
+    {
+        $key = CacheHelper::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getAllOptions']));
+
+        try {
+            $options = CacheHelper::init($key)->remember($cacheKey, 10, function () {
                 $response = self::select('option_value', 'option_key')->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
+                    return [$name->option_key => $name->option_value];
                 });
 
                 return $response;
@@ -39,6 +56,11 @@ trait OptionTransform
             $option = self::where('option_key', $key)->first();
             $option->option_value = $value;
 
+            if ($key=='language') {
+                Artisan::call('cache:clear');
+                Artisan::call('config:clear');
+            }
+
             return $option->save();
         } catch (\Throwable $th) {
             return false;
@@ -56,56 +78,17 @@ trait OptionTransform
         }
     }
 
-    public static function getOption(string $key)
-    {
-        try {
-            $option = self::where('option_key', $key)->first();
-
-            return $option['option_value'];
-        } catch (\Throwable $th) {
-            return false;
-        }
-    }
-
     public static function getSettings()
     {
         $settingFields = SettingsFields::values();
 
-        $key = CacheHelper::getOptionsCacheKey(2);
+        $key = CacheHelper::getOptionsCacheKey();
+        $cacheKey =  $key.md5(serialize(['getSettings']));
 
         try {
-            $options = Cache::remember($key, now()->addDay(), function () use ($settingFields) {
+            $options = CacheHelper::init($key)->remember($cacheKey, now()->addDay(), function () use ($settingFields) {
                 $response = self::select('option_value', 'option_key')->whereIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
-                });
-
-                return $response;
-            });
-
-            if ($options) {
-                return $options;
-            } else {
-                return [];
-            }
-        } catch (\Throwable $th) {
-            return [];
-        }
-    }
-
-    /**
-     * Summary of getAllWithoutSettings
-     * @return TCacheValue|array
-     */
-    public static function getAllWithoutSettings()
-    {
-        $settingFields = SettingsFields::values();
-
-        $key = CacheHelper::getOptionsCacheKey(3);
-
-        try {
-            $options = Cache::remember($key, now()->addDay(), function () use ($settingFields) {
-                $response = self::select('option_value', 'option_key')->whereNotIn('option_key', $settingFields)->orderBy('option_key', 'asc')->get()->flatMap(function ($name) {
-                    return array_merge([$name->option_key => $name->option_value], ['existing_language_file'=> LanguageHelper::getExistingLanguaseFile()]);
+                    return [$name->option_key => $name->option_value];
                 });
 
                 return $response;

@@ -21,6 +21,7 @@ import { Head } from "@inertiajs/vue3";
                 >
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         You are Logged in
+                        {{ __("welcome_message") }}
                     </div>
                 </div>
             </div>

@@ -233,12 +233,7 @@ defineProps({
                                                         colspan="100"
                                                         class="w-[100%]"
                                                     >
-                                                        <Pagination
-                                                            v-if="
-                                                                roles.meta
-                                                                    .last_page >
-                                                                1
-                                                            "
+                                                        <Pagination 
                                                             class="mt-6 dark:text-white flex justify-end p-3"
                                                             :meta="roles.meta"
                                                         ></Pagination>

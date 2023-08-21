@@ -1,5 +1,6 @@
 <script setup>
 import DarkMode from "@/Components/DarkMode.vue";
+import SelectLanguage from "@/Components/SelectLanguage.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
@@ -62,6 +63,9 @@ defineProps({
                         >
                             Visit website
                         </NavLink>
+                    </div>
+                    <div class="sm:space-y-5 ml-5 space-x-8">
+                        <select-language />
                     </div>
                 </div>
 

@@ -2,12 +2,11 @@
 
 namespace App\Observers;
 
+use App\Helpers\CacheHelper;
 use App\Models\Option;
-use App\Helpers\CacheHelper; 
 
 class OptionObserver
-{ 
-
+{
     protected $optionsCacheKey = '';
 
     public function __construct()

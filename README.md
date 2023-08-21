@@ -64,6 +64,10 @@ Start the local development server
 
 You can now access the server at http://localhost:8000
 
+## Contribution Guide
+
+Follow the [Link](https://github.com/anisAronno/multipurpose-admin-panel-boilerplate/blob/develop/CONTRIBUTING.md).
+
 ## License
 
 The application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

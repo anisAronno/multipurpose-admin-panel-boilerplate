@@ -28,7 +28,7 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|string|max:250|min:3',
             'gender' => 'nullable|string|max:50|min:3',
             'email' => 'email:rfc,dns|max:255|unique:users,email',
-            'avatar' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg,webp|max:2048',
+            'avatar' => 'nullable|image|max:2048',
             'roles' => 'required|array|present|min:0',
             'status' => 'required|string',
             'password' => 'required| min:8| max:32 |confirmed',
