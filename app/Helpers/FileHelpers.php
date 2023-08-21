@@ -2,115 +2,64 @@
 
 namespace App\Helpers;
 
-use App\Enums\AllowedFileType;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileHelpers
 {
-    /**
-     * check if isDefaultFile
-     *
-     * @param  mixed  $path
-     * @return bool
-     */
-    public static function isDefaultFile($path): bool
+    private static $fileTypeFolders = [
+        'images' => ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'],
+        'videos' => ['mp4', 'webm', 'ogg', 'mpeg', 'wav', 'mkv'],
+        'csv' => ['csv'],
+        'excel' => ['xls', 'xlsx'],
+        'pdf' => ['pdf'],
+        'text' => ['text'],
+        'documents' => ['doc', 'docx'],
+        'files' => ['zip', 'rar', 'gz', 'tar'],
+     ];
+
+
+    public static function getUrl($value, $disk = null): string
     {
-        $defaultFile = [
-            'images/defaults/avatar.png',
-            'images/defaults/placeholder.png',
-            'images/defaults/logo.png',
-            'images/defaults/banner.png',
-            'images/defaults/fav_icon.png',
-        ];
+        $storageDisk = !is_null($disk) ? $disk : Storage::getDefaultDriver();
 
-        $trimPath = stristr($path, 'images');
-
-        if (in_array($trimPath, $defaultFile)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Filter $fileType
-     *
-     * @param  mixed  $file
-     * @return bool
-     */
-    public static function isAllowFileType($path=''): bool
-    {
-        $extension = pathinfo(
-            parse_url($path, PHP_URL_PATH),
-            PATHINFO_EXTENSION
-        );
-
-        if (in_array($extension, AllowedFileType::values())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Summary of get_url_in_content( $content:string )
-     *
-     * @param  mixed  $value
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     */
-    public static function getUrl($value): string
-    {
         if (! empty($value)) {
-            $path = stristr($value, 'images');
-            
-            if ( ! empty($path) && Storage::disk('local')->exists('public/'.$path)) {
+            $fileExtension = pathinfo(parse_url($value, PHP_URL_PATH), PATHINFO_EXTENSION);
+            $fileTypeFolder = static::getFileTypeFolder($fileExtension);
+            $path = stristr($value, $fileTypeFolder);
+
+            if(self::isDefaultFile($value) && Storage::disk($storageDisk)->exists('public/'.$value)) {
+                return Storage::url($value);
+
+            } elseif (! empty($path) && Storage::disk($storageDisk)->exists('public/'.$path)) {
                 return Storage::url($path);
+            } else {
+                return $value;
             }
 
-            return $value;
+
+
         } else {
-            return Storage::url('images/defaults/placeholder.png');
+            return Storage::url(static::findDefaultsFolderPath().'/placeholder.png');
         }
     }
 
-    /**
-     * Upload the file to the path.
-     *
-     * @param $file
-     * @param $file_path
-     * @return mixed
-     */
-    public static function store($file, $file_path)
-    {
-        $disk = Storage::disk('local');
-        $disk->put('public/'.$file_path, file_get_contents($file));
-
-        return $file_path;
-    }
-
-    /**
-     * Summary of upload
-     *
-     * @param  mixed  $request
-     * @param  mixed  $file_name
-     * @param  mixed  $upload_dir
-     * @return mixed
-     */
-    public static function upload($request, $file_name, string $upload_dir): mixed
+    public static function upload($request, $file_name, string $upload_dir, $disk = null)
     {
         try {
             if ($request->hasFile($file_name)) {
                 $file = $request->$file_name;
-                $filename = time().'.'.$file->extension();
-                $up_path = 'images/'.$upload_dir.'/'.date('Y-m');
+                $extension = $file->extension();
+                $filename = time().'.'.$extension;
+                $fileTypeFolder = static::getFileTypeFolder($extension);
+                $up_path = $fileTypeFolder.'/'.$upload_dir.'/'.date('Y-m');
                 $filePath = $up_path.'/'.$filename;
 
-
-                if (! self::isAllowFileType($filePath)) {
+                if (! static::isAllowFileType($filePath)) {
                     return false;
                 }
 
-                return self::store($file, $filePath);
+                return static::store($file, $filePath, $disk);
             } else {
                 return false;
             }
@@ -119,27 +68,19 @@ class FileHelpers
         }
     }
 
-    /**
-     * Summary of deleteFile
-     *
-     * @param  mixed  $value
-     * @return bool
-     */
-    public static function deleteFile($value): bool
+    public static function deleteFile($value, $disk = null): bool
     {
         $path = stristr($value, 'images');
 
-        if (! self::isAllowFileType($path)) {
+        if (! static::isAllowFileType($path) || static::isDefaultFile($path)) {
             return false;
         }
 
-        if (self::isDefaultFile($path)) {
-            return false;
-        }
-        
+        $storageDisk = !is_null($disk) ? $disk : Storage::getDefaultDriver();
+
         try {
-            if (Storage::disk('local')->exists('public/'.$path)) {
-                Storage::disk('local')->delete('public/'.$path);
+            if (Storage::disk($storageDisk)->exists('public/'.$path)) {
+                Storage::disk($storageDisk)->delete('public/'.$path);
                 return true;
             }
 
@@ -147,5 +88,60 @@ class FileHelpers
         } catch (\Throwable $th) {
             return false;
         }
+    }
+
+    public static function isAllowFileType($path = ''): bool
+    {
+        $extension = pathinfo(
+            parse_url($path, PHP_URL_PATH),
+            PATHINFO_EXTENSION
+        );
+
+        $allowedExtensions = array_merge(...array_values(static::$fileTypeFolders));
+
+        return in_array($extension, $allowedExtensions);
+    }
+
+
+    private static function isDefaultFile($path): bool
+    {
+        $disk = Storage::disk('public');
+
+        $defaultFolderPath = static::findDefaultsFolderPath();
+
+        $defaultFiles = $disk->files($defaultFolderPath);
+
+        $trimPath = stristr($path, $defaultFolderPath);
+
+        return in_array($trimPath, $defaultFiles);
+    }
+
+    private static function store($file, $file_path, $disk)
+    {
+        $storageDisk = !is_null($disk) && !empty($disk) ? $disk : Storage::getDefaultDriver();
+
+        $disk = Storage::disk($storageDisk);
+        $disk->put('public/'.$file_path, file_get_contents($file));
+
+        return $file_path;
+    }
+
+    private static function findDefaultsFolderPath(): ?string
+    {
+        $directories = Storage::disk('public')->allDirectories();
+        $defaultsFolder = array_filter($directories, fn ($directory) => Str::contains($directory, 'defaults'));
+
+        return count($defaultsFolder) > 0 ? reset($defaultsFolder) : null;
+    }
+
+    private static function getFileTypeFolder($extension)
+    {
+        foreach (static::$fileTypeFolders as $folder => $extensions) {
+            if (in_array($extension, $extensions)) {
+                return $folder;
+            }
+        }
+
+        return 'others';
     }
 }

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
@@ -107,14 +106,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * Picture
      *
      * @param [type] $uid
-     * @return void
-     */
+      */
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
             return  $this->attributes['avatar'] = FileHelpers::getUrl($value);
         } else {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl('images/defaults/avatar.png');
+            return  $this->attributes['avatar'] = FileHelpers::getUrl('defaults/avatar.png');
         }
     }
 
@@ -152,7 +150,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $hasPermission;
     }
 
-     protected $appends = ['isDeletable', 'isEditable'];
+    protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)
     {
@@ -163,27 +161,27 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-       public function getIsEditableAttribute($value)
-       {
-           if ($this->id == 1) {
-               return false;
-           } else {
-               return true;
-           }
-       }
+    public function getIsEditableAttribute($value)
+    {
+        if ($this->id == 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-     public function addresses()
-     {
-         return $this->hasMany(Address::class, 'user_id', 'id');
-     }
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
 
-     public function socialLogins()
-     {
-         return $this->hasMany(SocialLogin::class, 'user_id', 'id');
-     }
+    public function socialLogins()
+    {
+        return $this->hasMany(SocialLogin::class, 'user_id', 'id');
+    }
 
-     public function loginHistories()
-     {
-         return $this->hasMany(LoginHistory::class, 'user_id', 'id');
-     }
+    public function loginHistories()
+    {
+        return $this->hasMany(LoginHistory::class, 'user_id', 'id');
+    }
 }

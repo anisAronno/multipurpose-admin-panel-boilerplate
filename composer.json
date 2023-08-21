@@ -2,7 +2,7 @@
     "name": "anisaronno/multipurpose-admin-panel-boilerplate",
     "type": "project",
     "description": "Application with laravel-10, vue-3, vite -4 , inertia 1, typescript, tailwind-3",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "keywords": [
         "laravel",
         "vuejs",
