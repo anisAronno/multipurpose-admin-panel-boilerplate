@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         LogViewer::auth(function ($request) {
             return $request->user()->hasRole(['superadmin', 'admin']);
         });
+
         JsonResource::withoutWrapping();
 
         Str::macro('stringToInteger', function (...$strings) {

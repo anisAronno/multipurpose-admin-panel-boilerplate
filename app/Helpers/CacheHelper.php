@@ -2,15 +2,24 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Facades\Artisan;
+use App\Traits\CacheKey;
+use Illuminate\Cache\TaggedCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 
 class CacheHelper
 {
-    public static function init($key)
+    use CacheKey;
+
+    /**
+     * Initialization cache instance
+     *
+     * @param string $key
+     * @return Cache|TaggedCache
+     */
+    public static function init($key = null)
     {
-        if (self::supportTag()) {
+        if (Cache::supportsTags() && !is_null($key)) {
             return Cache::tags($key);
         } else {
             return cache();
@@ -20,13 +29,13 @@ class CacheHelper
     /**
      * Forget Cache Key
      *
-     * @param [type] $key
-     * @return void
+     * @param string $key
+     * @return mixed
      */
     public static function forgetCache($key)
     {
-        if (self::supportTag()) {
-            return self::forgetCacheByTag($key);
+        if (Cache::supportsTags()) {
+            return  Cache::tags($key)->flush();
         } else {
             return self::forgetCacheByKey($key);
         }
@@ -34,13 +43,37 @@ class CacheHelper
     }
 
     /**
+     * Forget Cache key by tag
+     *
+     * @param string $key
+     * @return void
+     */
+    private static function forgetCacheByKey($key)
+    {
+        try {
+            $allKeys = self::getCacheKeys($key);
+
+            foreach ($allKeys as  $oldKey) {
+                if (Cache::has($oldKey)) {
+                    Cache::forget($oldKey);
+                } else {
+                    Cache::flush();
+                    break;
+                }
+            }
+        } catch (\Throwable $th) {
+            Cache::flush();
+        }
+    }
+
+    /**
      * Get ALl Cache Key
      *
-     * @param [type] $key
+     * @param string $key
       */
-    private static function getCacheKeys($key= null)
+    private static function getCacheKeys($key = null)
     {
-        switch (self::getCacheDriver()) {
+        switch (Cache::getDefaultDriver()) {
             case 'file':
                 return self::getFileCacheKeys();
             case 'redis':
@@ -53,59 +86,45 @@ class CacheHelper
     }
 
     /**
-     * Get Cache Driver
-     *
-     * @param [type] $key
-     */
-    private static function getCacheDriver($key= null)
-    {
-        return Cache::getDefaultDriver();
-
-    }
-
-
-    /**
-     * Get Supprted driver
-     *
-     * @return bool
-     */
-    private static function supportTag()
-    {
-        if (! in_array(self::getCacheDriver(), ['file', 'dynamodb', 'database'])) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
      * Get File Cache path
      *
      * @return array
      */
     private static function getFileCacheKeys(): array
     {
-        $storage = Cache::getStore();
-        $filesystem = $storage->getFilesystem();
+        try {
+            $storage = Cache::getStore();
+            $filesystem = $storage->getFilesystem();
 
-        $cachePath = $storage->getDirectory();
+            $cachePath = $storage->getDirectory();
 
-        $keys = [];
-        $files = $filesystem->allFiles($cachePath);
+            $keys = [];
+            $files = $filesystem->allFiles($cachePath);
 
-        foreach ($files as $file) {
-            $cacheKey = str_replace([$cachePath, DIRECTORY_SEPARATOR, '.php'], '', $file);
-            $keys[] = $cacheKey;
+            foreach ($files as $file) {
+                $cacheKey = str_replace([$cachePath, DIRECTORY_SEPARATOR, '.php'], '', $file);
+                $keys[] = $cacheKey;
+            }
+
+            return $keys;
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+
+    public function forget($key)
+    {
+        if ($this->files->exists($file = $this->path($key))) {
+            return $this->files->delete($file);
         }
 
-        return $keys;
+        return false;
     }
 
     /**
      * Get Redis cache key
      *
-     * @param [type] $key
+     * @param string $key
      * @return array
      */
     private static function getRedisCacheKeys($key = null): array
@@ -136,7 +155,7 @@ class CacheHelper
     /**
      * get memcache key
      *
-     * @param [type] $key
+     * @param string $key
      * @return array
      */
     private static function getMemcachedCacheKeys($key = null): array
@@ -162,94 +181,6 @@ class CacheHelper
         } catch (\Throwable $e) {
             return [];
         }
-    }
-
-
-    /**
-     * forget cache key by Tag
-     *
-     * @param [type] $key
-     * @return void
-     */
-    private static function forgetCacheByTag($key)
-    {
-        Cache::tags($key)->flush();
-    }
-
-    /**
-     * Forget Cache key by tag
-     *
-     * @param [type] $key
-     * @return void
-     */
-    private static function forgetCacheByKey($key)
-    {
-        try {
-            $allKeys = CacheHelper::getCacheKeys($key);
-            foreach ($allKeys as  $oldKey) {
-                if (Cache::has($oldKey)) {
-                    Cache::forget($oldKey);
-                } else {
-                    Artisan::call('cache:clear');
-                    break;
-                }
-            }
-        } catch (\Throwable $th) {
-            logger()->info($th->getMessage());
-        }
-    }
-
-
-    public static function getRoleCacheKey(): string
-    {
-        return 'role_';
-    }
-
-    public static function getUserCacheKey(): string
-    {
-        return 'user_';
-    }
-
-    public static function getOptionsCacheKey(): string
-    {
-        return 'option_';
-    }
-    public static function getProductCacheKey(): string
-    {
-        return 'product_';
-    }
-    public static function getFeaturedProductCacheKey(): string
-    {
-        return 'featured_product_';
-    }
-    public static function getBlogCacheKey(): string
-    {
-        return 'blog_';
-    }
-    public static function getFeaturedBlogCacheKey(): string
-    {
-        return 'featured_blog_';
-    }
-    public static function getCategoryCacheKey(): string
-    {
-        return 'category_';
-    }
-
-    public static function getFeaturedCategoryCacheKey(): string
-    {
-        return 'featured_category_';
-    }
-
-
-    public static function getContactCacheKey(): string
-    {
-        return 'contact_';
-    }
-
-
-    public static function getSpecialFeatureCacheKey(): string
-    {
-        return 'category_';
     }
 
 }
