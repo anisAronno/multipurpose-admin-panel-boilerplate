@@ -2,7 +2,7 @@
 
 namespace App\Rules\Options;
 
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use Illuminate\Contracts\Validation\Rule;
 
 class OptoinValueFilterRule implements Rule
@@ -27,7 +27,7 @@ class OptoinValueFilterRule implements Rule
     public function passes($attribute, $value)
     {
         if (is_file($value)) {
-            return (bool) FileHelpers::isAllowFileType($value->getClientOriginalName());
+            return (bool) Media::isAllowedFileType($value->getClientOriginalName());
         } else {
             return true;
         }

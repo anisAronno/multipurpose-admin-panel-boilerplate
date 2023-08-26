@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Enums\SettingsFields;
 use App\Helpers\CacheHelper;
+use Illuminate\Support\Facades\Artisan;
 
 trait OptionTransform
 {
@@ -56,7 +57,7 @@ trait OptionTransform
             $option = self::where('option_key', $key)->first();
             $option->option_value = $value;
 
-            if ($key=='language') {
+            if ($key == 'language') {
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
             }

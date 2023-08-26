@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
-
 
 use App\Enums\SocialLoginFields;
 use App\Enums\UserStatus;
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
@@ -61,7 +59,7 @@ class OptionController extends InertiaApplicationController
      */
     public function store(StoreOptionRequest $request)
     {
-       //
+        //
     }
 
     /**
@@ -96,13 +94,13 @@ class OptionController extends InertiaApplicationController
     public function update(UpdateOptionRequest $request, Option $option)
     {
         if ($request->image) {
-            $path = FileHelpers::upload($request, 'image', 'settings');
+            $path = Media::upload($request, 'image', 'settings');
 
             if (! $path) {
                 return $this->failedWithMessage('Update failed!');
             }
 
-            FileHelpers::deleteFile($option->option_value);
+            Media::delete($option->option_value);
 
             $option = $option::updateOption($option->option_key, $path);
 
@@ -148,7 +146,7 @@ class OptionController extends InertiaApplicationController
     {
         try {
             if ($option->option_value) {
-                FileHelpers::deleteFile($option->option_value);
+                Media::delete($option->option_value);
             }
 
             $option::updateOption($option->option_key, null);

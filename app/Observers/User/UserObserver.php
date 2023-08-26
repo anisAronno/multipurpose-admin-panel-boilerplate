@@ -2,7 +2,7 @@
 
 namespace App\Observers\User;
 
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Models\User;
 use App\Helpers\CacheHelper;
 
@@ -47,7 +47,7 @@ class UserObserver
     {
         CacheHelper::forgetCache($this->key);
 
-        FileHelpers::deleteFile($user->avatar);
+        Media::delete($user->avatar);
     }
 
     /**
@@ -71,6 +71,6 @@ class UserObserver
     {
         CacheHelper::forgetCache($this->key);
 
-        FileHelpers::deleteFile($user->avatar);
+        Media::delete($user->avatar);
     }
 }
