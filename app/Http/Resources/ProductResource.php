@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Models\Image;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
@@ -21,7 +21,7 @@ class ProductResource extends JsonResource
             if ($this->image->isNotEmpty()) {
                 return new ImageResources($this->image->first());
             }
-            return new ImageResources(new Image(['url' => FileHelpers::getDefaultImage()]));
+            return new ImageResources(new Image(['url' => Media::getPlaceholderImage()]));
         });
 
         return [

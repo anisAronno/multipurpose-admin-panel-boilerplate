@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Traits\HasAuthor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +38,6 @@ class Image extends Model
 
     public function getUrlAttribute($value)
     {
-        return  $this->attributes['url'] = FileHelpers::getUrl($value);
+        return  $this->attributes['url'] = Media::getURL($value);
     }
 }

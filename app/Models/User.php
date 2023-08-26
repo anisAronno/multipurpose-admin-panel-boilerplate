@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Enums\UserGender;
 use App\Enums\UserStatus;
-use App\Helpers\FileHelpers;
 use App\Helpers\UniqueSlug;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
@@ -106,9 +106,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl($value);
+            return  $this->attributes['avatar'] = Media::getURL($value);
         } else {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl('defaults/avatar.png');
+            return  $this->attributes['avatar'] = Media::getURL('defaults/avatar.png');
         }
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\CacheHelper;
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
@@ -80,7 +80,7 @@ class ImageController extends InertiaApplicationController
         $data['user_id'] = auth()->user()->id ;
 
         if ($request->image) {
-            $data['url'] = FileHelpers::upload($request, 'image', 'images');
+            $data['url'] = Media::upload($request, 'image', 'images');
             $data['mimes'] = $request->image->extension();
             $data['type'] = $request->image->getClientMimeType();
             $data['size'] = number_format($request->image->getSize() / (1024 * 1024), 2, '.', '')."MB";
@@ -104,7 +104,7 @@ class ImageController extends InertiaApplicationController
         $data['user_id'] = auth()->user()->id ;
 
         if ($request->image) {
-            $data['url'] = FileHelpers::upload($request, 'image', 'images');
+            $data['url'] = Media::upload($request, 'image', 'images');
             $data['mimes'] = $request->image->extension();
             $data['type'] = $request->image->getClientMimeType();
             $data['size'] = number_format($request->image->getSize() / (1024 * 1024), 2, '.', '')."MB";
@@ -155,7 +155,7 @@ class ImageController extends InertiaApplicationController
     public function destroy(Image $image)
     {
         try {
-            FileHelpers::deleteFile($image->url);
+            Media::delete($image->url);
 
             $image->delete();
 
@@ -169,7 +169,7 @@ class ImageController extends InertiaApplicationController
     {
         try {
             foreach ($request->data as  $image) {
-                isset($image['url']) ? FileHelpers::deleteFile($image['url']) : '';
+                isset($image['url']) ? Media::delete($image['url']) : '';
             }
 
             $idArr = array_column($request->data, 'id');

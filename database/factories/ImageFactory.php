@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
-use App\Models\Blog;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
@@ -25,7 +23,7 @@ class ImageFactory extends Factory
             'mimes' => 'images/png',
             'type' => 'images/png',
             'size' => '3 MB',
-            'user_id' => User::all(['id'])->random(),
+            'user_id' => User::all(['id'])->random() ?? null,
         ];
     }
 }

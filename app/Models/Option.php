@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SettingsFields;
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Traits\OptionTransform;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,10 +52,10 @@ class Option extends Model
 
     public function getOptionValueAttribute($value)
     {
-        $isFile = FileHelpers::isAllowFileType($value);
+        $isFile = Media::isAllowedFileType($value);
 
         if ($isFile) {
-            $value = FileHelpers::getUrl($value);
+            $value = Media::getURL($value);
             return $value;
         }
 

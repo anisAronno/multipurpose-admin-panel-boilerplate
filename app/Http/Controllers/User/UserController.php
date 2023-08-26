@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Enums\Status;
 use App\Enums\UserStatus;
 use App\Helpers\CacheHelper;
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
@@ -115,7 +115,7 @@ class UserController extends InertiaApplicationController
         $data['email_verified_at'] = Carbon::now();
 
         if ($request->avatar) {
-            $data['avatar'] = FileHelpers::upload($request, 'avatar', 'users');
+            $data['avatar'] = Media::upload($request, 'avatar', 'users');
         }
 
         $user = User::create($data);
@@ -206,11 +206,11 @@ class UserController extends InertiaApplicationController
     public function avatarUpdate(Request $request, User $user)
     {
         if ($request->image) {
-            $path = FileHelpers::upload($request, 'image', 'users');
+            $path = Media::upload($request, 'image', 'users');
             if (! $path) {
                 return $this->successWithMessage('Update Failed');
             } else {
-                FileHelpers::deleteFile($user->avatar);
+                Media::delete($user->avatar);
                 $user->update([$user->avatar = $path]);
             }
         }
@@ -220,7 +220,7 @@ class UserController extends InertiaApplicationController
 
     public function avatarDelete(User $user)
     {
-        FileHelpers::deleteFile($user->avatar);
+        Media::delete($user->avatar);
 
         $user->update([$user->avatar = null]);
 
