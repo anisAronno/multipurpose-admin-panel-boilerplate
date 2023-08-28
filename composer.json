@@ -2,7 +2,7 @@
     "name": "anisaronno/multipurpose-admin-panel-boilerplate",
     "type": "project",
     "description": "Application with laravel-10, vue-3, vite -4 , inertia 1, typescript, tailwind-3",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "keywords": [
         "laravel",
         "vuejs",
@@ -20,7 +20,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1.0",
-        "anisaronno/laravel-media-helper": "^0.0.4",
+        "anisaronno/laravel-media-helper": "0.0.8",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
         "joedixon/laravel-translation": "^2.2",

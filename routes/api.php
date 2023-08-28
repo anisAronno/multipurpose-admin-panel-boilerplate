@@ -26,7 +26,7 @@ Route::get('/image', function (Request $request) {
 
 Route::get('/default', function (Request $request) {
     try {
-        return  Media::getDefaultFiles(true, 'avatarasd');
+        return  Media::getAllDefaultFiles(true, 'avatar');
     } catch (\Throwable $th) {
         return $th->getMessage();
     }
