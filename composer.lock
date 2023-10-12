@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23f942254a2c099b5276d200bbcd2422",
+    "content-hash": "f7992d3f3e0f98a50dea47cc1e182098",
     "packages": [
         {
             "name": "anisaronno/laravel-media-helper",
-            "version": "0.4.0",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anisAronno/Laravel-Media-Helper.git",
-                "reference": "54072b59182ff145cfcf9c8cc1809d248e7ff825"
+                "reference": "cedfb05497b736c351245620d2d46c9d5dd33ed0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anisAronno/Laravel-Media-Helper/zipball/54072b59182ff145cfcf9c8cc1809d248e7ff825",
-                "reference": "54072b59182ff145cfcf9c8cc1809d248e7ff825",
+                "url": "https://api.github.com/repos/anisAronno/Laravel-Media-Helper/zipball/cedfb05497b736c351245620d2d46c9d5dd33ed0",
+                "reference": "cedfb05497b736c351245620d2d46c9d5dd33ed0",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,7 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "AnisAronno\\LaravelSettings\\MediaHelperServiceProvider"
+                        "AnisAronno\\MediaHelper\\MediaHelperServiceProvider"
                     ]
                 }
             },
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/anisAronno/Laravel-Media-Helper/issues",
-                "source": "https://github.com/anisAronno/Laravel-Media-Helper/tree/v0.4.0"
+                "source": "https://github.com/anisAronno/Laravel-Media-Helper/tree/v0.1.0"
             },
-            "time": "2023-10-12T11:09:33+00:00"
+            "time": "2023-10-12T17:51:53+00:00"
         },
         {
             "name": "brick/math",
