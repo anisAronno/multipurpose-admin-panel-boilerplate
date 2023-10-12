@@ -2,14 +2,17 @@
 
 namespace Database\Factories;
 
+use AnisAronno\MediaHelper\Models\Image;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\AnisAronno\MediaHelper\Models\Image>
  */
 class ImageFactory extends Factory
 {
+    protected $model = Image::class;
+
     /**
      * Define the model's default state.
      *

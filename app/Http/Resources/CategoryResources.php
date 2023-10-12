@@ -21,7 +21,7 @@ class CategoryResources extends JsonResource
             if ($this->image->isNotEmpty()) {
                 return new ImageResources($this->image->first());
             }
-            return new ImageResources(new Image(['url' => Media::getPlaceholderImage()]));
+            return new ImageResources(new Image(['url' => Media::getDefaultPlaceholder()]));
         });
 
         return [
