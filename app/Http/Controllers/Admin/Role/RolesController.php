@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Role;
 
-use App\Helpers\CacheHelper;
+use AnisAronno\LaravelCacheMaster\CacheControl;
+use App\Helpers\CacheKey;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
 use App\Http\Requests\Role\RoleUpdateRequest;
@@ -46,10 +47,10 @@ class RolesController extends InertiaApplicationController
             return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
         }
 
-        $key = CacheHelper::getRoleCacheKey();
+        $key = CacheKey::getRoleCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $roles = CacheHelper::init($key)->remember($cacheKey, 10, function () {
+        $roles = CacheControl::init($key)->remember($cacheKey, 10, function () {
             return Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
             }])->orderBy('id', 'desc')->paginate(10);

@@ -2,9 +2,10 @@
 
 namespace App\Observers\User;
 
+use AnisAronno\LaravelCacheMaster\CacheControl;
 use AnisAronno\MediaHelper\Facades\Media;
+use App\Helpers\CacheKey;
 use App\Models\User;
-use App\Helpers\CacheHelper;
 
 class UserObserver
 {
@@ -12,7 +13,7 @@ class UserObserver
 
     public function __construct()
     {
-        $this->key = CacheHelper::getUserCacheKey();
+        $this->key = CacheKey::getUserCacheKey();
     }
 
     /**
@@ -23,7 +24,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        CacheHelper::forgetCache($this->key);
+        CacheControl::forgetCache($this->key);
     }
 
     /**
@@ -34,7 +35,7 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        CacheHelper::forgetCache($this->key);
+        CacheControl::forgetCache($this->key);
     }
 
     /**
@@ -45,7 +46,7 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        CacheHelper::forgetCache($this->key);
+        CacheControl::forgetCache($this->key);
 
         Media::delete($user->avatar);
     }
@@ -58,7 +59,7 @@ class UserObserver
      */
     public function restored(User $user)
     {
-        CacheHelper::forgetCache($this->key);
+        CacheControl::forgetCache($this->key);
     }
 
     /**
@@ -69,7 +70,7 @@ class UserObserver
      */
     public function forceDeleted(User $user)
     {
-        CacheHelper::forgetCache($this->key);
+        CacheControl::forgetCache($this->key);
 
         Media::delete($user->avatar);
     }

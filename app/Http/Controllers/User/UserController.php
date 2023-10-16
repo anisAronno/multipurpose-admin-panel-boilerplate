@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
+use AnisAronno\LaravelCacheMaster\CacheControl;
 use AnisAronno\MediaHelper\Facades\Media;
 use App\Enums\UserStatus;
-use App\Helpers\CacheHelper;
+use App\Helpers\CacheKey;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
@@ -44,10 +45,10 @@ class UserController extends InertiaApplicationController
 
             return Inertia::render('Dashboard/User/Index', ['users' => $users]);
         }
-        $key = CacheHelper::getUserCacheKey();
+        $key = CacheKey::getUserCacheKey();
         $cacheKey =  $key.md5(serialize([$currentPage]));
 
-        $users = CacheHelper::init($key)->remember($cacheKey, 10, function () {
+        $users = CacheControl::init($key)->remember($cacheKey, 10, function () {
             return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
         });
 
