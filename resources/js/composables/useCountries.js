@@ -15,7 +15,7 @@ let userLanguages;
 if (Intl) {
   userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   userCountry = countryData[userTimeZone];
-  userLanguages = countryData[userTimeZone].languages.code;
+  userLanguages = countryData[userTimeZone]?.languages?.code;
 }
  
 /** -------------------
@@ -43,6 +43,7 @@ export function useCountries() {
       userTimeZone,
       countries,
       countryWithCode, 
+      userLanguages
   };
 }
 

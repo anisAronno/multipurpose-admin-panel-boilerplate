@@ -1,0 +1,1 @@
+import{p as o}from"./app-4f9e7dfc.js";var e,t;const a=(t=(e=route())==null?void 0:e.t)==null?void 0:t.url,l=o({logo:`${a}/storage/defaults/logo.png`,placeholder:`${a}/storage/defaults/placeholder.png`,avatar:`${a}/storage/defaults/avatar.png`,banner:`${a}/storage/defaults/banner.png`,fav_icon:`${a}/storage/defaults/fav_icon.png`,site_url:a});export{l as d};
