@@ -2,8 +2,7 @@
 
 namespace App\Http\Resources;
 
-use AnisAronno\MediaHelper\Facades\Media;
-use App\Models\Image;
+use AnisAronno\MediaGallery\Http\Resources\MediaResources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
@@ -17,21 +16,14 @@ class SpecialFeatureResources extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image = $this->whenLoaded('image', function () {
-            if ($this->image->isNotEmpty()) {
-                return new ImageResources($this->image->first());
-            }
-            return new ImageResources(new Image(['url' => Media::getDefaultPlaceholder()]));
-        });
-
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'slug' => $this->slug,
             'status' => $this->status,
-            'image' => $image,
-            'images' => ImageResources::collection($this->whenLoaded('images')),
+            'featuredMedia' => MediaResources::collection($this->whenLoaded('featuredMedia')),
+            'media' => MediaResources::collection($this->whenLoaded('media')),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
         ];
     }

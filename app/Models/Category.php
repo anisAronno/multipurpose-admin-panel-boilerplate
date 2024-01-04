@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use AnisAronno\MediaGallery\Traits\HasMedia;
 use App\Enums\Status;
 use App\Helpers\UniqueSlug;
 use App\Traits\CheckStatusAndFeture;
-use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,7 +18,7 @@ class Category extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
-    use HasImages;
+    use HasMedia;
 
     /**
     * The attributes that are mass assignable.

@@ -4,29 +4,92 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c96b4b5ea9169c7d8d9b3097234ac1f",
+    "content-hash": "ed1ccfaf94f32f5ddd9eea29cc938d15",
     "packages": [
         {
-            "name": "anisaronno/laravel-media-helper",
-            "version": "0.0.5",
+            "name": "anisaronno/laravel-media-gallery",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/anisAronno/Laravel-Media-Helper.git",
-                "reference": "647f73af31368e2031b7d423c0a50c6d5bd28b76"
+                "url": "https://github.com/anisAronno/laravel-media-gallery.git",
+                "reference": "1780e5960da721da7684a495d15aef39e8d1478e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anisAronno/Laravel-Media-Helper/zipball/647f73af31368e2031b7d423c0a50c6d5bd28b76",
-                "reference": "647f73af31368e2031b7d423c0a50c6d5bd28b76",
+                "url": "https://api.github.com/repos/anisAronno/laravel-media-gallery/zipball/1780e5960da721da7684a495d15aef39e8d1478e",
+                "reference": "1780e5960da721da7684a495d15aef39e8d1478e",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "^8.12|^9.0|^10.0",
-                "laravel/framework": "^8.37|^9.0|^10.0",
-                "php": "^8.0"
+                "anisaronno/laravel-media-helper": "^0.1.0",
+                "laravel/framework": "^8.0|^9.0|^10.0",
+                "php": "^7.4|^8.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^8.9",
+                "orchestra/testbench": "^8.13",
+                "phpunit/phpunit": "^10.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AnisAronno\\MediaGallery\\MediaGalleryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AnisAronno\\MediaGallery\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MD. Anichur Rahaman",
+                    "email": "contact@anichur.com",
+                    "homepage": "https://anichur.com",
+                    "role": "Author, Developer"
+                }
+            ],
+            "description": "Laravel Settings Table",
+            "homepage": "https://github.com/anisAronno/laravel-media-media",
+            "keywords": [
+                "laravel",
+                "media",
+                "wedevs",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/anisAronno/laravel-media-gallery/issues",
+                "source": "https://github.com/anisAronno/laravel-media-gallery/tree/v0.5.0"
+            },
+            "time": "2024-01-02T19:01:45+00:00"
+        },
+        {
+            "name": "anisaronno/laravel-media-helper",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anisAronno/Laravel-Media-Helper.git",
+                "reference": "21cc30e7fc1ddc95f39750e6d98f8433d5b94c06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anisAronno/Laravel-Media-Helper/zipball/21cc30e7fc1ddc95f39750e6d98f8433d5b94c06",
+                "reference": "21cc30e7fc1ddc95f39750e6d98f8433d5b94c06",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0|^9.0|^10.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^1.21",
                 "phpunit/phpunit": "^9.0"
             },
             "type": "library",
@@ -57,17 +120,16 @@
             "description": "Laravel Media Helper",
             "homepage": "https://github.com/anisAronno/laravel-media-helper",
             "keywords": [
-                "file",
-                "gallery",
                 "laravel",
-                "media",
-                "wedevs"
+                "laravel-media-helper",
+                "wedevs",
+                "wordpress"
             ],
             "support": {
                 "issues": "https://github.com/anisAronno/Laravel-Media-Helper/issues",
-                "source": "https://github.com/anisAronno/Laravel-Media-Helper/tree/v0.0.5"
+                "source": "https://github.com/anisAronno/Laravel-Media-Helper/tree/v0.1.1"
             },
-            "time": "2023-08-22T13:46:10+00:00"
+            "time": "2023-10-25T04:41:44+00:00"
         },
         {
             "name": "brick/math",
@@ -9325,5 +9387,5 @@
         "php": "^8.1.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

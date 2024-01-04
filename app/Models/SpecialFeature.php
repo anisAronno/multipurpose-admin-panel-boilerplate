@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use AnisAronno\MediaGallery\Traits\HasMedia;
 use App\Helpers\UniqueSlug;
-use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
@@ -14,7 +14,7 @@ class SpecialFeature extends Model
 {
     use HasFactory;
     use LogsActivity;
-    use HasImages;
+    use HasMedia;
 
     /**
     * The attributes that are mass assignable.

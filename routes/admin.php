@@ -2,7 +2,6 @@
 
 
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\PageController;
@@ -74,14 +73,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Contact Route
          */
         Route::resource('contact', ContactController::class, ['except' => ['update', 'store']]);
-
-        /**
-         * Image Route
-         */
-        Route::resource('image', ImageController::class, ['except' => ['update']]);
-        Route::post('/image/update/{image}', [ImageController::class, 'update'])->name('image.update');
-        Route::post('image/delete-all', [ImageController::class, 'groupDelete'])->name('image.destroy.all');
-        Route::post('image/editor', [ImageController::class, 'textEditorImageUpload'])->name('image.editor');
+ 
 
         /**
          * Special Feature Controller route

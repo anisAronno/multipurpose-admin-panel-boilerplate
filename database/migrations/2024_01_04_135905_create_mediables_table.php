@@ -1,11 +1,12 @@
 <?php
 
+use AnisAronno\MediaGallery\Models\Media;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Image;
 
-return new class () extends Migration {
+return new class() extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -13,10 +14,10 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('imageables', function (Blueprint $table) { 
-            $table->foreignIdFor(Image::class)->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('imageable_id');
-            $table->string('imageable_type');
+        Schema::create('mediables', function (Blueprint $table)
+        {
+            $table->foreignIdFor(Media::class)->constrained()->cascadeOnDelete();
+            $table->morphs('mediable');
             $table->tinyInteger('is_featured')->default(0);
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('imageables');
+        Schema::dropIfExists('mediables');
     }
 };

@@ -11,13 +11,13 @@ use App\Models\LoginHistory;
 use App\Models\SearchHistory;
 use App\Models\Product;
 use App\Models\Rating;
-use App\Models\React; 
+use App\Models\React;
 use App\Models\ShareHistory;
 use App\Models\SocialLogin;
 use App\Models\Tag;
 use App\Models\User;
-use App\Models\Image;
 use App\Models\Visitor;
+use Database\Factories\MediaFactory;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -32,16 +32,26 @@ class UserSeeder extends Seeder
         User::factory()->count(10)
         ->has(
             Category::factory()->count(3)
-            ->has(Image::factory()->count(2), 'images')
-            ->afterCreating(function ($category) {
-                $category->images->first()->pivot->is_featured = 1;
-                $category->images->first()->pivot->save();
+            ->hasAttached(
+                MediaFactory::new()->count(5)
+            )
+            ->afterCreating(function (Category $category) {
+                $featuredMedia                     = $category->media()->first();
+                $featuredMedia->pivot->is_featured = true;
+                $featuredMedia->pivot->save();
             })
         )
         ->has(
             Blog::factory()->count(2)
             ->has(Category::factory()->count(2), 'categories')
-            ->has(Image::factory()->count(2), 'images')
+            ->hasAttached(
+                MediaFactory::new()->count(5)
+            )
+            ->afterCreating(function (Blog $blog) {
+                $featuredMedia                     = $blog->media()->first();
+                $featuredMedia->pivot->is_featured = true;
+                $featuredMedia->pivot->save();
+            })
             ->has(Tag::factory()->count(2), 'tags')
             ->has(Comment::factory()->count(2), 'comments')
             // ->has(Favourite::factory()->count(2), 'favourites')
@@ -49,17 +59,20 @@ class UserSeeder extends Seeder
             ->has(React::factory()->count(2), 'reacts')
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
-            ->afterCreating(function ($blog) {
-                $blog->images->first()->pivot->is_featured = 1;
-                $blog->images->first()->pivot->save();
-            })
         )
         ->has(Address::factory()->count(2))
         ->has(SocialLogin::factory()->count(2))
         ->has(
             Product::factory()->count(2)
             ->has(Category::factory()->count(2), 'categories')
-            ->has(Image::factory()->count(2), 'images')
+            ->hasAttached(
+                MediaFactory::new()->count(5)
+            )
+            ->afterCreating(function (Product $product) {
+                $featuredMedia                     = $product->media()->first();
+                $featuredMedia->pivot->is_featured = true;
+                $featuredMedia->pivot->save();
+            })
             ->has(Tag::factory()->count(2), 'tags')
             ->has(Comment::factory()->count(2), 'comments')
             // ->has(Favourite::factory()->count(2), 'favourites')
@@ -67,10 +80,6 @@ class UserSeeder extends Seeder
             ->has(React::factory()->count(2), 'reacts')
             ->has(Visitor::factory()->count(2), 'visitors')
             ->has(ShareHistory::factory()->count(2), 'shares')
-            ->afterCreating(function ($product) {
-                $product->images->first()->pivot->is_featured = 1;
-                $product->images->first()->pivot->save();
-            })
         )
         ->has(LoginHistory::factory()->count(2))
         ->has(SearchHistory::factory()->count(2))

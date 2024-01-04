@@ -1,31 +1,3 @@
 {
-    "preset": "laravel",
-    "rules": {
-        "align_multiline_comment": true,
-        "array_indentation": true,
-        "array_syntax": true,
-        "blank_line_after_namespace": true,
-        "blank_line_after_opening_tag": true,
-        "combine_consecutive_issets": true,
-        "combine_consecutive_unsets": true,
-        "concat_space": true,
-        "declare_parentheses": true,
-        "declare_strict_types": false,
-        "explicit_string_variable": true,
-        "fully_qualified_strict_types": true,
-        "global_namespace_import": {
-            "import_classes": true,
-            "import_constants": true,
-            "import_functions": true
-        },
-        "is_null": true,
-        "lambda_not_used_import": true,
-        "method_chaining_indentation": true,
-        "no_empty_comment": true,
-        "not_operator_with_space": true,
-        "simplified_if_return": true,
-        "ternary_to_null_coalescing": true,
-        "trim_array_spaces": true,
-        "yoda_style": true
-    }
+    "preset": "laravel"
 }

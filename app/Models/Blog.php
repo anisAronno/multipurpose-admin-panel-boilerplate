@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use AnisAronno\MediaGallery\Traits\HasMedia;
 use App\Enums\Format;
 use App\Enums\Status;
 use App\Helpers\UniqueSlug;
@@ -10,7 +11,6 @@ use App\Traits\Favouriteable;
 use App\Traits\HasAuthor;
 use App\Traits\HasCategories;
 use App\Traits\HasComments;
-use App\Traits\HasImages;
 use App\Traits\HasRatings;
 use App\Traits\HasReacts;
 use App\Traits\HasTags;
@@ -28,7 +28,6 @@ class Blog extends Model
     use SoftDeletes;
     use LogsActivity;
     use CheckStatusAndFeture;
-    use HasImages;
     use HasCategories;
     use HasAuthor;
     use HasTags;
@@ -38,6 +37,7 @@ class Blog extends Model
     use HasReacts;
     use HasVisitors;
     use Shareable; 
+    use HasMedia;
 
     /**
     * The attributes that are mass assignable.

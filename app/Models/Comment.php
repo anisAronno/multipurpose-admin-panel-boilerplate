@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use AnisAronno\MediaGallery\Traits\HasMedia;
 use App\Enums\Status;
-use App\Traits\HasImages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +15,7 @@ class Comment extends Model
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-    use HasImages;
+    use HasMedia;
 
     /**
     * The attributes that are mass assignable.
