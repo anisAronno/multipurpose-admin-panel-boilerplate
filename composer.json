@@ -20,7 +20,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1.0",
-        "anisaronno/laravel-media-gallery": "^0.5.0",
+        "anisaronno/laravel-media-gallery": "0.6.0",
         "guzzlehttp/guzzle": "^7.5",
         "inertiajs/inertia-laravel": "^0.6.3",
         "joedixon/laravel-translation": "^2.2",

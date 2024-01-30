@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed1ccfaf94f32f5ddd9eea29cc938d15",
+    "content-hash": "85b45238dfbe31c4d35ac30f9de3733e",
     "packages": [
         {
             "name": "anisaronno/laravel-media-gallery",
-            "version": "0.5.0",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anisAronno/laravel-media-gallery.git",
-                "reference": "1780e5960da721da7684a495d15aef39e8d1478e"
+                "reference": "ebd41cf23ce76a68020980bf19eb8129e0e2e637"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anisAronno/laravel-media-gallery/zipball/1780e5960da721da7684a495d15aef39e8d1478e",
-                "reference": "1780e5960da721da7684a495d15aef39e8d1478e",
+                "url": "https://api.github.com/repos/anisAronno/laravel-media-gallery/zipball/ebd41cf23ce76a68020980bf19eb8129e0e2e637",
+                "reference": "ebd41cf23ce76a68020980bf19eb8129e0e2e637",
                 "shasum": ""
             },
             "require": {
@@ -57,6 +57,7 @@
             "description": "Laravel Settings Table",
             "homepage": "https://github.com/anisAronno/laravel-media-media",
             "keywords": [
+                "gallery",
                 "laravel",
                 "media",
                 "wedevs",
@@ -64,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/anisAronno/laravel-media-gallery/issues",
-                "source": "https://github.com/anisAronno/laravel-media-gallery/tree/v0.5.0"
+                "source": "https://github.com/anisAronno/laravel-media-gallery/tree/v0.6.0"
             },
-            "time": "2024-01-02T19:01:45+00:00"
+            "time": "2024-01-04T08:41:12+00:00"
         },
         {
             "name": "anisaronno/laravel-media-helper",

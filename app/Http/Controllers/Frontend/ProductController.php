@@ -56,7 +56,7 @@ class ProductController extends Controller
             $show_views,
             $type,
         ) {
-            $products = Product::with(['categories', 'image'])->isActive();
+            $products = Product::with(['categories', 'featuredMedia'])->isActive();
 
             if (! empty($status)) {
                 $products->where('status', $status);
@@ -150,14 +150,14 @@ class ProductController extends Controller
 
         $featuredProducts = CacheHelper::init($featuredProductKey)->remember($featuredProductKey, now()->addDay(), function () {
             return Product::isActive()->isFeatured()
-            ->with(['image'])
+            ->with(['featuredMedia'])
             ->orderBy('id', 'desc')
             ->limit(8)
             ->get();
         });
 
 
-        return Inertia::render('Frontend/Products/Show')->with(['product' => new ProductResource($product->load('image')), 'featuredProducts' => ProductResource::collection($featuredProducts)]);
+        return Inertia::render('Frontend/Products/Show')->with(['product' => new ProductResource($product->load('featuredMedia')), 'featuredProducts' => ProductResource::collection($featuredProducts)]);
     }
 
     /**

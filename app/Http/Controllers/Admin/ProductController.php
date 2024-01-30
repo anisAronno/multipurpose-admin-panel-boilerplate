@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\InertiaApplicationController;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -56,6 +57,7 @@ class ProductController extends InertiaApplicationController
         $page       = $request->get('page', 1);
         $productCacheKey = CacheHelper::getProductCacheKey();
 
+        /** @var User $user */
         $user  = auth()->user();
         $key =  $productCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate, $is_commentable, $is_reactable, $is_shareable, $show_ratings, $show_views, $type]));
 
@@ -75,7 +77,7 @@ class ProductController extends InertiaApplicationController
             $show_views,
             $type,
         ) {
-            $products = Product::with(['categories', 'images', 'user']);
+            $products = Product::with(['categories', 'media', 'user']);
 
             if (! $user->haveAdministrativeRole()) {
                 $products->where('user_id', $user->id);
@@ -168,12 +170,12 @@ class ProductController extends InertiaApplicationController
                     $product->categories()->attach($request->get('categories'));
                 }
 
-                if ($request->has('image')) {
-                    $product->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                if ($request->has('featuredMedia')) {
+                    $product->media()->attach(array_column($request->get('featuredMedia'), 'id'), ['is_featured' => 1]);
                 }
 
-                if ($request->has('images')) {
-                    $product->images()->attach(array_column($request->get('images'), 'id'));
+                if ($request->has('media')) {
+                    $product->media()->attach(array_column($request->get('media'), 'id'));
                 }
             }
             return Redirect::route('admin.product.index')->with(['success' => true, 'message', 'Created successfully']);
@@ -190,7 +192,7 @@ class ProductController extends InertiaApplicationController
        */
       public function show(Product $product)
       {
-          $product->load(['categories', 'images']);
+          $product->load(['categories', 'media']);
 
           return Inertia::render('Dashboard/Products/Show')->with(['product' => new ProductResource($product)]);
       }
@@ -211,7 +213,7 @@ class ProductController extends InertiaApplicationController
 
         $categories = Category::select('id as value', 'title as label') ->get();
 
-        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['images']), 'statusArr' => $statusArr, 'categories' => $categories, '$typeArr' => $typeArr]);
+        return Inertia::render('Dashboard/Products/Edit', ['product' => $product->load(['media']), 'statusArr' => $statusArr, 'categories' => $categories, '$typeArr' => $typeArr]);
     }
 
     /**
@@ -226,7 +228,7 @@ class ProductController extends InertiaApplicationController
 
         if ($request->categories) {
             $product->categories()->sync($request->categories);
-            $product->images()->sync(array_column($request->get('images'), 'id'));
+            $product->media()->sync(array_column($request->get('media'), 'id'));
         }
 
         if (session('last_visited_url')) {
@@ -245,7 +247,7 @@ class ProductController extends InertiaApplicationController
     {
         $product->delete();
 
-        $product->images()->detach();
+        $product->media()->detach();
         $product->categories()->detach();
 
 

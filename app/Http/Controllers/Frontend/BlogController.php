@@ -53,7 +53,7 @@ class BlogController extends Controller
             $show_views,
             $format,
         ) {
-            $blogs = Blog::with(['user', 'image'])->isActive();
+            $blogs = Blog::with(['user', 'featuredMedia'])->isActive();
 
             if (! empty($isFeatured)) {
                 $blogs->where('is_featured', $isFeatured);
@@ -134,7 +134,7 @@ class BlogController extends Controller
         if (! $blog->isActive()) {
             abort(403);
         }
-        return Inertia::render('Frontend/Blog/Show')->with(['blog' => new BlogResources($blog->load('user', 'image'))]);
+        return Inertia::render('Frontend/Blog/Show')->with(['blog' => new BlogResources($blog->load('user', 'featuredMedia'))]);
     }
 
     /**

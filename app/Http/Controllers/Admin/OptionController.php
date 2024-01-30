@@ -75,8 +75,8 @@ class OptionController extends InertiaApplicationController
      */
     public function update(UpdateOptionRequest $request, Option $option)
     {
-        if ($request->image) {
-            $path = Media::upload($request, 'image', 'settings');
+        if ($request->featuredMedia) {
+            $path = Media::upload($request, 'featuredMedia', 'settings');
 
             if (! $path) {
                 return $this->failedWithMessage('Update failed!');

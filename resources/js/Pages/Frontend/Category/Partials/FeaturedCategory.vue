@@ -3,7 +3,7 @@ defineProps({
     categories: Object,
 });
 </script>
-<template>
+<template> 
     <div
         class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-50 my-5 sm:my-5 md:lg-3"
         v-if="categories?.length > 0"
@@ -34,7 +34,7 @@ defineProps({
                         class="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg group-hover:opacity-75 lg:aspect-w-5 lg:aspect-h-6"
                     >
                         <img
-                            :src="category.image?.url"
+                            :src="category.featuredMedia?.url"
                             :alt="category.title.title"
                             class="h-full w-full object-cover object-center"
                         />

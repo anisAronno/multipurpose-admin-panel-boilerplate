@@ -44,7 +44,7 @@ class CategoryController extends Controller
             $startDate,
             $endDate,
         ) {
-            $categories = Category::whereHas('blogs')->orWhereHas('products')->with('image')->isActive();
+            $categories = Category::whereHas('blogs')->orWhereHas('products')->with('featuredMedia')->isActive();
 
             if (! empty($isFeatured)) {
                 $categories->where('is_featured', $isFeatured);
@@ -108,7 +108,7 @@ class CategoryController extends Controller
             $query->isActive();
         }])->isActive();
 
-        $category->load([ 'image', 'blogs.image', 'products.image']);
+        $category->load([ 'featuredMedia', 'blogs.featuredMedia', 'products.featuredMedia']);
 
         return Inertia::render('Frontend/Category/Show')->with(['category' => new CategoryResources($category)]);
     }

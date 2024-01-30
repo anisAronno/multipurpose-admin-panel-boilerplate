@@ -30,7 +30,7 @@ class HomeController extends Controller
 
         $featuredProducts = CacheHelper::init($featuredProductKey)->remember($featuredProductKey, now()->addDay(), function () {
             return Product::isActive()->isFeatured()
-            ->with(['image'])
+            ->with(['featuredMedia'])
             ->orderBy('id', 'desc')
             ->limit(8)
             ->get();
@@ -40,7 +40,7 @@ class HomeController extends Controller
             return Category::whereHas('products', function ($query) {
                 $query->where('categoryable_type', Product::class);
             })->isActive()->isFeatured()
-            ->with(['image'])
+            ->with(['featuredMedia'])
             ->orderBy('id', 'desc')
             ->limit(3)
             ->get();
@@ -48,13 +48,13 @@ class HomeController extends Controller
 
         $featuredBlog = CacheHelper::init($featuredBlogKey)->remember($featuredBlogKey, now()->addDay(), function () {
             return Blog::isActive()->isFeatured()
-            ->with(['categories', 'image', 'user'])
+            ->with(['categories', 'featuredMedia', 'user'])
             ->orderBy('id', 'desc')->limit(3)->get();
         });
 
         $specialFeatures = CacheHelper::init($specialFeatureKey)->remember($specialFeatureKey, now()->addDay(), function () {
             return SpecialFeature::isActive()
-            ->with(['image'])
+            ->with(['featuredMedia'])
             ->orderBy('id', 'desc')
             ->limit(4)
             ->get();

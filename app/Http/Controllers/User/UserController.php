@@ -205,8 +205,8 @@ class UserController extends InertiaApplicationController
 
     public function avatarUpdate(Request $request, User $user)
     {
-        if ($request->image) {
-            $path = Media::upload($request, 'image', 'users');
+        if ($request->featuredMedia) {
+            $path = Media::upload($request, 'featuredMedia', 'users');
             if (! $path) {
                 return $this->successWithMessage('Update Failed');
             } else {

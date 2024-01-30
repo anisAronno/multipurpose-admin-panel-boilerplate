@@ -18,7 +18,7 @@ class React extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['title', 'image', 'status'])
+        ->logOnly(['title', 'status'])
         ->logOnlyDirty()
         ->dontSubmitEmptyLogs();
     }

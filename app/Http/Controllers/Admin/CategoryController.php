@@ -9,6 +9,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResources;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -44,6 +45,7 @@ class CategoryController extends InertiaApplicationController
         $page       = $request->get('page', 1);
         $categoryCacheKey = CacheHelper::getCategoryCacheKey();
 
+        /** @var User $user */
         $user  = auth()->user();
         $key =  $categoryCacheKey.md5(serialize([$orderBy, $order, $status, $isFeatured, $page, $search, $startDate, $endDate,  ]));
 
@@ -57,7 +59,7 @@ class CategoryController extends InertiaApplicationController
             $endDate,
             $user,
         ) {
-            $categories = Category::with([ 'images']);
+            $categories = Category::with([ 'media']);
 
             if (! $user->haveAdministrativeRole()) {
                 $categories->where('user_id', $user->id);
@@ -119,12 +121,12 @@ class CategoryController extends InertiaApplicationController
             $category = Category::create($data);
 
             if ($category) {
-                if ($request->has('image')) {
-                    $category->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                if ($request->has('featuredMedia')) {
+                    $category->media()->attach(array_column($request->get('featuredMedia'), 'id'), ['is_featured' => 1]);
                 }
 
-                if ($request->has('images')) {
-                    $category->images()->attach(array_column($request->get('images'), 'id'));
+                if ($request->has('media')) {
+                    $category->media()->attach(array_column($request->get('media'), 'id'));
                 }
             }
 
@@ -134,18 +136,18 @@ class CategoryController extends InertiaApplicationController
         }
     }
 
-      /**
-       * Summary of show
-       * @param Request $request
-       * @param Category $category
-       * @return \Inertia\Response
-       */
-      public function show(Category $category)
-      {
-          $category->load(['images']);
+    /**
+     * Summary of show
+     * @param Request $request
+     * @param Category $category
+     * @return \Inertia\Response
+     */
+    public function show(Category $category)
+    {
+        $category->load(['media']);
 
-          return Inertia::render('Dashboard/Category/Show')->with(['category' => $category->load(['images'])]);
-      }
+        return Inertia::render('Dashboard/Category/Show')->with(['category' => $category->load(['media'])]);
+    }
 
     /**
      * Summary of edit
@@ -154,11 +156,11 @@ class CategoryController extends InertiaApplicationController
      */
     public function edit(Category $category)
     {
-        $category->load(['images']);
+        $category->load(['media']);
 
         $statusArr = Status::values();
 
-        return Inertia::render('Dashboard/Category/Edit', ['category' => $category->load(['images']), 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/Category/Edit', ['category' => $category->load(['media']), 'statusArr' => $statusArr]);
     }
 
     /**
@@ -172,7 +174,7 @@ class CategoryController extends InertiaApplicationController
         try {
             $category->update($request->only('title', 'description', 'is_featured', 'status'));
 
-            $category->images()->sync(array_column($request->get('images'), 'id'));
+            $category->media()->sync(array_column($request->get('media'), 'id'));
 
             if (session('last_visited_url')) {
                 return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
@@ -192,7 +194,7 @@ class CategoryController extends InertiaApplicationController
     public function destroy(Category $category)
     {
         $category->delete();
-        $category->images()->detach();
+        $category->media()->detach();
 
         if (session('last_visited_url')) {
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);

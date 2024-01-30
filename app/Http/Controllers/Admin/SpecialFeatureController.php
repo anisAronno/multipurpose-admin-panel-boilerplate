@@ -9,6 +9,7 @@ use App\Http\Requests\StoreSpecialFeatureRequest;
 use App\Http\Requests\UpdateSpecialFeatureRequest;
 use App\Http\Resources\SpecialFeatureResources;
 use App\Models\SpecialFeature;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -42,7 +43,7 @@ class SpecialFeatureController extends InertiaApplicationController
         $endDate   = $request->get('endDate', '');
         $page       = $request->get('page', 1);
         $specialFeatureCacheKey = CacheHelper::getSpecialFeatureCacheKey();
-
+        /** @var User $user */
         $user  = auth()->user();
         $key =  $specialFeatureCacheKey.md5(serialize([$orderBy, $order, $status, $page, $search, $startDate, $endDate,  ]));
 
@@ -55,7 +56,7 @@ class SpecialFeatureController extends InertiaApplicationController
             $endDate,
             $user,
         ) {
-            $specialFeatures = SpecialFeature::with(['images']);
+            $specialFeatures = SpecialFeature::with(['media']);
 
             if (! $user->haveAdministrativeRole()) {
                 $specialFeatures->where('user_id', $user->id);
@@ -113,12 +114,12 @@ class SpecialFeatureController extends InertiaApplicationController
 
 
             if ($specialFeature) {
-                if ($request->has('image')) {
-                    $specialFeature->images()->attach(array_column($request->get('image'), 'id'), ['is_featured' => 1]);
+                if ($request->has('featuredMedia')) {
+                    $specialFeature->media()->attach(array_column($request->get('featuredMedia'), 'id'), ['is_featured' => 1]);
                 }
 
-                if ($request->has('images')) {
-                    $specialFeature->images()->attach(array_column($request->get('images'), 'id'));
+                if ($request->has('media')) {
+                    $specialFeature->media()->attach(array_column($request->get('media'), 'id'));
                 }
             }
 
@@ -136,7 +137,7 @@ class SpecialFeatureController extends InertiaApplicationController
        */
       public function show(SpecialFeature $specialFeature)
       {
-          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => new SpecialFeatureResources($specialFeature->load('images'))]);
+          return Inertia::render('Dashboard/SpecialFeature/Show')->with(['specialFeature' => new SpecialFeatureResources($specialFeature->load('media'))]);
       }
 
     /**
@@ -148,7 +149,7 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $statusArr = Status::values();
 
-        return Inertia::render('Dashboard/SpecialFeature/Edit', ['specialFeature' => $specialFeature->load('images'), 'statusArr' => $statusArr]);
+        return Inertia::render('Dashboard/SpecialFeature/Edit', ['specialFeature' => $specialFeature->load('media'), 'statusArr' => $statusArr]);
     }
 
     /**
@@ -162,7 +163,7 @@ class SpecialFeatureController extends InertiaApplicationController
         try {
             $specialFeature->update($request->only('title', 'description', 'status'));
 
-            $specialFeature->images()->sync(array_column($request->get('images'), 'id'));
+            $specialFeature->media()->sync(array_column($request->get('media'), 'id'));
 
             if (session('last_visited_url')) {
                 return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Updated successfull']);
@@ -183,7 +184,7 @@ class SpecialFeatureController extends InertiaApplicationController
     {
         $specialFeature->delete();
 
-        $specialFeature->images()->detach();
+        $specialFeature->media()->detach();
 
         if (session('last_visited_url')) {
             return Redirect::to(session('last_visited_url'))->with(['success' => true, 'message', 'Deleted successfull']);
