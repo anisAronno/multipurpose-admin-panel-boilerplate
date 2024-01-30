@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Role;
 
-use AnisAronno\LaravelCacheMaster\CacheControl;
+use App\Helpers\CacheControl;
 use App\Helpers\CacheKey;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\Role\RoleStoreRequest;
@@ -11,6 +11,7 @@ use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -32,31 +33,29 @@ class RolesController extends InertiaApplicationController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $queryParams = $request->query();
+        ksort($queryParams);
+        $queryString = http_build_query($queryParams);
+        $roleCacheKey = CacheKey::getRoleCacheKey();
+        $key = $roleCacheKey . md5(serialize([$queryString]));
 
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $roles = Role::with(['permissions' => function ($query) {
-                $query->select('id', 'name');
-            }])->where('name', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
-
-            return Inertia::render('Dashboard/Role/Index', ['roles' => $roles]);
-        }
-
-        $key = CacheKey::getRoleCacheKey();
-        $cacheKey =  $key.md5(serialize([$currentPage]));
-
-        $roles = CacheControl::init($key)->remember($cacheKey, 10, function () {
+        $roles = Cache::remember($key, now()->addDay(), function () use ($request) {
             return Role::with(['permissions' => function ($query) {
                 $query->select('id', 'name');
-            }])->orderBy('id', 'desc')->paginate(10);
+            }])
+            ->when($request->has('search'), function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->input('search') . '%');
+            })
+            ->orderBy($request->input('orderBy', 'id'), $request->input('order', 'desc'))
+            ->paginate(10)
+            ->withQueryString();
         });
 
-        Session::put('last_visited_url', $request->fullUrl());
+        CacheControl::updateCacheKeys($roleCacheKey, $key);
 
         return Inertia::render('Dashboard/Role/Index')->with(['roles' => RoleResource::collection($roles)]);
     }
@@ -64,7 +63,6 @@ class RolesController extends InertiaApplicationController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -89,7 +87,6 @@ class RolesController extends InertiaApplicationController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(RoleStoreRequest $request)
     {
@@ -120,7 +117,6 @@ class RolesController extends InertiaApplicationController
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
     {
@@ -152,7 +148,6 @@ class RolesController extends InertiaApplicationController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(RoleUpdateRequest $request, Role $role)
     {
@@ -177,7 +172,6 @@ class RolesController extends InertiaApplicationController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
     {

@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use AnisAronno\LaravelCacheMaster\CacheControl;
+use App\Helpers\CacheControl;
 use App\Helpers\CacheKey;
 use App\Models\Option;
 
@@ -23,7 +23,7 @@ class OptionObserver
      */
     public function created(Option $option)
     {
-        CacheControl::forgetCache($this->optionsCacheKey);
+        CacheControl::clearCache($this->optionsCacheKey);
     }
 
     /**
@@ -34,7 +34,7 @@ class OptionObserver
      */
     public function updated(Option $option)
     {
-        CacheControl::forgetCache($this->optionsCacheKey);
+        CacheControl::clearCache($this->optionsCacheKey);
     }
 
     /**
@@ -45,7 +45,7 @@ class OptionObserver
      */
     public function deleted(Option $option)
     {
-        CacheControl::forgetCache($this->optionsCacheKey);
+        CacheControl::clearCache($this->optionsCacheKey);
     }
 
     /**
@@ -56,7 +56,7 @@ class OptionObserver
      */
     public function restored(Option $option)
     {
-        CacheControl::forgetCache($this->optionsCacheKey);
+        CacheControl::clearCache($this->optionsCacheKey);
     }
 
     /**
@@ -67,7 +67,7 @@ class OptionObserver
      */
     public function forceDeleted(Option $option)
     {
-        CacheControl::forgetCache($this->optionsCacheKey);
+        CacheControl::clearCache($this->optionsCacheKey);
 
     }
 }

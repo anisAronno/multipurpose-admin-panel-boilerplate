@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use AnisAronno\LaravelCacheMaster\CacheControl;
+use App\Helpers\CacheControl;
 use App\Helpers\CacheKey;
 use Spatie\Permission\Contracts\Role;
 
@@ -26,8 +26,8 @@ class RoleObserver
      */
     public function created(Role $role)
     {
-        CacheControl::forgetCache($this->roleCacheKey);
-        CacheControl::forgetCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -38,8 +38,8 @@ class RoleObserver
      */
     public function updated(Role $role)
     {
-        CacheControl::forgetCache($this->roleCacheKey);
-        CacheControl::forgetCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -50,8 +50,8 @@ class RoleObserver
      */
     public function deleted(Role $role)
     {
-        CacheControl::forgetCache($this->roleCacheKey);
-        CacheControl::forgetCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -62,8 +62,8 @@ class RoleObserver
      */
     public function restored(Role $role)
     {
-        CacheControl::forgetCache($this->roleCacheKey);
-        CacheControl::forgetCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -74,7 +74,7 @@ class RoleObserver
      */
     public function forceDeleted(Role $role)
     {
-        CacheControl::forgetCache($this->roleCacheKey);
-        CacheControl::forgetCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 }

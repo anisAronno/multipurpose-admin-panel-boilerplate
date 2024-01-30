@@ -26,7 +26,7 @@
                     }"
                     :href="link.url ?? ''"
                 >
-                    <span v-html="__(link.label)"></span>
+                    <span v-html="link.label"></span>
                 </Link>
             </template>
         </div>

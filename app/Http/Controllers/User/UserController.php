@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use AnisAronno\LaravelCacheMaster\CacheControl;
 use AnisAronno\MediaHelper\Facades\Media;
 use App\Enums\UserStatus;
+use App\Helpers\CacheControl;
 use App\Helpers\CacheKey;
 use App\Http\Controllers\InertiaApplicationController;
 use App\Http\Requests\User\UserStoreRequest;
@@ -13,6 +13,7 @@ use App\Http\Resources\UserResources;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -33,34 +34,44 @@ class UserController extends InertiaApplicationController
     /**
      * Display a listing of the resource.
      *
-      */
+     * @param Request $request
+     */
     public function index(Request $request)
     {
-        $currentPage = isset($request->page) ? (int) [$request->page] : 1;
+        $queryParams = $request->query();
+        ksort($queryParams);
+        $queryString = http_build_query($queryParams);
+        $userCacheKey = CacheKey::getUserCacheKey();
+        $key = $userCacheKey . md5(serialize([$queryString]));
 
-
-        if (! empty($request->search)) {
-            $q = $request->search;
-            $users = User::with(['roles'])->where('name', 'LIKE', '%'.$q.'%')->orWhere('email', 'LIKE', '%'.$q.'%')->orderBy('id', 'desc')->paginate(10);
-
-            return Inertia::render('Dashboard/User/Index', ['users' => $users]);
-        }
-        $key = CacheKey::getUserCacheKey();
-        $cacheKey =  $key.md5(serialize([$currentPage]));
-
-        $users = CacheControl::init($key)->remember($cacheKey, 10, function () {
-            return User::with(['roles'])->orderBy('id', 'desc')->paginate(10);
+        $users = Cache::remember($key, now()->addDay(), function () use ($request) {
+            return User::with(['roles'])
+                ->when($request->has('search'), function ($query) use ($request) {
+                    $query->where(function ($subQuery) use ($request) {
+                        $subQuery->where('name', 'LIKE', '%' . $request->input('search') . '%')
+                            ->orWhere('email', 'LIKE', '%' . $request->input('search') . '%');
+                    });
+                })
+                ->when($request->has('startDate') && $request->has('endDate'), function ($query) use ($request) {
+                    $query->whereBetween('created_at', [
+                        new \DateTime($request->input('startDate')),
+                        new \DateTime($request->input('endDate'))
+                    ]);
+                })
+                ->orderBy($request->input('orderBy', 'id'), $request->input('order', 'desc'))
+                ->paginate(10)
+                ->withQueryString();
         });
 
-        Session::put('last_visited_url', $request->fullUrl());
+        CacheControl::updateCacheKeys($userCacheKey, $key);
 
         return Inertia::render('Dashboard/User/Index')->with(['users' => UserResources::collection($users)]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -74,7 +85,6 @@ class UserController extends InertiaApplicationController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(UserStoreRequest $request)
     {
@@ -110,7 +120,6 @@ class UserController extends InertiaApplicationController
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
@@ -132,7 +141,6 @@ class UserController extends InertiaApplicationController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user)
     {
@@ -164,7 +172,6 @@ class UserController extends InertiaApplicationController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
@@ -185,7 +192,6 @@ class UserController extends InertiaApplicationController
      * Summary of avatarUpdate
      *
      * @param  User  $user
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function avatarUpdate(Request $request, User $user)
     {
@@ -206,7 +212,6 @@ class UserController extends InertiaApplicationController
      * Remove the specified user avatar.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function avatarDelete(User $user)
     {

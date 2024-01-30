@@ -4,72 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a251049be8422ee18fce0c0ddbe70b63",
+    "content-hash": "0363abf7aa258281ef13812a2d998c3f",
     "packages": [
-        {
-            "name": "anisaronno/laravel-cache-control",
-            "version": "0.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/anisAronno/laravel-cache-control.git",
-                "reference": "80536c6fedb18da8f22d2f24c9162a5708a662a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/anisAronno/laravel-cache-control/zipball/80536c6fedb18da8f22d2f24c9162a5708a662a4",
-                "reference": "80536c6fedb18da8f22d2f24c9162a5708a662a4",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^8.0|^9.0|^10.0",
-                "php": "^7.4|^8.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^8.0",
-                "pestphp/pest": "^1.21",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "AnisAronno\\LaravelCacheMaster\\CacheMasterServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "AnisAronno\\LaravelCacheMaster\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "MD. Anichur Rahaman",
-                    "email": "contact@anichur.com",
-                    "homepage": "https://anichur.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel package for efficient caching control and management.",
-            "homepage": "https://github.com/anisAronno/laravel-cache-control",
-            "keywords": [
-                "cache",
-                "laravel",
-                "laravel-cache",
-                "redis",
-                "wedevs"
-            ],
-            "support": {
-                "issues": "https://github.com/anisAronno/laravel-cache-control/issues",
-                "source": "https://github.com/anisAronno/laravel-cache-control/tree/v0.0.1"
-            },
-            "time": "2023-10-13T04:38:27+00:00"
-        },
         {
             "name": "anisaronno/laravel-media-helper",
             "version": "0.1.0",
@@ -9637,5 +9573,5 @@
         "php": "^8.1.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
