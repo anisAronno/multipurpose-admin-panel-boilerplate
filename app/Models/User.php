@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Enums\UserGender;
 use App\Enums\UserStatus;
-use App\Helpers\FileHelpers;
+use App\Helpers\UniqueSlug;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailQueued;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,9 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Spatie\Activitylog\LogOptions;
@@ -97,7 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         static::creating(function ($model) {
             $model->token = Uuid::uuid4()->toString();
-            $model->username = Str::slug($model->name).'_'.(User::max('id') + 1).random_int(1, 9999);
+            $model->username = UniqueSlug::generate($model, 'username', $model->name);
         });
 
         parent::boot();
@@ -107,27 +106,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * Picture
      *
      * @param [type] $uid
-     * @return void
-     */
+      */
     public function getAvatarAttribute($value)
     {
         if ($value !== null) {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl($value);
+            return  $this->attributes['avatar'] = Media::getURL($value);
         } else {
-            return  $this->attributes['avatar'] = FileHelpers::getUrl('images/defaults/avatar.png');
-        }
-    }
-
-    /**
-     * Date
-     *
-     * @param [type] $uid
-     * @return void
-     */
-    public function getCreatedAtAttribute($value)
-    {
-        if ($value !== null) {
-            return  $this->attributes['created_at'] = Carbon::parse($value)->diffForHumans();
+            return  $this->attributes['avatar'] = Media::getURL('defaults/avatar.png');
         }
     }
 
@@ -165,7 +150,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $hasPermission;
     }
 
-     protected $appends = ['isDeletable', 'isEditable'];
+    protected $appends = ['isDeletable', 'isEditable'];
 
     public function getIsDeletableAttribute($value)
     {
@@ -176,27 +161,27 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-       public function getIsEditableAttribute($value)
-       {
-           if ($this->id == 1) {
-               return false;
-           } else {
-               return true;
-           }
-       }
+    public function getIsEditableAttribute($value)
+    {
+        if ($this->id == 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-     public function addresses()
-     {
-         return $this->hasMany(Address::class, 'user_id', 'id');
-     }
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
 
-     public function socialLogins()
-     {
-         return $this->hasMany(SocialLogin::class, 'user_id', 'id');
-     }
+    public function socialLogins()
+    {
+        return $this->hasMany(SocialLogin::class, 'user_id', 'id');
+    }
 
-     public function loginHistories()
-     {
-         return $this->hasMany(LoginHistory::class, 'user_id', 'id');
-     }
+    public function loginHistories()
+    {
+        return $this->hasMany(LoginHistory::class, 'user_id', 'id');
+    }
 }

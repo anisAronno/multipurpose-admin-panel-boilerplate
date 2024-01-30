@@ -1,0 +1,1 @@
+import{d as e}from"./defaultFile-2b6c57d3.js";import{o as l,f as s,u as r}from"./app-4dfa7f3b.js";const a=["src"],_={__name:"ApplicationLogo",setup(t){return(o,n)=>(l(),s("img",{src:o.$page.props.global.options.logo||r(e).logo,alt:"logo",class:"rounded-full"},null,8,a))}};export{_};

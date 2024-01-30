@@ -2,22 +2,20 @@
 
 namespace App\Observers;
 
-use App\Services\Cache\CacheServices;
-use App\Traits\ClearCache;
+use App\Helpers\CacheControl;
+use App\Helpers\CacheKey;
 use Spatie\Permission\Contracts\Role;
 
 class RoleObserver
 {
-    use ClearCache;
-
-    public $roleCacheKey = '';
+    protected $roleCacheKey = '';
 
     public $userCacheKey = '';
 
     public function __construct()
     {
-        $this->roleCacheKey = CacheServices::getUserCacheKey();
-        $this->userCacheKey = CacheServices::getRoleCacheKey();
+        $this->roleCacheKey = CacheKey::getUserCacheKey();
+        $this->userCacheKey = CacheKey::getRoleCacheKey();
     }
 
     /**
@@ -28,8 +26,8 @@ class RoleObserver
      */
     public function created(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -40,8 +38,8 @@ class RoleObserver
      */
     public function updated(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -52,8 +50,8 @@ class RoleObserver
      */
     public function deleted(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -64,8 +62,8 @@ class RoleObserver
      */
     public function restored(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 
     /**
@@ -76,7 +74,7 @@ class RoleObserver
      */
     public function forceDeleted(Role $role)
     {
-        $this->clearCache($this->roleCacheKey);
-        $this->clearCache($this->userCacheKey);
+        CacheControl::clearCache($this->roleCacheKey);
+        CacheControl::clearCache($this->userCacheKey);
     }
 }

@@ -1,17 +1,16 @@
 <script setup>
 import ToastListItem from "@/Components/ToastListItem.vue";
 import toast from "@/Stores/toast";
-import { Inertia } from "@inertiajs/inertia";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { onUnmounted } from "vue";
 
 const page = usePage();
 
-let removeFinshEventListener = Inertia.on("finish", () => {
-    if (page.props.value.flash.message) {
+let removeFinshEventListener = router.on("finish", () => {
+    if (page.props.flash.message) {
         toast.add({
-            message: page.props.value.flash.message,
-            success: page.props.value.flash.success,
+            message: page.props.flash.message,
+            success: page.props.flash.success,
         });
     }
 });

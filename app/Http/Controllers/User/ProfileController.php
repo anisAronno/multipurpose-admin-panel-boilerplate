@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use AnisAronno\MediaHelper\Facades\Media;
 use App\Enums\UserGender;
-use App\Helpers\FileHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,7 +22,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request)
     {
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render('Dashboard/Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
             'genderArr' => UserGender::values(),
@@ -65,7 +65,7 @@ class ProfileController extends Controller
         Auth::logout();
 
         if (! $user->isDeletable) {
-            FileHelpers::deleteFile($user->avatar);
+            Media::delete($user->avatar);
             $user->delete();
         }
 
@@ -90,10 +90,10 @@ class ProfileController extends Controller
         try {
             $user = $request->user();
             if ($request->avatar) {
-                $path = FileHelpers::upload($request, 'avatar', 'users');
+                $path = Media::upload($request, 'avatar', 'users');
 
                 if ($path) {
-                    FileHelpers::deleteFile($user->avatar);
+                    Media::delete($user->avatar);
                     $user->avatar = $path;
                     $user->save();
 

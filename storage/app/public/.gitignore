@@ -1,4 +1,4 @@
 
 !.gitignore
-!images/defaults
-!images/defaults/*
+!/defaults
+!/defaults/*

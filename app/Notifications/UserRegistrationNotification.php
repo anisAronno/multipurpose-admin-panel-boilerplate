@@ -11,6 +11,7 @@ class UserRegistrationNotification extends Notification
 {
     use Queueable;
 
+
     /**
      * Create a new notification instance.
      *

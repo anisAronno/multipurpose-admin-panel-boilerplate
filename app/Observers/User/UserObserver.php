@@ -2,20 +2,18 @@
 
 namespace App\Observers\User;
 
-use App\Helpers\FileHelpers;
+use AnisAronno\MediaHelper\Facades\Media;
+use App\Helpers\CacheControl;
+use App\Helpers\CacheKey;
 use App\Models\User;
-use App\Services\Cache\CacheServices;
-use App\Traits\ClearCache;
 
 class UserObserver
 {
-    use ClearCache;
-
     public $key = '';
 
     public function __construct()
     {
-        $this->key = CacheServices::getUserCacheKey();
+        $this->key = CacheKey::getUserCacheKey();
     }
 
     /**
@@ -26,7 +24,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        $this->clearCache($this->key);
+        CacheControl::clearCache($this->key);
     }
 
     /**
@@ -37,7 +35,7 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        $this->clearCache($this->key);
+        CacheControl::clearCache($this->key);
     }
 
     /**
@@ -48,9 +46,9 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        $this->clearCache($this->key);
+        CacheControl::clearCache($this->key);
 
-        FileHelpers::deleteFile($user->avatar);
+        Media::delete($user->avatar);
     }
 
     /**
@@ -61,7 +59,7 @@ class UserObserver
      */
     public function restored(User $user)
     {
-        $this->clearCache($this->key);
+        CacheControl::clearCache($this->key);
     }
 
     /**
@@ -72,8 +70,8 @@ class UserObserver
      */
     public function forceDeleted(User $user)
     {
-        $this->clearCache($this->key);
+        CacheControl::clearCache($this->key);
 
-        FileHelpers::deleteFile($user->avatar);
+        Media::delete($user->avatar);
     }
 }
